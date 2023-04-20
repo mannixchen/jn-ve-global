@@ -181,10 +181,19 @@ function setSelectRow(selectedRows: any[]) {
         return
     }
 
+    // 在设置表格的选中行时，传递的 row 需要是当前 data 中同一数据的引用，这里比对数据，获取新数据的引用
+    const newSelectRows = selectedRows
+        .map((oldRow) => {
+            return localConfig.value.data.find(
+                (newRow) => JSON.stringify(newRow) === JSON.stringify(oldRow)
+            )
+        })
+        .filter((newRow) => newRow)
+
     nextTick(() => {
         localInstance.value?.clearSelection()
         nextTick(() => {
-            selectedRows.forEach((row) => {
+            newSelectRows.forEach((row) => {
                 localInstance.value?.toggleRowSelection(row, true)
             })
         })

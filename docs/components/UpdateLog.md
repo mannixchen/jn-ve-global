@@ -24,6 +24,12 @@
 
 1. 增加数据动态刷新能力
 
+<h3>优化</h3>
+
+<h4>Table</h4>
+
+1. 优化表格 selectRows 的选中行为
+
 <h3>BugFix</h3>
 
 <h4>Chart</h4>
