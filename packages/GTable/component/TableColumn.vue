@@ -29,7 +29,13 @@
             </template>
 
             <!-- 可编辑行 -->
-            <template v-else-if="columnConfig.editable && $index >= 0">
+            <template
+                v-else-if="
+                    (_.isFunction(columnConfig.editable)
+                        ? columnConfig.editable(row, $index)
+                        : columnConfig.editable) && $index >= 0
+                "
+            >
                 <TableEditCell :column-config="columnConfig" :data="row" :index="$index" />
             </template>
 
@@ -53,6 +59,7 @@ import { TableColumnProps } from '../index'
 import { getColumnProps } from '../utils'
 import FunctionalComponent from '../../FunctionalComponent'
 import TableEditCell from '../component/TableEditCell/index.vue'
+import _ from 'lodash'
 
 const props = defineProps({
     columnConfig: {

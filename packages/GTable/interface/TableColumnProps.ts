@@ -163,7 +163,7 @@ export default interface TableColumnProps extends EleTableColumnProps {
     /**
      * 是否可编辑
      */
-    editable?: boolean
+    editable?: boolean | ((row?: any, index?: number) => boolean)
     /**
      * 编辑控件类型
      */
