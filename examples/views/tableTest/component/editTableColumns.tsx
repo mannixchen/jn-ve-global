@@ -69,7 +69,12 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
             prop: 'money',
             label: '工资-FigureInput',
             // width: 180,
-            editable: true,
+            editable: (row, index) => {
+                if (index === 2) {
+                    return false
+                }
+                return true
+            },
             // openDB: true,
             openSC: true,
             rules: [
