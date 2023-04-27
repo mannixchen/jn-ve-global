@@ -7,13 +7,13 @@
     position: relative;
     z-index: 2;
 
-    .custom-svg-icon,
-    i {
+    :deep(.custom-svg-icon),
+    :deep(i) {
         color: #595959 !important;
         font-size: 20px;
     }
 
-    .left-box {
+    :deep(.left-box) {
         svg.custom-svg-icon {
             cursor: pointer;
             font-size: 28px;
