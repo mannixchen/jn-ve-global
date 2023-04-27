@@ -42,7 +42,7 @@ pages:
         # - yarn cache clean
         # - yarn install
         # - yarn docs:build
-        # - pnpm install
+        - pnpm i -w
         - pnpm docs:build
         - rm -fr public
         - mkdir public && cp -fr docs/.vuepress/dist/* public
