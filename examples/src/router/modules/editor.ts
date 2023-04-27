@@ -32,6 +32,14 @@ const routes: Array<RouteConfig> = [
                     title: 'LuckSheet'
                 },
                 component: () => import('@/views/demo/editor/LuckSheet/index.vue')
+            },
+            {
+                path: 'codeEditor',
+                name: 'codeEditor',
+                meta: {
+                    title: 'CodeEditor'
+                },
+                component: () => import('@/views/demo/editor/codeEditor/index.vue')
             }
         ]
     }
