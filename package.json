@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
+        "@jsjn/sheet": "workspace:^",
         "@jsjn/utils": "workspace:^",
         "@vueuse/core": "^9.3.1",
         "async-validator": "^4.2.5",
@@ -82,6 +83,7 @@
         "vite": "4.2.1",
         "vite-plugin-dts": "1.5.0",
         "vite-plugin-eslint": "^1.8.1",
+        "vite-plugin-require-transform": "^1.0.3",
         "vite-plugin-svg-icons": "2.0.1",
         "vite-plugin-vue-setup-extend": "^0.4.0",
         "vue-router": "^4.0.14",

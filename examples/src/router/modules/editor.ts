@@ -24,6 +24,14 @@ const routes: Array<RouteConfig> = [
                     title: '富文本'
                 },
                 component: () => import('@/views/demo/editor/jnEditor/index.vue')
+            },
+            {
+                path: 'luckSheet',
+                name: 'luckSheet',
+                meta: {
+                    title: 'LuckSheet'
+                },
+                component: () => import('@/views/demo/editor/LuckSheet/index.vue')
             }
         ]
     }

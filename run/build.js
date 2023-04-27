@@ -1,7 +1,7 @@
 const childProcess = require('child_process')
 const filePath = require('./filePath')
 
-const buildLibs = ['utils', 'jn-ve-global' /* , 'sheet', 'code-editor' */]
+const buildLibs = ['utils', 'sheet'/* , 'code-editor', 'jn-ve-global' */]
 
 function runChild() {
     buildLibs.forEach((name) => {

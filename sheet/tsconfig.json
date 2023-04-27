@@ -1,0 +1,22 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        // "outDir": "./dist",
+        "composite": false,
+        "rootDir": "../",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@component/*": ["../jn-ve-global/packages/*"],
+            "@ROOT/*": ["../*"]
+        }
+    },
+    "include": [
+        "./src/**/*.ts",
+        "./src/**/*.tsx",
+        "./src/**/*.vue",
+
+        "../source.d.ts",
+        "../vite-env.d.ts"
+    ]
+}
