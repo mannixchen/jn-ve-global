@@ -1,0 +1,299 @@
+import _ from 'lodash'
+
+/**
+ * 过滤对象中为空的属性
+ * @param obj
+ * @returns
+ */
+export function filterObj(obj: object) {
+    if (!(typeof obj === 'object')) {
+        return
+    }
+
+    for (let key in obj) {
+        if (
+            obj.hasOwnProperty(key) &&
+            (obj[key] === null || obj[key] === undefined || obj[key] === '')
+        ) {
+            delete obj[key]
+        }
+    }
+    return obj
+}
+
+/**
+ * b 对象赋值给 a 对象相同的字段
+ * @param target 目标数据
+ * @param provider 提供者
+ * @param excludes 要排除的 key 数组
+ * @param ignore 是否无视 undefined 或 null，即使提供者的字段无效，也进行赋值
+ */
+export function assignOwnProp(
+    target: object,
+    provider: object,
+    excludes?: Array<string>,
+    ignore?: boolean
+) {
+    Object.keys(target).forEach((k) => {
+        if (excludes && excludes.includes(k)) {
+            return false
+        }
+
+        if (!ignore && (provider[k] === undefined || provider[k] === null)) {
+            return false
+        }
+
+        if (typeof provider[k] === 'object') {
+            target[k] = _.cloneDeep(provider[k])
+        } else {
+            target[k] = provider[k]
+        }
+    })
+}
+
+/**
+ * 合并两个对象的有效字段，无效字段从目标对象中移除
+ * @param target 目标输出对象，是对源对象进行操作的
+ * @param provider 提供者
+ * @param processor 处理器钩子，需要返回布尔值或无返回值；true: 有效 | false: 无效 | undefined: 无返回值，交由自判断
+ */
+export function assignValidField(
+    target: object,
+    provider: object,
+    processor?: (key: string, value: any) => boolean | undefined
+) {
+    Object.keys(provider).forEach((key) => {
+        const providerVal = provider[key]
+
+        /**
+         * 处理器优先，是从字段级别出发的
+         * 如果无返回值，不予处理
+         */
+        if (processor) {
+            const res = processor(key, providerVal)
+            if (res !== undefined && res === false) {
+                delete target[key]
+                return
+            } else if (res !== undefined && res === true) {
+                target[key] = providerVal
+                return
+            }
+        }
+
+        // 自判断
+        if (
+            _.isNull(providerVal) ||
+            _.isUndefined(providerVal) ||
+            (_.isArray(providerVal) && !providerVal.length) ||
+            (_.isString(providerVal) && !providerVal) ||
+            (_.isNumber(providerVal) && providerVal === 0) ||
+            (_.isBoolean(providerVal) && providerVal === false) ||
+            (_.isObject(providerVal) && _.isEmpty(providerVal)) ||
+            (_.isArray(providerVal) &&
+                providerVal.length &&
+                (providerVal as Array<any>).every((item) => !item))
+        ) {
+            delete target[key]
+            return
+        } else {
+            target[key] = providerVal
+        }
+    })
+}
+
+/**
+ * 增强版序列化对象：可以将对象转换成字符串，通过 JSON.stringify 实现
+ *  - JSON.stringify 不能序列化函数，当前方法可以序列化函数
+ *  - 但是不能序列化简写的函数，如：对象函数简写方式
+ *
+ * 注意：可序列化的函数，只能是声明式或箭头函数
+ */
+export const advanceSerialize = {
+    FUNC_PREFIX: 'FUNC_PREFIX',
+    stringify(obj: any, space?: number | string, error?: (err: Error | unknown) => void) {
+        try {
+            return JSON.stringify(
+                obj,
+                (k, v) => {
+                    if (typeof v === 'function') {
+                        return `${this.FUNC_PREFIX}${v}`
+                    }
+                    return v
+                },
+                space
+            )
+        } catch (err) {
+            error && error(err)
+        }
+    },
+    parse(jsonStr: string, error?: (err: Error | unknown) => void) {
+        try {
+            return JSON.parse(jsonStr, (key, value) => {
+                if (value && typeof value === 'string') {
+                    return value.indexOf(this.FUNC_PREFIX) !== -1
+                        ? new Function(`return ${value.replace(this.FUNC_PREFIX, '')}`)()
+                        : value
+                }
+                return value
+            })
+        } catch (err) {
+            error && error(err)
+        }
+    }
+}
+
+/**
+ * 清空 obj 所有的 key（非改变引用）
+ * @param obj
+ */
+export function emptyObj(obj: object) {
+    Object.keys(obj).forEach((key) => delete obj[key])
+}
+
+/**
+ * 获取数组 or 对象的长度
+ * @param target
+ * @returns
+ */
+export function getLength(target: Array<any> | object) {
+    if (_.isArray(target)) return target.length
+    if (_.isObject(target)) return Object.keys(target).length
+}
+
+export interface KeyFound {
+    key: string
+    type: 'add' | 'sub' | 'change'
+    newValue: any
+    oldValue: any
+}
+/**
+ * 比较两个对象不同的属性值（常用于 vue watch 对象，且深度监听，获取改变的字段）
+ * @param newObj 新对象
+ * @param oldObj 旧对象
+ * @returns
+ */
+export function difference(newObj: object, oldObj: object) {
+    let keyFounds: KeyFound[] = []
+
+    // 旧对象没有，新对象有，代表所有字段都是新增的
+    if (!oldObj && newObj) {
+        keyFounds = Object.keys(newObj).map((key) => {
+            return {
+                key,
+                type: 'add',
+                newValue: newObj[key],
+                oldValue: undefined
+            }
+        })
+        return keyFounds
+    }
+
+    // 新对象没有，旧对象有，代表所有字段都是减少的
+    if (!newObj && oldObj) {
+        keyFounds = Object.keys(oldObj).map((key) => {
+            return {
+                key,
+                type: 'sub',
+                newValue: undefined,
+                oldValue: newObj[key]
+            }
+        })
+        return keyFounds
+    }
+
+    Object.keys(newObj).forEach((key) => {
+        // 新的有，旧的也有（变化的）
+        if (newObj[key] !== undefined && oldObj[key] !== undefined) {
+            if (newObj[key] !== oldObj[key]) {
+                keyFounds.push({
+                    key,
+                    type: 'change',
+                    newValue: newObj[key],
+                    oldValue: oldObj[key]
+                })
+            }
+        }
+
+        // 新的有，旧的没有（新增的）
+        else if (newObj[key] !== undefined && oldObj[key] === undefined) {
+            keyFounds.push({
+                key,
+                type: 'add',
+                newValue: newObj[key],
+                oldValue: oldObj[key]
+            })
+        }
+    })
+
+    // 新的没有，旧的有（减少的）
+    Object.keys(oldObj).forEach((key) => {
+        if (newObj[key] === undefined && oldObj[key] !== undefined) {
+            keyFounds.push({
+                key,
+                type: 'sub',
+                newValue: newObj[key],
+                oldValue: oldObj[key]
+            })
+        }
+    })
+
+    // console.group(`%c 开始比对 ===== `, 'color: #000;')
+    // console.log(`%c new ===== `, 'color: #67c23a;', newObj)
+    // console.log(`%c old ===== `, 'color: #f56c6c;', oldObj)
+    // console.log(`%c 差异 ===== `, 'color: #409eff;', keyFounds)
+    // console.groupEnd()
+
+    return keyFounds
+}
+
+/**
+ * 递归性的处理数据中无效的引用类型数据（数组 or 对象），直接改变源数据
+ * @param source 源数据
+ * @param parent 父级，在自身数据清空后，促使父级移除自身
+ * @returns
+ */
+export function clearEmpty(source: object | Array<any>, parent?: object | Array<any>) {
+    if (_.isArray(source)) {
+        source.forEach((item, index) => {
+            if (_.isObject(item) && _.isEmpty(item)) {
+                source.splice(index, 1)
+                return
+            }
+
+            if (_.isObject(item)) {
+                clearEmpty(item, source)
+            }
+        })
+
+        if (parent && _.isEmpty(source)) {
+            clearEmpty(parent)
+            return
+        }
+
+        return
+    }
+
+    if (_.isObject(source)) {
+        _.keys(source).forEach((key) => {
+            const item = source[key]
+
+            if (_.isObject(item) && _.isEmpty(item)) {
+                delete source[key]
+                return
+            }
+
+            if (_.isObject(item) && !_.isEmpty(item)) {
+                clearEmpty(item, source)
+            }
+        })
+    }
+}
+
+/**
+ * 判断目标是否是 object 且不是数组的 object
+ * @param target
+ * @returns
+ */
+export function isObject(target: any) {
+    return !!target && _.isObject(target) && !_.isArray(target)
+}
