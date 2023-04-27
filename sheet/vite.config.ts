@@ -6,10 +6,6 @@ import eslintPlugin from 'vite-plugin-eslint'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import requireTransform from 'vite-plugin-require-transform'
 import dts from 'vite-plugin-dts'
-// import { visualizer } from 'rollup-plugin-visualizer'
-
-const port = 3068
-const lifecycle = process.env.npm_lifecycle_event
 
 export default defineConfig({
     plugins: [
@@ -27,16 +23,9 @@ export default defineConfig({
             include: ['src/**/*.{js,jsx,ts,tsx,vue}']
         }),
         requireTransform({})
-        // 打包分析
-        // lifecycle === 'report'
-        //     ? visualizer({ open: true, brotliSize: true, filename: 'report.html' })
-        //     : null
     ],
     optimizeDeps: {
         esbuildOptions: {}
-    },
-    server: {
-        port
     },
     build: {
         lib: {
