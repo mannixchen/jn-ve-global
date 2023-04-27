@@ -1,0 +1,35 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2022-12-15 15:49:47
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2022-12-15 16:30:42
+ * @FilePath: /micro-basic/src/views/_layout/common/asideMenu/styles/popupMenuStyles.scss
+ * @Description: 收起弹出菜单的样式覆盖
+ */
+
+.aside-menu-shrink-popup {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    --el-menu-bg-color: transparent;
+    width: fit-content !important;
+    max-width: 250px !important;
+
+    .menu-grade {
+        --jn-menu-item-base-padding-left: 8px;
+        --el-menu-level: 1;
+
+        &.is-disabled {
+            opacity: 1;
+        }
+
+
+        &.el-menu-item,
+        .el-sub-menu__title {
+            color: #fff !important;
+
+            &:hover {
+                color: #000 !important;
+                background-color: #fff;
+            }
+        }
+    }
+}

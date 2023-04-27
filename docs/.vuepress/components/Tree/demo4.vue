@@ -36,7 +36,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import treeData from './data/treeData.json'
 // 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
 // import { BtnProps } from 'jn-ve-global/packages/index
-import { BtnProps } from '@component/index'
+import { BtnProps } from 'jn-ve-global'
 
 // 通过 btns 传递要添加的扩展按钮组
 const btns: BtnProps[] = [

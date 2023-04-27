@@ -10,7 +10,7 @@
 
 <script lang="tsx" setup>
 import { reactive, watch, ref } from 'vue'
-import { FormProps } from '@component/index'
+import { FormProps } from 'jn-ve-global'
 import treeData from '../selectTreeTest/data.json'
 
 let formConfig = ref<FormProps>({

@@ -1,5 +1,5 @@
 import { reactive } from 'vue'
-import { TableColumnProps } from '@component/GTable'
+import { TableColumnProps } from 'jn-ve-global'
 
 export default () =>
     reactive<TableColumnProps[]>([

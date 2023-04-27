@@ -1,0 +1,34 @@
+{
+    "name": "jn-ve-global",
+    "version": "2.6.2",
+    "author": "zyc",
+    "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
+    "files": [
+        "dist",
+        "packages",
+        "@types"
+    ],
+    "main": "./dist/jn-ve-global.umd.js",
+    "module": "./dist/jn-ve-global.mjs",
+    "types": "./@types/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/jn-ve-global.mjs",
+            "require": "./dist/jn-ve-global.umd.js"
+        },
+        "./style.css": "./dist/style.css",
+        "./dist/*": "./dist/*",
+        "./packages/*": "./packages/*",
+        "./packages": "./packages",
+        "./@types/*": "./@types/*",
+        "./@types": "./@types"
+    },
+    "scripts": {
+        "build": "vite build",
+        "build:push": "vite build && yalc push",
+        "build:px": "vite build -- --px && yalc push"
+    },
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-release/"
+    }
+}

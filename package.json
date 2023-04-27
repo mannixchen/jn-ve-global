@@ -1,38 +1,19 @@
 {
-    "name": "jn-ve-global",
-    "version": "2.6.2",
-    "author": "zyc",
-    "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
-    "files": [
-        "dist",
-        "packages",
-        "@types"
-    ],
-    "main": "./dist/jn-ve-global.umd.js",
-    "module": "./dist/jn-ve-global.mjs",
-    "types": "./@types/index.d.ts",
-    "exports": {
-        ".": {
-            "import": "./dist/jn-ve-global.mjs",
-            "require": "./dist/jn-ve-global.umd.js"
-        },
-        "./style.css": "./dist/style.css",
-        "./dist/*": "./dist/*",
-        "./packages/*": "./packages/*",
-        "./packages": "./packages",
-        "./@types/*": "./@types/*",
-        "./@types": "./@types"
-    },
+    "name": "@jsjn/librar-monorepo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
     "scripts": {
-        "dev": "serve -l 9099 --cors lib & vite",
-        "build": "vite build",
-        "serve": "vite preview",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prepare": "node ./run/initHusky.js",
+        "cm": "git-cz",
         "docs:dev": "vuepress dev docs --open",
         "docs:build": "vuepress build docs",
-        "docs:build:github": "vuepress build docs github",
-        "build:push": "vite build && yalc push",
-        "build:px": "vite build -- --px && yalc push"
+        "docs:build:github": "vuepress build docs github"
     },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "resolutions": {
         "vue": "3.2.37",
         "vite": "4.0.3",
@@ -43,23 +24,34 @@
         "@jsjn/utils": "1.2.1",
         "@vueuse/core": "^9.3.1",
         "async-validator": "^4.2.5",
-        "axios": "^1.2.2",
+        "axios": "^1.3.2",
         "dayjs": "^1.11.7",
         "echarts": "^5.3.3",
         "element-plus": "2.3.3",
+        "jn-ve-global": "workspace:^",
+        "js-base64": "^3.7.5",
         "lodash": "^4.17.21",
+        "mitt": "^3.0.0",
+        "qs": "^6.11.0",
         "resize-observer-polyfill": "^1.5.1",
         "uuid": "^9.0.0",
         "vue": "3.2.37",
+        "vuex": "^4.1.0",
+        "vuex-persist": "^3.1.3",
         "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
         "@babel/plugin-proposal-optional-chaining": "^7.18.9",
+        "@commitlint/cli": "^17.6.1",
+        "@commitlint/config-conventional": "^17.6.1",
         "@docsearch/js": "^3.3.3",
         "@esbuild/darwin-x64": "^0.17.14",
+        "@jsjn/types": "^1.3.2",
         "@types/lodash": "^4.14.181",
         "@types/node": "^18.11.2",
+        "@types/nprogress": "^0.2.0",
+        "@types/qs": "^6.9.7",
         "@types/uuid": "^9.0.0",
         "@typescript-eslint/parser": "^5.21.0",
         "@vitejs/plugin-vue": "^4.0.0",
@@ -73,9 +65,13 @@
         "@vuepress/plugin-search": "2.0.0-beta.61",
         "@vuepress/theme-default": "2.0.0-beta.61",
         "clipboard-copy": "^4.0.1",
+        "commitizen": "^4.3.0",
+        "cz-conventional-changelog": "^3.3.0",
         "eslint": "^8.14.0",
         "eslint-plugin-vue": "^9.6.0",
         "highlight.js": "^11.5.1",
+        "husky": "^8.0.3",
+        "lint-staged": "^13.2.1",
         "nprogress": "^0.2.0",
         "postcss-pxtorem": "^6.0.0",
         "postcss-selector-not": "^6.0.1",
@@ -91,7 +87,15 @@
         "vue-tsc": "^1.0.8",
         "vuepress": "2.0.0-beta.61"
     },
-    "publishConfig": {
-        "registry": "http://172.31.71.159/repository/npm-release/"
+    "lint-staged": {
+        "*.{js,jsx,vue,ts,tsx}": [
+            "eslint --fix",
+            "git add"
+        ]
+    },
+    "config": {
+        "commitizen": {
+            "path": "cz-conventional-changelog"
+        }
     }
 }

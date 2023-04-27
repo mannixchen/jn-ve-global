@@ -13,7 +13,7 @@ export default {
 <script lang="tsx" setup>
 // 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
 // import { FormProps } from 'jn-ve-global/packages/GForm'
-import { FormProps } from '@component/GForm'
+import { FormProps } from 'jn-ve-global'
 import { reactive } from 'vue'
 import treeData from './data/treeData.json'
 import { toThousands, restrictDecimals } from '@jsjn/utils'

@@ -13,7 +13,7 @@ export default {
 <script lang="tsx" setup>
 import { reactive } from 'vue'
 import mockData from './data/editTableData'
-import { TableColumnProps, TableConfig, BaseTableDataItem } from '@component/index'
+import { TableColumnProps, TableConfig, BaseTableDataItem } from 'jn-ve-global'
 import dayjs from 'dayjs'
 
 const foodsMapping = {

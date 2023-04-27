@@ -13,7 +13,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps, BtnProps, FormGenerateItemProps } from '@component/index'
+import { FormProps, BtnProps, FormGenerateItemProps } from 'jn-ve-global'
 import mockData from './data/demo5.json'
 
 const formConfigJson = ref<string>('')

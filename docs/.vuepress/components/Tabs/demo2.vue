@@ -15,7 +15,7 @@ export default {
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { TabPaneProps } from '@component/GTabs'
+import { TabPaneProps } from 'jn-ve-global'
 
 enum TabVal {
     BASE_INFO = 'base_info',

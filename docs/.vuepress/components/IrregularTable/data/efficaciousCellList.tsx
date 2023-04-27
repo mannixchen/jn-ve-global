@@ -1,5 +1,5 @@
 import { reactive, computed } from 'vue'
-import type { IrregularTableCell } from '@component/index'
+import type { IrregularTableCell } from 'jn-ve-global'
 
 export default () => {
     const row1 = reactive<IrregularTableCell[]>([

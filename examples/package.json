@@ -1,0 +1,12 @@
+{
+    "name": "examples",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview"
+    },
+    "resolutions": {
+        "vue": "3.2.31"
+    }
+}

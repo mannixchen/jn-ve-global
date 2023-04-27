@@ -1,0 +1,24 @@
+:root {
+    --jn-base-font-color: #595959;
+    --jn-base-font-color-black: #333333;
+    --jn-base-font-size: 18px;
+    --jn-base-font-size-m: 16px;
+    --jn-base-font-size-s: 14px;
+    --jn-base-border-color: #e8e8e8;
+    --jn-base-letter-spacing: 0.75px;
+    --jn-base-active-color: #399ffb;
+    --jn-base-border-radius: 8px;
+    --jn-base-animation-date: 0.2s;
+    --jn-base-html-bg: #f8f8f8;
+
+    --jn-base-theme-color: var(--el-color-primary);
+
+    // 各种滑动验证码
+    --captcha-move-track-opacity: 0.7;
+    --captcha-bottom-opacity: 0.6;
+}
+
+html.consumer {
+    --jn-base-border-color: #E3E3E3;
+    --jn-base-html-bg: #f5f5f5;
+}

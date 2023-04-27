@@ -1,0 +1,26 @@
+:root {
+    // tags 标签页
+    --jn-tags-view-height: 40px;
+    --jn-tags-view-bgc: #fff;
+    --jn-tags-view-border-b: 1px solid var(--jn-base-border-color);
+    --jn-tags-view-item-height: 28px;
+    --jn-tags-view-item-font-size: var(--jn-base-font-size-m);
+    --jn-tags-view-item-interval: 8px;
+    --jn-tags-view-item-label-padding-lr: 20px;
+    --jn-tags-view-item-active-bg: var(--jn-base-active-color);
+    --jn-tags-view-item-border-radius: 2px;
+    --jn-tags-view-item-closed-size: 16px;
+    --jn-tags-view-item-closed-hover-color: #e02020;
+
+    // 面包屑
+    --jn-breadcrumb-height: 50px;
+    --jn-breadcrumb-bgc: #fff;
+    --jn-breadcrumb-border-b: 1px solid var(--jn-base-border-color);
+    --jn-breadcrumb-font-size: var(--jn-base-font-size-m);
+    --jn-breadcrumb-color: #9699a4;
+    --jn-breadcrumb-current-color: var(--jn-base-active-color);
+    --jn-breadcrumb-separator: 4px;
+
+    // 顶部系统信息
+    --jn-header-system-info-height: 54px;
+}

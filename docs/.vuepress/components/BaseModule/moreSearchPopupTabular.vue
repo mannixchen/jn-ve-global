@@ -23,7 +23,7 @@ import {
     TableColumnProps,
     PaginationProps,
     BaseTableDataItem
-} from '@component/index'
+} from 'jn-ve-global'
 import mockData from './data/mock.json'
 import SearchFormConfig from './component/SearchFormConfig'
 import TableColumns from './component/TableColumns'

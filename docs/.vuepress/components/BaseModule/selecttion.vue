@@ -30,7 +30,7 @@
 
 <script lang="tsx" setup>
 import { reactive, ref, watch } from 'vue'
-import { BtnProps, PaginationProps, TableConfig, FormProps } from '@component/index'
+import { BtnProps, PaginationProps, TableConfig, FormProps } from 'jn-ve-global'
 import mockData from './data/mock.json'
 import TableColumns from './component/TableColumns'
 

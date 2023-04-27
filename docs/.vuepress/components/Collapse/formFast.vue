@@ -14,7 +14,7 @@ export default {
 <script lang="tsx" setup>
 import { reactive } from 'vue'
 import FormConfig from './data/formConfig'
-import { BtnProps } from '@component/index'
+import { BtnProps } from 'jn-ve-global'
 import _ from 'lodash'
 
 const formConfig = FormConfig()

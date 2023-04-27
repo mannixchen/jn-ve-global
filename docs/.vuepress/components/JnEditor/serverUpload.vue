@@ -11,8 +11,7 @@ export default {
 <script lang="ts" setup>
 import { watch, ref } from 'vue'
 
-// 假设前缀，实际需要使用：import prefix from '@/api/prefix'
-const prefix = '/api'
+const prefix = '/proxy'
 
 const html = ref<string>('')
 const uploadUrl = `${prefix}/kinso-basic-open-server/v1/document/file/upload`

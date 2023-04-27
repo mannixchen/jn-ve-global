@@ -11,7 +11,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps, BtnProps } from '@component/index'
+import { FormProps, BtnProps } from 'jn-ve-global'
 import Beijing from './data/beijing.json'
 
 const formConfig = reactive<FormProps>({

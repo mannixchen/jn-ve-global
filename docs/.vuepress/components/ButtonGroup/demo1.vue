@@ -24,7 +24,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import BtnProps from '@component/GButtonGroup/interface/BtnProps'
+import { BtnProps } from 'jn-ve-global'
 
 const isHide = ref<boolean>(false)
 const isLoading = ref<boolean>(false)

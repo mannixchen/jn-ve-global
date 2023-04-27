@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { localIcons } from '@component/GIconPicker/data/icons'
+import { localIcons } from 'jn-ve-global/packages/GIconPicker/data/icons'
 
 const regtechIcons = localIcons.filter((name) => name.startsWith('jg-'))
 const newCore = localIcons.filter((name) => name.startsWith('xhx-'))

@@ -9,7 +9,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { FormProps } from '@component/GForm'
+import { FormProps } from 'jn-ve-global'
 import { reactive } from 'vue'
 
 let formConfig = reactive<FormProps>({

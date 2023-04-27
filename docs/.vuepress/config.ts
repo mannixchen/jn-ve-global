@@ -26,11 +26,7 @@ export default defineUserConfig({
 
     // 定义路径别名
     alias: {
-        '@': path.resolve(__dirname, '../../examples'),
-        '@component': path.resolve(__dirname, '../../packages'),
-        '@examples': path.resolve(__dirname, '../../examples'),
-        '@assets': path.resolve(__dirname, '../../examples/assets'),
-        '@mdroot': path.resolve(__dirname, '../modules'),
+        '@': path.resolve(__dirname, '../../examples/src'),
         '@imgs': path.resolve(__dirname, './public/images')
     },
 
@@ -51,9 +47,9 @@ export default defineUserConfig({
                 vueJsx() as any,
                 createSvgIconsPlugin({
                     iconDirs: [
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/old'),
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/newCore'),
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/regtech')
+                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/old'),
+                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/newCore'),
+                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/regtech')
                     ],
                     symbolId: 'custom-icon-[dir]-[name]'
                 }),

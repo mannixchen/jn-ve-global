@@ -12,7 +12,7 @@ export default {
 
 <script lang="tsx" setup>
 import { reactive } from 'vue'
-import { TableColumnProps, TableConfig, BaseTableDataItem } from '@component/index'
+import { TableColumnProps, TableConfig, BaseTableDataItem } from 'jn-ve-global'
 import mockData from '../data/editTableData'
 import { columns as InfoSelectColumns } from '../data/columns'
 import userList from '../data/userList.json'

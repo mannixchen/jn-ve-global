@@ -21,7 +21,7 @@ export default {
 import { ref } from 'vue'
 import { columns } from '../data/columns'
 import userList from '../data/userList.json'
-import { FormProps, InfoSelectControlConfig } from '@component/index'
+import { FormProps, InfoSelectControlConfig } from 'jn-ve-global'
 
 // 表单集成
 let formConfig = ref<FormProps>({

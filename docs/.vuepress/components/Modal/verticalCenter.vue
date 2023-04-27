@@ -24,7 +24,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { BtnProps } from '@component/index'
+import { BtnProps } from 'jn-ve-global'
 
 const dialogShow = ref<boolean>(false)
 

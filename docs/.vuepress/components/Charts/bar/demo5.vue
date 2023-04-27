@@ -12,7 +12,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs, onMounted } from 'vue'
-import ChartConfig from '@component/GChart/interface/ChartConfig'
+import { ChartConfig } from 'jn-ve-global'
 
 const chartConfig = ref<ChartConfig>({
     type: 'bar',

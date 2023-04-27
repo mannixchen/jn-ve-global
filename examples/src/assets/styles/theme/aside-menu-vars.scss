@@ -1,0 +1,48 @@
+:root {
+    --jn-aside-base-width: 250px;
+    --jn-aside-collapse-width: 64px;
+    --jn-aside-bgc: #545c64;
+    --jn-aside-bgi: none;
+    --jn-aside-bg-size: none;
+    --jn-aside-bg-repeat: none;
+
+    // menuItem
+    --jn-menu-item-sub-menu-bgc: transparent;
+    --jn-menu-item-height: 46px;
+    --jn-menu-item-first-font-size: var(--jn-base-font-size);
+    --jn-menu-item-icon-size: 22px;
+    --jn-menu-item-collapse-icon-size: 24px;
+    --jn-menu-item-icon-m-r: 4px;
+    --jn-menu-item-base-padding-left: 12px;
+    --jn-menu-item-color: #fff;
+    --jn-menu-item-active-color: #fff;
+    --jn-menu-item-hover-color: #fff;
+
+    // 状态
+    --jn-menu-item-hover-bgc: #64a8ef;
+    --jn-menu-item-active-bgc: #409eff;
+    --jn-menu-item-active-side-opacity: 0;
+    --jn-menu-item-grade-2-active-bgi: none;
+
+    // 浮出菜单
+    --jn-menu-popper-penult-menu-item-color: #2762af;
+    --jn-menu-popper-penult-menu-item-side-bgc: #d8dbde;
+    --jn-menu-popper-last-menu-item-color: var(--jn-base-font-color-black);
+    --jn-menu-popper-last-menu-item-hover-color: #64a8ef;
+    --jn-menu-popper-last-menu-item-active-color: #409eff;
+
+
+
+    // 覆盖
+    --jn-aside-base-width: 250px;
+    --jn-menu-item-sub-menu-bgc: transparent;
+    --jn-aside-bgc: #2F74C9;
+    --jn-menu-item-base-padding-left: 18px;
+    --jn-menu-item-height: 42px;
+    --jn-aside-bgi: linear-gradient(180deg, rgba(4, 116, 241) 1%, rgb(59, 164, 85) 100%);
+    --jn-menu-item-icon-size: 18px;
+    --jn-menu-item-first-font-size: var(--jn-base-font-size);
+    --jn-menu-item-hover-bgc: transparent;
+    --jn-menu-item-active-bgc: transparent;
+    --jn-menu-item-grade-2-active-bgi: none;
+}

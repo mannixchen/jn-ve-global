@@ -14,16 +14,9 @@ export default {
 import { watch, reactive, nextTick, ref } from 'vue'
 import mockData from './data/editTableData'
 import treeData from './data/treeData.json'
-import {
-    TableColumnProps,
-    TableConfig,
-    SelectControlConfig,
-    SelectTreeProps,
-    BaseTableDataItem
-} from '@component/index'
+import { TableColumnProps, TableConfig, BaseTableDataItem } from 'jn-ve-global'
 import dayjs from 'dayjs'
-import { findTargetById } from '@/utils/utils'
-import { toThousands } from '@jsjn/utils'
+import { toThousands, findTargetById } from '@jsjn/utils'
 
 const foodsMapping = {
     pastries: '黄金糕',

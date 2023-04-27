@@ -14,7 +14,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 // 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
 // import { TableConfig } from 'jn-ve-global/packages/GTable
-import { TableConfig, TableColumnProps, BaseTableDataItem } from '@component/GTable'
+import { TableConfig, TableColumnProps, BaseTableDataItem } from 'jn-ve-global'
 
 const columns = reactive<TableColumnProps[]>([
     {

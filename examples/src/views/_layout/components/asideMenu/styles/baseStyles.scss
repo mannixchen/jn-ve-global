@@ -1,0 +1,109 @@
+@import './common.scss';
+
+.aside-menu-wrapper {
+    :deep(.aside-menu) {
+
+        &,
+        .el-menu {
+            border: none;
+            background-color: var(--jn-menu-item-sub-menu-bgc);
+        }
+
+        .el-sub-menu.is-opened>.el-sub-menu__title .el-sub-menu__icon-arrow {
+            transform: rotateX(180deg);
+        }
+
+        @include menu-item-base-style;
+
+        // 携带层级的类名样式操作
+        @for $i from 1 through 10 {
+
+            .grade-#{$i} {
+
+                /* 通用 */
+                &.el-menu-item,
+                >.el-sub-menu__title {
+                    &:hover {
+                        background-color: var(--jn-menu-item-hover-bgc) !important;
+                        @include menu-item-active-font-color-mixin;
+                    }
+                }
+
+                /* 激活 */
+                &.is-active {
+                    @if $i==1 {
+                        @include grade-1-item-active-mixin;
+                    }
+
+                    @else if $i==2 {
+                        @include grade-2-item-active-mixin;
+                    }
+                }
+
+                /* 菜单浮出 */
+                &.popover-show {
+                    @if $i==1 {
+                        @include grade-1-item-hover-mixin;
+                    }
+
+                    @else if $i==2 {
+                        @include menu-item-active-font-color-mixin;
+                    }
+                }
+
+
+                /* 层级定制样式 */
+                @if $i==1 {
+
+                    &.el-menu-item,
+                    >.el-sub-menu__title {
+                        font-size: var(--jn-menu-item-first-font-size);
+                    }
+
+                    &:hover {
+                        @include grade-1-item-hover-mixin;
+                    }
+                }
+
+                @else if $i==2 {}
+
+                @else {}
+            }
+        }
+
+        /* 禁用 + 菜单浮出触发器 */
+        .is-disabled {
+            opacity: 1;
+        }
+
+
+        // 收起的菜单
+        &.el-menu--collapse {
+            >li.grade-1 {
+
+                &,
+                & div {
+                    padding: 0 !important;
+                    margin: 0 !important;
+                }
+            }
+
+            .icon-wrapper {
+                width: 100%;
+
+                >i,
+                >svg {
+                    font-size: var(--jn-menu-item-collapse-icon-size);
+                }
+            }
+        }
+    }
+}
+
+
+.scrollbar-hide-x {
+    :deep(.el-loading-mask) {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+        font-size: 40px;
+    }
+}
