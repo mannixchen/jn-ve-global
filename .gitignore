@@ -12,7 +12,7 @@ dist-ssr
 .cache 
 zyunchao.github.io
 jvb-doc
-# jn-ve-global/jn-ve-global
+jn-ve-global/jn-ve-global
 @types
 pnpm-lock.yaml
 .husky
