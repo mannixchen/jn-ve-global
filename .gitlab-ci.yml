@@ -43,6 +43,9 @@ pages:
         # - yarn install
         # - yarn docs:build
         # - pnpm i -w
+        - cd utils
+        - pnpm build
+        - cd ..
         - pnpm docs:build
         - rm -fr public
         - mkdir public && cp -fr docs/.vuepress/dist/* public

@@ -1,10 +1,11 @@
 const childProcess = require('child_process')
-const filePath = require('./filePatch')
+const filePath = require('./filePath')
 
-// cd 子应用目录，npm start 启动项目 
+const buildLibs = ['utils', 'jn-ve-global' /* , 'sheet', 'code-editor' */]
+
 function runChild() {
-    Object.values(filePath).forEach((item) => {
-        childProcess.spawn(`cd ${item} && pnpm run build`, {
+    buildLibs.forEach((name) => {
+        childProcess.spawn(`cd ${filePath[name]} && pnpm run build`, {
             stdio: 'inherit',
             shell: true
         })

@@ -1,5 +1,5 @@
 const childProcess = require('child_process')
-const filePath = require('./filePatch')
+const filePath = require('./filePath')
 
 // cd 子应用目录，npm start 启动项目
 function runChild() {
