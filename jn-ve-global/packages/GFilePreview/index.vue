@@ -1,0 +1,143 @@
+<template>
+    <div v-if="previewType" v-loading="loadingSourceFlag" class="g-file-preview__wrapper">
+        <component
+            :is="previewMapping[previewType]"
+            v-if="['pdf', 'docx', 'excel'].includes(previewType) && isMounted"
+            :src="fileUrl"
+            style="height: 90vh"
+        />
+
+        <img v-if="previewType === 'img'" :src="fileUrl" alt="">
+    </div>
+
+    <div v-else class="error">
+        文件类型出错，目前支持 [image,pdf,docx,xlsx]
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: 'GFilePreview'
+})
+</script>
+
+<script lang="ts" setup>
+import { watch, ref, computed, reactive, onMounted, onUnmounted, nextTick, watchEffect } from 'vue'
+import { imgSuffix, officeSuffix, officeSuffixNoPre } from '../GUpload/constant/fileTypeList'
+import { getFileType, getFileBlobUrlByRequest } from '../GUpload/utils'
+import _ from 'lodash'
+import myAxios from '../_http/http'
+import { global } from '@jsjn/utils'
+
+// @vue-office
+import VueOfficeExcel from '@vue-office/excel'
+import '@vue-office/excel/lib/index.css'
+import VueOfficeDocx from '@vue-office/docx'
+import '@vue-office/docx/lib/index.css'
+import VueOfficePdf from '@vue-office/pdf'
+
+const previewMapping = {
+    pdf: VueOfficePdf,
+    docx: VueOfficeDocx,
+    excel: VueOfficeExcel
+}
+
+const props = withDefaults(
+    defineProps<{
+        fileName: string
+        fileId?: string
+        source?: string | Blob
+        downloadUrl?: string
+    }>(),
+    {
+        downloadUrl: '/kinso-basic-open-server/v1/document/file/download'
+    }
+)
+
+const loadingSourceFlag = ref<boolean>(true)
+
+const isMounted = ref<boolean>(false)
+onMounted(() => {
+    nextTick(() => {
+        isMounted.value = true
+    })
+})
+
+// 预览类型
+const previewType = computed<'img' | 'pdf' | 'docx' | 'excel'>(() => {
+    const fileType = getFileType(props.fileName)
+    if (imgSuffix.includes(fileType)) {
+        return 'img'
+    }
+
+    if (fileType === 'pdf') {
+        return 'pdf'
+    }
+
+    if (['docx', 'doc'].includes(fileType)) {
+        return 'docx'
+    }
+
+    if (['xls', 'xlsx'].includes(fileType)) {
+        return 'excel'
+    }
+
+    return null
+})
+
+const fileUrl = ref<string>('')
+watchEffect(() => {
+    if (!previewType.value) return
+
+    const id = props.fileId
+    const source = props.source
+
+    // 用户传递已经处理好的数据
+    if (source) {
+        if (_.isString(source)) {
+            fileUrl.value = source
+            loadingSourceFlag.value = false
+            return
+        }
+        fileUrl.value = global.URL.createObjectURL(source as Blob)
+        loadingSourceFlag.value = false
+        return
+    }
+
+    // 用户直接传递 id
+    if (id) {
+        loadingSourceFlag.value = true
+        myAxios
+            .get(`${props.downloadUrl}/${id}`, {
+                responseType: 'blob'
+            })
+            .then((res) => {
+                fileUrl.value = global.URL.createObjectURL(res as any)
+                loadingSourceFlag.value = false
+            })
+    }
+})
+
+onUnmounted(() => {
+    fileUrl.value && window.URL.revokeObjectURL(fileUrl.value)
+})
+</script>
+
+<style lang="scss" scoped>
+.g-file-preview__wrapper {
+    min-height: 400px;
+    max-height: 100vh;
+}
+
+.error {
+    font-size: 20px;
+    color: var(--el-color-danger);
+}
+</style>
+
+<style>
+.x-spreadsheet-contextmenu {
+    display: none !important;
+}
+</style>
