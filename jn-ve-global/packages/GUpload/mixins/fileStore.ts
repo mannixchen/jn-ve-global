@@ -1,6 +1,7 @@
 import { ref, computed, watch, reactive } from 'vue'
 import _ from 'lodash'
 import { getFileType, getFileBlobUrlByRequest } from '../utils'
+import UploadFile from '../interface/UploadFile'
 
 export default ({ emits, props, attrs, uploadRef }) => {
     /**
@@ -8,14 +9,14 @@ export default ({ emits, props, attrs, uploadRef }) => {
      *  1. 列表模式能够获取到点击的文件信息
      *  2. avatar 只能够获取用户默认传递 | 上传成功的 file
      */
-    const currentFile = ref(null)
+    const currentFile = ref<UploadFile>(null)
 
     /**
      * 普通的列表模式，将抛出有效的 fileList
      */
     const localFileList = computed({
         get: () =>
-            _.cloneDeep(props.fileList).map((file, index) => {
+            _.cloneDeep(props.fileList).map((file: UploadFile) => {
                 const proxyFile = reactive(file)
                 // 异步获取文件的 url，proxy 代理 file，file.url 发生变化时，会渲染列表
                 if (!file.url && file.fileId && props.downloadUrl) {

@@ -20,7 +20,7 @@ export default interface UploadFile {
     /**
      * 业务中的文件服务器的文件 id
      */
-    fileId: string
+    fileId?: string
     percentage?: number
     status?: UploadStatus
     size?: number
