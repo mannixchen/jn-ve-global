@@ -9,7 +9,7 @@ import {
     setDefauleMode
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
-import { getGlobal } from '@jsjn/utils'
+import { global, getGlobal } from '@jsjn/utils'
 import {
     setIterceptorsReqHandle,
     setIterceptorsResHandle,
@@ -24,6 +24,8 @@ import './assets/styles/index.scss'
 import './assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
+
+getGlobal()
 
 /**
  * 全局注册组件
@@ -81,8 +83,8 @@ export default (
     if (props) {
         if (props.appMode) {
             setAppMode(props.appMode)
-        } else if (getGlobal().__VUE_APP_MODE__) {
-            setAppMode(getGlobal().__VUE_APP_MODE__)
+        } else if (global.__VUE_APP_MODE__) {
+            setAppMode(global.__VUE_APP_MODE__)
         }
 
         /**
