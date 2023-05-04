@@ -1,6 +1,40 @@
 # 组件库 jn-ve-global 更新日志 
 
-遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
+<!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
+
+<!-- ================== 2.7.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.7.0
+
+</template>
+
+<template #date>
+
+2023-05-xx
+
+</template>
+
+:::danger
+
+组件库项目集成 monorepo ，项目结构重构
+
+:::
+
+<h3>New</h3>
+
+<h4>GFilePreview</h4>
+
+新增文件预览组件
+
+<h4>Upload</h4>
+
+上传组件的预览集成 FilePreview
+
+</update-log-block>
 
 <!-- ================== 2.6.2 ======================================================================== -->
 

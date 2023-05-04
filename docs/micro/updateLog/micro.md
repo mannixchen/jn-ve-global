@@ -1,6 +1,6 @@
 # 微应用框架更新日志
 
-遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。
+<!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
 
 :::tip
 
