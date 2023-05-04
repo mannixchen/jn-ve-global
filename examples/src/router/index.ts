@@ -6,6 +6,7 @@ import { Base64 } from 'js-base64'
 import _ from 'lodash'
 import store from '@/store'
 import { toLoginPage, isTimeout } from '@/login/utils/login'
+import { apis } from '@/api'
 
 // 加载进度条配置
 NProgress.configure({ showSpinner: false })
@@ -25,6 +26,19 @@ router.beforeEach(async (to, from) => {
     store.commit('currentStatus/setRouteLoading', true)
     // 设置网页 title
     document.title = import.meta.env.VITE_SYS_NAME
+
+    // 校验登录是否失效
+    // if (to.path !== loginPath) {
+    //     const isDevitalize = await apis.common['checkLogin']()
+    //     if (isDevitalize.data !== true) {
+    //         store.commit('loginInfo/setLoginInfo', {
+    //             'access_token': ''
+    //         })
+
+    //         await toLoginPage()
+    //         return false
+    //     }
+    // }
 
     /**
      * 无登录权限（token）权重最高
