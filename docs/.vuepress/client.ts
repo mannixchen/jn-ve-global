@@ -3,6 +3,7 @@ import ElementPlus from 'element-plus'
 import zhCn from './zh-cn'
 import 'element-plus/dist/index.css'
 import GlobalComponent from 'jn-ve-global/packages/register'
+import { getGlobal } from '@jsjn/utils'
 
 export default defineClientConfig({
     enhance({ app, router, siteData }) {
@@ -10,6 +11,8 @@ export default defineClientConfig({
         app.use(ElementPlus, { locale: zhCn })
         app.use(GlobalComponent)
     },
-    setup() {},
+    setup() {
+        getGlobal()
+    },
     rootComponents: []
 })
