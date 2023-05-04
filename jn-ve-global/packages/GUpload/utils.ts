@@ -7,6 +7,7 @@ import VideoFileTypeImg from './assets/images/Video.png'
 import WordFileTypeImg from './assets/images/Word.png'
 import ZARFileTypeImg from './assets/images/ZAR.png'
 import DefaulrFileLogo from './assets/images/Other.png'
+import myAxios from '../_http/http'
 
 /**
  * 根据文件名称获取文件类型，转换小写
@@ -14,7 +15,7 @@ import DefaulrFileLogo from './assets/images/Other.png'
  * @returns
  */
 export function getFileType(fileName: string) {
-    return fileName.replace(/.+\./, '').toLowerCase()
+    return fileName ? fileName.replace(/.+\./, '').toLowerCase() : ''
 }
 
 /**
@@ -49,4 +50,39 @@ export function getFileTypeIcon(fileName: string, url?: string) {
     if (['rar', 'zip', 'arj', 'z', '7z'].includes(fileType)) return ZARFileTypeImg
 
     return DefaulrFileLogo
+}
+
+/**
+ * 依据 url 获取文件服务器资源，并返回本地 blob 协议的地址
+ * @param url 资源服务器地址：用户传递下载地址 + fileId
+ * @param fileType 文件类型，包装 pdf 类型的数据
+ * @returns
+ */
+export function getFileBlobUrlByRequest(url: string, fileType?: string) {
+    return myAxios
+        .get(url, {
+            responseType: 'blob'
+        })
+        .then((res) => {
+            let blob: Blob
+
+            /**
+             * 这里的测试样例的 axios 实例未处理响应体，基座的拦截器是处理过响应数据结构的
+             */
+            // if (res.status === 200) {
+            //     blob = res.data
+            //     if (fileType === 'pdf') {
+            //         blob = new Blob([res.data], { type: 'application/pdf;' })
+            //     }
+            // }
+
+            // 实际的基座响应数据
+            if (res) {
+                blob = res as any
+                if (fileType && fileType === 'pdf') {
+                    blob = new Blob([blob], { type: 'application/pdf;' })
+                }
+            }
+            return blob ? window.URL.createObjectURL(blob) : url
+        })
 }
