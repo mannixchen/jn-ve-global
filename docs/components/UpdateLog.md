@@ -28,7 +28,7 @@
 
 <h4>GFilePreview</h4>
 
-新增文件预览组件
+新增[文件预览组件](./FilePreview.md)
 
 <h4>Upload</h4>
 
