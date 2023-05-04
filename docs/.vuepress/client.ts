@@ -10,9 +10,11 @@ export default defineClientConfig({
         app.directive('auth', {})
         app.use(ElementPlus, { locale: zhCn })
         app.use(GlobalComponent)
+
+        if (!__VUEPRESS_SSR__) {
+            getGlobal()
+        }
     },
-    setup() {
-        getGlobal()
-    },
+    setup() {},
     rootComponents: []
 })

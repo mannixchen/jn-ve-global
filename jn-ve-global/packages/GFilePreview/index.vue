@@ -23,9 +23,9 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, computed, reactive, onMounted, onUnmounted, nextTick, watchEffect } from 'vue'
-import { imgSuffix, officeSuffix, officeSuffixNoPre } from '../GUpload/constant/fileTypeList'
-import { getFileType, getFileBlobUrlByRequest } from '../GUpload/utils'
+import { ref, computed, onMounted, onUnmounted, nextTick, watchEffect } from 'vue'
+import { imgSuffix } from '../GUpload/constant/fileTypeList'
+import { getFileType } from '../GUpload/utils'
 import _ from 'lodash'
 import myAxios from '../_http/http'
 import { global } from '@jsjn/utils'
