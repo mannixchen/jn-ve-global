@@ -39,7 +39,8 @@ export default [
             { text: 'Icon', link: '/components/Icon.md' },
             { text: 'Table', link: '/components/Table.md' },
             { text: 'Tree', link: '/components/Tree.md' },
-            { text: 'IrregularTable', link: '/components/IrregularTable.md' }
+            { text: 'IrregularTable', link: '/components/IrregularTable.md' },
+            { text: 'FilePreview', link: '/components/FilePreview.md' }
         ]
     },
     {
