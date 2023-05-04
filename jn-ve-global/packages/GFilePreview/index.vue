@@ -87,6 +87,7 @@ const previewType = computed<'img' | 'pdf' | 'docx' | 'excel'>(() => {
 })
 
 const fileUrl = ref<string>('')
+const isLocalCreateURL = ref<boolean>(false)
 watchEffect(() => {
     if (!previewType.value) return
 
@@ -101,6 +102,7 @@ watchEffect(() => {
             return
         }
         fileUrl.value = global.URL.createObjectURL(source as Blob)
+        isLocalCreateURL.value = true
         loadingSourceFlag.value = false
         return
     }
@@ -114,20 +116,27 @@ watchEffect(() => {
             })
             .then((res) => {
                 fileUrl.value = global.URL.createObjectURL(res as any)
+                isLocalCreateURL.value = true
                 loadingSourceFlag.value = false
             })
     }
 })
 
 onUnmounted(() => {
-    fileUrl.value && window.URL.revokeObjectURL(fileUrl.value)
+    fileUrl.value && isLocalCreateURL.value && window.URL.revokeObjectURL(fileUrl.value)
 })
 </script>
 
 <style lang="scss" scoped>
 .g-file-preview__wrapper {
     min-height: 400px;
-    max-height: 100vh;
+    max-height: 90vh;
+    overflow: auto;
+
+    > img {
+        display: block;
+        margin: 0 auto;
+    }
 }
 
 .error {

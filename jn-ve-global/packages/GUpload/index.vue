@@ -91,18 +91,25 @@
     <g-modal
         v-if="currentFile"
         v-model="modalShow"
-        append-to-body
-        :show-close="!imgSuffix.includes(getFileType(currentFile.name))"
+        vertical-center
+        :show-close="false"
         :custom-class="`upload-preview-modal 
         ${imgSuffix.includes(getFileType(currentFile.name)) ? 'img-modal' : ''} 
         ${officeSuffix.includes(getFileType(currentFile.name)) ? 'office-modal' : ''}`"
     >
-        <div class="file-preview-wrapper">
+        <LGFilePreview
+            :file-name="currentFile.name"
+            :source="currentFile.url"
+            :file-id="currentFile.url ? undefined : currentFile.fileId"
+            :download-url="downloadUrl"
+        />
+
+        <!-- <div class="file-preview-wrapper">
             <img
                 v-if="imgSuffix.includes(getFileType(currentFile.name))"
                 :src="currentFile.url"
                 alt=""
-            >
+            />
 
             <embed
                 v-if="['pdf'].includes(getFileType(currentFile.name))"
@@ -110,8 +117,8 @@
                 type="application/pdf"
                 width="100%"
                 height="100%"
-            >
-        </div>
+            />
+        </div> -->
     </g-modal>
 </template>
 
@@ -129,6 +136,7 @@ import { imgSuffix, officeSuffix } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
 import { ElUpload } from 'element-plus'
+import LGFilePreview from '../GFilePreview/index.vue'
 
 interface UploadCustomProps {
     instance?: InstanceType<typeof ElUpload> | null
