@@ -231,3 +231,27 @@ export function percent2percent25(str: string) {
         return str
     }
 }
+
+/**
+ * 字符串转换成数组，指定字符分割
+ * @param str
+ * @param symbol
+ * @returns
+ */
+export function str2Arr(str: string, symbol: string = ',') {
+    if (!str) return []
+    return str.split(symbol)
+}
+
+/**
+ * 数组转字符串，指定字符分割，常用于请求参数的处理
+ * @param arr
+ * @param symbol
+ * @returns
+ */
+export function arr2Str(arr: string[], symbol: string = ',') {
+    if (!_.isArray(arr)) {
+        throw new Error(`${arr} is not an array`)
+    }
+    return arr.join(symbol)
+}

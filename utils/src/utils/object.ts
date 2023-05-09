@@ -1,5 +1,5 @@
 import _ from 'lodash'
-
+import { str2Arr, arr2Str } from './string'
 /**
  * 过滤对象中为空的属性
  * @param obj
@@ -296,4 +296,26 @@ export function clearEmpty(source: object | Array<any>, parent?: object | Array<
  */
 export function isObject(target: any) {
     return !!target && _.isObject(target) && !_.isArray(target)
+}
+
+/**
+ * 把对象的指定字段从字符串数组转换成字符串，副作用函数
+ * @param obj
+ * @param field
+ * @param symbol
+ */
+export function objFieldArr2Str(obj: object, field: string, symbol: string = ',') {
+    obj[field] = arr2Str(obj[field], symbol)
+    return obj
+}
+
+/**
+ * 将对象的指定字段从字符串转换成数组，副作用函数
+ * @param obj
+ * @param field
+ * @param symbol
+ */
+export function objFieldStr2Arr(obj: object, field: string, symbol: string = ',') {
+    obj[field] = str2Arr(obj[field], symbol)
+    return obj
 }
