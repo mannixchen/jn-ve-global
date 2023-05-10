@@ -36,7 +36,7 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
     const onExceed = (files: UploadFile, fileList: UploadFile[]) => {
         // 用户传递的优先执行
         if (attrs.value['on-exceed']) {
-            attrs.value['on-exceed']()
+            attrs.value['on-exceed'](files, fileList)
             return
         }
         let num = localLimit.value

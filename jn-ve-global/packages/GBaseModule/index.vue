@@ -27,16 +27,18 @@
             <span v-if="localMode === 'tabular' && !noSearchLabel" class="title">查询结果</span>
 
             <div
-                v-if="(btns && btns.length) || $slots['middle-right']"
+                v-if="(btns && btns.length) || $slots['middle-right'] || $slots['middle-left']"
                 class="middle-opertion-wrapper"
             >
                 <!-- 左 按钮组-->
                 <div class="middle-left-wrapper">
-                    <LGButtonGroup
-                        v-if="btns && btns.length > 0"
-                        class="btns-wrapper"
-                        :btns="btns"
-                    />
+                    <slot name="middle-left">
+                        <LGButtonGroup
+                            v-if="btns && btns.length > 0"
+                            class="btns-wrapper"
+                            :btns="btns"
+                        />
+                    </slot>
                 </div>
 
                 <!-- 右 -->

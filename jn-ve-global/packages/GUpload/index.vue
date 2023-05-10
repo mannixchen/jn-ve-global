@@ -253,6 +253,10 @@ const { filePreview, fileDownload, delAvatar, delFile } = getMethods({
 
 // 工具
 const { getUploadProps, showPreview } = getUtils({ attrs })
+
+defineExpose({
+    uploadRef
+})
 </script>
 
 <style lang="scss" scoped>
