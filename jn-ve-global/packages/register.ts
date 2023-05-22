@@ -25,6 +25,8 @@ import './assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
 
+export * from './export'
+
 getGlobal()
 
 /**

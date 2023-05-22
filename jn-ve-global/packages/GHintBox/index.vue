@@ -1,6 +1,6 @@
 <template>
     <span ref="domRef" class="tool-tip-by-width-box">
-        <el-tooltip
+        <ElTooltip
             v-if="isOverlengthFlag"
             effect="dark"
             :content="text"
@@ -11,7 +11,7 @@
             <span>
                 {{ text }}
             </span>
-        </el-tooltip>
+        </ElTooltip>
 
         <template v-else>
             {{ text }}
@@ -29,6 +29,7 @@ export default {
 import { watch, ref, onMounted, computed, shallowRef } from 'vue'
 import { getStyle, size2Rem } from '@jsjn/utils'
 import { useResizeObserver } from '@vueuse/core'
+import { ElTooltip } from 'element-plus'
 import _ from 'lodash'
 
 const props = withDefaults(
