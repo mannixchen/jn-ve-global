@@ -2,6 +2,30 @@
 
 <!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
 
+<!-- ================== 2.7.1 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.7.1
+
+</template>
+
+<template #date>
+
+2023-05-31
+
+</template>
+
+<h3>BugFix</h3>
+
+<h4>SelectTree</h4>
+
+下拉树点击空白区域回填为空的问题
+
+</update-log-block>
+
 <!-- ================== 2.7.0 ======================================================================== -->
 
 <update-log-block>
@@ -14,7 +38,7 @@
 
 <template #date>
 
-2023-05-xx
+2023-05-04
 
 </template>
 
