@@ -7,6 +7,7 @@ import { getIpsByPconline } from '@/utils/getIPs'
 import type { IpsByPconline } from '@/utils/getIPs'
 import loginHandle from '../utils/login'
 import type { LoginParams } from '../utils/login'
+import { myEncryptPwd } from '../utils/encryptionPWD'
 
 /**
  * @param loginInfoFormConfig 登录表单配置对象
@@ -41,7 +42,7 @@ export default (
 
             const params = {
                 ...loginInfoFormConfig.model,
-                password: Base64.encode(loginInfoFormConfig.model.password),
+                password: myEncryptPwd(loginInfoFormConfig.model.password),
                 loginType: VerifyTypeMapping[verifyTypeCode.value],
                 clientId: import.meta.env.VITE_CLIENT_ID,
                 clientSecret: import.meta.env.VITE_CLIENT_SECRET,
