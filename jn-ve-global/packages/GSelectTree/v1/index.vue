@@ -16,6 +16,7 @@
         :clearable="clearable"
         :filterable="filterable"
         :filter-method="filterable ? selectFilterMethod : undefined"
+        @clear="handleClear"
     >
         <el-option value="">
             <el-tree-v2
@@ -205,11 +206,17 @@ const localSelectValue = computed({
         return selectShowTxt
     },
     set: (val) => {
-        if (!(val as string[] | string).length) {
-            emits('update:modelValue', val)
-        }
+        // if (!(val as string[] | string).length) {
+        //     emits('update:modelValue', val)
+        // }
     }
 })
+
+// Bugfix 树收起时，点击空白处，实际触发的是 单个 el-option 的选中，但是值为空，以此替换清空操作时的值初始化抛出
+const handleClear = () => {
+    const val = props.multiple ? [] : ''
+    emits('update:modelValue', val)
+}
 
 /**
  * 清空树节点

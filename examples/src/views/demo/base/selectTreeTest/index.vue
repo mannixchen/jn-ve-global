@@ -9,6 +9,8 @@
             v-model="avtiveVal"
             style="width: 400px"
             :tree-data="mockData"
+            :default-expand-all="false"
+            clearable
         />
 
         <hr style="margin: 20px 0">
@@ -24,6 +26,8 @@
             style="width: 400px"
             :tree-data="mockData"
             :tree-config="treeConfig"
+            :default-expand-all="false"
+            clearable
         />
     </div>
 </template>
@@ -34,7 +38,7 @@ import mockData from './data.json'
 import type { SelectTreeTreeConfig as TreeConfig } from 'jn-ve-global'
 
 const avtiveValM = ref<string[]>(['1425375363846037505', '1423533477376192513'])
-const avtiveVal = ref<string | string[]>('')
+const avtiveVal = ref<string | string[]>('1424688522159378434')
 
 const treeConfig = ref<TreeConfig>({
     checkStrictly: true
