@@ -262,7 +262,7 @@ export function arr2Str(arr: string[], symbol: string = ',') {
  * @returns
  */
 export function phoneEncrypt(phone: string) {
-    return phone.replaceAll('(\\d{3})\\d{4}(\\d{4})', '$1****$2')
+    return phone.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2')
 }
 
 /**
@@ -271,5 +271,5 @@ export function phoneEncrypt(phone: string) {
  * @returns
  */
 export function idCardEncrypt(idCard: string) {
-    return idCard.replaceAll('(\\d{6})\\d{8}(\\w{4})', '$1********$2')
+    return idCard.replace(/(\d{6})\d{8}(\w{4})/, '$1********$2')
 }
