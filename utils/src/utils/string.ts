@@ -255,3 +255,21 @@ export function arr2Str(arr: string[], symbol: string = ',') {
     }
     return arr.join(symbol)
 }
+
+/**
+ * 手机号中间加 ****
+ * @param phone
+ * @returns
+ */
+export function phoneEncrypt(phone: string) {
+    return phone.replaceAll('(\\d{3})\\d{4}(\\d{4})', '$1****$2')
+}
+
+/**
+ * 身份证加 *
+ * @param idCard
+ * @returns
+ */
+export function idCardEncrypt(idCard: string) {
+    return idCard.replaceAll('(\\d{6})\\d{8}(\\w{4})', '$1********$2')
+}
