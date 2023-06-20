@@ -65,7 +65,11 @@
                     </span>
 
                     <!-- 节点文本 -->
-                    <span class="tree-node__label" :title="node.label">{{ node.label }}</span>
+                    <span class="tree-node__label">
+                        <slot name="tree-node" :node="node" :data="data">
+                            <span :title="node.label">{{ node.label }}</span>
+                        </slot>
+                    </span>
                 </template>
             </ElTreeV2>
         </div>

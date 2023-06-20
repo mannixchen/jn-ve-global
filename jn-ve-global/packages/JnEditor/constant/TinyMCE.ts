@@ -1,10 +1,7 @@
 import { TinyMCE } from '../interface/tinymce'
 
-const getGlobal = (): any => (!window['rawWindow'] ? window : window['rawWindow'])
-
 const getTinymce = (): TinyMCE => {
-    const global = getGlobal()
-    return global && global.tinymce ? global.tinymce : null
+    return window && ((window as any).tinymce ?? null)
 }
 
 export { getTinymce }

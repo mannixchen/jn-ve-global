@@ -5,7 +5,8 @@ import { interceptorsReqHandle, interceptorsResHandle } from './httpInterceptors
 // 当前项目的 axios 实例
 const instance = axios.create({
     timeout: 1000 * 8,
-    headers: {}
+    headers: {},
+    baseURL: window['__MAIN_HOST_PATH__']
 })
 
 /**

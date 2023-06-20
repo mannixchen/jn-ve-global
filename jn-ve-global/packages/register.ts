@@ -9,7 +9,7 @@ import {
     setDefauleMode
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
-import { global, getGlobal } from '@jsjn/utils'
+import { getGlobal } from '@jsjn/utils'
 import {
     setIterceptorsReqHandle,
     setIterceptorsResHandle,
@@ -85,8 +85,8 @@ export default (
     if (props) {
         if (props.appMode) {
             setAppMode(props.appMode)
-        } else if (global.__VUE_APP_MODE__) {
-            setAppMode(global.__VUE_APP_MODE__)
+        } else if (window.__VUE_APP_MODE__) {
+            setAppMode(window.__VUE_APP_MODE__)
         }
 
         /**

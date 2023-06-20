@@ -319,3 +319,20 @@ export function objFieldStr2Arr(obj: object, field: string, symbol: string = ','
     obj[field] = str2Arr(obj[field], symbol)
     return obj
 }
+
+/**
+ * 对象转 url 参数序列化
+ * @param obj
+ * @returns
+ */
+export function obj2Params(obj: object): string {
+    let paramStr = ''
+    Object.keys(obj).forEach((item) => {
+        if (paramStr === '') {
+            paramStr = `${item}=${obj[item]}`
+        } else {
+            paramStr = `${paramStr}&${item}=${obj[item]}`
+        }
+    })
+    return paramStr
+}

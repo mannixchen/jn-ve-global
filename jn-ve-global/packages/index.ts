@@ -1,5 +1,7 @@
 import type { App, Plugin } from 'vue'
 import type { BaseModuleMode } from './_globalConstant/baseModuleMode'
+import { ReqHandle, ResHandle } from './_http/httpInterceptors'
+
 export * from './GTable'
 export * from './GForm'
 export * from './GSelectTree/v1'
@@ -8,8 +10,8 @@ export * from './GTabs'
 export * from './GChart'
 export * from './GFormGenerate'
 export * from './JnEditor/interface/tinymce'
-import { ReqHandle, ResHandle } from './_http/httpInterceptors'
-
+export * from './GUpload/interface/UploadFile'
+export { default as UploadFile } from './GUpload/interface/UploadFile'
 export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'
 export { default as IrregularTableCell } from './GIrregularTable/interface/Cell'
 export { BaseModuleMode }

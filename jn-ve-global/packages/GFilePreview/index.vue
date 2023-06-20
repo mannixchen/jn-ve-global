@@ -28,7 +28,6 @@ import { imgSuffix } from '../GUpload/constant/fileTypeList'
 import { getFileType } from '../GUpload/utils'
 import _ from 'lodash'
 import myAxios from '../_http/http'
-import { global } from '@jsjn/utils'
 
 // @vue-office
 import VueOfficeExcel from '@vue-office/excel'
@@ -101,7 +100,7 @@ watchEffect(() => {
             loadingSourceFlag.value = false
             return
         }
-        fileUrl.value = global.URL.createObjectURL(source as Blob)
+        fileUrl.value = window.URL.createObjectURL(source as Blob)
         isLocalCreateURL.value = true
         loadingSourceFlag.value = false
         return
@@ -115,7 +114,7 @@ watchEffect(() => {
                 responseType: 'blob'
             })
             .then((res) => {
-                fileUrl.value = global.URL.createObjectURL(res as any)
+                fileUrl.value = window.URL.createObjectURL(res as any)
                 isLocalCreateURL.value = true
                 loadingSourceFlag.value = false
             })

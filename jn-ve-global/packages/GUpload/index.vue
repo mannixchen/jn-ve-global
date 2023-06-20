@@ -4,6 +4,7 @@
         :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
         v-bind="getUploadProps()"
+        :action="localUploadUrl"
         :headers="localReqHeaders"
         :disabled="disabled"
         :accept="localAccept"
@@ -101,7 +102,7 @@
             :file-name="currentFile.name"
             :source="currentFile.url"
             :file-id="currentFile.url ? undefined : currentFile.fileId"
-            :download-url="downloadUrl"
+            :download-url="localDownloadUrl"
         />
 
         <!-- <div class="file-preview-wrapper">
@@ -216,8 +217,10 @@ const {
     localReqHeaders,
     localShowFileList,
     localLimit,
-    localAccept
-} = getConstant()
+    localAccept,
+    localUploadUrl,
+    localDownloadUrl
+} = getConstant(props)
 
 // elUpload ref
 const { uploadRef } = getRefStore({ emits })
@@ -227,7 +230,8 @@ const { currentFile, localFileList } = getFileStore({
     props,
     emits,
     attrs,
-    uploadRef
+    uploadRef,
+    localDownloadUrl
 })
 
 // 钩子

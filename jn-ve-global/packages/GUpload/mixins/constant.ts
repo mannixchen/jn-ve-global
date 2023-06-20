@@ -1,7 +1,7 @@
 import { computed, useAttrs, ref } from 'vue'
 import { humpObj2PartitionObj, Local } from '@jsjn/utils'
 
-export default () => {
+export default (props) => {
     const attrsSource = useAttrs()
     // 预览框
     const modalShow = ref<boolean>(false)
@@ -96,6 +96,24 @@ export default () => {
         return attrs.value['list-type'] === 'avatar' ? 'image/*' : attrs.value['accept']
     })
 
+    // 兼容无界微应用
+    const localUploadUrl = computed(() => {
+        if (!attrs.value['action']) return attrs.value['action']
+        const uploadUrl: string = attrs.value['action']
+        if (window['__MAIN_HOST_PATH__'] && !uploadUrl.includes(window['__MAIN_HOST_PATH__'])) {
+            return `${window['__MAIN_HOST_PATH__']}${uploadUrl}`
+        }
+        return uploadUrl
+    })
+    const localDownloadUrl = computed(() => {
+        if (!props.downloadUrl) return props.downloadUrl
+        const downloadUrl = props.downloadUrl
+        if (window['__MAIN_HOST_PATH__'] && !downloadUrl.includes(window['__MAIN_HOST_PATH__'])) {
+            return `${window['__MAIN_HOST_PATH__']}${downloadUrl}`
+        }
+        return downloadUrl
+    })
+
     return {
         modalShow,
         attrs,
@@ -104,6 +122,8 @@ export default () => {
         strokeWidth,
         localShowFileList,
         localLimit,
-        localAccept
+        localAccept,
+        localUploadUrl,
+        localDownloadUrl
     }
 }

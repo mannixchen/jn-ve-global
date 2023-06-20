@@ -4,7 +4,10 @@
 export let global: Window & typeof globalThis = null
 export function getGlobal(): Window & typeof globalThis {
     if (global) return global
-    global = new Function('return window')()
+    // 京东 micro-app 获取根 window
+    // global = new Function('return window')()
+    // 无界获取真实 window
+    global = window.top ?? window['__WUJIE_RAW_WINDOW__'] ?? window
     return global
 }
 

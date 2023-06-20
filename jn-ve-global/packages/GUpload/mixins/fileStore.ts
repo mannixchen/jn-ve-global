@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { getFileType, getFileBlobUrlByRequest } from '../utils'
 import UploadFile from '../interface/UploadFile'
 
-export default ({ emits, props, attrs, uploadRef }) => {
+export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
     /**
      * 当前活跃的 file
      *  1. 列表模式能够获取到点击的文件信息
@@ -19,9 +19,9 @@ export default ({ emits, props, attrs, uploadRef }) => {
             _.cloneDeep(props.fileList).map((file: UploadFile) => {
                 const proxyFile = reactive(file)
                 // 异步获取文件的 url，proxy 代理 file，file.url 发生变化时，会渲染列表
-                if (!file.url && file.fileId && props.downloadUrl) {
+                if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
-                    const url = `${props.downloadUrl}/${file.fileId}`
+                    const url = `${localDownloadUrl.value}/${file.fileId}`
                     getFileBlobUrlByRequest(url, fileType).then((localBolbUrl) => {
                         proxyFile.url = localBolbUrl
                     })
@@ -74,10 +74,10 @@ export default ({ emits, props, attrs, uploadRef }) => {
                 return
             }
 
-            if (props.imgUrl || !props.downloadUrl) return
+            if (props.imgUrl || !localDownloadUrl.value) return
 
             if (attrs.value['list-type'] === 'avatar') {
-                const url = `${props.downloadUrl}/${fileId}`
+                const url = `${localDownloadUrl.value}/${fileId}`
                 const localBolbUrl = await getFileBlobUrlByRequest(url)
                 localImgUrl.value = localBolbUrl
             }
