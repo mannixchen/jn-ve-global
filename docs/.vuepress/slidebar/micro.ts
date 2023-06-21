@@ -21,6 +21,10 @@ export default [
         ]
     },
     {
+        text: 'v1升v2指南',
+        link: '/micro/v1ToV2.md'
+    },
+    {
         text: '仓库管理[淘汰]',
         link: '/micro/storeMage.md'
     },

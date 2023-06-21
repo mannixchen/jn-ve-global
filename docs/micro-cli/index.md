@@ -5,11 +5,11 @@
 ## 安装全局依赖
 
 ```shell
-npm i jn-micro-cli -g --registry=http://172.31.71.159/repository/npm-public/
+npm i jn-micro-cli@1.2.0 -g --registry=http://172.31.71.159/repository/npm-public/
 
 # 安装成功后，验证
 jn-micro -v
-# 输出：1.1.0
+# 输出：1.2.0
 ```
 
 :::tip

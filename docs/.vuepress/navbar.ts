@@ -28,11 +28,11 @@ export default [
         text: '更新日志',
         children: [
             {
-                text: '组件库@2.7.1',
+                text: '组件库@2.7.2',
                 link: '/components/UpdateLog.md'
             },
             {
-                text: '基座应用@2.3.0',
+                text: '基座应用@2.0.0',
                 link: '/micro/updateLog/basic.md'
             },
             {
