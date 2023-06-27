@@ -252,9 +252,11 @@ const handleCurrentChange = (data) => {
         }
     }
 
-    nextTick(() => {
-        elSelectRef.value.focus()
-    })
+    if (props.filterable) {
+        nextTick(() => {
+            elSelectRef.value.blur()
+        })
+    }
 }
 
 /**
