@@ -2,12 +2,24 @@
  * 用于微应用的 window 获取
  */
 export let global: Window & typeof globalThis = null
-export function getGlobal(): Window & typeof globalThis {
+export function getGlobal(win: Window & typeof globalThis = window): Window & typeof globalThis {
     if (global) return global
-    // 京东 micro-app 获取根 window
-    // global = new Function('return window')()
-    // 无界获取真实 window
-    global = window.top ?? window['__WUJIE_RAW_WINDOW__'] ?? window
+
+    // 顶层保险
+    if (win === win.top) {
+        global = win
+        return global
+    }
+
+    // 寻找名称带有 basic 的 window
+    if (win.name.includes('basic')) {
+        global = win
+        return global
+    }
+
+    // 递归寻找
+    getGlobal(win.parent as Window & typeof globalThis)
+
     return global
 }
 
