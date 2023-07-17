@@ -26,6 +26,7 @@ export default {
 import { computed } from 'vue'
 import SvgIcon from '../SvgIcon/index.vue'
 import * as elIcons from '@element-plus/icons-vue'
+import { ElIcon } from 'element-plus'
 
 const props = defineProps({
     icon: String

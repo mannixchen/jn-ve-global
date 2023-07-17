@@ -60,6 +60,7 @@ import { getColumnProps } from '../utils'
 import FunctionalComponent from '../../FunctionalComponent'
 import TableEditCell from '../component/TableEditCell/index.vue'
 import _ from 'lodash'
+import { ElTableColumn } from 'element-plus'
 
 const props = defineProps({
     columnConfig: {

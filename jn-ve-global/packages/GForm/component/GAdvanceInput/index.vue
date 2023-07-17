@@ -28,7 +28,7 @@ export default {
 import { computed, watch } from 'vue'
 import useInputDisabledTooltip from './mixins/useInputDisabledTooltip'
 import InputCore from './core.vue'
-import { ElInput as ElInputCom } from 'element-plus'
+import { ElInput as ElInputCom, ElTooltip } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

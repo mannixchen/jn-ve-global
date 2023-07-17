@@ -10,6 +10,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
+import { ElPagination } from 'element-plus'
 </script>
 
 <style lang="scss" scoped></style>

@@ -62,6 +62,7 @@ import LGTable from '../../../GTable/index.vue'
 import disabledKey from '../../constant/disabledKey'
 import modeKey from '../../constant/modeKey'
 import LGButtonGroup from '../../../GButtonGroup/index.vue'
+import { ElCollapseItem, ElTooltip } from 'element-plus'
 
 interface Props {
     /**

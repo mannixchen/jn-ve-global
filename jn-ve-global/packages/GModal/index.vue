@@ -82,6 +82,7 @@ import BtnProps from '../GButtonGroup/interface/BtnProps'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import _ from 'lodash'
 import { partitionObj2HumpObj } from '@jsjn/utils'
+import { ElDialog, ElDrawer, ElScrollbar } from 'element-plus'
 
 interface Props {
     /**

@@ -34,6 +34,7 @@ export default {
 import { computed, useSlots } from 'vue'
 import { TabPaneProps } from './index'
 import _ from 'lodash'
+import { ElTabs, ElTabPane } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

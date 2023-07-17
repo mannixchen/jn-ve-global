@@ -51,6 +51,7 @@ import _ from 'lodash'
 import { packagingOptionData } from '../utils'
 import useMainLogic from '../hooks'
 import { getStyle } from '@jsjn/utils'
+import { ElSelectV2 } from 'element-plus'
 
 interface Props {
     /**

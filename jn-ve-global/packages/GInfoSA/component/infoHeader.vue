@@ -62,6 +62,7 @@ import { watch, ref, onMounted, computed, reactive, watchEffect } from 'vue'
 import InfoColumnProps from '../interface/InfoColumnProps'
 import { getWidth } from '../utils'
 import _ from 'lodash'
+import { ElInput, ElSelect, ElOption } from 'element-plus'
 
 interface Props {
     /**

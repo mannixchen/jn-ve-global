@@ -6,6 +6,7 @@
 
 <script lang="ts" setup name="GFormRow">
 import type { FormProps } from '../../index'
+import { ElRow } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

@@ -83,6 +83,7 @@ import LGColFormItem from './component/GColFormItem/index.vue'
 import LGCollapse from '../GCollapse/index.vue'
 import LGCollapseItem from '../GCollapse/component/GCollapseItem/index.vue'
 import useCollapseLayout from './mixins/useCollapseLayout'
+import { ElForm } from 'element-plus'
 
 interface Props {
     config: FormProps

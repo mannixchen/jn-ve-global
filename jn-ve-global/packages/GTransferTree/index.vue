@@ -137,11 +137,18 @@ export default defineComponent({
 <script lang="ts" setup>
 import { reactive, nextTick, watch, ref } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-import { ElTreeV2 } from 'element-plus'
 import { size2Rem } from '@jsjn/utils'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import type { BtnProps, TreeData } from '../index'
 import _ from 'lodash'
+import {
+    ElTooltip,
+    ElInput,
+    ElTreeV2,
+    ElCheckbox,
+    ElScrollbar,
+    ElCheckboxGroup
+} from 'element-plus'
 
 import useCheckedContext from './hooks/useCheckedContext'
 import useTreeContext, { TreeProps } from './hooks/useTreeContext'

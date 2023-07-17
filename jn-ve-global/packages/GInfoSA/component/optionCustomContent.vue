@@ -44,6 +44,7 @@ export default {
 import InfoColumnProps from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { getWidth } from '../utils'
+import { ElTooltip } from 'element-plus'
 
 interface Props {
     /**

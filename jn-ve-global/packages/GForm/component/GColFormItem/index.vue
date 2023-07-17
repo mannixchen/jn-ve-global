@@ -17,6 +17,7 @@
 <script lang="ts" setup name="GColFormItem">
 import { FormItemProps, FormProps } from '../../index'
 import LGFormItem from '../GFormItem/index.vue'
+import { ElCol } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

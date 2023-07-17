@@ -62,6 +62,7 @@ import { ref } from 'vue'
 import { TableRowBtnProps } from '../../../../index'
 import LGIcon from '../../../../GIcon/index.vue'
 import { getBtnProps } from '../constant/util'
+import { ElDropdown, ElButton, ElDropdownMenu, ElDropdownItem } from 'element-plus'
 
 interface Props {
     /**

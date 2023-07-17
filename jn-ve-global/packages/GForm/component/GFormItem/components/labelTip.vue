@@ -29,6 +29,7 @@ import LGIcon from '../../../../GIcon/index.vue'
 import { FormItemProps } from '../../../index'
 import FunctionalComponent from '../../../../FunctionalComponent'
 import _ from 'lodash'
+import { ElTooltip } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

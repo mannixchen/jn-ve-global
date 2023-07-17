@@ -97,6 +97,7 @@ import AddOperationColumn from './component/OperationColumn/index'
 import { size2Rem } from '@jsjn/utils'
 import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
 import useTimeoutCreate from './hooks/useTimeoutCreate'
+import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
 
 interface Props {
     config: TableConfig

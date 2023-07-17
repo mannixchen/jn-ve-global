@@ -48,6 +48,7 @@ import OptionCustomContent from '../component/optionCustomContent.vue'
 import _ from 'lodash'
 import useMainLogic from '../hooks'
 import { getStyle } from '@jsjn/utils'
+import { ElAutocomplete } from 'element-plus'
 
 interface Props {
     /**

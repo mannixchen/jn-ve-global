@@ -40,6 +40,7 @@ export default {
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import BtnProps from './interface/BtnProps'
+import { ElButton } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

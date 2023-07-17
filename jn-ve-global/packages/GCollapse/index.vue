@@ -17,6 +17,7 @@ export default {
 import { computed, provide } from 'vue'
 import disabledKey from './constant/disabledKey'
 import modeKey from './constant/modeKey'
+import { ElCollapse } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

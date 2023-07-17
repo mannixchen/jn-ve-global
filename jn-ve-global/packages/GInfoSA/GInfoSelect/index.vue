@@ -83,6 +83,7 @@ import _ from 'lodash'
 import useMainLogic from '../hooks'
 import { packagingOptionData } from '../utils'
 import { getStyle } from '@jsjn/utils'
+import { ElSelect, ElOption } from 'element-plus'
 
 interface Props {
     /**

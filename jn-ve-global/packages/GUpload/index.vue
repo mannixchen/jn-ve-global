@@ -136,7 +136,7 @@ import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
-import { ElUpload } from 'element-plus'
+import { ElUpload, ElButton, ElProgress } from 'element-plus'
 import LGFilePreview from '../GFilePreview/index.vue'
 
 interface UploadCustomProps {

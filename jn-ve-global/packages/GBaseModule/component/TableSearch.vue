@@ -79,6 +79,7 @@ import tableSearchMoreIcon from '../../assets/icons/svg/old/table-search-more.sv
 import { getStyle } from '@jsjn/utils'
 import LGModal from '../../GModal/index.vue'
 import type { BaseModuleMode } from '../../_globalConstant/baseModuleMode'
+import { ElScrollbar } from 'element-plus'
 
 interface Props {
     /**

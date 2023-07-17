@@ -439,6 +439,25 @@ import {
     useMonitorRowEdit,
     useRefsStore
 } from './hooks'
+import {
+    ElInput,
+    ElInputNumber,
+    ElButton,
+    ElSelect,
+    ElOption,
+    ElTag,
+    ElRadio,
+    ElRadioGroup,
+    ElTimePicker,
+    ElTimeSelect,
+    ElDatePicker,
+    ElCheckbox,
+    ElCheckboxGroup,
+    ElColorPicker,
+    ElRate,
+    ElSlider,
+    ElTooltip
+} from 'element-plus'
 
 interface Props {
     /**

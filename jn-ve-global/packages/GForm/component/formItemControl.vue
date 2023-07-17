@@ -260,6 +260,19 @@ import LGChoose from './GChoose/index.vue'
 import formConfigProvideKey from '../constant/formConfigProvideKey'
 import getControlOprions from '../mixins/getControlOprions'
 
+import {
+    ElInputNumber,
+    ElSelect,
+    ElOption,
+    ElSwitch,
+    ElTimePicker,
+    ElTimeSelect,
+    ElDatePicker,
+    ElRate,
+    ElSlider,
+    ElColorPicker
+} from 'element-plus'
+
 interface Props {
     /**
      * FormItem 的配置参数
@@ -342,7 +355,7 @@ const localControlProps = computed(() => {
      * 这里在过滤传递的 props 的 _on 开头的伪事件代码
      * 处理原因忘记了
      * 应该不是为拖拽平台服务的，拖拽平台注入的事件都是处理过的事件名称
-     * 
+     *
      */
     const temp = {}
     if (Object.keys(controlProps).some((key) => key.startsWith('_on'))) {

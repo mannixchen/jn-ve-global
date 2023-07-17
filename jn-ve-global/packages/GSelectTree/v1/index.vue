@@ -53,7 +53,7 @@ import { findTargetByField, getAllParentNode } from '@jsjn/utils'
 import { TreeData } from './interface/TreeData'
 import TreeV2Props from './interface/TreeV2Props'
 import TreeV2Config from './interface/TreeV2Config'
-import { ElTreeV2 } from 'element-plus'
+import { ElTreeV2, ElSelect, ElOption } from 'element-plus'
 import type { TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 
 interface SelectTreeProps {

@@ -11,6 +11,8 @@ export * from './GChart'
 export * from './GFormGenerate'
 export * from './JnEditor/interface/tinymce'
 export * from './GUpload/interface/UploadFile'
+export * from './export'
+
 export { default as UploadFile } from './GUpload/interface/UploadFile'
 export { default as InfoColumnProps } from './GInfoSA/interface/InfoColumnProps'
 export { default as IrregularTableCell } from './GIrregularTable/interface/Cell'

@@ -88,6 +88,7 @@ import { getBaseModuleMode } from '../_globalConstant/baseModuleMode'
 import type { BaseModuleMode } from '../_globalConstant/baseModuleMode'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
+import { ElTabs, ElTabPane } from 'element-plus'
 
 interface Props {
     /**

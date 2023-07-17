@@ -22,6 +22,7 @@ import { TreeData } from '../v1/interface/TreeData'
 import TreeProps from '../v1/interface/TreeProps'
 import _ from 'lodash'
 import { humpObj2PartitionObj } from '@jsjn/utils'
+import { ElTreeSelect } from 'element-plus'
 
 interface SelectTreeV2TreeProps extends TreeProps {
     /**

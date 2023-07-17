@@ -68,6 +68,7 @@ import _ from 'lodash'
 import LGButtonGroup from '../GButtonGroup/index.vue'
 import usePagination from './hooks/usePagination'
 import { Search } from '@element-plus/icons-vue'
+import { ElTransfer, ElPagination, ElInput } from 'element-plus'
 
 interface Option {
     id?: string

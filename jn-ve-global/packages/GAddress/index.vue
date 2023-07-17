@@ -13,8 +13,8 @@
             v-if="!hideDetail"
             v-model.trim="detailAddress"
             placeholder="详细地址"
-            :size="$attrs.size"
-            :disabled="$attrs.disabled"
+            :size="($attrs.size as any)"
+            :disabled="($attrs.disabled as boolean)"
             @blur="emits('table-edit-hide')"
         />
     </div>
@@ -29,7 +29,7 @@ export default {
 <script lang="ts" setup>
 import { toRaw, computed, useAttrs, watch, ref } from 'vue'
 import regionData from './data/region.json'
-import { ElCascader } from 'element-plus'
+import { ElCascader, ElInput } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{

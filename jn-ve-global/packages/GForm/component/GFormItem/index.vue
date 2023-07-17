@@ -95,6 +95,7 @@ export default {
 import { toRef, computed, isVNode } from 'vue'
 import type { FormProps, FormItemProps } from '../../index'
 import _ from 'lodash'
+import { ElFormItem } from 'element-plus'
 
 // 组件
 import FunctionalComponent from '../../../FunctionalComponent'

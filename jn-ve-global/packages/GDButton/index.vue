@@ -1,5 +1,10 @@
 <template>
-    <el-button class="debounce-button" type="primary" v-bind="$attrs" @click="handleDebounce">
+    <el-button
+        class="debounce-button"
+        type="primary"
+        v-bind="$attrs"
+        @click="handleDebounce as any"
+    >
         <slot />
     </el-button>
 </template>
@@ -13,6 +18,7 @@ export default {
 <script lang="ts" setup>
 import { computed } from 'vue'
 import _ from 'lodash'
+import { ElButton } from 'element-plus'
 
 interface Props {
     /**
