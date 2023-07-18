@@ -11,7 +11,7 @@
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
-                <g-icon v-if="btn.icon" :icon="btn.icon" custom-color />
+                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
             </el-button>
 
@@ -24,7 +24,7 @@
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
-                <g-icon v-if="btn.icon" :icon="btn.icon" custom-color />
+                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
             </el-button>
         </template>
@@ -41,6 +41,7 @@ export default {
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import BtnProps from './interface/BtnProps'
 import { ElButton } from 'element-plus'
+import LGIcon from '../GIcon/index.vue'
 
 const props = withDefaults(
     defineProps<{

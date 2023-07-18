@@ -41,7 +41,7 @@
             @click="handleMoreSearch"
         >
             <span>{{ modeTriggerLabel }}</span>
-            <g-icon
+            <LGIcon
                 v-if="moreSearchMode === 'pull-down'"
                 :icon="pullDownFlag ? 'el-ArrowUp' : 'el-ArrowDown'"
             />
@@ -80,6 +80,7 @@ import { getStyle } from '@jsjn/utils'
 import LGModal from '../../GModal/index.vue'
 import type { BaseModuleMode } from '../../_globalConstant/baseModuleMode'
 import { ElScrollbar } from 'element-plus'
+import LGIcon from '../../GIcon/index.vue'
 
 interface Props {
     /**

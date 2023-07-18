@@ -1,5 +1,6 @@
 <template>
     <el-collapse
+        v-model="localModelValue"
         v-bind="$attrs"
         :disabled="localDisabled"
         :class="['custom-collapse', `${mode}-mode`]"
@@ -21,6 +22,7 @@ import { ElCollapse } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{
+        modelValue: string | string[]
         /**
          * 模式
          *  - card 卡片
@@ -37,6 +39,15 @@ const props = withDefaults(
         disabled: undefined
     }
 )
+
+const emits = defineEmits(['update:modelValue'])
+
+const localModelValue = computed({
+    get: () => props.modelValue,
+    set(val) {
+        emits('update:modelValue', val)
+    }
+})
 
 const localDisabled = computed(() => (props.mode === 'card' ? true : props.disabled))
 const localMode = computed(() => props.mode)

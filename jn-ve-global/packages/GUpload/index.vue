@@ -22,7 +22,7 @@
         <template #default>
             <slot v-if="attrs['list-type'] !== 'avatar'">
                 <div :class="['upload-btn', uploadListType]">
-                    <g-icon v-if="['picture-card'].includes(uploadListType)" icon="el-Plus" />
+                    <LGIcon v-if="['picture-card'].includes(uploadListType)" icon="el-Plus" />
 
                     <el-button v-else size="small" type="primary" :disabled="disabled">
                         上传附件
@@ -30,11 +30,11 @@
                 </div>
             </slot>
             <div v-else class="avatar-upload">
-                <g-icon icon="el-Plus" />
+                <LGIcon icon="el-Plus" />
                 <img v-if="currentFile && currentFile.url" :src="currentFile.url" alt="">
                 <div v-if="currentFile && currentFile.url" class="operation" @click.stop="">
-                    <g-icon icon="el-View" @click="modalShow = true" />
-                    <g-icon
+                    <LGIcon icon="el-View" @click="modalShow = true" />
+                    <LGIcon
                         v-if="!disabled"
                         icon="el-Delete"
                         class="del-btn-icon"
@@ -57,13 +57,13 @@
 
                 <!-- 按钮 -->
                 <div class="btns">
-                    <g-icon
+                    <LGIcon
                         v-if="showPreview(file.name)"
                         icon="el-View"
                         @click="filePreview(file)"
                     />
-                    <g-icon v-if="!downloadHide" icon="el-Bottom" @click="fileDownload(file)" />
-                    <g-icon
+                    <LGIcon v-if="!downloadHide" icon="el-Bottom" @click="fileDownload(file)" />
+                    <LGIcon
                         v-if="!delHide"
                         icon="el-Delete"
                         class="del-btn-icon"
@@ -82,7 +82,7 @@
 
                 <!-- 成功角标 -->
                 <label v-if="file.status === 'success'" class="status-label">
-                    <g-icon icon="el-Check" />
+                    <LGIcon icon="el-Check" />
                 </label>
             </div>
         </template>
@@ -138,6 +138,7 @@ import UploadFile from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
 import { ElUpload, ElButton, ElProgress } from 'element-plus'
 import LGFilePreview from '../GFilePreview/index.vue'
+import LGIcon from '../GIcon/index.vue'
 
 interface UploadCustomProps {
     instance?: InstanceType<typeof ElUpload> | null

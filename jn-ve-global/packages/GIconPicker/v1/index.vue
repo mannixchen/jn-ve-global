@@ -18,11 +18,11 @@
                     :disabled="disabled"
                 >
                     <template #prepend>
-                        <g-icon :icon="localSelectedIcon" />
+                        <LGIcon :icon="localSelectedIcon" />
                     </template>
 
                     <template v-if="localSelectedIcon" #suffix>
-                        <g-icon icon="el-CircleClose" @click="handleClearIcon" />
+                        <LGIcon icon="el-CircleClose" @click="handleClearIcon" />
                     </template>
                 </el-input>
             </template>
