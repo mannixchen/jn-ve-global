@@ -13,7 +13,7 @@
             <el-table
                 ref="localInstance"
                 :tooltip-options="{
-                    popperClass: 'max-h-200'
+                    popperClass: 'table-tooltip-popper max-h-200'
                 }"
                 v-bind="tableProps"
                 :height="
