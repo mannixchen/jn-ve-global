@@ -1,5 +1,5 @@
 <template>
-    <el-table-column
+    <ElTableColumn
         v-bind="columnProps"
         :class-name="`${columnProps.className || ''}${
             columnConfig.editable ? ' g-table-edit-cell' : ''
@@ -44,7 +44,7 @@
                 <FunctionalComponent :render="columnConfig.render(row, $index)" />
             </template>
         </template>
-    </el-table-column>
+    </ElTableColumn>
 </template>
 
 <script lang="tsx">

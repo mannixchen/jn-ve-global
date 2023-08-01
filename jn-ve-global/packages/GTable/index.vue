@@ -11,8 +11,11 @@
         <!-- 表格 -->
         <div class="g-table-main">
             <el-table
-                v-bind="tableProps"
                 ref="localInstance"
+                :tooltip-options="{
+                    popperClass: 'max-h-200'
+                }"
+                v-bind="tableProps"
                 :height="
                     tableProps.height !== undefined
                         ? tableProps.height === false
@@ -403,6 +406,11 @@ const tablePaste = async (e: ClipboardEvent) => {
     props.config.onPasted?.(tableDataValidated)
 }
 // *********************↑ 粘贴 ↑***************************************************************************************************
+
+defineExpose({
+    instance: localInstance,
+    config: localConfig
+})
 </script>
 
 <style lang="scss" scoped>

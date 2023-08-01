@@ -25,6 +25,10 @@ export default (props: { config: FormProps }) => {
      * 不属于 collapse 控制的表单项：第一个 collapseItem 之前的项，被认为不予控制
      */
     const collapseBeforeFormItems = computed<FormItemProps[]>(() => {
+        if (!formItems.value) {
+            return []
+        }
+
         const firstCollapseItemIndex = formItems.value.findIndex((item) => {
             return item.controlConfig.type === 'collapseItem'
         })
@@ -33,6 +37,10 @@ export default (props: { config: FormProps }) => {
     })
 
     const collapseItems = computed<CustomCollapseItem[]>(() => {
+        if (!formItems.value) {
+            return []
+        }
+
         // 原始的控件标识为 collapseItem 的 formItem 列表
         const collapseFormItems = formItems.value.filter((item, index) => {
             if (item.controlConfig && item.controlConfig.type === 'collapseItem') {

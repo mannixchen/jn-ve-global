@@ -1,5 +1,5 @@
 <template>
-    <el-input v-if="!reload" ref="localElInputRef" v-bind="localInputProps">
+    <ElInputCom v-if="!reload" ref="localElInputRef" v-bind="localInputProps">
         <!-- input 插槽
                 - 组件（VNode/JSX.Element）
                 - 组件库内图标（ali-/el-/jg-）
@@ -10,7 +10,7 @@
             <LGIcon v-else-if="stringIsIcon(slot)" :icon="slot" />
             <span v-else>{{ slot }}</span>
         </template>
-    </el-input>
+    </ElInputCom>
 </template>
 
 <script lang="ts">
