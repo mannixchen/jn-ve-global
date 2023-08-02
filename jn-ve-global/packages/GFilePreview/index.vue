@@ -74,7 +74,7 @@ const previewType = computed<'img' | 'pdf' | 'docx' | 'excel'>(() => {
         return 'pdf'
     }
 
-    if (['docx', 'doc'].includes(fileType)) {
+    if (['docx'/* , 'doc' */].includes(fileType)) {
         return 'docx'
     }
 
