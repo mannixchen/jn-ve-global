@@ -2,11 +2,11 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-02-01 10:02:50
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-02-01 10:23:40
- * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useConstant.ts
+ * @LastEditTime: 2023-08-02 11:14:31
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GTable/component/TableEditCell/hooks/useConstant.ts
  * @Description: 存储组件常量归类
  */
-import { computed, ref, inject, toRef } from 'vue'
+import { computed, ref, inject, toRef, watch } from 'vue'
 import { FigureInputProps } from '../../../../GForm'
 import { onCellEditKey, tableInstanceKey } from '../../../constant/InjectionKeys'
 import { BaseTableDataItem } from '../../../index'
@@ -128,7 +128,10 @@ export default ({ props, editCellContentRef }) => {
          * text 文本将销毁
          */
         if (localData.value.edit !== undefined) {
-            if (localData.value.edit && props.columnConfig.controlConfig) {
+            if (
+                localData.value.edit &&
+                (props.columnConfig.controlConfig || props.columnConfig.controlRender)
+            ) {
                 return false
             }
         }
@@ -138,7 +141,10 @@ export default ({ props, editCellContentRef }) => {
          * 没有总控情况下，或总控为 false 情况下
          * 控制权回到当前组件中
          */
-        return cellStatus.value === CellStatus.TEXT || !props.columnConfig.controlConfig
+        return (
+            cellStatus.value === CellStatus.TEXT ||
+            (!props.columnConfig.controlConfig && !props.columnConfig.controlRender)
+        )
     })
 
     // 控制控件的创建
@@ -146,8 +152,9 @@ export default ({ props, editCellContentRef }) => {
         /**
          * 优先级1
          *  1. 没有传递 columnConfig.controlConfig
+         *  2. 没有传递 columnConfig.controlRender
          */
-        if (!props.columnConfig.controlConfig) return false
+        if (!props.columnConfig.controlConfig && !props.columnConfig.controlRender) return false
 
         /**
          * 优先级2

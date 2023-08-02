@@ -1,4 +1,4 @@
-import { VNode } from 'vue'
+import { VNode, Ref } from 'vue'
 import TableEditCellControlConfig from './TableEditCellControlConfig'
 import { BaseTableDataItem } from '../../index'
 import { Rule } from 'async-validator'
@@ -168,6 +168,22 @@ export default interface TableColumnProps extends EleTableColumnProps {
      * 编辑控件类型
      */
     controlConfig?: TableEditCellControlConfig
+    /**
+     * 自定义渲染编辑控件
+     * @param prop 当前字段的绑定值
+     * @param key 字段 key
+     * @param row 当前行
+     * @param index 当前行 索引
+     * @param finish 完成事件，切换回文本
+     * @returns
+     */
+    controlRender?: (
+        prop?: Ref<any>,
+        key?: string,
+        row?: any,
+        index?: number,
+        finish?: () => void
+    ) => JSX.Element | VNode | string | number
     /**
      * 控件验证规则
      * rules 服务于两种情况：
