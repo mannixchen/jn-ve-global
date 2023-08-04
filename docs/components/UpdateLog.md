@@ -2,6 +2,34 @@
 
 <!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
 
+<!-- ================== 2.8.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.8.0
+
+</template>
+
+<template #date>
+
+2023-08-xx
+
+</template>
+
+<h3>New</h3>
+
+<h4>Table</h4>
+
+1. 可编辑单元格增加编辑控件自定义 render
+
+<h4>TransferTree</h4>
+
+1. 增加懒加载
+
+</update-log-block>
+
 <!-- ================== 2.7.2 ======================================================================== -->
 
 <update-log-block>

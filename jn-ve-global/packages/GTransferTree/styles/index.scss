@@ -1,4 +1,13 @@
-/*! scopecss-disable */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .g-transfer-tree-wrapper {
     --el-transfer-border-color: var(--el-border-color-lighter);
     --el-transfer-border-radius: var(--el-border-radius-base);
@@ -154,6 +163,12 @@
                                 font-size: var(--jn-ve-g-form-font-size) !important;
                                 color: var(--el-text-color-regular);
                             }
+
+                            .lazying-icon {
+                                animation: rotate 1.5s linear infinite;
+                                margin-right: 4px;
+                                font-size: 18px;
+                            }
                         }
                     }
                 }
@@ -231,6 +246,7 @@
         }
 
         .g-transfer-tree-panel__header {
+
             .count,
             .change-check-strictly-trigger {
                 display: none !important;

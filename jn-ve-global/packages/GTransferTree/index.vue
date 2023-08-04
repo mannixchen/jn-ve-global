@@ -5,7 +5,7 @@
             <p class="g-transfer-tree-panel__header">
                 <span>{{ titles[0] }}</span>
                 <span class="right">
-                    <span class="count">
+                    <span v-if="!lazy" class="count">
                         <span>{{ treeCheckedKeys.length }}</span>
                         <span>/</span>
                         <span>{{ enableNodesLength }}</span>
@@ -52,8 +52,10 @@
                         :height="size2Rem(400 - 32 - 30 - 10)"
                         :filter-method="filterable ? treeFilterMethod : undefined"
                         @check="handleTreeCheck"
+                        @node-expand="handleExpand"
                     >
-                        <template #default="{ node }">
+                        <template #default="{ node, data }">
+                            <LGIcon v-if="data.lazying" icon="el-Loading" class="lazying-icon" />
                             <span class="g-transfer-tree-panel__node-label" :title="node.label">
                                 {{ node.label }}
                             </span>
@@ -149,10 +151,12 @@ import {
     ElScrollbar,
     ElCheckboxGroup
 } from 'element-plus'
-
+import LGIcon from '../GIcon/index.vue'
 import useCheckedContext from './hooks/useCheckedContext'
 import useTreeContext, { TreeProps } from './hooks/useTreeContext'
 import useFilterContext from './hooks/useFilterContext'
+import useLazyContext from './hooks/useLazyContext'
+import type { TreeNodeData, TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 
 const props = withDefaults(
     defineProps<{
@@ -188,6 +192,16 @@ const props = withDefaults(
          * 禁用
          */
         disabled?: boolean
+        /**
+         * 懒加载，使用懒加载将切换树的类型，虚拟树没有懒加载
+         */
+        lazy?: boolean
+        /**
+         * 加载子树数据的方法，仅当 lazy 属性为true 时生效
+         * @param node
+         * @param resolve
+         */
+        load?: (node, resolve) => void
     }>(),
     {
         data: () => [],
@@ -208,6 +222,7 @@ const props = withDefaults(
 const emits = defineEmits<{
     (e: 'update:modelValue', arr: Array<string | number>): void
     (e: 'update:selectedData', arr: TreeData[]): void
+    (e: 'node-expand', data: TreeNodeData, node: TreeNode): void
 }>()
 
 const localCheckStrictly = ref<boolean>(false)
@@ -236,6 +251,9 @@ const {
     emits,
     localTreeData
 })
+
+// 懒加载
+const { handleExpand } = useLazyContext({ props, localTreeData, elTreeV2Ref, emits })
 
 // 搜索功能上下文
 const { filterTextLeft, filterTextRight, treeFilterMethod, checkedPanelIsEmpty } = useFilterContext(
@@ -283,7 +301,7 @@ const transferBtns = reactive<BtnProps[]>([
              */
             nextTick(() => {
                 treeCheckedKeys.value = []
-                elTreeV2Ref.value.setCheckedKeys([])
+                elTreeV2Ref.value?.setCheckedKeys([])
                 changeNodesDisabledStatus(localSelectedKeys.value, true)
             })
         }
@@ -291,9 +309,10 @@ const transferBtns = reactive<BtnProps[]>([
 ])
 
 defineExpose({
-    elTreeV2Ref,
+    treeRef: elTreeV2Ref,
     filterTextLeft,
-    filterTextRight
+    filterTextRight,
+    treeData: localTreeData
 })
 </script>
 

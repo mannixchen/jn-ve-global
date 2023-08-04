@@ -70,7 +70,7 @@ export default (p: Params) => {
         // 更新待选项的可选值
         enableNodesLength.value = getEnableNodesLength(localTreeData.value)
         // 更新节点
-        elTreeV2Ref.value.setData(localTreeData.value)
+        elTreeV2Ref.value?.setData(localTreeData.value)
     }
 
     return {
