@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2022-11-16 17:05:44
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-04-26 15:25:01
+ * @LastEditTime: 2023-08-04 11:22:24
  * @FilePath: /@jsjn-librar-monorepo/examples/src/login/utils/login.ts
  * @Description: 登录的核心逻辑：
  *  - 登录过期验证
@@ -64,6 +64,15 @@ export type LoginType = {
  * @returns
  */
 export default async function (props: LoginType) {
+    /**
+     * 判断是同一用户重新登录（登录超时），还是新用户登录
+     * 获取之前未清空的用户信息
+     *  1. undefind 未登录过用户，不做处理
+     *  2. string 已存在登录用户，比对
+     */
+    const preUserLoginName = store.state.currentUserInfo.accountInfo.loginName
+    const currentUserLoginName = (props as LoginType).params.account
+
     const params = props.params
     const urlQuery: LoginUrlQuery = router.currentRoute.value.query
 
@@ -122,14 +131,6 @@ export default async function (props: LoginType) {
      */
     decodePath = decodePath === rootPath || decodePath === homePath ? initPath : decodePath
 
-    /**
-     * 判断是同一用户重新登录（登录超时），还是新用户登录
-     * 获取之前未清空的用户信息
-     *  1. undefind 未登录过用户，不做处理
-     *  2. string 已存在登录用户，比对
-     */
-    const preUserLoginName = store.state.currentUserInfo.accountInfo.loginName
-    const currentUserLoginName = (props as LoginType).params.account
     // 如果与上一登录用户不同，清空信息，且跳转到初始页面
     if (preUserLoginName) {
         if (preUserLoginName !== currentUserLoginName) {
