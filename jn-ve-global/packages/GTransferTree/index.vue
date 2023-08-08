@@ -49,8 +49,9 @@
                         :data="localTreeData"
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
-                        :height="size2Rem(400 - 32 - 30 - 10)"
+                        :height="size2Rem(450 - 32 - 30 - 10)"
                         :filter-method="filterable ? treeFilterMethod : undefined"
+                        v-bind="$attrs"
                         @check="handleTreeCheck"
                         @node-expand="handleExpand"
                     >

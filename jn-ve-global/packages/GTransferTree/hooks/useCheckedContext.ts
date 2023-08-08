@@ -6,6 +6,10 @@ import _ from 'lodash'
 interface Params {
     props: {
         /**
+         * 选中的数据（对象）
+         */
+        selectedData?: TreeData[]
+        /**
          * 绑定的已选值
          */
         modelValue: Array<string | number>
@@ -35,13 +39,30 @@ export default (p: Params) => {
                 selectedKeys?.map((key) => {
                     const selectedNode = findTargetByField(treeData, key, props.sourceMapping.value)
 
+                    // 如果从源数据中查找到
                     if (selectedNode) {
                         return selectedNode
                     } else {
-                        return {
+                        let defaultTarget = {
                             [props.sourceMapping.value]: key,
                             [props.sourceMapping.label]: key
                         }
+
+                        // 从传递的选中数据里面查找，以显示
+                        if (props.selectedData?.length) {
+                            const dT = props.selectedData.find(
+                                (item) => item[props.sourceMapping.value] === key
+                            )
+
+                            if (dT) {
+                                defaultTarget[props.sourceMapping.value] =
+                                    dT[props.sourceMapping.value]
+                                defaultTarget[props.sourceMapping.label] =
+                                    dT[props.sourceMapping.label]
+                            }
+                        }
+
+                        return defaultTarget
                     }
                 }) || []
 

@@ -4,7 +4,7 @@ import { ElTreeV2 } from 'element-plus'
 import type { CheckedInfo, TreeKey } from 'element-plus/es/components/tree-v2/src/types'
 import { getEnableNodesLength } from '../utils/tree'
 import _ from 'lodash'
-import { findTargetByField } from '@jsjn/utils'
+import { findTargetByField, findTargetsByField } from '@jsjn/utils'
 
 export interface TreeProps extends TreeV2Props {
     check?: string
@@ -56,14 +56,19 @@ export default (p: Params) => {
 
     function changeNodesDisabledStatus(keys: Array<string | number>, status: boolean) {
         keys.forEach((key) => {
-            const preSelectedNode = findTargetByField(
+            /**
+             * 这里筛选所有符合条件的节点
+             */
+            const preSelectedNodes = findTargetsByField(
                 localTreeData.value,
                 key as string,
                 props.sourceMapping.value
             )
 
-            if (preSelectedNode) {
-                preSelectedNode['disabled'] = status
+            if (preSelectedNodes?.length) {
+                preSelectedNodes.forEach((node) => {
+                    node['disabled'] = status
+                })
             }
         })
 

@@ -1,5 +1,9 @@
 <template>
-    <el-tooltip :placement="placement" :popper-class="[popperClass, 'form-item-tip__popper']">
+    <el-tooltip
+        v-if="isShow"
+        :placement="placement"
+        :popper-class="[popperClass, 'form-item-tip__popper']"
+    >
         <template #content>
             <!-- 组件 || jsx 元素 -->
             <component :is="content" v-if="isVNode(content)" />
@@ -24,7 +28,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { isVNode } from 'vue'
+import { isVNode, computed } from 'vue'
 import LGIcon from '../../../../GIcon/index.vue'
 import { FormItemProps } from '../../../index'
 import FunctionalComponent from '../../../../FunctionalComponent'
@@ -45,6 +49,13 @@ const props = withDefaults(
         placement: 'top'
     }
 )
+
+const isShow = computed<boolean>(() => {
+    if (_.isString(props.content) && props.content) return true
+    if (_.isFunction(props.content) && props.content()) return true
+    if (isVNode(props.content)) return true
+    return false
+})
 </script>
 
 <style lang="scss" scoped></style>
