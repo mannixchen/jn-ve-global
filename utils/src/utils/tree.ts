@@ -98,6 +98,39 @@ export function findTargetByField(
 }
 
 /**
+ * 在源数据中，依据指定字段查找数据节点（所有重复节点），或者指定节点的字段
+ * @param source 源数据
+ * @param targetFieldVal 查找依据值
+ * @param targetFieldName 依据字段名称，默认 'id'
+ * @returns
+ */
+export function findTargetsByField(
+    source: any[],
+    targetFieldVal: string,
+    targetFieldName: string = 'id'
+) {
+    if (!targetFieldVal || source.length === 0) return null
+
+    let target = []
+
+    function recursion(source: any[], targetFieldVal: string, targetFieldName: string) {
+        for (let i = 0; i < source.length; i++) {
+            const item = source[i]
+            if (item[targetFieldName] === targetFieldVal) {
+                target.push(item)
+            }
+
+            if (item.children && item.children.length) {
+                recursion(item.children, targetFieldVal, targetFieldName)
+            }
+        }
+    }
+
+    recursion(source, targetFieldVal, targetFieldName)
+    return target
+}
+
+/**
  * 获取树的所有叶子节点（没有 children 字段或 children 为空的节点）
  * @param tree 树数据
  * @returns
