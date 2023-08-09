@@ -13,6 +13,7 @@
 
                     <el-tooltip
                         v-if="checkStrictly === undefined"
+                        :visible="tipVisible"
                         effect="dark"
                         :content="!localCheckStrictly ? '包含下级' : '不包含下级'"
                         placement="bottom"
@@ -138,7 +139,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { reactive, nextTick, watch, ref } from 'vue'
+import { reactive, nextTick, watch, ref, computed, onMounted } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { size2Rem } from '@jsjn/utils'
 import LGButtonGroup from '../GButtonGroup/index.vue'
@@ -203,6 +204,14 @@ const props = withDefaults(
          * @param resolve
          */
         load?: (node, resolve) => void
+        /**
+         * 包含下级弹框是否常驻
+         */
+        checkStrictlyTipPermanent?: boolean
+        /**
+         * 默认的是否包含下级
+         */
+        defaultCheckStrictly?: boolean
     }>(),
     {
         data: () => [],
@@ -216,7 +225,8 @@ const props = withDefaults(
         titles: () => ['待选', '已选'],
         filterable: true,
         checkStrictly: undefined,
-        disabled: false
+        disabled: false,
+        defaultCheckStrictly: true
     }
 )
 
@@ -226,7 +236,15 @@ const emits = defineEmits<{
     (e: 'node-expand', data: TreeNodeData, node: TreeNode): void
 }>()
 
-const localCheckStrictly = ref<boolean>(false)
+const localCheckStrictly = ref<boolean>(props.defaultCheckStrictly)
+const tipVisible = ref<boolean>(undefined)
+onMounted(() => {
+    if (props.checkStrictlyTipPermanent) {
+        setTimeout(() => {
+            tipVisible.value = props.checkStrictlyTipPermanent
+        }, 1000)
+    }
+})
 
 // 树的上下文
 const {
