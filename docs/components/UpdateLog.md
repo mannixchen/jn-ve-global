@@ -14,7 +14,7 @@
 
 <template #date>
 
-2023-08-xx
+2023-08-09
 
 </template>
 
@@ -27,6 +27,10 @@
 <h4>TransferTree</h4>
 
 1. 增加懒加载
+2. 同步数据回填
+3. 透传 element 的 api
+4. 增加相同节点筛选禁用处理方式
+5. 搜索清空后，关闭打开的节点
 
 </update-log-block>
 
