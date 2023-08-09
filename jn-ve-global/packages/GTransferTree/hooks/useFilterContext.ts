@@ -1,4 +1,4 @@
-import { Ref, ref, watch } from 'vue'
+import { Ref, nextTick, ref, watch } from 'vue'
 import type { TreeNode, TreeNodeData } from 'element-plus/es/components/tree-v2/src/types'
 import { ElTreeV2 } from 'element-plus'
 import { TreeProps } from './useTreeContext'
@@ -26,6 +26,15 @@ export default (p: Params) => {
         () => filterTextLeft.value,
         (query) => {
             elTreeV2Ref.value?.filter(query)
+
+            // TODO: 组件自带的 filter 方法，在清空搜索条件后，会展开所有节点，这里手动关闭展开的节点
+            if (query === '') {
+                elTreeV2Ref.value?.setExpandedKeys([])
+
+                // nextTick(() => {
+                //     elTreeV2Ref.value?.setExpandedKeys([])
+                // })
+            }
         }
     )
 
