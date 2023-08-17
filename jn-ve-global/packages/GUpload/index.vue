@@ -186,6 +186,10 @@ interface UploadCustomProps {
      * 下载 & 预览文件的 url
      */
     downloadUrl?: string
+    /**
+     * 上传 or 下载的请求超时时间
+     */
+    timeout?: number
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
@@ -200,7 +204,8 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     downloadHide: false,
     delHide: false,
     successNoMsg: false,
-    downloadUrl: '/kinso-basic-open-server/v1/document/file/download'
+    downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
+    timeout: 1000 * 8
 })
 
 const emits = defineEmits([

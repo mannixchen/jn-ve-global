@@ -22,7 +22,7 @@ export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
                 if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
                     const url = `${localDownloadUrl.value}/${file.fileId}`
-                    getFileBlobUrlByRequest(url, fileType).then((localBolbUrl) => {
+                    getFileBlobUrlByRequest(url, fileType, props.timeout).then((localBolbUrl) => {
                         proxyFile.url = localBolbUrl
                     })
                 }
@@ -78,7 +78,7 @@ export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
 
             if (attrs.value['list-type'] === 'avatar') {
                 const url = `${localDownloadUrl.value}/${fileId}`
-                const localBolbUrl = await getFileBlobUrlByRequest(url)
+                const localBolbUrl = await getFileBlobUrlByRequest(url, undefined, props.timeout)
                 localImgUrl.value = localBolbUrl
             }
         },

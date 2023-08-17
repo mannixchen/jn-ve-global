@@ -58,10 +58,11 @@ export function getFileTypeIcon(fileName: string, url?: string) {
  * @param fileType 文件类型，包装 pdf 类型的数据
  * @returns
  */
-export function getFileBlobUrlByRequest(url: string, fileType?: string) {
+export function getFileBlobUrlByRequest(url: string, fileType?: string, timeout?: number) {
     return myAxios
         .get(url, {
-            responseType: 'blob'
+            responseType: 'blob',
+            timeout
         })
         .then((res) => {
             let blob: Blob
