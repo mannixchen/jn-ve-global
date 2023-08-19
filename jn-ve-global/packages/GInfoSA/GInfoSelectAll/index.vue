@@ -161,6 +161,12 @@ const visibleChange = (flag: boolean) => {
 <style lang="scss" scoped>
 .g-info-select-all {
     width: 100%;
+
+    :deep(.is-filterable) {
+        > div {
+            width: 100%;
+        }
+    }
 }
 </style>
 <style lang="scss">
