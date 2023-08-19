@@ -2,6 +2,30 @@
 
 <!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
 
+<!-- ================== 2.8.1 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.8.1
+
+</template>
+
+<template #date>
+
+2023-09-xx
+
+</template>
+
+<h3>BugFix</h3>
+
+<h4>InfoSelectAll</h4>
+
+1. 搜索框搜索内容容器长度问题；
+
+</update-log-block>
+
 <!-- ================== 2.8.0 ======================================================================== -->
 
 <update-log-block>
