@@ -7,20 +7,18 @@
 }
 
 .g-custom-dialog.upload-preview-modal {
-    .el-dialog__header {
-        display: none;
-    }
-
     .el-dialog__body {
-        padding: 0;
-        width: 100%;
-        background-color: transparent;
+        padding: 10px;
     }
 
     &.img-modal {
         --el-dialog-bg-color: transparent;
         box-shadow: none;
         width: fit-content;
+
+        .el-dialog__header {
+            display: none;
+        }
 
         .el-dialog__body {
             width: fit-content;
