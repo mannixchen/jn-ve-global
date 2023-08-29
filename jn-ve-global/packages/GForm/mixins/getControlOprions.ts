@@ -8,7 +8,7 @@ import {
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
 } from '../index'
-import getAuthorization from '../../_http/getAuthorization'
+import myAxios from '../../_http/http'
 
 // 参数存储字段名称列表
 enum DataFiledName {
@@ -43,7 +43,6 @@ export default ({
         prop: Ref<string | number | boolean | object | Array<any>>
     }
 }) => {
-    const Authorization = getAuthorization()
     // 设定的获取数据 url，未设定就终止
     const getOptionsUrl = props.controlConfig.getOptionsUrl
 
@@ -54,7 +53,6 @@ export default ({
      *  - 是否为指定的控件类型
      */
     if (
-        !Authorization ||
         !getOptionsUrl ||
         ![...loadOptionsControlTyeps, ...loadTreeDataControlType].includes(props.controlConfig.type)
     ) {
@@ -74,18 +72,10 @@ export default ({
     watch(
         () => props.controlConfig.getOptionsUrl,
         (url) => {
-            /**
-             * 数据请求，具有业务针对性
-             */
-            fetch(url, {
-                method: 'get',
-                headers: {
-                    Authorization
-                }
-            })
-                .then((e) => e.json())
+            myAxios
+                .get(url)
                 .then((res) => {
-                    if (res.code === '000000') {
+                    if ((res as any).code === '000000') {
                         // 1. 自定义
                         const customMapData = props.controlConfig?.mapOptionsCb?.(res.data)
                         if (customMapData) {
@@ -115,8 +105,6 @@ export default ({
                     props.controlConfig[dataFieldName] = []
                 })
         },
-        {
-            immediate: true
-        }
+        { immediate: true }
     )
 }

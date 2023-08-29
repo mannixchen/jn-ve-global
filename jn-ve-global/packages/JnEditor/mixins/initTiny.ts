@@ -10,7 +10,7 @@ import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
-import getAuthorization from '../../_http/getAuthorization'
+import myAxios from '../../_http/http'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -318,30 +318,18 @@ function uploadFile(
     success: (url: string) => void,
     failure?: (err: string) => void
 ) {
-    const Authorization = getAuthorization()
-    // 获取鉴权信息，否则放弃
-    const uploadHeaders = new Headers()
-
-    if (Authorization) {
-        uploadHeaders.append('Authorization', Authorization)
-    } else {
-        !!failure
-            ? failure('上传失败，未能获取登录信息')
-            : ElMessage.error('上传失败，未能获取登录信息')
-        return
-    }
-
     const formData = new FormData()
     formData.append('file', file)
 
     // 通信
-    fetch(props.uploadUrl, {
+    myAxios(props.uploadUrl, {
         method: 'POST',
-        headers: uploadHeaders,
-        body: formData
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        data: formData
     })
-        .then((response) => response.json())
-        .then((result) => {
+        .then((result: any) => {
             if (result.code === '000000') {
                 success(`${props.downloadUrl}/${result.data.fileId}`)
             } else {
