@@ -2,6 +2,48 @@
 
 <!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
 
+<!-- ================== 2.9.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.9.0
+
+</template>
+
+<template #date>
+
+2023-08-29
+
+</template>
+
+<h3>New</h3>
+
+<h4>Upload</h4>
+
+1. Upload 预览样式优化
+2. 文件列表的预览 & 下载行为重构（取消预加载行为）
+
+:::danger
+
+如果过去有使用自定义下载 & 预览行为，且依赖了组件抛出的 `文件对象` 的 `url` 的，请注意核查。
+
+2.9.0+ 组件不再抛出 file.url，请自定义行为中自己获取 file.url
+
+:::
+
+<h3>优化</h3>
+
+1. input 取消 trim 限制
+2. 重构组件请求逻辑（与业务框架强关联），包括:
+    - options getOptionsUrl
+    - initTiny uploadFile
+3. Address 组件采用请求业务接口方式获取初始数据 <strong style="color:#ff3040; ">注意：与业务强关联，请确保后台 open 服务是否最新，注意 /kinso-basic-open-server/v1/area/treeByAuth 接口是否能正常访问</strong>
+4. 清理冗余代码、数据，减少打包体积
+
+</update-log-block>
+
 <!-- ================== 2.8.1 ======================================================================== -->
 
 <update-log-block>
@@ -14,7 +56,7 @@
 
 <template #date>
 
-2023-09-xx
+2023-08-20
 
 </template>
 
