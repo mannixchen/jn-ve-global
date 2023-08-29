@@ -1,7 +1,7 @@
 <template>
     <InputCore
         v-show="!inputDisabled || !exceedBoxWidth"
-        v-model.trim="localModelValue"
+        v-model="localModelValue"
         v-model:el-input-ref="localInputRef"
         v-bind="$attrs"
     />
