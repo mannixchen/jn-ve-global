@@ -23,6 +23,7 @@
             list-type="picture-card"
             download-hide
             :download-url="FILE_DOWNLOAD_URL"
+            :timeout="1000 * 60"
         />
 
         <h3>列表</h3>
@@ -33,6 +34,7 @@
             list-type="picture"
             del-hide
             :download-url="FILE_DOWNLOAD_URL"
+            :timeout="1000 * 60"
         />
 
         <h3>头像</h3>

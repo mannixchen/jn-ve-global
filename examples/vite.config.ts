@@ -56,7 +56,7 @@ export default defineConfig({
         host: '0.0.0.0',
         proxy: {
             '/proxy': {
-                target: 'http://172.31.33.70/',
+                target: 'http://172.31.33.84:9000',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/proxy/, '')
             }
