@@ -46,7 +46,7 @@
 
         <!-- 文件列表 -->
         <template #file="{ file }">
-            <div :class="['file-list-item', uploadListType]">
+            <div v-loading="file.isLoading" :class="['file-list-item', uploadListType]">
                 <!-- 略缩 -->
                 <div class="info">
                     <img class="preview" :src="getFileTypeIcon(file.name, file.url)">
@@ -188,7 +188,7 @@ interface UploadCustomProps {
      */
     downloadUrl?: string
     /**
-     * 上传 or 下载的请求超时时间
+     * 下载的请求超时时间
      */
     timeout?: number
 }
@@ -206,7 +206,7 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     delHide: false,
     successNoMsg: false,
     downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
-    timeout: 1000 * 8
+    timeout: 1000 * 20
 })
 
 const emits = defineEmits([
@@ -259,7 +259,8 @@ const { filePreview, fileDownload, delAvatar, delFile } = getMethods({
     uploadRef,
     currentFile,
     props,
-    modalShow
+    modalShow,
+    localDownloadUrl
 })
 
 // 工具

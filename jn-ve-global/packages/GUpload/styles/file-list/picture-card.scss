@@ -61,6 +61,20 @@
                         color: transparent;
                     }
                 }
+
+                .el-loading-mask {
+                    .el-loading-spinner {
+                        --el-loading-spinner-size: calc(var(--el-upload-list-picture-card-size) / 2);
+
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        margin-top: 0;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
             }
 
 

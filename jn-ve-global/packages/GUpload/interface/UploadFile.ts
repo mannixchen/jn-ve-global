@@ -8,6 +8,10 @@ export interface ElFile extends File {
 
 export default interface UploadFile {
     /**
+     * 预览 or 下载时的 loading
+     */
+    isLoading?: boolean
+    /**
      * 文件名称
      */
     name: string
@@ -16,7 +20,7 @@ export default interface UploadFile {
      *  - 预览
      *  - 下载
      */
-    url: string
+    url?: string
     /**
      * 业务中的文件服务器的文件 id
      */

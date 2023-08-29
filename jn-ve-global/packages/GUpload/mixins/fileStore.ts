@@ -1,7 +1,8 @@
 import { ref, computed, watch, reactive } from 'vue'
 import _ from 'lodash'
-import { getFileType, getFileBlobUrlByRequest } from '../utils'
+import { fillFileMemoryUrl, getFileType, getFileBlobUrlByRequest } from '../utils'
 import UploadFile from '../interface/UploadFile'
+import { imgSuffix } from '../constant/fileTypeList'
 
 export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
     /**
@@ -17,14 +18,17 @@ export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
     const localFileList = computed({
         get: () =>
             _.cloneDeep(props.fileList).map((file: UploadFile) => {
+                // proxy 代理 file，file.url 发生变化时，会同步渲染 dom
                 const proxyFile = reactive(file)
-                // 异步获取文件的 url，proxy 代理 file，file.url 发生变化时，会渲染列表
+
+                // 异步获取文件的 url
                 if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
-                    const url = `${localDownloadUrl.value}/${file.fileId}`
-                    getFileBlobUrlByRequest(url, fileType, props.timeout).then((localBolbUrl) => {
-                        proxyFile.url = localBolbUrl
-                    })
+
+                    // 只有图片（缩略图）才进行 预加载 url，避免性能浪费
+                    if (imgSuffix.includes(fileType)) {
+                        fillFileMemoryUrl(proxyFile, localDownloadUrl.value, props.timeout)
+                    }
                 }
                 return proxyFile
             }),

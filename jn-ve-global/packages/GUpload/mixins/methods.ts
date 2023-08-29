@@ -1,7 +1,8 @@
-import { ElMessageBox } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
 import UploadFile from '../interface/UploadFile'
+import { fillFileMemoryUrl } from '../utils'
 
-export default ({ uploadRef, currentFile, props, modalShow, attrs, emits }) => {
+export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localDownloadUrl }) => {
     // 预览
     const filePreview = (file: UploadFile) => {
         // 预览行为，覆盖本地
@@ -10,9 +11,11 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits }) => {
             return
         }
 
-        // 组件默认行为
-        currentFile.value = file
-        modalShow.value = true
+        _loadFile(file, () => {
+            // 组件预览默认行为
+            currentFile.value = file
+            modalShow.value = true
+        })
     }
 
     // 下载
@@ -23,12 +26,36 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits }) => {
             return
         }
 
-        // 默认下载行为
-        let aDom = document.createElement('a')
-        aDom.href = file.url
-        aDom.setAttribute('download', file.name)
-        aDom.click()
-        aDom = null
+        _loadFile(file, () => {
+            // 默认下载行为
+            let aDom = document.createElement('a')
+            aDom.href = file.url
+            aDom.setAttribute('download', file.name)
+            aDom.click()
+            aDom = null
+        })
+    }
+
+    /**
+     * 加载文件资源
+     *  - 已有：执行行为 预览 or 下载
+     *  - 未有：请求接口，回调执行行为
+     * @param file 
+     * @param cb 
+     * @returns 
+     */
+    function _loadFile(file: UploadFile, cb) {
+        if (!file.url) {
+            fillFileMemoryUrl(file, localDownloadUrl.value, props.timeout).then((res) => {
+                if (res.url) {
+                    cb?.()
+                } else {
+                    ElMessage.error('获取文件出错，请检查！')
+                }
+            })
+            return
+        }
+        cb?.()
     }
 
     /**

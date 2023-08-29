@@ -8,6 +8,8 @@ import WordFileTypeImg from './assets/images/Word.png'
 import ZARFileTypeImg from './assets/images/ZAR.png'
 import DefaulrFileLogo from './assets/images/Other.png'
 import myAxios from '../_http/http'
+import { imgSuffix } from './constant/fileTypeList'
+import UploadFile from './interface/UploadFile'
 
 /**
  * 根据文件名称获取文件类型，转换小写
@@ -28,8 +30,7 @@ export function getFileTypeIcon(fileName: string, url?: string) {
     const fileType = getFileType(fileName)
 
     // 图片取原url
-    if (['png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'].includes(fileType))
-        return url
+    if (imgSuffix.includes(fileType)) return url
 
     // word
     if (['rtf', 'doc', 'docx'].includes(fileType)) return WordFileTypeImg
@@ -86,4 +87,36 @@ export function getFileBlobUrlByRequest(url: string, fileType?: string, timeout?
             }
             return blob ? window.URL.createObjectURL(blob) : url
         })
+}
+
+/**
+ * 根据文件信息，填充文件的 url 信息，文件需要是一个 proxy 响应式对象，通过引用进行修改字段
+ * @param proxyFile 响应式的文件对象
+ * @param downloadUrl 下载地址拼接
+ * @param timeout 超时时间
+ * @returns 处理完 url 的响应式文件对象
+ */
+export async function fillFileMemoryUrl(
+    proxyFile: UploadFile,
+    downloadUrl: string,
+    timeout: number
+): Promise<UploadFile> {
+    proxyFile.isLoading = true
+
+    const url = `${downloadUrl}/${proxyFile.fileId}`
+    const fileType = getFileType(proxyFile.name)
+
+    // 得到内存 url
+    const memoryFileUrl = await getFileBlobUrlByRequest(url, fileType, timeout)
+        .catch(() => {
+            // 超时返回错误，下次进行相同操作时，会再次请求处理
+            return undefined
+        })
+        .finally(() => {
+            proxyFile.isLoading = false
+        })
+
+    proxyFile.url = memoryFileUrl
+
+    return proxyFile
 }
