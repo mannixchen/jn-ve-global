@@ -28,8 +28,9 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, computed, useAttrs, watch, ref } from 'vue'
-import regionData from './data/region.json'
 import { ElCascader, ElInput } from 'element-plus'
+import myAxios from '../_http/http'
+import prefix from '../_http/prefix'
 
 const props = withDefaults(
     defineProps<{
@@ -60,7 +61,17 @@ const emits = defineEmits(['update:modelValue', 'table-edit-hide'])
 const attrs = useAttrs()
 const elCascaderRef = ref<InstanceType<typeof ElCascader> | null>()
 
-const localRegionData = computed(() => props.options || regionData)
+const localRegionData = ref([])
+watch(
+    () => props.options,
+    (d) => {
+        localRegionData.value = d
+    },
+    { immediate: true }
+)
+if (!props.options) {
+    getAllAdministrative()
+}
 
 const localCascaderProps = computed(() => ({
     ...(attrs as any).props,
@@ -111,8 +122,21 @@ const tableEditHide = (val) => {
     if (!val && props.hideDetail) emits('table-edit-hide')
 }
 
+// 请求后台获取全国行政区划
+function getAllAdministrative() {
+    myAxios.get(`${prefix ?? ''}/kinso-basic-open-server/v1/area/treeByAuth`).then((res: any) => {
+        if (res.code === '000000') {
+            // 这里也可能外部采用了接口加载数据，有可能在初始化后，又改变了数据
+            // 避免万一重复覆盖，这里再响应回来后，再次判断下
+            if (!props.options) {
+                localRegionData.value = res.data
+            }
+        }
+    })
+}
+
 defineExpose({
-    regionData,
+    regionData: localRegionData,
     elCascaderRef
 })
 </script>
