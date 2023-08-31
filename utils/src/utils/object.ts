@@ -336,3 +336,26 @@ export function obj2Params(obj: object): string {
     })
     return paramStr
 }
+
+/**
+ * url 转 对象格式
+ * @param url
+ * @returns
+ */
+export function urlParams2Obj(url: string) {
+    var params = {}
+    var arr = url.split('?')
+    if (arr.length <= 1) {
+        return params
+    }
+    arr = arr[1].split('&')
+    arr.forEach((v, i) => {
+        let str = v.split('=')[1]
+        if (str.indexOf('%') === -1) {
+            params[v.split('=')[0]] = v.split('=')[1]
+        } else {
+            params[v.split('=')[0]] = JSON.parse(decodeURIComponent(v.split('=')[1]))
+        }
+    })
+    return params
+}
