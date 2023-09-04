@@ -6,6 +6,20 @@
   "description": "统一管理平台",
   "glyphs": [
     {
+      "icon_id": "3868280",
+      "name": "提案审批",
+      "font_class": "tianshenpi",
+      "unicode": "eb67",
+      "unicode_decimal": 60263
+    },
+    {
+      "icon_id": "16852660",
+      "name": "流程图",
+      "font_class": "flowChart",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
       "icon_id": "1041",
       "name": "平板电脑",
       "font_class": "pingbandiannao",

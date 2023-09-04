@@ -66,4 +66,12 @@ export default interface BtnProps {
      * 按钮图标
      */
     icon?: string
+    /**
+     * 按钮分组
+     */
+    group?: string | string[]
+    /**
+     * 预留字段
+     */
+    [k: string]: any
 }

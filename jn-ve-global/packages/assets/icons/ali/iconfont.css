@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2683065 */
-  src: url('iconfont.woff2?t=1664541309104') format('woff2'),
-       url('iconfont.woff?t=1664541309104') format('woff'),
-       url('iconfont.ttf?t=1664541309104') format('truetype');
+  src: url('iconfont.woff2?t=1693549582056') format('woff2'),
+       url('iconfont.woff?t=1693549582056') format('woff'),
+       url('iconfont.ttf?t=1693549582056') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon-tianshenpi:before {
+  content: "\eb67";
+}
+
+.ali-icon-flowChart:before {
+  content: "\e641";
 }
 
 .ali-icon-pingbandiannao:before {
