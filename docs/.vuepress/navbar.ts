@@ -32,13 +32,13 @@ export default [
                 link: '/components/UpdateLog.md'
             },
             {
-                text: '基座应用@2.1.0',
+                text: '基座应用@2.2.0',
                 link: '/micro/updateLog/basic.md'
-            },
-            {
-                text: '微应用框架@2.1.0',
-                link: '/micro/updateLog/micro.md'
             }
+            // {
+            //     text: '微应用框架@2.1.0',
+            //     link: '/micro/updateLog/micro.md'
+            // }
         ]
     }
 ]

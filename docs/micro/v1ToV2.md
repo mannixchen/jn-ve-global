@@ -61,3 +61,117 @@ micro-cli 需要更新，执行
 ### Home 升级
 
 home 升级方式不变，参考 [首页开发](./homeDev.md)
+
+## 二次性能优化
+
+### 问题分析
+
+#### 1. 微应用菜单切换，转圈时间长，加载慢
+
+:::tip
+
+这个问题存在两个优化点：
+
+1. 降低共享资源的请求频率，加载缓存，降低网络传输所占用的时间
+2. 组件（包括：element-plus、jn-ve-global）按需加载，不采用全局注册的方式，降低应用初始化的压力
+
+:::
+
+##### 关于第一点解释：
+
+目前，微应用的共享资源（如：vue、vue-router、jn-ve-global）采用了 umd 方式引入使用，为了避免缓存，引用资源时添加了时间戳
+
+如：
+
+![Alt text](/images/micro/source-time.png)
+
+时间戳是以微应用的打包时间确定的，这样一来，每个微应用（包括基座）的资源时间戳都不一致，导致每次微应用首次加载浏览器都会去加载新的资源，这些资源其实基座都已经加载过了；
+
+其实，每个微应用的这个时间戳，在本次发包时间范围内，时间戳不变的情况下，第二次加载（包括关闭浏览器）由于该次时间戳已经加载过资源，浏览器也就不会再去请求新的了，而是加载缓存；
+
+简而言之：微应用会在首次加载时，请求共享资源，这个行为在网络良好的情况下，不会产生什么影响。<strong style="color: #ff3040; ">但是如果涉及到网络较差、服务器处理慢等情况时</strong>  ，就会导致浏览器加载缓慢，造成切换菜单转圈时间长。即在网络传输层浪费了大量的时间
+
+:::tip 解决方案
+
+除去 jn-ve-global 会经常更换版本外，其他一些资源，估计很长时间不会变动，现采用版本号控制依赖缓存，原理：
+
+基座和微应用以相同的版本号加载资源，这样基座在加载完依赖后，后续微应用加载的只是浏览器的缓存，能够有效降低传输层的耗费时间
+
+:::
+
+方案落地：
+
+1. 基座升级，基座的请求共享依赖采用版本号控制
+2. 微应用升级
+
+* 以下内容更替 `/public/index.html` 内容
+
+```html
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- 基座 & 子 共享依赖 -->
+    <!-- <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue/vue.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js?v=<%= VUE_APP_VUE_V%>"></script> -->
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue/<%= NODE_ENV === 'development' ? 'vue.global' : 'vue.runtime.global.prod' %>.js?v=<%= VUE_APP_VUE_V%>"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue-router/vue-router.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vuex/vuex.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/@element-plus/icons-vue/index.iife.min.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/element-plus/index.full<%= NODE_ENV === 'development' ? '' : '.min' %>.js?v=<%= VUE_APP_ELEP_V%>"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/lodash/lodash<%= NODE_ENV === 'development' ? '' : '.min' %>.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/resize-observer-polyfill/ResizeObserver.global.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/xlsx/xlsx.full.min.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/echarts/echarts.min.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/tinymce5.10.5/tinymce.min.js"></script>
+    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/jn-ve-global/jn-ve-global.umd.js?v=<%= VUE_APP_VE_GLOBAL_V%>"></script>
+
+    <!-- 项目自定义依赖 -->
+    <script src="<%= BASE_URL %>/microApps/index.js"></script>
+</head>
+
+<body>
+    <noscript>
+        <strong>
+            We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without
+            JavaScript enabled. Please enable it to continue.
+        </strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+</body>
+
+</html>
+```
+
+* 以下内容追加到 `.env` 中，依赖版本以环境变量的方式注入到请求中
+
+```shell
+# 依赖版本，需要随版本更新而修改
+VUE_APP_VUE_V=3.2.37
+VUE_APP_ELEP_V=2.3.3
+VUE_APP_VE_GLOBAL_V=2.9.0
+```
+
+##### 组件按需加载
+
+具体方案落地较难，框架初期，考虑到开发水平差异，组件都是以全局注册的方式注册的。全局注册可以直接写标签
+全局注册，会提高应用初始化的压力，应用首次转圈长也有这的一部分原因
+
+具体方案落地，需要各项目自己去解决代码按需加载的方式，等同于前端优化首屏加载速度
+
+#### 2. 微应用一直转圈
+
+这个涉及到 “无界” 执行原理，可以参考这个 [issues](https://github.com/Tencent/wujie/issues/54)
+
+简单解释下：微应用初始化时，需要请求一次服务器 host，以此路径创建一个 iframe dom，在请求主 host 的时候，这个行为被服务器配置拦截了，导致框架创建不了 dom，继而无法执行初始化动作，导致转圈
+
+解决方案：
+
+:::tip
+这个优化需要配置网关、nginx 路径等，具体配置内容，请和宣佬联系
+:::
