@@ -131,7 +131,7 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/jn-ve-global/jn-ve-global.umd.js?v=<%= VUE_APP_VE_GLOBAL_V%>"></script>
 
     <!-- 项目自定义依赖 -->
-    <script src="<%= BASE_URL %>/microApps/index.js"></script>
+    <script src="<%= BASE_URL %>microApps/index.js"></script>
 </head>
 
 <body>

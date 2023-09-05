@@ -49,7 +49,7 @@
     - `.env`
 5. 微应用依赖包升级
     - `"@jsjn/types": "^1.4.3"`
-    - `"@jsjn/micro-core-components": "^2.3.0"`
+    - `"@jsjn/micro-core-components": "^2.3.1"`
 6. 除监管外，需要更新 home 应用的源
 
 </update-log-block>
