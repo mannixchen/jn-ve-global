@@ -172,6 +172,10 @@ VUE_APP_VE_GLOBAL_V=2.9.0
 
 解决方案：
 
-:::tip
-这个优化需要配置网关、nginx 路径等，具体配置内容，请和宣佬联系
-:::
+1. 网关增加配置，如下：
+
+![网关配置](/images/micro/getwayconfig.jpg)
+
+2. Nginx 配置路径
+
+![无界ng配置](/images/micro/wujie-iframe-ng-config.png)
