@@ -1,8 +1,8 @@
 import { getGlobal, global } from '@jsjn/utils'
 
 export function loadSource() {
-    if (getGlobal().luckysheet) return
-    const rootLocation = getGlobal().location
+    if (window.luckysheet) return
+    const rootLocation = global.location
     const prefix: string = `${rootLocation.origin}${rootLocation.pathname}lib/luckysheet`
 
     const cssList = [
@@ -15,27 +15,27 @@ export function loadSource() {
     return new Promise((rootResolve) => {
         setTimeout(() => {
             cssList.forEach((file) => {
-                const linkTag = getGlobal().document.createElement('link')
+                const linkTag = window.document.createElement('link')
                 linkTag.rel = 'stylesheet'
                 linkTag.href = `${prefix}${file}`
-                getGlobal().document.head.appendChild(linkTag)
+                window.document.head.appendChild(linkTag)
             })
 
             new Promise((resolve, reject) => {
-                const scriptTag = getGlobal().document.createElement('script')
+                const scriptTag = window.document.createElement('script')
                 scriptTag.type = 'text/javascript'
                 // scriptTag.async = false
                 scriptTag.src = `${prefix}/plugins/js/plugin.js`
-                getGlobal().document.head.appendChild(scriptTag)
+                window.document.head.appendChild(scriptTag)
                 scriptTag.onload = (e) => {
                     resolve(e)
                 }
             }).then(() => {
-                const scriptTag = getGlobal().document.createElement('script')
+                const scriptTag = window.document.createElement('script')
                 scriptTag.type = 'text/javascript'
                 // scriptTag.async = false
                 scriptTag.src = `${prefix}/luckysheet.umd.js`
-                getGlobal().document.head.appendChild(scriptTag)
+                window.document.head.appendChild(scriptTag)
                 scriptTag.onload = (e) => {
                     rootResolve(e)
                 }

@@ -1,7 +1,7 @@
 {
     "name": "@jsjn/sheet",
     "author": "zyc",
-    "version": "1.0.1",
+    "version": "2.0.3",
     "description": "基于 vue3 + ts + Luckysheet 的二次封装库 江苏金农内部库",
     "files": [
         "dist",

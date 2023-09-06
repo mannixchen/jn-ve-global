@@ -35,7 +35,7 @@ const props = withDefaults(
 const onlykey = uuidv4()
 const containerId = `jn-sheet-${onlykey}`
 const reloadFlag = ref<boolean>(false)
-const luckysheet = shallowRef(getGlobal().luckysheet)
+const luckysheet = shallowRef(window.luckysheet)
 
 onMounted(() => {
     nextTick(init)
@@ -60,7 +60,7 @@ function init() {
         initSheet()
     } else {
         loadSource().then(() => {
-            luckysheet.value = getGlobal().luckysheet
+            luckysheet.value = window.luckysheet
             initSheet()
         })
     }
@@ -76,7 +76,7 @@ function initSheet() {
             gridKey: onlykey // 表格唯一标识符
         }
 
-        luckysheet.value.create(localOptions)
+        luckysheet.value?.create(localOptions)
     })
 }
 
