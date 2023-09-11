@@ -1,4 +1,62 @@
-# 基座更新日志
+# 统一管理平台更新日志
+
+<!-- ================== 2.3.0 ================================================= -->
+
+<update-log-block>
+
+<template #version>
+
+2.3.0
+
+</template>
+
+<template #date>
+
+2023-09-11
+
+</template>
+
+<h3>基座</h3>
+
+<h4>BugFix</h4>
+
+1. 工作流按钮节点切换/按钮数量动态变化（增减）时，导致的按钮重复问题；
+2. 工作流可审批节点默认编辑状态下，审批等按钮禁用未生效问题；
+
+<h4>优化</h4>
+
+1. 工作流节点抛出数据增加字段(from、pageType)；
+2. 工作流增强组件抛出按钮按引用抛出；
+
+<h4>业务更新</h4>
+
+1. 登录页忘记密码功能可配置显示；
+2. 角色增加排序字段；
+3. 分类管理增加 appCode 字段；
+4. 管理端机构增加 “初始化机构” 功能；
+5. 消息中心、待办的消息来源采用分类字段管理树形展示 <strong style="color: #ff3040;">请注意维护分类字典表</strong>；
+
+<h3>微应用</h3>
+
+适配依赖版本列表：
+
+```json
+"@jsjn/micro-core-api": "^2.1.0",
+"@jsjn/micro-core-assets": "^1.0.0",
+"@jsjn/micro-core-components": "^2.3.4",
+"@jsjn/micro-core-constants": "^2.0.0",
+"@jsjn/micro-core-directives": "^1.1.0",
+"@jsjn/micro-core-hooks": "^1.1.2",
+"@jsjn/micro-core-micro-main": "^2.3.2",
+"@jsjn/micro-core-router": "^2.1.1",
+"@jsjn/micro-core-store": "^2.1.0",
+"@jsjn/micro-core-utils": "^2.1.1",
+"@jsjn/micro-core-views": "^2.1.2",
+"@jsjn/types": "^1.4.7",
+"@jsjn/utils": "^1.5.5",
+```
+
+</update-log-block>
 
 <!-- ================== 2.2.0 ================================================= -->
 
