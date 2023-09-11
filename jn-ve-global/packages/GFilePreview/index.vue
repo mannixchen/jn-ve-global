@@ -131,6 +131,7 @@ onUnmounted(() => {
     min-height: 400px;
     max-height: 90vh;
     overflow: auto;
+    max-width: 90vw;
 
     > img {
         display: block;

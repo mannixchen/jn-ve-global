@@ -138,11 +138,12 @@ import { reactive, ref } from 'vue'
 import { BtnProps, FormProps } from 'jn-ve-global/packages'
 import WorkflowModuleAdvance from '@/components/business/workflowModuleAdvance/index.vue'
 import FormConfig from './component/formConfig'
+import WorkflowNode from '@jsjn/types/entity/WorkflowNode'
 
 const formConfig = FormConfig()
 const isSaved = ref<boolean>(false)
 const isEdit = ref<boolean>(false)
-const currentTaskNodeInfo = ref<WorkflowNode>(null)
+const currentTaskNodeInfo = ref<WorkflowNode & { from: string; pageType: 'detail' | undefined; }>(null)
 
 const opertions = reactive<BtnProps[]>([
     {
@@ -196,10 +197,11 @@ const opertions = reactive<BtnProps[]>([
 ])
 
 const getRouteQueryHandle = (data) => {
-    console.log(`%c 阿波罗获取路由传参 === `, 'color: #f56c6c;', data)
+    console.log(`%c 获取工作流路由参数：`, 'color: #f56c6c;', data)
 }
 
 function getCurrentTaskNodeInfo(info) {
+    console.log('获取当前活跃的节点信息：', info)
     currentTaskNodeInfo.value = info
 }
 </script>
