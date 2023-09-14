@@ -1,69 +1,71 @@
 <template>
-    <el-form
-        v-if="config && refreshLoad"
-        ref="localInstance"
-        class="g-form"
-        v-bind="formRootConfigs"
-    >
-        <!-- 
+    <div>
+        <el-form
+            v-if="config && refreshLoad"
+            ref="localInstance"
+            class="g-form"
+            v-bind="formRootConfigs"
+        >
+            <!-- 
             提供默认插槽
             - 可以自定义表单内容的渲染
             - 配合拖拽平台
          -->
-        <slot :form-items="localConfig.formItems">
-            <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
-            <LGFormRow
-                v-if="baseFormItems.length"
-                :form-config="(localConfig as FormProps)"
-                :class="{ 'is-collapse-layout': isCollapseLayout }"
-            >
-                <template v-for="(item, index) in baseFormItems" :key="`${item.prop}-${index}`">
-                    <LGColFormItem
-                        :form-config="(localConfig as FormProps)"
-                        :form-item-config="(item as FormItemProps)"
-                    />
-                </template>
-            </LGFormRow>
-
-            <!-- Collapse 布局容器 -->
-            <LGCollapse
-                v-if="isCollapseLayout"
-                v-model="activeCollapses"
-                :mode="localConfig.collapseMode"
-            >
-                <template
-                    v-for="(collapseItem, index) in collapseItems"
-                    :key="`${collapseItem.title}-${index}`"
+            <slot :form-items="localConfig.formItems">
+                <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
+                <LGFormRow
+                    v-if="baseFormItems.length"
+                    :form-config="(localConfig as FormProps)"
+                    :class="{ 'is-collapse-layout': isCollapseLayout }"
                 >
-                    <LGCollapseItem
-                        :title="collapseItem.title"
-                        :name="collapseItem.name"
-                        :disabled="collapseItem.disabled"
-                        :prefix="collapseItem.prefix"
-                        :btns="collapseItem.btns"
-                        :shadow="collapseItem.shadow"
-                        :tip="collapseItem.tip"
-                        :class="{
-                            'form-item-classify': true,
-                            'is-tail': collapseItem.isTail
-                        }"
+                    <template v-for="(item, index) in baseFormItems" :key="`${item.prop}-${index}`">
+                        <LGColFormItem
+                            :form-config="(localConfig as FormProps)"
+                            :form-item-config="(item as FormItemProps)"
+                        />
+                    </template>
+                </LGFormRow>
+
+                <!-- Collapse 布局容器 -->
+                <LGCollapse
+                    v-if="isCollapseLayout"
+                    v-model="activeCollapses"
+                    :mode="localConfig.collapseMode"
+                >
+                    <template
+                        v-for="(collapseItem, index) in collapseItems"
+                        :key="`${collapseItem.title}-${index}`"
                     >
-                        <LGFormRow :form-config="(localConfig as FormProps)">
-                            <template
-                                v-for="(item, index) in collapseItem.content"
-                                :key="`${item.prop}-${index}`"
-                            >
-                                <LGColFormItem
-                                    :form-config="(localConfig as FormProps)"
-                                    :form-item-config="item"
-                                />
-                            </template>
-                        </LGFormRow>
-                    </LGCollapseItem>
-                </template>
-            </LGCollapse>
-        </slot>
-    </el-form>
+                        <LGCollapseItem
+                            :title="collapseItem.title"
+                            :name="collapseItem.name"
+                            :disabled="collapseItem.disabled"
+                            :prefix="collapseItem.prefix"
+                            :btns="collapseItem.btns"
+                            :shadow="collapseItem.shadow"
+                            :tip="collapseItem.tip"
+                            :class="{
+                                'form-item-classify': true,
+                                'is-tail': collapseItem.isTail
+                            }"
+                        >
+                            <LGFormRow :form-config="(localConfig as FormProps)">
+                                <template
+                                    v-for="(item, index) in collapseItem.content"
+                                    :key="`${item.prop}-${index}`"
+                                >
+                                    <LGColFormItem
+                                        :form-config="(localConfig as FormProps)"
+                                        :form-item-config="item"
+                                    />
+                                </template>
+                            </LGFormRow>
+                        </LGCollapseItem>
+                    </template>
+                </LGCollapse>
+            </slot>
+        </el-form>
+    </div>
 </template>
 <script lang="ts">
 export default {
@@ -175,6 +177,11 @@ function advanceInstance(instance: FormInstance) {
         return !(cacheStr === currentModelStr)
     }
 }
+
+defineExpose({
+    instance: localInstance,
+    config: localConfig
+})
 </script>
 
 <style lang="scss" scoped>
