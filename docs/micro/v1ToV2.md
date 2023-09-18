@@ -64,20 +64,24 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
 
 ## 二次性能优化
 
+:::tip 结合
+
+2.3.0 + 2.4.0
+
+:::
+
 ### 问题分析
 
-#### 1. 微应用菜单切换，转圈时间长，加载慢
+#### 问题1. 微应用菜单切换，转圈时间长，加载慢
 
 :::tip
 
 这个问题存在两个优化点：
 
 1. 降低共享资源的请求频率，加载缓存，降低网络传输所占用的时间
-2. 组件（包括：element-plus、jn-ve-global）按需加载，不采用全局注册的方式，降低应用初始化的压力
+2. 组件按需加载
 
 :::
-
-##### 关于第一点解释：
 
 目前，微应用的共享资源（如：vue、vue-router、jn-ve-global）采用了 umd 方式引入使用，为了避免缓存，引用资源时添加了时间戳
 
@@ -99,12 +103,11 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
 
 :::
 
-方案落地：
+##### 方案落地：
 
-1. 基座升级，基座的请求共享依赖采用版本号控制
-2. 微应用升级
+微应用升级
 
-* 以下内容更替 `/public/index.html` 内容
+1. 以下内容更替 `/public/index.html` 内容
 
 ```html
 <!DOCTYPE html>
@@ -117,18 +120,14 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
     <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <!-- 基座 & 子 共享依赖 -->
-    <!-- <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue/vue.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js?v=<%= VUE_APP_VUE_V%>"></script> -->
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue/<%= NODE_ENV === 'development' ? 'vue.global' : 'vue.runtime.global.prod' %>.js?v=<%= VUE_APP_VUE_V%>"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vue-router/vue-router.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vuex/vuex.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/@element-plus/icons-vue/index.iife.min.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/element-plus/index.full<%= NODE_ENV === 'development' ? '' : '.min' %>.js?v=<%= VUE_APP_ELEP_V%>"></script>
-    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/lodash/lodash<%= NODE_ENV === 'development' ? '' : '.min' %>.js"></script>
-    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/resize-observer-polyfill/ResizeObserver.global.js"></script>
-    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/xlsx/xlsx.full.min.js"></script>
-    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/echarts/echarts.min.js"></script>
-    <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/tinymce5.10.5/tinymce.min.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/jn-ve-global/jn-ve-global.umd.js?v=<%= VUE_APP_VE_GLOBAL_V%>"></script>
+    <!-- 如果微应用中有使用到 echarts 请把这一会注释打开 -->
+    <!-- <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/echarts/echarts.min.js"></script> -->
 
     <!-- 项目自定义依赖 -->
     <script src="<%= BASE_URL %>microApps/index.js"></script>
@@ -148,23 +147,105 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
 </html>
 ```
 
-* 以下内容追加到 `.env` 中，依赖版本以环境变量的方式注入到请求中
+2. 以下内容追加到 `.env` 中，依赖版本以环境变量的方式注入到请求中
 
 ```shell
 # 依赖版本，需要随版本更新而修改
 VUE_APP_VUE_V=3.2.37
 VUE_APP_ELEP_V=2.3.3
-VUE_APP_VE_GLOBAL_V=2.9.0
+VUE_APP_VE_GLOBAL_V=2.10.0
 ```
 
-##### 组件按需加载
+3. 更新子应用的依赖，对比子应用的依赖版本，更新到如下版本
 
-具体方案落地较难，框架初期，考虑到开发水平差异，组件都是以全局注册的方式注册的。全局注册可以直接写标签
-全局注册，会提高应用初始化的压力，应用首次转圈长也有这的一部分原因
+```json
+"@jsjn/micro-core-api": "^2.1.0",
+"@jsjn/micro-core-assets": "^1.0.0",
+"@jsjn/micro-core-components": "^2.4.0",
+"@jsjn/micro-core-constants": "^2.0.0",
+"@jsjn/micro-core-directives": "^1.1.0",
+"@jsjn/micro-core-hooks": "^1.1.2",
+"@jsjn/micro-core-micro-main": "^2.3.2",
+"@jsjn/micro-core-router": "^2.1.1",
+"@jsjn/micro-core-store": "^2.1.0",
+"@jsjn/micro-core-utils": "^2.1.1",
+"@jsjn/micro-core-views": "^2.1.3",
+"@jsjn/types": "^1.4.7",
+"@jsjn/utils": "^1.6.0",
+"jn-ve-global": "2.10.0",
+```
 
-具体方案落地，需要各项目自己去解决代码按需加载的方式，等同于前端优化首屏加载速度
+4. 以下内容更替 `/微应用项目/src/main.ts`，如有自定义内容，请自行处理
 
-#### 2. 微应用一直转圈
+```ts
+// import './public-path'
+import { loadCss } from '@jsjn/utils'
+
+// workspaace
+import LGlobalComponents from '@jsjn/micro-core-components/global'
+import App from '@jsjn/micro-core-views/App.vue'
+import '@jsjn/micro-core-assets/styles/index.scss'
+
+// wujie
+import microMain from '@jsjn/micro-core-micro-main/wujie'
+
+// micro-app
+// import '@jsjn/micro-core-micro-main/register'
+// import microLifecycle from '@jsjn/micro-core-micro-main/lifecycle'
+
+// 外部模块
+import { createApp } from 'vue'
+import mitt from 'mitt'
+
+// 本地模块
+import api from '@/api'
+import store, { key } from '@/store'
+import router from '@/router'
+import directives from '@/directives'
+import '@/assets/styles/index.scss'
+
+// 组件库
+import GlobalComponents from 'jn-ve-global'
+import VE_GLOBAL_CONFIG from '@jsjn/micro-core-micro-main/wujie/constants/VE_GLOBAL_CONFIG'
+
+// element-plus
+import ElementPlus from 'element-plus'
+import locale from 'element-plus/es/locale/lang/zh-cn'
+import 'dayjs/locale/zh-cn'
+
+// 基座样式文件透传到子应用：主动污染子应用内
+;[
+    `/basic/lib/jn-ve-global/style.css`,
+    `/basic/css/app.${window['__BASIC_VERSION__']}.css`,
+    `/basic/css/chunk-vendors.${window['__BASIC_VERSION__']}.css`
+].forEach((path) => {
+    loadCss(path, window['__MAIN_HOST_PATH__'])
+})
+
+const app = createApp(App)
+// 第三方容器
+app.config.globalProperties.mittBus = mitt()
+
+app.use(ElementPlus, { locale })
+    .use(router)
+    .use(api)
+    .use(GlobalComponents, VE_GLOBAL_CONFIG)
+    .use(LGlobalComponents)
+    .use(store, key)
+    .use(directives)
+    // .use(microLifecycle)
+    // .use(VueGridLayout)
+    .use(microMain)
+    .mount('#app')
+```
+
+#### 问题2. 微应用一直转圈
+
+:::tip
+
+需要升级 getway，具体操作请联系虞鹏飞
+
+:::
 
 这个涉及到 “无界” 执行原理，可以参考这个 [issues](https://github.com/Tencent/wujie/issues/54)
 

@@ -32,7 +32,7 @@ export default [
                 link: '/components/UpdateLog.md'
             },
             {
-                text: '统一管理平台@2.3.0',
+                text: '统一管理平台@2.4.0',
                 link: '/micro/updateLog/basic.md'
             }
             // {

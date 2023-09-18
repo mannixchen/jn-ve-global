@@ -1,5 +1,42 @@
 # 统一管理平台更新日志
 
+<!-- ================== 2.4.0 ================================================= -->
+
+<update-log-block>
+
+<template #version>
+
+2.4.0
+
+</template>
+
+<template #date>
+
+2023-09-18
+
+</template>
+
+<h3>基座</h3>
+
+<h4>优化</h4>
+
+1. 公用依赖按需加载
+2. 微应用容器公用环境注入优化
+3. 应用缓存问题优化
+    - 基座更新的样式缓存
+    - 微应用更新版本时的 index.html 的缓存 [issues#631](https://github.com/Tencent/wujie/issues/631)
+
+<h3>微应用</h3>
+
+<h4>优化</h4>
+
+1. 优化资源按需加载
+2. 优化公用资源的加载
+
+[更新参考文档#方案落地](../v1ToV2.md#方案落地)
+
+</update-log-block>
+
 <!-- ================== 2.3.0 ================================================= -->
 
 <update-log-block>
@@ -38,26 +75,6 @@
 4. 管理端机构增加 “初始化机构” 功能；
 5. 消息中心、待办的消息来源采用分类字段管理树形展示 <strong style="color: #ff3040;">请注意维护分类字典表</strong>；
 
-<h3>微应用</h3>
-
-适配依赖版本列表：
-
-```json
-"@jsjn/micro-core-api": "^2.1.0",
-"@jsjn/micro-core-assets": "^1.0.0",
-"@jsjn/micro-core-components": "^2.3.4",
-"@jsjn/micro-core-constants": "^2.0.0",
-"@jsjn/micro-core-directives": "^1.1.0",
-"@jsjn/micro-core-hooks": "^1.1.2",
-"@jsjn/micro-core-micro-main": "^2.3.2",
-"@jsjn/micro-core-router": "^2.1.1",
-"@jsjn/micro-core-store": "^2.1.0",
-"@jsjn/micro-core-utils": "^2.1.1",
-"@jsjn/micro-core-views": "^2.1.2",
-"@jsjn/types": "^1.4.7",
-"@jsjn/utils": "^1.5.5",
-```
-
 </update-log-block>
 
 <!-- ================== 2.2.0 ================================================= -->
@@ -78,8 +95,8 @@
 
 <h3>优化</h3>
 
-1. 共享资源控制缓存采用版本号控制 [原因详见](../v1ToV2.md#二次性能优化)
-2. 自定义无界沙箱创建请求路径 [原因详见](../v1ToV2.md#_2-微应用一直转圈)
+1. 共享资源控制缓存采用版本号控制
+2. 自定义无界沙箱创建请求路径
 3. 工作流平台升级，优化了如下内容：
     - 样式排版
     - 获取节点信息难
