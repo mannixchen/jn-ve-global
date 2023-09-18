@@ -1,5 +1,5 @@
 <template>
-    <div class="jn-editor-wrapper">
+    <div v-loading="tinyLoading" class="jn-editor-wrapper">
         <TinymceDom ref="elementRef" />
     </div>
 </template>
@@ -16,10 +16,9 @@ import {
     onDeactivated
 } from 'vue'
 import { TinyMCE, Editor as TinyMCEEditor, RawEditorSettings } from './interface/tinymce'
-import { getTinymce } from './constant/TinyMCE'
 import { v4 as uuidv4 } from 'uuid'
-import getDom from './mixins/dom'
-import initCurrentTiny from './mixins/initTiny'
+import useDom from './hooks/useDom'
+import useInitTiny from './hooks/useInitTiny'
 
 interface JnEditorProps {
     /**
@@ -95,15 +94,21 @@ const emits = defineEmits([
 ])
 
 // 静态常量
-const tinymceRoot = getTinymce()
 const elementId = computed(() => `${props.id}-${uuidv4()}` || uuidv4())
 // 核心变量
 const currentEditor = shallowRef<TinyMCEEditor | null>(null)
 const editorMounted = ref<boolean>(false)
 // dom 节点
-const { element: TinymceDom, elementRef } = getDom(props, elementId.value)
+const { element: TinymceDom, elementRef } = useDom(props, elementId.value)
 
-const init = () => initCurrentTiny(elementId.value, props, emits, currentEditor, editorMounted)
+// 操作 tiny 的初始化环境
+const { init, tinyLoading, remove } = useInitTiny(
+    elementId.value,
+    props,
+    emits,
+    currentEditor,
+    editorMounted
+)
 onMounted(init)
 
 // 监听 disabled 禁用
@@ -127,18 +132,17 @@ if (props.mode === 'classic') {
     })
     onDeactivated(() => {
         editorMounted.value = false
-        getTinymce()?.remove(currentEditor.value)
+        remove(currentEditor.value)
     })
 }
 
 // 销毁移除当前创建的实例
 onBeforeUnmount(() => {
-    if (tinymceRoot === null) return
-    tinymceRoot.remove(currentEditor.value)
+    remove(currentEditor.value)
 })
 
 defineExpose({
-    tinymceRoot,
+    tinymceRoot: window['tinymce'],
     elementId,
     currentEditor,
     editorMounted

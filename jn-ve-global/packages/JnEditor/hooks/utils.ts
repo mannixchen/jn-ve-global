@@ -1,3 +1,6 @@
+import { loadScript, loadCss, global } from '@jsjn/utils'
+import { TinyMCE } from '../interface/tinymce'
+
 /**
  * 图片压缩
  * @explain 借助canvas对图片进行重绘（canvas2DataURL）
@@ -47,4 +50,29 @@ export function imgCompress(
         // 回调函数返回base64的值
         callback(base64)
     }
+}
+
+/**
+ * 获取 tinymce 实例
+ * @returns
+ */
+export async function getTinymce() {
+    const tinyGlobalName = 'tinymce'
+
+    // console.log(`%c window['tinymce'] ==== `, 'color: #67c23a;', window[tinyGlobalName])
+
+    // 如果已存在，直接返回
+    if (window[tinyGlobalName]) {
+        return window[tinyGlobalName]
+    }
+
+    // console.log(`%c 加载 script..........`, 'color: #67c23a;' )
+
+    const tinymceDir = '/tinymce5.10.5'
+    const tinyJsFile = `${tinymceDir}/tinymce.min.js`
+    const tinyCssFile = `${tinymceDir}/skins/ui/oxide/skin.min.css`
+    loadCss(tinyCssFile)
+
+    const tinymce = await loadScript(tinyJsFile, tinyGlobalName)
+    return tinymce
 }

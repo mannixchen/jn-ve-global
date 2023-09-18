@@ -1,16 +1,17 @@
-import { Ref, watch, ShallowRef } from 'vue'
+import { Ref, watch, ShallowRef, ref } from 'vue'
 import {
     TinyMCE,
     Editor as TinyMCEEditor,
     EditorEvent,
     RawEditorSettings
 } from '../interface/tinymce'
-import { getTinymce } from '../constant/TinyMCE'
+
 import JnEditorProps from '../interface/JnEditorProps'
 import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
 import myAxios from '../../_http/http'
+import { getTinymce } from './utils'
 
 export type EditorOptions = Parameters<TinyMCE['init']>[0]
 
@@ -34,6 +35,9 @@ export default (
     currentEditor: ShallowRef<TinyMCEEditor | null>,
     editorMounted: Ref<boolean>
 ) => {
+    const tinyLoading = ref<boolean>(false)
+    let tinymce = null
+
     /**
      * 扩展插件：
      *
@@ -104,7 +108,7 @@ export default (
         powerpaste_googledocs_import: 'prompt', // 控制如何过滤从 Google 文档粘贴的内容
         paste_data_images: true,
         images_upload_handler: getImagesUploadHandler(props), // 自定义上传
-        file_picker_callback: getFilePickerCallback(props), // 文件上传处理函数
+        file_picker_callback: getFilePickerCallback(props, tinymce), // 文件上传处理函数
         convert_urls: false, // 将当前图片路径变为相对路径
         textpattern_patterns: [
             { start: '*', end: '*', format: 'italic' },
@@ -185,8 +189,33 @@ export default (
         }
     }
 
-    getTinymce()?.init(finalInit)
-    editorMounted.value = true
+    // 初始化
+    function init() {
+        tinyLoading.value = true
+        // console.time('tinymce loding time at')
+        getTinymce()
+            .then((tinyGlobal) => {
+                tinymce = tinyGlobal
+                tinymce?.init(finalInit)
+                tinyLoading.value = false
+                editorMounted.value = true
+                // console.timeEnd('tinymce loding time at')
+            })
+            .catch((err) => {
+                console.log(`%c tiny init err`, 'color: #f56c6c;', err)
+            })
+    }
+
+    // 移除
+    function remove(instance: TinyMCEEditor) {
+        tinymce?.remove(instance)
+    }
+
+    return {
+        init,
+        remove,
+        tinyLoading
+    }
 }
 
 // 闭包获取自定义上传
@@ -238,7 +267,7 @@ function getImagesUploadHandler(props: JnEditorProps) {
 }
 
 // 闭包获取文件上传（按钮）处理函数
-function getFilePickerCallback(props: JnEditorProps) {
+function getFilePickerCallback(props: JnEditorProps, tinymce: TinyMCE) {
     /**
      * 文件上传处理函数
      *
@@ -280,7 +309,7 @@ function getFilePickerCallback(props: JnEditorProps) {
                 reader.readAsDataURL(file)
                 reader.onload = function () {
                     const id = 'blobid' + new Date().getTime()
-                    const blobCache = getTinymce().activeEditor.editorUpload.blobCache
+                    const blobCache = tinymce.activeEditor.editorUpload.blobCache
                     const base64 = (reader.result as string).split(',')[1]
                     const blobInfo = blobCache.create(id, file, base64)
                     blobCache.add(blobInfo)
