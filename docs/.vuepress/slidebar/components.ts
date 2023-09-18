@@ -8,7 +8,7 @@ export default [
         children: [
             { text: 'Form', link: '/components/Form.md' },
             { text: 'Tabs', link: '/components/Tabs.md' },
-            { text: 'OperateExcel', link: '/components/OperateExcel.md' },
+            // { text: 'OperateExcel', link: '/components/OperateExcel.md' },
             { text: 'FigureInput', link: '/components/FigureInput.md' },
             { text: 'IconPicker', link: '/components/IconPicker.md' },
             { text: 'Upload', link: '/components/Upload.md' },
