@@ -77,27 +77,32 @@ export default defineConfig({
             // 确保外部化处理那些你不想打包进库的依赖
             external: [
                 'vue',
+                'vue-router',
                 'element-plus',
                 '@element-plus/icons-vue',
-                'vue-router',
                 'lodash',
-                // 'async-validator',
                 'resize-observer-polyfill',
-                'xlsx',
-                'echarts'
+                'echarts',
+                '@vue-office/excel',
+                '@vue-office/docx',
+                '@vue-office/pdf'
             ],
             output: {
-                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量 ElementPlusIconsVue
+                /**
+                 * 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                 * 该库在 umd 构建模式下，需要保证其排除的项目也要以 umd 方式使用，需要提供其依赖的全局名称
+                 */
                 globals: {
                     vue: 'Vue',
+                    'vue-router': 'VueRouter',
                     'element-plus': 'ElementPlus',
                     '@element-plus/icons-vue': 'ElementPlusIconsVue',
-                    'vue-router': 'VueRouter',
                     lodash: '_',
-                    // 'async-validator': 'Schema',
                     'resize-observer-polyfill': 'ResizeObserver',
-                    'xlsx': 'XLSX',
-                    'echarts': 'echarts'
+                    'echarts': 'echarts',
+                    '@vue-office/excel': 'vue-office-excel',
+                    '@vue-office/docx': 'vue-office-docx',
+                    '@vue-office/pdf': 'vue-office-pdf'
                 }
             }
         }

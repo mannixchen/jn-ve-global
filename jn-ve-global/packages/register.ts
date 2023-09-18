@@ -25,7 +25,21 @@ import './assets/icons/ali/iconfont.css'
 import 'virtual:svg-icons-register'
 import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
 
-export * from './export'
+export { default as GAddress } from './GAddress/index.vue'
+export { default as GButtonGroup } from './GButtonGroup/index.vue'
+export { default as GCollapse } from './GCollapse/index.vue'
+export { default as GCollapseItem } from './GCollapse/component/GCollapseItem/index.vue'
+export { default as GDButton } from './GDButton/index.vue'
+export { default as GFigureInput } from './GFigureInput/index.vue'
+export { default as GFilePreview } from './GFilePreview/index.vue'
+export { default as GForm } from './GForm/index.vue'
+export { default as GFormItem } from './GForm/component/GFormItem/index.vue'
+export { default as GHintBox } from './GHintBox/index.vue'
+export { default as GIcon } from './GIcon/index.vue'
+export { default as GIconPicker } from './GIconPicker/v2/index.vue'
+export { default as GAdvanceInput } from './GForm/component/GAdvanceInput/index.vue'
+export { default as GBaseModule } from './GBaseModule/index.vue'
+export { default as GTable } from './GTable/index.vue'
 
 getGlobal()
 
@@ -119,8 +133,6 @@ export default (
  * 抛出组件库内的图标资源
  */
 export const icons = { elIconKeys, aliIcons, localIcons }
-
-// 版本号输出，增加辨识 version
-console.log(`[${packageInfo.name}] v${packageInfo.version}`)
-console.log(`[vue] v${VueVersion}`)
-console.log(`[element-plus] v${ElVersion}`)
+window['__JN_VE_V__'] = packageInfo.version
+window['__VUE_V__'] = VueVersion
+window['__ELE_V__'] = ElVersion
