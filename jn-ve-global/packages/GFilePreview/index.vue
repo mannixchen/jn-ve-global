@@ -1,8 +1,12 @@
 <template>
-    <div v-if="previewType" v-loading="loadingSourceFlag" class="g-file-preview__wrapper">
+    <div
+        v-if="previewType && !loadComSourceErr"
+        v-loading="loadingSourceFlag || loadComSourceFlag"
+        class="g-file-preview__wrapper"
+    >
         <component
-            :is="previewMapping[previewType]"
-            v-if="['pdf', 'docx', 'excel'].includes(previewType) && isMounted"
+            :is="currentOfficeCom"
+            v-if="['pdf', 'docx', 'excel'].includes(previewType) && currentOfficeCom && isMounted"
             :src="fileUrl"
             style="height: 90vh"
         />
@@ -10,9 +14,15 @@
         <img v-if="previewType === 'img'" :src="fileUrl" alt="">
     </div>
 
-    <div v-else class="error">
-        文件类型出错，目前支持 [image,pdf,docx,xlsx]
-    </div>
+    <div
+        v-else
+        class="error"
+        v-text="
+            !loadComSourceErr
+                ? '文件类型出错，目前仅支持 [image,pdf,docx,xlsx]'
+                : '加载资源出错....'
+        "
+    />
 </template>
 
 <script lang="ts">
@@ -23,24 +33,12 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, watchEffect } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watchEffect, watch } from 'vue'
 import { imgSuffix } from '../GUpload/constant/fileTypeList'
 import { getFileType } from '../GUpload/utils'
 import _ from 'lodash'
 import myAxios from '../_http/http'
-
-// @vue-office
-import VueOfficeExcel from '@vue-office/excel'
-import '@vue-office/excel/lib/index.css'
-import VueOfficeDocx from '@vue-office/docx'
-import '@vue-office/docx/lib/index.css'
-import VueOfficePdf from '@vue-office/pdf'
-
-const previewMapping = {
-    pdf: VueOfficePdf,
-    docx: VueOfficeDocx,
-    excel: VueOfficeExcel
-}
+import useSource from './hooks/useSource'
 
 const props = withDefaults(
     defineProps<{
@@ -74,7 +72,7 @@ const previewType = computed<'img' | 'pdf' | 'docx' | 'excel'>(() => {
         return 'pdf'
     }
 
-    if (['docx'/* , 'doc' */].includes(fileType)) {
+    if (['docx' /* , 'doc' */].includes(fileType)) {
         return 'docx'
     }
 
@@ -84,6 +82,20 @@ const previewType = computed<'img' | 'pdf' | 'docx' | 'excel'>(() => {
 
     return null
 })
+
+const { initSource, currentOfficeCom, loadComSourceFlag, loadComSourceErr } = useSource({
+    previewType
+})
+watch(
+    () => previewType.value,
+    (type) => {
+        if (!type) return
+        if (type !== 'img') {
+            initSource()
+        }
+    },
+    { immediate: true }
+)
 
 const fileUrl = ref<string>('')
 const isLocalCreateURL = ref<boolean>(false)
@@ -142,6 +154,8 @@ onUnmounted(() => {
 .error {
     font-size: 20px;
     color: var(--el-color-danger);
+    text-align: center;
+    margin: 20px 0;
 }
 </style>
 
