@@ -6,6 +6,7 @@ import eslintPlugin from 'vite-plugin-eslint'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import esbuild from 'rollup-plugin-esbuild'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import { viteExternalsPlugin } from 'vite-plugin-externals'
 
 export default defineConfig({
     plugins: [
@@ -37,6 +38,14 @@ export default defineConfig({
             ],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
+        }),
+
+        /**
+         * 使用外部库，类似webpack的externals，但现在只支持浏览器环境。
+         * https://github.com/crcong/vite-plugin-externals/blob/HEAD/README.zh-CN.md
+         */
+        viteExternalsPlugin({
+            vue: 'Vue'
         })
     ],
 
