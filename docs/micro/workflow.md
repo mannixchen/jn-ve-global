@@ -27,13 +27,14 @@
 如下参数是可选的：
 
 * title: `string` 流程标题
-* from: `string` 流程来源，即关闭流程时，想要返回的页面
+* from: `string` 流程来源，即关闭流程时，想要返回的页面，需要使用 Base64 加密后传递
 
 可添加额外的参数，传递给业务页面
 :::
 
 ```ts
 import { toPage } from '@jsjn/micro-core-micro-main/navTo'
+import { Base64 } from 'js-base64'
 
 toPage({
     path: '/workflow',
@@ -42,7 +43,7 @@ toPage({
         secretId: '592743c924ed451589709dce6596f444',
         processInstId: '795239480167497728',
         title: '沙钢定制化进件流程(房e贷)+-+有审批-可修改人工节点',
-        from: '/uums/anmentMage/agenttask',
+        from: Base64.encode(`${route.path}?index=${activeTask.value}`),
         // 如下自定义参数，无需额外参数，拷贝时请删除
         myField: '......'
     }
