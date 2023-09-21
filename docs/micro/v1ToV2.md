@@ -161,7 +161,7 @@ VUE_APP_VE_GLOBAL_V=2.10.0
 ```json
 "@jsjn/micro-core-api": "^2.1.0",
 "@jsjn/micro-core-assets": "^1.0.0",
-"@jsjn/micro-core-components": "^2.4.0",
+"@jsjn/micro-core-components": "^2.4.1",
 "@jsjn/micro-core-constants": "^2.0.0",
 "@jsjn/micro-core-directives": "^1.1.0",
 "@jsjn/micro-core-hooks": "^1.1.2",
