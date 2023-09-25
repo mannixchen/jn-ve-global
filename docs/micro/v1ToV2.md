@@ -126,7 +126,7 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/@element-plus/icons-vue/index.iife.min.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/element-plus/index.full<%= NODE_ENV === 'development' ? '' : '.min' %>.js?v=<%= VUE_APP_ELEP_V%>"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/jn-ve-global/jn-ve-global.umd.js?v=<%= VUE_APP_VE_GLOBAL_V%>"></script>
-    <!-- 如果微应用中有使用到 echarts 请把这一会注释打开 -->
+    <!-- 如果微应用中有使用到 echarts 请把这一行注释打开 -->
     <!-- <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/echarts/echarts.min.js"></script> -->
 
     <!-- 项目自定义依赖 -->
@@ -165,7 +165,7 @@ VUE_APP_VE_GLOBAL_V=2.10.0
 "@jsjn/micro-core-constants": "^2.0.0",
 "@jsjn/micro-core-directives": "^1.1.0",
 "@jsjn/micro-core-hooks": "^1.1.2",
-"@jsjn/micro-core-micro-main": "^2.3.2",
+"@jsjn/micro-core-micro-main": "^2.4.0",
 "@jsjn/micro-core-router": "^2.1.1",
 "@jsjn/micro-core-store": "^2.1.0",
 "@jsjn/micro-core-utils": "^2.1.1",
@@ -178,40 +178,29 @@ VUE_APP_VE_GLOBAL_V=2.10.0
 4. 以下内容更替 `/微应用项目/src/main.ts`，如有自定义内容，请自行处理
 
 ```ts
-// import './public-path'
 import { loadCss } from '@jsjn/utils'
-
 // workspaace
 import LGlobalComponents from '@jsjn/micro-core-components/global'
 import App from '@jsjn/micro-core-views/App.vue'
 import '@jsjn/micro-core-assets/styles/index.scss'
-
-// wujie
-import microMain from '@jsjn/micro-core-micro-main/wujie'
-
-// micro-app
-// import '@jsjn/micro-core-micro-main/register'
-// import microLifecycle from '@jsjn/micro-core-micro-main/lifecycle'
-
 // 外部模块
 import { createApp } from 'vue'
 import mitt from 'mitt'
-
 // 本地模块
 import api from '@/api'
 import store, { key } from '@/store'
 import router from '@/router'
 import directives from '@/directives'
 import '@/assets/styles/index.scss'
-
 // 组件库
 import GlobalComponents from 'jn-ve-global'
 import VE_GLOBAL_CONFIG from '@jsjn/micro-core-micro-main/wujie/constants/VE_GLOBAL_CONFIG'
-
 // element-plus
 import ElementPlus from 'element-plus'
 import locale from 'element-plus/es/locale/lang/zh-cn'
 import 'dayjs/locale/zh-cn'
+// wujie
+import microInit from '@jsjn/micro-core-micro-main'
 
 // 基座样式文件透传到子应用：主动污染子应用内
 ;[
@@ -225,7 +214,7 @@ import 'dayjs/locale/zh-cn'
 const app = createApp(App)
 // 第三方容器
 app.config.globalProperties.mittBus = mitt()
-
+// 实例挂载
 app.use(ElementPlus, { locale })
     .use(router)
     .use(api)
@@ -233,9 +222,7 @@ app.use(ElementPlus, { locale })
     .use(LGlobalComponents)
     .use(store, key)
     .use(directives)
-    // .use(microLifecycle)
-    // .use(VueGridLayout)
-    .use(microMain)
+    .use(microInit)
     .mount('#app')
 ```
 

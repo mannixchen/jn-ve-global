@@ -34,11 +34,11 @@ export default [
             {
                 text: '统一管理平台@2.4.0',
                 link: '/micro/updateLog/basic.md'
+            },
+            {
+                text: '微应用依赖',
+                link: '/micro/updateLog/dependence.md'
             }
-            // {
-            //     text: '微应用框架@2.1.0',
-            //     link: '/micro/updateLog/micro.md'
-            // }
         ]
     }
 ]
