@@ -5,7 +5,7 @@
 ```json
 "@jsjn/micro-core-api": "^2.1.0",
 "@jsjn/micro-core-assets": "^1.0.0",
-"@jsjn/micro-core-components": "^2.4.1",
+"@jsjn/micro-core-components": "^2.5.0",
 "@jsjn/micro-core-constants": "^2.0.0",
 "@jsjn/micro-core-directives": "^1.1.0",
 "@jsjn/micro-core-hooks": "^1.1.2",
@@ -19,6 +19,28 @@
 ```
 
 :::
+
+<!-- ================== 20231007 ================================================= -->
+
+<update-log-block>
+
+<template #version>
+
+20231007
+
+</template>
+
+<template #date>
+
+2023-10-07
+
+</template>
+
+<h3>"@jsjn/micro-core-components": "^2.5.0"</h3>
+
+1. 增加打印（节点信息 + 审批历史）功能，[样例](../workflow.md#打印)
+
+</update-log-block>
 
 <!-- ================== 20230925 ================================================= -->
 
