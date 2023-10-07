@@ -25,6 +25,7 @@
 3. 应用缓存问题优化
     - 基座更新的样式缓存
     - 微应用更新版本时的 index.html 的缓存 [issues#631](https://github.com/Tencent/wujie/issues/631)
+4. 工作流平台增加打印功能
 
 <h3>微应用</h3>
 
