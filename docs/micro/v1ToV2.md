@@ -158,22 +158,11 @@ VUE_APP_VE_GLOBAL_V=2.10.0
 
 3. 更新子应用的依赖，对比子应用的依赖版本，更新到如下版本
 
-```json
-"@jsjn/micro-core-api": "^2.1.0",
-"@jsjn/micro-core-assets": "^1.0.0",
-"@jsjn/micro-core-components": "^2.4.1",
-"@jsjn/micro-core-constants": "^2.0.0",
-"@jsjn/micro-core-directives": "^1.1.0",
-"@jsjn/micro-core-hooks": "^1.1.2",
-"@jsjn/micro-core-micro-main": "^2.4.0",
-"@jsjn/micro-core-router": "^2.1.1",
-"@jsjn/micro-core-store": "^2.1.0",
-"@jsjn/micro-core-utils": "^2.1.1",
-"@jsjn/micro-core-views": "^2.1.3",
-"@jsjn/types": "^1.4.7",
-"@jsjn/utils": "^1.6.0",
-"jn-ve-global": "2.10.0",
-```
+:::tip
+
+[参考依赖最新版本](./updateLog/dependence.md)
+
+:::
 
 4. 以下内容更替 `/微应用项目/src/main.ts`，如有自定义内容，请自行处理
 
