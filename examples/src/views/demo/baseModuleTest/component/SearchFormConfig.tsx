@@ -109,14 +109,14 @@ export default () =>
                 controlConfig: {
                     type: 'input'
                 }
-            },
-            {
-                prop: 'name9',
-                label: '身份证号',
-                span: 8,
-                controlConfig: {
-                    type: 'input'
-                }
             }
+            // {
+            //     prop: 'name9',
+            //     label: '身份证号',
+            //     span: 8,
+            //     controlConfig: {
+            //         type: 'input'
+            //     }
+            // }
         ]
     })

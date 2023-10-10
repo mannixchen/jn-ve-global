@@ -1,88 +1,90 @@
 <template>
     <div
-        v-if="localConfig && refreshLoad"
         class="g-table-root"
         :class="{
             'hide-pagination': !localConfig.pagination || localConfig.pagination.show === false,
             'data-empty': localConfig.data && localConfig.data.length === 0
         }"
     >
-        <!-- 表格 -->
-        <div class="g-table-main">
-            <el-table
-                ref="localInstance"
-                :tooltip-options="{
-                    popperClass: 'table-tooltip-popper max-h-200'
-                }"
-                v-bind="tableProps"
-                :height="
-                    tableProps.height !== undefined
-                        ? tableProps.height === false
-                            ? undefined
-                            : tableProps.height
-                        : '100%'
-                "
-                @select="localSelect"
-                @select-all="localSelectAll"
-            >
-                <!-- 一键开启多选 -->
-                <el-table-column
-                    v-if="localConfig.showSelection"
-                    :width="size2Rem(55)"
-                    v-bind="localConfig.selectionColumns"
-                    type="selection"
-                    class-name="table-selection-column"
-                />
-
-                <template
-                    v-for="(columnConfig, index) in localConfig.columns"
-                    :key="`${columnConfig.label}-${index}`"
+        <template v-if="localConfig && refreshLoad">
+            <!-- 表格 -->
+            <div class="g-table-main">
+                <el-table
+                    ref="localInstance"
+                    :tooltip-options="{
+                        popperClass: 'table-tooltip-popper max-h-200'
+                    }"
+                    v-bind="tableProps"
+                    :height="
+                        tableProps.height !== undefined
+                            ? tableProps.height === false
+                                ? undefined
+                                : tableProps.height
+                            : '100%'
+                    "
+                    @select="localSelect"
+                    @select-all="localSelectAll"
                 >
-                    <!-- 排除多选 + 隐藏列 -->
-                    <TableColumn
-                        v-if="
-                            !(localConfig.showSelection && columnConfig.type === 'selection') &&
-                                !columnConfig.hide
-                        "
-                        :column-config="columnConfig"
+                    <!-- 一键开启多选 -->
+                    <el-table-column
+                        v-if="localConfig.showSelection"
+                        :width="size2Rem(55)"
+                        v-bind="localConfig.selectionColumns"
+                        type="selection"
+                        class-name="table-selection-column"
                     />
-                </template>
 
-                <template #empty>
-                    <LGIcon icon="ali-icon-wushuju" />
-                    <p>
-                        <span>暂无数据</span>
-                        <LGIcon
-                            v-if="props.config.onRefresh"
-                            icon="el-Refresh"
-                            :class="{ 'is-refresh': isRefresh }"
-                            @click="handleEmptyRefresh"
+                    <template
+                        v-for="(columnConfig, index) in localConfig.columns"
+                        :key="`${columnConfig.label}-${index}`"
+                    >
+                        <!-- 排除多选 + 隐藏列 -->
+                        <TableColumn
+                            v-if="
+                                !(localConfig.showSelection && columnConfig.type === 'selection') &&
+                                    !columnConfig.hide
+                            "
+                            :column-config="columnConfig"
                         />
-                    </p>
-                </template>
-            </el-table>
-        </div>
+                    </template>
 
-        <!-- 分页 -->
-        <div
-            v-if="
-                localConfig.pagination &&
-                    (localConfig.pagination.show === true || localConfig.pagination.show === undefined)
-            "
-            class="g-table-pagination"
-        >
-            <el-pagination
-                v-if="isCreatePagination"
-                v-model:page-size="localConfig.pagination.pageSize"
-                v-model:current-page="localConfig.pagination.currentPage"
-                :total="localConfig.pagination.total"
-                :page-sizes="localConfig.pagination.pageSizes || [10, 20, 50]"
-                prev-text="上一页"
-                next-text="下一页"
-                background
-                layout="prev, pager, next, jumper, total, sizes"
-            />
-        </div>
+                    <template #empty>
+                        <LGIcon icon="ali-icon-wushuju" />
+                        <p>
+                            <span>暂无数据</span>
+                            <LGIcon
+                                v-if="props.config.onRefresh"
+                                icon="el-Refresh"
+                                :class="{ 'is-refresh': isRefresh }"
+                                @click="handleEmptyRefresh"
+                            />
+                        </p>
+                    </template>
+                </el-table>
+            </div>
+
+            <!-- 分页 -->
+            <div
+                v-if="
+                    localConfig.pagination &&
+                        (localConfig.pagination.show === true ||
+                            localConfig.pagination.show === undefined)
+                "
+                class="g-table-pagination"
+            >
+                <el-pagination
+                    v-if="isCreatePagination"
+                    v-model:page-size="localConfig.pagination.pageSize"
+                    v-model:current-page="localConfig.pagination.currentPage"
+                    :total="localConfig.pagination.total"
+                    :page-sizes="localConfig.pagination.pageSizes || [10, 20, 50]"
+                    prev-text="上一页"
+                    next-text="下一页"
+                    background
+                    layout="prev, pager, next, jumper, total, sizes"
+                />
+            </div>
+        </template>
     </div>
 </template>
 
