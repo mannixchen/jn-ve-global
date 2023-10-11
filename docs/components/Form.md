@@ -437,20 +437,17 @@ historyLog?: string | {
 };
 ```
 
-```ts
-formConfig.historyLog = `{
-    "name": {
-            "old": "张三",
-            "new": "李四",
-            "message": "字段[name]值从[张三]变成[李四]"
-    },
-    "sex": {
-            "old": "15",
-            "new": "20",
-            "message": "字段[sex]值从[15]变成[20]"
-    }
-}`
-```
+<demo-block>
+
+<Form-demo5 />
+
+<template #code>
+
+@[code](@demoroot/Form/demo5.vue)
+
+</template>
+
+</demo-block>
 
 ## GForm :config 配置列表
 
