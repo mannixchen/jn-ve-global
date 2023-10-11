@@ -46,9 +46,14 @@ const props = withDefaults(
         fileId?: string
         source?: string | Blob
         downloadUrl?: string
+        /**
+         * 下载的请求超时时间
+         */
+        timeout?: number
     }>(),
     {
-        downloadUrl: '/kinso-basic-open-server/v1/document/file/download'
+        downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
+        timeout: 1000 * 20
     }
 )
 
@@ -121,14 +126,21 @@ watchEffect(() => {
     // 用户直接传递 id
     if (id) {
         loadingSourceFlag.value = true
+        loadComSourceErr.value = false
+
         myAxios
             .get(`${props.downloadUrl}/${id}`, {
-                responseType: 'blob'
+                responseType: 'blob',
+                timeout: props.timeout
             })
             .then((res) => {
                 fileUrl.value = window.URL.createObjectURL(res as any)
                 isLocalCreateURL.value = true
                 loadingSourceFlag.value = false
+            })
+            .catch(() => {
+                loadingSourceFlag.value = false
+                loadComSourceErr.value = true
             })
     }
 })

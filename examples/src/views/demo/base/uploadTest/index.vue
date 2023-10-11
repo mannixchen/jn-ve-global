@@ -1,18 +1,11 @@
 <template>
-    <el-upload
-        class="avatar-uploader"
-        action="/api/kinso-basic-open-server/v1/document/file/upload"
+    <g-upload
+        action="/proxy/kinso-basic-open-server/v1/document/file/upload"
+        list-type="avatar"
         :show-file-list="false"
         :on-success="handleAvatarSuccess"
         :before-upload="beforeAvatarUpload"
-    >
-        <template #default>
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-            <el-icon v-else class="avatar-uploader-icon">
-                <Plus />
-            </el-icon>
-        </template>
-    </el-upload>
+    />
 
     <br>
 
@@ -75,7 +68,7 @@ const open = () => {
 </style>
 
 <style>
-.avatar-uploader .el-upload {
+/* .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
@@ -94,5 +87,5 @@ const open = () => {
     width: 178px;
     height: 178px;
     text-align: center;
-}
+} */
 </style>

@@ -99,28 +99,23 @@
         ${imgSuffix.includes(getFileType(currentFile.name)) ? 'img-modal' : ''} 
         ${officeSuffix.includes(getFileType(currentFile.name)) ? 'office-modal' : ''}`"
     >
+        <!-- 预览组件 -->
         <LGFilePreview
             :file-name="currentFile.name"
             :source="currentFile.url"
             :file-id="currentFile.url ? undefined : currentFile.fileId"
             :download-url="localDownloadUrl"
+            :timeout="timeout"
         />
 
-        <!-- <div class="file-preview-wrapper">
-            <img
-                v-if="imgSuffix.includes(getFileType(currentFile.name))"
-                :src="currentFile.url"
-                alt=""
-            />
+        <!-- 连续预览 -->
+        <div v-if="attrs['list-type'] !== 'avatar'" class="pre-trigger" @click="preImgHandle">
+            <g-icon icon="el-ArrowLeftBold" />
+        </div>
 
-            <embed
-                v-if="['pdf'].includes(getFileType(currentFile.name))"
-                :src="currentFile.url"
-                type="application/pdf"
-                width="100%"
-                height="100%"
-            />
-        </div> -->
+        <div v-if="attrs['list-type'] !== 'avatar'" class="next-trigger" @click="nextImgHandle">
+            <g-icon icon="el-ArrowRightBold" />
+        </div>
     </g-modal>
 </template>
 
@@ -132,12 +127,11 @@ export default {
 </script>
 
 <script lang="ts" setup>
-// import { watch, ref } from 'vue'
 import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix } from './constant/fileTypeList'
 import UploadFile from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
-import { ElUpload, ElButton, ElProgress } from 'element-plus'
+import { ElUpload, ElButton, ElProgress, ElMessage } from 'element-plus'
 import LGFilePreview from '../GFilePreview/index.vue'
 import LGIcon from '../GIcon/index.vue'
 
@@ -266,6 +260,30 @@ const { filePreview, fileDownload, delAvatar, delFile } = getMethods({
 // 工具
 const { getUploadProps, showPreview } = getUtils({ attrs })
 
+// 连续预览
+const preImgHandle = () => {
+    const tIndex = _findTargetFileIndex(currentFile.value, localFileList.value)
+    const preIndex = tIndex - 1
+    if (preIndex < 0) {
+        ElMessage.warning('没有了!')
+        return
+    }
+    currentFile.value = localFileList.value[preIndex]
+}
+const nextImgHandle = () => {
+    const tIndex = _findTargetFileIndex(currentFile.value, localFileList.value)
+    const preIndex = tIndex + 1
+    if (preIndex >= localFileList.value.length) {
+        ElMessage.warning('到底了!')
+        return
+    }
+    currentFile.value = localFileList.value[preIndex]
+}
+
+function _findTargetFileIndex(file: UploadFile, fileList: UploadFile[]) {
+    return fileList.findIndex((item) => item.fileId === file.fileId)
+}
+
 defineExpose({
     uploadRef
 })
@@ -276,4 +294,41 @@ defineExpose({
 </style>
 <style lang="scss">
 @import './styles/preview.scss';
+
+.upload-preview-modal {
+    --btn-size: 40px;
+
+    overflow: initial !important;
+
+    .pre-trigger,
+    .next-trigger {
+        width: var(--btn-size);
+        height: var(--btn-size);
+        border-radius: 50%;
+        background-color: rgba($color: #fff, $alpha: 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0.5;
+        transition: all 0.2s;
+        position: absolute;
+        top: calc(50% - var(--btn-size));
+        left: -50px;
+        z-index: 29999;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
+    }
+
+    .next-trigger {
+        left: initial;
+        right: -50px;
+    }
+}
 </style>
