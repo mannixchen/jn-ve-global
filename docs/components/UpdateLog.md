@@ -1,6 +1,38 @@
 # 组件库 jn-ve-global 更新日志 
 
-<!-- 遵循 [Semantic Versioning 2.0.0](https://semver.org/lang/zh-CN/) 语义化版本规范。 -->
+<!-- ================== 2.11.0 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
+2.11.0
+
+</template>
+
+<template #date>
+
+2023-10-11
+
+</template>
+
+<h3>New</h3>
+
+<h4>Upload</h4>
+
+1. 增加连续预览功能
+
+<h4>FilePreview</h4>
+
+1. 增加超时配置 Api
+
+<h4>Form</h4>
+
+1. 下拉框禁用去掉角标
+2. 增加字段变更历史记录展示 tooltip
+
+</update-log-block>
+
 <!-- ================== 2.10.0 ======================================================================== -->
 
 <update-log-block>

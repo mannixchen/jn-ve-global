@@ -153,7 +153,7 @@ home 升级方式不变，参考 [首页开发](./homeDev.md)
 # 依赖版本，需要随版本更新而修改
 VUE_APP_VUE_V=3.2.37
 VUE_APP_ELEP_V=2.3.3
-VUE_APP_VE_GLOBAL_V=2.10.0
+VUE_APP_VE_GLOBAL_V=2.11.0
 ```
 
 3. 更新子应用的依赖，对比子应用的依赖版本，更新到如下版本

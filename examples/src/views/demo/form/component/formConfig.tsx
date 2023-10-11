@@ -11,11 +11,28 @@ import { reactive } from 'vue'
 import prefix from '@/api/prefix'
 
 export default () => {
+
+    setTimeout(() => {
+        formConfig.historyLog = `{
+            "name": {
+                 "old": "张三",
+                 "new": "李四",
+                 "message": "字段[name]值从[张三]变成[李四]"
+            },
+            "sex": {
+                 "old": "15",
+                 "new": "20",
+                 "message": "字段[sex]值从[15]变成[20]"
+            }
+       }`
+    }, 2000)
+
     const formConfig = reactive<FormProps>({
         instance: null,
         labelPosition: 'right',
         labelWidth: '180px',
         // disabled: true,
+        historyLog: ``,
         model: {
             name: '',
             region: '',
@@ -48,6 +65,8 @@ export default () => {
                 label: 'Input',
                 span: 12,
                 required: true,
+                tip: 'ces',
+                tipPosition: 'append',
                 controlConfig: {
                     type: 'input',
                     props: {
