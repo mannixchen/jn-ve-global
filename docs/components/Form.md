@@ -422,6 +422,36 @@ xl: item.xl ?? 8
 
 </demo-block>
 
+### 字段修改历史
+
+通过后台接口获取到表单的修改日志记录，传递给表单配置的 `historyLog` 字段，如：
+
+字段类型：
+
+```ts
+/**
+ * 数据模型修改历史，json 字符串 or 数据模型
+ */
+historyLog?: string | {
+    [k: string]: FieldHistoryLog;
+};
+```
+
+```ts
+formConfig.historyLog = `{
+    "name": {
+            "old": "张三",
+            "new": "李四",
+            "message": "字段[name]值从[张三]变成[李四]"
+    },
+    "sex": {
+            "old": "15",
+            "new": "20",
+            "message": "字段[sex]值从[15]变成[20]"
+    }
+}`
+```
+
 ## GForm :config 配置列表
 
 ### Form Attributes
