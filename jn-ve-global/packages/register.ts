@@ -133,6 +133,5 @@ export default (
  * 抛出组件库内的图标资源
  */
 export const icons = { elIconKeys, aliIcons, localIcons }
-window['__JN_VE_V__'] = packageInfo.version
-window['__VUE_V__'] = VueVersion
-window['__ELE_V__'] = ElVersion
+
+export const version = packageInfo.version

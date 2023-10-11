@@ -13,12 +13,34 @@
 "@jsjn/micro-core-router": "^2.1.1",
 "@jsjn/micro-core-store": "^2.1.0",
 "@jsjn/micro-core-utils": "^2.1.1",
-"@jsjn/micro-core-views": "^2.1.3",
+"@jsjn/micro-core-views": "^2.2.0",
 "@jsjn/types": "^1.4.7",
 "@jsjn/utils": "^1.6.0",
+"jn-ve-global": "2.11.0",
 ```
 
 :::
+<!-- ================== 20231011 ================================================= -->
+
+<update-log-block>
+
+<template #version>
+
+20231011
+
+</template>
+
+<template #date>
+
+2023-10-11
+
+</template>
+
+<h3>"@jsjn/micro-core-views": "^2.2.0"</h3>
+
+1. 适配基座 keep-alive 配置
+
+</update-log-block>
 
 <!-- ================== 20231007 ================================================= -->
 
