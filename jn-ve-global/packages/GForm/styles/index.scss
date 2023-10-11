@@ -26,6 +26,8 @@
 
         // 显示 tooltip 的 item
         &.show-tip {
+
+            &.field-log-tip,
             &.tip-append {
                 .el-form-item__content {
                     flex-wrap: nowrap
@@ -50,6 +52,19 @@
                 margin-left: 10px;
                 font-size: 22px;
                 color: #767575;
+            }
+
+            .item-tip.log {
+                margin-left: 10px;
+                font-size: 24px;
+                color: var(--el-color-primary);
+                height: 100%;
+                display: flex;
+                align-items: center;
+
+                .iconfont {
+                    font-size: inherit
+                }
             }
         }
 

@@ -4,7 +4,8 @@
         :class="{
             'no-colon': formConfig.colon === false,
             'g-form-item': true,
-            'show-tip': formItemConfig.tip,
+            'show-tip': formItemConfig.tip || currentFieldHistoryInfo,
+            'field-log-tip': currentFieldHistoryInfo,
             [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
             'no-margin-b':
                 formItemConfig?.controlConfig?.type === 'table' ||
@@ -82,6 +83,13 @@
             :popper-class="formItemConfig.tipPopperClass"
             :placement="formItemConfig.tipPlacement"
         />
+
+        <!-- 字段变更历史 -->
+        <el-tooltip v-if="currentFieldHistoryInfo" :content="currentFieldHistoryInfo.message">
+            <span class="item-tip log">
+                <LGIcon icon="ali-icon-shijian" />
+            </span>
+        </el-tooltip>
     </el-form-item>
 </template>
 
@@ -95,7 +103,9 @@ export default {
 import { toRef, computed, isVNode } from 'vue'
 import type { FormProps, FormItemProps } from '../../index'
 import _ from 'lodash'
-import { ElFormItem } from 'element-plus'
+import { ElFormItem, ElTooltip } from 'element-plus'
+import useHistoryLog from './hooks/useHistoryLog'
+import LGIcon from '../../../GIcon/index.vue'
 
 // 组件
 import FunctionalComponent from '../../../FunctionalComponent'
@@ -119,6 +129,12 @@ const props = withDefaults(
         formConfig: null
     }
 )
+
+// 字段历史变更记录
+const { currentFieldHistoryInfo } = useHistoryLog({
+    formConfig: props.formConfig,
+    formItemConfig: props.formItemConfig
+})
 
 // 没有 label 的控件列表：将 labelWidth 置为 0
 const labelWidth = computed(() => {

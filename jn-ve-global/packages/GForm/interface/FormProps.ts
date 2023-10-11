@@ -5,6 +5,12 @@ interface Callback {
     (isValid?: boolean, invalidFields?: ValidateFieldsError): void
 }
 
+export interface FieldHistoryLog {
+    old: string
+    new: string
+    message: string
+}
+
 export interface ExtendRuleItem extends RuleItem {
     /**
      * 触发方式
@@ -116,6 +122,14 @@ interface ElFormProps {
  * 自定义的表单配置字段
  */
 export default interface FormProps extends ElFormProps {
+    /**
+     * 数据模型修改历史，json 字符串 or 数据模型
+     */
+    historyLog?:
+        | string
+        | {
+              [k: string]: FieldHistoryLog
+          }
     /**
      * 多个表单的主键
      */
