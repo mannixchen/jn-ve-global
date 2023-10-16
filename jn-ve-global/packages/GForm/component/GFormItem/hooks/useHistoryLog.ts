@@ -15,27 +15,23 @@ interface Params {
 
 export default ({ formItemConfig, formConfig }: Params) => {
     const currentFieldName = formItemConfig.prop
-    const currentFieldHistoryInfo = ref<FieldHistoryLog>(null)
-
-    watch(
-        () => formConfig.historyLog,
-        (log) => {
-            if (!log) return
-            let logObj: { [k: string]: FieldHistoryLog } = null
-            if (_.isString(log) && log.includes(currentFieldName)) {
-                try {
-                    logObj = JSON.parse(log)
-                } catch (error) {}
-            } else if (_.isObject(log)) {
-                logObj = log
-            }
-            if (logObj?.[currentFieldName]) {
-                currentFieldHistoryInfo.value = logObj[currentFieldName]
-            }
-        },
-        { deep: true, immediate: true }
-    )
-
+    const currentFieldHistoryInfo = computed(() => {
+        let logObj: { [k: string]: FieldHistoryLog } = null
+        const log = formConfig.historyLog
+        if (!log) return null
+        if (_.isString(log) && log.includes(currentFieldName)) {
+            try {
+                logObj = JSON.parse(log)
+            } catch (error) {}
+        } else if (_.isObject(log)) {
+            logObj = log
+        }
+        if (logObj?.[currentFieldName]) {
+            return logObj[currentFieldName]
+        }
+        return null
+    })
+    
     return {
         currentFieldHistoryInfo
     }

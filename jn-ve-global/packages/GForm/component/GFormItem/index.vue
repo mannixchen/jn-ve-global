@@ -106,6 +106,7 @@ import _ from 'lodash'
 import { ElFormItem, ElTooltip } from 'element-plus'
 import useHistoryLog from './hooks/useHistoryLog'
 import LGIcon from '../../../GIcon/index.vue'
+import useArgAdvance from './hooks/useArgAdvance'
 
 // 组件
 import FunctionalComponent from '../../../FunctionalComponent'
@@ -129,6 +130,9 @@ const props = withDefaults(
         formConfig: null
     }
 )
+
+// 字段配置属性包装
+useArgAdvance(props)
 
 // 字段历史变更记录
 const { currentFieldHistoryInfo } = useHistoryLog({
