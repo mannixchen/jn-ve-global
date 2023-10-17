@@ -1,8 +1,9 @@
 import { TableConfig, TableRowBtnProps, BaseTableDataItem, TableColumnProps } from '../../../index'
 import More from './component/more.vue'
 import { getBtnProps } from './constant/util'
-import { watch, nextTick, reactive } from 'vue'
+import { watch, nextTick, reactive, onMounted } from 'vue'
 import { assignOwnProp } from '@jsjn/utils'
+import { ElButton } from 'element-plus'
 
 /**
  * 对数据进行 push 操作，会改变原始数据
@@ -19,12 +20,9 @@ export default (config: TableConfig<any>) => {
      *  6. btns 长度不为 0
      */
     if (
-        !!config.columns &&
-        !!config.columns.length &&
+        config.columns?.length &&
         !config.columns.some((column) => column.prop === 'opertion' || column.label === '操作') &&
-        !!config.rowBtnConfig &&
-        !!config.rowBtnConfig.btns &&
-        !!config.rowBtnConfig.btns.length
+        config?.rowBtnConfig?.btns?.length
     ) {
         const columns = config.columns
         const rowBtnConfig = config.rowBtnConfig
@@ -118,7 +116,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
      * 需要鉴权 or 不需要鉴权的按钮
      */
     return btn.authCode ? (
-        <el-button
+        <ElButton
             {...btnSourceProps}
             disabled={disabled}
             loading={loading}
@@ -128,9 +126,9 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
                 btn.onClick?.(row, index)
             }}>
             {btn.label}
-        </el-button>
+        </ElButton>
     ) : (
-        <el-button
+        <ElButton
             {...btnSourceProps}
             disabled={disabled}
             loading={loading}
@@ -139,7 +137,7 @@ function createBtn(btn: TableRowBtnProps<any>, row: BaseTableDataItem, index: nu
                 btn.onClick?.(row, index)
             }}>
             {btn.label}
-        </el-button>
+        </ElButton>
     )
 }
 

@@ -47,15 +47,15 @@ export default interface TableConfig<TBD = any> extends TableProps<TBD> {
      * 分页
      */
     pagination?: PaginationProps | null
-    /**
-     * 可粘贴的
-     */
-    pastable?: boolean
-    /**
-     * 粘贴完成
-     * @param tableData 粘贴处理后的数据
-     */
-    onPasted?: (tableData: TBD[]) => void
+    // /**
+    //  * 可粘贴的
+    //  */
+    // pastable?: boolean
+    // /**
+    //  * 粘贴完成
+    //  * @param tableData 粘贴处理后的数据
+    //  */
+    // onPasted?: (tableData: TBD[]) => void
     /**
      * 自定义渲染操作列的按钮组
      */

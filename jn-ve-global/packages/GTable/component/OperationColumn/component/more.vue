@@ -4,7 +4,7 @@
         @visible-change="(visible) => (dropdownIsVisible = visible)"
     >
         <!-- 触发器 -->
-        <el-button
+        <ElButton
             :class="[
                 'table-row-more-operation-btn',
                 {
@@ -15,7 +15,7 @@
         >
             <span>更多操作...</span>
             <!-- <LGIcon icon="el-More" /> -->
-        </el-button>
+        </ElButton>
 
         <!-- 下拉 -->
         <template #dropdown>
@@ -26,17 +26,17 @@
                     class="table-row-more-operation-item"
                 >
                     <!-- 不鉴权 -->
-                    <el-button
+                    <ElButton
                         v-if="!btn.authCode"
                         v-bind="getBtnProps(btn)"
                         text
                         @click="handleBtnClick(btn)"
                     >
                         {{ btn.label }}
-                    </el-button>
+                    </ElButton>
 
                     <!-- 鉴权 -->
-                    <el-button
+                    <ElButton
                         v-else
                         v-auth="btn.authCode"
                         v-bind="getBtnProps(btn)"
@@ -44,7 +44,7 @@
                         @click="handleBtnClick(btn)"
                     >
                         {{ btn.label }}
-                    </el-button>
+                    </ElButton>
                 </el-dropdown-item>
             </el-dropdown-menu>
         </template>
@@ -114,7 +114,7 @@ const handleBtnClick = (btn: TableRowBtnProps<any>) => {
 .table-row-more-operation-item {
     padding: 0;
 
-    .el-button {
+    .ElButton {
         width: 100%;
         padding: 0 18px;
     }

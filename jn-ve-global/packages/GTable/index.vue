@@ -95,7 +95,7 @@ import { getTableProps } from './utils'
 import LGIcon from '../GIcon/index.vue'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import TableColumn from './component/TableColumn.vue'
-import AddOperationColumn from './component/OperationColumn/index'
+import useAddOperationColumn from './component/OperationColumn/index'
 import { size2Rem } from '@jsjn/utils'
 import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
 import useTimeoutCreate from './hooks/useTimeoutCreate'
@@ -119,7 +119,7 @@ const tableProps = computed(() => getTableProps(props.config))
 const localConfig = computed(() => props.config)
 
 // 追加操作按钮列
-AddOperationColumn(localConfig.value)
+useAddOperationColumn(localConfig.value)
 
 // 提供表格的 onCellEdited 事件
 provide(onCellEditKey, props.config?.onCellEdited)
@@ -133,6 +133,10 @@ useLoadTriggerValidator({ props, localInstance })
 watch(
     () => props.config,
     () => {
+        // 追加操作按钮列
+        useAddOperationColumn(localConfig.value)
+
+        // 重构 dom
         refreshLoad.value = false
         nextTick(() => {
             refreshLoad.value = true

@@ -1,6 +1,7 @@
 @mixin cell-button {
     .el-button {
-
+        --el-button-font-weight: 400;
+        
         &.is-text,
         &.el-button--text {
             height: auto !important;
