@@ -9,7 +9,7 @@
                 <div class="label">
                     <LGIcon v-if="prefix" :icon="prefix" class="prefix-icon" />
                     <slot name="title">
-                        <span>{{ attrs.title }}</span>
+                        <span class="label__text">{{ attrs.title }}</span>
 
                         <el-tooltip
                             v-if="tip"
@@ -25,7 +25,7 @@
                     </slot>
                     <LGIcon icon="el-DArrowRight" class="active-icon" />
                 </div>
-                <LGButtonGroup v-if="btns && btns.length" :btns="btns" />
+                <LGButtonGroup v-if="btns && btns.length" :btns="btns" @click.stop="void 0" />
             </div>
         </template>
 
