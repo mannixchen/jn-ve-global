@@ -5,7 +5,7 @@
         v-model="localModelValue"
         v-bind="$attrs"
         :disabled="localDisabled"
-        :class="['custom-collapse', `${mode}-mode`]"
+        :class="['custom-collapse', `${mode}-mode`, { 'is-show-anchor': showNavBars }]"
     >
         <slot />
     </el-collapse>
@@ -106,6 +106,9 @@ const {
 <style lang="scss" scoped>
 .custom-collapse {
     border: none !important;
+}
+
+.is-show-anchor {
     position: relative;
 }
 
