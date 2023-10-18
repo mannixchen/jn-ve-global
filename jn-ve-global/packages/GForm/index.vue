@@ -1,9 +1,9 @@
 <template>
-    <div>
+    <div :class="{ 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }">
         <el-form
             v-if="config && refreshLoad"
             ref="localInstance"
-            class="g-form"
+            :class="['g-form', { 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }]"
             v-bind="formRootConfigs"
         >
             <!-- 
@@ -31,6 +31,7 @@
                     v-if="isCollapseLayout"
                     v-model="activeCollapses"
                     :mode="localConfig.collapseMode"
+                    :show-nav-bars="localConfig.showNavBars"
                 >
                     <template
                         v-for="(collapseItem, index) in collapseItems"
@@ -186,6 +187,11 @@ defineExpose({
 
 <style lang="scss" scoped>
 @import './styles';
+
+.is-show-anchor {
+    height: 100%;
+    overflow: auto;
+}
 </style>
 <style lang="scss">
 @import './styles/index.global.scss';

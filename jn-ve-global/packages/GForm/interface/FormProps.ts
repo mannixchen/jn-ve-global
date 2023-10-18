@@ -156,6 +156,10 @@ export default interface FormProps extends ElFormProps {
      */
     collapseMode?: 'card' | 'panel'
     /**
+     * 是否显示 Collapse 导航条
+     */
+    showNavBars?: boolean
+    /**
      * 扩展字段
      */
     [k: string]: any
