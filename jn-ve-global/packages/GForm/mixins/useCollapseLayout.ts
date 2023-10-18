@@ -30,7 +30,7 @@ export default (props: { config: FormProps }) => {
         }
 
         const firstCollapseItemIndex = formItems.value.findIndex((item) => {
-            return item.controlConfig.type === 'collapseItem'
+            return item.controlConfig?.type === 'collapseItem'
         })
 
         return props.config.formItems.filter((_, index) => index < firstCollapseItemIndex)

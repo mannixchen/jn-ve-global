@@ -2,8 +2,8 @@
     <div class="examples-base-wrapper">
         <g-button-group :btns="btns" />
         <!-- <g-form :config="formConfig" /> -->
-        <g-collapse v-model="activeNames" :mode="mode" @change="handleChange">
-            <GCollapseItem title="表单" name="1" :form-config="formConfig" :btns="btns" disabled />
+        <g-collapse v-model="activeNames" :mode="mode" :show-nav-bars="true" @change="handleChange">
+            <!-- <GCollapseItem title="表单" name="1" :form-config="formConfig" :btns="btns" /> -->
             <GCollapseItem
                 :disabled="isDisabled"
                 title="表格"
@@ -11,17 +11,24 @@
                 :table-config="tableConfig"
                 :height="500"
             />
+
             <GCollapseItem title="自定义" name="3" tip="测试提醒内容.">
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
                 <p>自定义内容........</p>
-
-                <!-- <template #title> 123</template> -->
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
                 <GTable :config="tableConfig" />
-                <!-- <GForm :config="formConfig" /> -->
+            </GCollapseItem>
+            <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
+                <GTable :config="tableConfig" />
+            </GCollapseItem>
+            <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
+                <GTable :config="tableConfig" />
+            </GCollapseItem>
+            <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
+                <GTable :config="tableConfig" />
             </GCollapseItem>
         </g-collapse>
     </div>
