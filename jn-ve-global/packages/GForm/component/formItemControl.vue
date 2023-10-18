@@ -238,7 +238,9 @@ import {
     InfoAutocompleteControlConfig,
     InfoSelectControlConfig,
     AddressControlConfig,
-    SelectTreeControlConfig
+    SelectTreeControlConfig,
+    DatePickerControlConfig,
+    DatePickerProps
 } from '../index'
 import { TableConfig } from '../../index'
 import FunctionalComponent from '../../FunctionalComponent'
@@ -304,7 +306,7 @@ const localPropRef = ref<any>(props.prop)
 const controlDisabled = computed(() =>
     rootFormConfig.value.disabled
         ? rootFormConfig.value.disabled
-        : (props.controlConfig.props as any).disabled
+        : (props.controlConfig.props as any)?.disabled
 )
 
 /**
@@ -329,26 +331,34 @@ const localControlProps = computed(() => {
         ...props.controlConfig.props
     }
 
-    // 具体控件的差异配置
-    /* eslint-disable indent */
-    switch (props.controlConfig!.type) {
-        case 'input':
-        case 'figureInput':
-        case 'infoAutocomplete':
-            controlProps['placeholder'] = controlProps['placeholder']
-                ? controlProps['placeholder']
-                : `请输入`
-            break
-        case 'select':
-        case 'infoSelect':
-        case 'datePicker':
-        case 'timeSelect':
-        case 'timePicker':
-        case 'dateTimePicker':
-            controlProps['placeholder'] = controlProps['placeholder']
-                ? controlProps['placeholder']
-                : `请选择`
-            break
+    // 占位符的配置
+    if (!controlProps['placeholder']) {
+        /* eslint-disable indent */
+        switch (props.controlConfig!.type) {
+            case 'input':
+            case 'figureInput':
+            case 'infoAutocomplete': {
+                controlProps['placeholder'] = !controlDisabled?.value ? `请输入` : ' '
+                break
+            }
+            case 'select':
+            case 'infoSelect':
+            case 'datePicker':
+            case 'timeSelect':
+            case 'timePicker':
+            case 'dateTimePicker': {
+                controlProps['placeholder'] = !controlDisabled?.value ? `请选择` : ' '
+                break
+            }
+        }
+    }
+    if (
+        controlDisabled.value &&
+        props.controlConfig!.type === 'datePicker' &&
+        (controlProps as DatePickerProps).type === 'daterange'
+    ) {
+        ;(controlProps as DatePickerProps).startPlaceholder = ' '
+        ;(controlProps as DatePickerProps).endPlaceholder = ' '
     }
 
     /**
