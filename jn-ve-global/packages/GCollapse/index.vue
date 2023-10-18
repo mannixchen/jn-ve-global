@@ -106,6 +106,7 @@ const {
 <style lang="scss" scoped>
 .custom-collapse {
     border: none !important;
+    position: relative;
 }
 
 .cpllapse-nav-bars__wrapper {

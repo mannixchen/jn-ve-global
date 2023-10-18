@@ -191,6 +191,7 @@ defineExpose({
 .is-show-anchor {
     height: 100%;
     overflow: auto;
+    position: relative;
 }
 </style>
 <style lang="scss">
