@@ -34,6 +34,14 @@
                 }
             }
 
+            &.field-log-tip {
+                --el-border-color: #AFEEEE;
+
+                .el-form-item__label {
+                    color: #03A480;
+                }
+            }
+
             &.tip-label {
                 .el-form-item__label {
                     align-items: center;

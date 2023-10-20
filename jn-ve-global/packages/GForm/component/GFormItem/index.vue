@@ -85,9 +85,12 @@
         />
 
         <!-- 字段变更历史 -->
-        <el-tooltip v-if="currentFieldHistoryInfo" :content="`修改前值：${currentFieldHistoryInfo.old}`">
+        <el-tooltip
+            v-if="currentFieldHistoryInfo"
+            :content="`修改前值：${currentFieldHistoryInfo.old}`"
+        >
             <span class="item-tip log">
-                <LGIcon icon="jg-jgxx-gantanhao" />
+                <LGIcon icon="xhx-public-tip-info" />
             </span>
         </el-tooltip>
     </el-form-item>
