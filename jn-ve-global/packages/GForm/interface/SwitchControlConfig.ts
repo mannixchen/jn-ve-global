@@ -63,7 +63,10 @@ export interface SwitchProps {
      * switch 状态改变前的钩子，返回 false 或者返回 Promise 且被 reject 则停止切换	function
      */
     beforeChange?: Function
-
+    /**
+     * 无论图标或文本是否显示在点内，只会呈现文本的第一个字符
+     */
+    inlinePrompt?: boolean
     // 事件 ---------------------------------------------------
     onChange?: (newVal: string) => void
 }
