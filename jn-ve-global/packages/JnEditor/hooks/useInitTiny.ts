@@ -51,7 +51,7 @@ export default (
      *  - indent2em: 首行缩进
      */
     const myFunctionalList = {
-        plugins: 'imagetools quickbars powerpaste axupimgs tpImportword formatpainter indent2em'
+        plugins: 'imagetools quickbars powerpaste tpImportword formatpainter indent2em'
     }
     const functionalList = {
         plugins: `print preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern emoticons ${
@@ -59,7 +59,7 @@ export default (
         } ${props.config?.plugins ? props.config.plugins : ''}`,
         toolbar: [
             'fullscreen preview undo redo | cut copy paste pastetext | forecolor backcolor bold italic underline strikethrough link anchor | alignleft aligncenter alignright alignjustify outdent indent indent2em lineheight | bullist numlist | blockquote subscript superscript removeformat ',
-            'styleselect formatselect fontselect fontsizeselect | tpImportword image axupimgs media emoticons charmap hr pagebreak insertdatetime  selectall visualblocks searchreplace | code print formatpainter',
+            'styleselect formatselect fontselect fontsizeselect | tpImportword image media emoticons charmap hr pagebreak insertdatetime  selectall visualblocks searchreplace | code print formatpainter',
             `table tabledelete | tableprops tablerowprops tablecellprops | tablemergecells tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol ${
                 props.config?.toolbar ? props.config.toolbar : ''
             }`
