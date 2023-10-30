@@ -37,7 +37,7 @@
 
 </template>
 
-<h3>"@jsjn/micro-core-components": "^2.5.3"</h3>
+<h3>"@jsjn/micro-core-components": "^2.5.4"</h3>
 
 工作流高阶容器增加对再担保基座的 keep-alive 的适配（激活/失活时 数据的抛出）
 
