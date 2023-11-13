@@ -1,0 +1,5 @@
+vue/src/components/*
+!vue/src/components/.gitkeep
+cjs
+esm
+dist

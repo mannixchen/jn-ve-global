@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "ES2015",
+        "baseUrl": ".",
+        "declarationDir": "./es",
+        "strict": true,
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "jsx": "preserve",
+        "target": "ES2018",
+        "sourceMap": true,
+        "lib": ["ES2018", "DOM"],
+        "allowSyntheticDefaultImports": true,
+        "skipLibCheck": true,
+        "types": [],
+        "declaration": true,
+        "emitDeclarationOnly": true
+    },
+    "include": ["./vue/src/**/*"]
+}
