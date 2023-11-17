@@ -31,7 +31,7 @@ export async function buildModules() {
             format: 'esm', // 模块格式
             dir: outputEsm, // 输出目录
             exports: undefined, // 导出模式
-            preserveModules: true, // 与原始模块创建相同的文件
+            preserveModules: false, // 与原始模块创建相同的文件
             preserveModulesRoot: 'src',
             sourcemap: false, // 生成 sourcemap
             entryFileNames: `[name].mjs` // 生成文件名
@@ -40,7 +40,7 @@ export async function buildModules() {
             format: 'cjs',
             dir: outputCjs,
             exports: 'named',
-            preserveModules: true,
+            preserveModules: false,
             preserveModulesRoot: 'src',
             sourcemap: false,
             entryFileNames: `[name].js`
