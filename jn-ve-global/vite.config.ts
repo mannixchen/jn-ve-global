@@ -85,7 +85,10 @@ export default defineConfig({
                 'echarts',
                 '@vue-office/excel',
                 '@vue-office/docx',
-                '@vue-office/pdf'
+                '@vue-office/pdf',
+                'axios',
+                '@jsjn/icons-vue',
+                '@jsjn/utils'
             ],
             output: {
                 /**
@@ -102,7 +105,10 @@ export default defineConfig({
                     'echarts': 'echarts',
                     '@vue-office/excel': 'vue-office-excel',
                     '@vue-office/docx': 'vue-office-docx',
-                    '@vue-office/pdf': 'vue-office-pdf'
+                    '@vue-office/pdf': 'vue-office-pdf',
+                    'axios': 'axios',
+                    '@jsjn/icons-vue': 'JnIconsVue',
+                    '@jsjn/utils': 'JnUtils'
                 }
             }
         }

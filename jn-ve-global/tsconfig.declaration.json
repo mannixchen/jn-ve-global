@@ -1,0 +1,19 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "outDir": "es",
+        "declarationDir": "es",
+        "declaration": true,
+        "emitDeclarationOnly": true
+    },
+    "include": [
+        // 只包含入口文件，就可以只生成引入文件的 .d.ts
+        "packages/index.ts",
+
+        // 环境类型文件配置
+        "./global.d.ts",
+        "../source.d.ts",
+        "../vite-env.d.ts"
+    ],
+    "exclude": ["node_modules", "**/__tests__/**", "**/__demos__/**", "**/*.md"]
+}
