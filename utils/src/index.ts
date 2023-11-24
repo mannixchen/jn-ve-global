@@ -8,3 +8,6 @@ export * from './utils/string'
 export * from './utils/tree'
 export * from './utils/download'
 export * from './utils/number'
+export * from './utils/camelcase'
+import { getGlobal } from './utils/bom'
+getGlobal()

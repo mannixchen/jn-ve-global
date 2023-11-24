@@ -7,9 +7,11 @@ import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import esbuild from 'rollup-plugin-esbuild'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { viteExternalsPlugin } from 'vite-plugin-externals'
+import commonjs from '@rollup/plugin-commonjs'
 
 export default defineConfig({
     plugins: [
+        commonjs() as any,
         vue(),
         vueJsx(),
         // setup 增强，标签添加 name 属性
@@ -38,16 +40,30 @@ export default defineConfig({
             ],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
-        }),
+        })
 
         /**
          * 使用外部库，类似webpack的externals，但现在只支持浏览器环境。
          * https://github.com/crcong/vite-plugin-externals/blob/HEAD/README.zh-CN.md
          */
-        viteExternalsPlugin({
-            vue: 'Vue'
-        })
+        // viteExternalsPlugin({
+        //     vue: 'Vue'
+        // })
     ],
+
+    // 打包配置
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks: (id) => {
+                    // 将 node_modules 中的代码单独打包成一个 JS 文件
+                    if (id.includes('node_modules')) {
+                        return 'vendor'
+                    }
+                }
+            }
+        }
+    },
 
     // 别名
     resolve: {

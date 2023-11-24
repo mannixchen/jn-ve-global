@@ -33,7 +33,9 @@ export function size2Rem(size: number) {
 export function loadScript<T>(
     libPath: string,
     globalName: string,
-    prefix: string = `${global.location.origin}${global.location.pathname}lib`,
+    prefix: string = `${(global || getGlobal()).location.origin}${
+        (global || getGlobal()).location.pathname
+    }lib`,
     type: 'default' | 'async' | 'defer' = 'default'
 ): Promise<T> {
     return new Promise((resolve, reject) => {
@@ -60,7 +62,9 @@ export function loadScript<T>(
  */
 export function loadCss(
     libPath: string,
-    prefix: string = `${global.location.origin}${global.location.pathname}lib`
+    prefix: string = `${(global || getGlobal()).location.origin}${
+        (global || getGlobal()).location.pathname
+    }lib`
 ) {
     const linkTag = window.document.createElement('link')
     linkTag.rel = 'stylesheet'
