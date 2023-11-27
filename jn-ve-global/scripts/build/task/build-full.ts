@@ -1,30 +1,22 @@
-/*
- * @Author: Zyunchao 18651805393@163.com
- * @Date: 2023-11-06 15:17:09
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-11-24 16:01:02
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/scripts/build/task/build-modules.ts
- * @Description: 组件库模块分包编译
- */
 import path from 'path'
 import { readFileSync } from 'fs'
 import { rollup } from 'rollup'
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import esbuild from 'rollup-plugin-esbuild'
-import postcss from 'rollup-plugin-postcss'
-import { nodeResolve } from '@rollup/plugin-node-resolve'
+import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
 import commonjs from '@rollup/plugin-commonjs'
 import copy from 'rollup-plugin-copy'
 import cssnano from 'cssnano'
 import image from '@rollup/plugin-image'
+import postcss from 'rollup-plugin-postcss'
 import json from '@rollup/plugin-json'
 
-import { compRoot, outputEsm, outputCjs } from '../utils/paths'
-import { target, sourcemapCreate } from '../utils/constants'
+import { compRoot, output } from '../utils/paths'
+import { PKG_CAMELCASE_NAME, target } from '../utils/constants'
 import { externalDepMapping } from '../utils/externalDepMapping'
 
-export const buildModules = async () => {
+const build = async (minify: boolean) => {
     // 入口
     const input = [path.resolve(compRoot, 'index.ts')]
 
@@ -40,8 +32,15 @@ export const buildModules = async () => {
             json(),
             esbuild({
                 target,
-                sourceMap: sourcemapCreate
+                sourceMap: minify,
+                treeShaking: true
             }),
+            minify // 生成的是否是压缩版本
+                ? minifyPlugin({
+                      target,
+                      sourceMap: minify
+                  })
+                : null,
             postcss({
                 plugins: [
                     cssnano()
@@ -53,7 +52,7 @@ export const buildModules = async () => {
                     //     unitPrecision: 5
                     // })
                 ],
-                extract: 'css/index.css'
+                extract: 'index.css'
             }),
             // 阿里图标文件直接拷贝输出到包中
             copy({
@@ -65,7 +64,7 @@ export const buildModules = async () => {
                             `${compRoot}/assets/icons/ali/*.woff2`,
                             `${compRoot}/assets/icons/ali/*.css`
                         ],
-                        dest: [`${outputEsm}/fonts` /* , `${outputCjs}/fonts` */]
+                        dest: [`${output}/fonts`]
                     }
                 ]
             }),
@@ -99,31 +98,31 @@ export const buildModules = async () => {
                 }
             }
         ],
-        treeshake: false,
+        treeshake: true,
         external: [...Object.keys(externalDepMapping)]
     })
 
     // 输出文件
     await Promise.all([
-        bundle.write({
-            format: 'esm', // 模块格式
-            dir: outputEsm, // 输出目录
-            exports: undefined, // 导出模式
-            preserveModules: true, // 与原始模块创建相同的文件
-            preserveModulesRoot: 'packages',
-            sourcemap: sourcemapCreate, // 生成 sourcemap
-            entryFileNames: `[name].mjs` // 生成文件名
-        })
-
-        // TODO: 系统目前用不到 cjs 减小打包体积
+        // TODO: 全量包 ESM 暂不需要，esm 走分包即可
         // bundle.write({
-        //     format: 'cjs',
-        //     dir: outputCjs,
-        //     exports: 'named',
-        //     preserveModules: true,
-        //     preserveModulesRoot: 'packages',
-        //     sourcemap: sourcemapCreate,
-        //     entryFileNames: `[name].js`
-        // })
+        //     format: 'esm',
+        //     file: path.resolve(output, `index${minify ? '.min' : ''}.mjs`),
+        //     exports: undefined,
+        //     sourcemap: minify
+        // }),
+        bundle.write({
+            format: 'umd',
+            file: path.resolve(output, `index${minify ? '.min' : ''}.js`),
+            exports: 'named',
+            sourcemap: minify,
+            name: PKG_CAMELCASE_NAME, // 组件全局名称
+            globals: externalDepMapping
+        })
     ])
+}
+
+// 合并为一个主任务
+export const buildFull = async () => {
+    await Promise.all([build(false), build(true)])
 }
