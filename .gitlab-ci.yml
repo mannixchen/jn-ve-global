@@ -43,9 +43,9 @@ pages:
         # - yarn install
         # - yarn docs:build
         - pnpm i
-        # - cd utils
-        # - pnpm build
-        # - cd ..
+        - cd utils
+        - pnpm build
+        - cd ..
         # - cd icons-vue
         # - pnpm build
         # - cd ..
