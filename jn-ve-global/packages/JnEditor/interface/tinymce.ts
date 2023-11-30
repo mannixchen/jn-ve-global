@@ -3507,8 +3507,8 @@ interface TinyMCE extends EditorManager {
     isGecko: boolean
     isMac: boolean
 }
-declare const tinymce: TinyMCE
-export default tinymce
+// declare const tinymce: TinyMCE
+// export default tinymce
 export {
     AddOnManager,
     Annotator,

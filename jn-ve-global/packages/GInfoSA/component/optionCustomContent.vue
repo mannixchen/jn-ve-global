@@ -2,7 +2,7 @@
     <ul :class="['option-custom-content', type]">
         <template v-for="(column, columnIndex) in columns" :key="`${column.prop}-${columnIndex}`">
             <!-- 带有 toolTip -->
-            <el-tooltip
+            <ElTooltip
                 v-if="column.showOverflowTooltip"
                 effect="dark"
                 :content="data[column.prop]"
@@ -18,7 +18,7 @@
                     </template>
                     <span v-else class="option-text">{{ data[column.prop] }}</span>
                 </li>
-            </el-tooltip>
+            </ElTooltip>
 
             <!-- 不带 toolTip -->
             <li
@@ -41,12 +41,12 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import InfoColumnProps from '../interface/InfoColumnProps'
+import { InfoColumnProps } from '../interface/InfoColumnProps'
 import FunctionalComponent from '../../FunctionalComponent'
 import { getWidth } from '../utils'
 import { ElTooltip } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 列的配置
      */
@@ -76,7 +76,7 @@ const headerJSHieght = '34px'
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
+@import './styles.scss';
 
 .option-custom-content {
     display: flex;

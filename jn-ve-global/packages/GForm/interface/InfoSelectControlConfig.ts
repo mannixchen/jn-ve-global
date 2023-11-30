@@ -1,5 +1,5 @@
 import { SelectOptionProps } from './SelectControlConfig'
-import { InfoColumnProps } from '../../index'
+import type { InfoColumnProps } from '../../GInfoSA'
 
 /**
  * 下拉框参数
@@ -141,7 +141,7 @@ export interface InfoSelectCustomProps {
     valueBindObj?: boolean
 }
 
-export default interface InfoSelectControlConfig {
+export interface InfoSelectControlConfig {
     type: 'infoSelect'
     /**
      * 分页总数

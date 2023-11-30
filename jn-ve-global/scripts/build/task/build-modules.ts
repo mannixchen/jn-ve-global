@@ -2,12 +2,11 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-11-06 15:17:09
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-11-24 16:01:02
+ * @LastEditTime: 2023-11-30 14:18:31
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/scripts/build/task/build-modules.ts
  * @Description: 组件库模块分包编译
  */
 import path from 'path'
-import { readFileSync } from 'fs'
 import { rollup } from 'rollup'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -19,6 +18,8 @@ import copy from 'rollup-plugin-copy'
 import cssnano from 'cssnano'
 import image from '@rollup/plugin-image'
 import json from '@rollup/plugin-json'
+import myIconfontRaw from '../plugins/rollup-plugin-raw'
+import setVersion from '../plugins/rollup-plugin-setv'
 
 import { compRoot, outputEsm, outputCjs } from '../utils/paths'
 import { target, sourcemapCreate } from '../utils/constants'
@@ -26,7 +27,7 @@ import { externalDepMapping } from '../utils/externalDepMapping'
 
 export const buildModules = async () => {
     // 入口
-    const input = [path.resolve(compRoot, 'index.ts')]
+    const input = [path.resolve(compRoot, 'index.ts'), path.resolve(compRoot, 'resolver.ts')]
 
     // 编译解析
     const bundle = await rollup({
@@ -65,39 +66,12 @@ export const buildModules = async () => {
                             `${compRoot}/assets/icons/ali/*.woff2`,
                             `${compRoot}/assets/icons/ali/*.css`
                         ],
-                        dest: [`${outputEsm}/fonts` /* , `${outputCjs}/fonts` */]
+                        dest: [`${outputEsm}/fonts`, `${outputCjs}/fonts`]
                     }
                 ]
             }),
-            // 图标选择器，获取 ali 的资源列表（源文件）
-            {
-                name: 'rollup-plugin-raw',
-                resolveId(importee, importer) {
-                    const prefix = /^\.\.?\//
-                    const suffix = /\?raw$/
-                    if (suffix.test(importee)) {
-                        if (prefix.test(importee)) {
-                            return path.resolve(
-                                <string>importer,
-                                '..',
-                                importee.replace(suffix, '')
-                            )
-                        } else {
-                            return path.resolve(process.cwd(), importee.replace(suffix, ''))
-                        }
-                    }
-                },
-                transform(_, id) {
-                    if (id.includes('/icons/ali/iconfont.txt')) {
-                        const filePath = path.resolve(process.cwd(), id)
-                        const fileContent = readFileSync(filePath, 'utf-8')
-                        return {
-                            code: `export default ${JSON.stringify(fileContent)};`,
-                            map: { mappings: '' }
-                        }
-                    }
-                }
-            }
+            myIconfontRaw(),
+            setVersion()
         ],
         treeshake: false,
         external: [...Object.keys(externalDepMapping)]
@@ -113,17 +87,15 @@ export const buildModules = async () => {
             preserveModulesRoot: 'packages',
             sourcemap: sourcemapCreate, // 生成 sourcemap
             entryFileNames: `[name].mjs` // 生成文件名
+        }),
+        bundle.write({
+            format: 'cjs',
+            dir: outputCjs,
+            exports: 'named',
+            preserveModules: true,
+            preserveModulesRoot: 'packages',
+            sourcemap: sourcemapCreate,
+            entryFileNames: `[name].js`
         })
-
-        // TODO: 系统目前用不到 cjs 减小打包体积
-        // bundle.write({
-        //     format: 'cjs',
-        //     dir: outputCjs,
-        //     exports: 'named',
-        //     preserveModules: true,
-        //     preserveModulesRoot: 'packages',
-        //     sourcemap: sourcemapCreate,
-        //     entryFileNames: `[name].js`
-        // })
     ])
 }

@@ -1,5 +1,5 @@
 <template>
-    <ElInputCom v-if="!reload" ref="localElInputRef" v-bind="localInputProps">
+    <ElInputCom v-if="!reload" ref="localElInputRef" v-bind="(localInputProps as any)">
         <!-- input 插槽
                 - 组件（VNode/JSX.Element）
                 - 组件库内图标（ali-/el-/jg-）
@@ -21,11 +21,11 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRefs, watch, ref, computed, reactive, useAttrs } from 'vue'
+import { computed, useAttrs } from 'vue'
 import useInputSlots from './mixins/useInputSlots'
-import { InputControlConfig } from '../../../index'
+import type { InputControlConfig } from '../../interface'
 import { stringIsIcon } from '@jsjn/utils'
-import LGIcon from '../../../GIcon/index.vue'
+import { GIcon as LGIcon } from '../../../GIcon'
 import { ElInput as ElInputCom } from 'element-plus'
 
 const props = withDefaults(

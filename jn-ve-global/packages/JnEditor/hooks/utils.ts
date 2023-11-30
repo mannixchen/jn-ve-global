@@ -1,5 +1,4 @@
 import { loadScript, loadCss, global } from '@jsjn/utils'
-import { TinyMCE } from '../interface/tinymce'
 
 /**
  * 图片压缩
@@ -58,15 +57,10 @@ export function imgCompress(
  */
 export async function getTinymce() {
     const tinyGlobalName = 'tinymce'
-
-    // console.log(`%c window['tinymce'] ==== `, 'color: #67c23a;', window[tinyGlobalName])
-
     // 如果已存在，直接返回
     if (window[tinyGlobalName]) {
         return window[tinyGlobalName]
     }
-
-    // console.log(`%c 加载 script..........`, 'color: #67c23a;' )
 
     const tinymceDir = '/tinymce5.10.5'
     const tinyJsFile = `${tinymceDir}/tinymce.min.js`

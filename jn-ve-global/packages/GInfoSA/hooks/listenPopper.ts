@@ -1,4 +1,4 @@
-import { watch, ref, Ref, onMounted, onUnmounted, onBeforeUnmount } from 'vue'
+import { Ref, onMounted } from 'vue'
 
 export interface LisenPopperProps {
     popperClass: string

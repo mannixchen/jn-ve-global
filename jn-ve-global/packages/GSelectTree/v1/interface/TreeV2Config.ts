@@ -1,7 +1,7 @@
 import { VNode } from 'vue'
 import type { TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 
-export default interface TreeV2Config {
+export interface TreeV2Config {
     /**
      * 内容为空的时候展示的文本
      */

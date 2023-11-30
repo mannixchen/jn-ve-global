@@ -1,5 +1,7 @@
-export * from './interface/FormGenerateProps'
-export * from './implements/AdvanceFormConfig'
+import _GFormGenerate from './index.vue'
 
-export { default as FormGenerateProps } from './interface/FormGenerateProps'
+export * from './interface/FormGenerateProps'
+
 export { default as AdvanceFormConfig } from './implements/AdvanceFormConfig'
+
+export const GFormGenerate = _GFormGenerate

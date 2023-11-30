@@ -1,9 +1,5 @@
-import JnEditorProps from '../../JnEditor/interface/JnEditorProps'
-import {
-    RawEditorSettings,
-    EditorEvent,
-    Editor as TinyMCEEditor
-} from '../../JnEditor/interface/tinymce'
+import type { JnEditorProps } from '../../JnEditor'
+import type { RawEditorSettings, EditorEvent, Editor as TinyMCEEditor } from '../../JnEditor'
 
 export interface FormControlJnEditorProps {
     /**
@@ -80,7 +76,7 @@ export interface FormControlJnEditorEvents {
     onRedo?: (e: EditorEvent<any>) => void
 }
 
-export default interface JnEditorControlConfig {
+export interface JnEditorControlConfig {
     type: 'jnEditor'
     props?: FormControlJnEditorProps & FormControlJnEditorEvents
 }

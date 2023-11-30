@@ -1,6 +1,6 @@
-import { TableConfig } from '../../index'
+import type { TableConfig } from '../../GTable/interface'
 
-export default interface FormItemTableTableConfig {
+export interface FormItemTableTableConfig {
     type: 'table'
     props: TableConfig<any>
 }

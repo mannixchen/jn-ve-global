@@ -1,5 +1,5 @@
 <template>
-    <div ref="groupWrapperRef" class="form-item-control-group-wrapper">
+    <div ref="groupWrapperRef" class="form-item-control-group__wrapper">
         <!-- 组分发到 item -->
         <template
             v-for="(extControlConfig, index) in controlConfigs"
@@ -33,11 +33,11 @@ export default {
 
 <script lang="ts" setup>
 import { ref, toRef, watch, reactive, computed } from 'vue'
-import { FormItemProps, ExtendControlConfig, ControlConfig } from '../index'
+import type { FormItemProps, ExtendControlConfig, ControlConfig } from '../interface'
 import FormItemControl from './formItemControl.vue'
 import _ from 'lodash'
 
-interface Props {
+export interface Props {
     /**
      * 当前控件 formItem 的配置对象
      */
@@ -145,8 +145,14 @@ const wrapperClass = (type: 'add' | 'remove') => {
 }
 </script>
 
-<style lang="scss" scoped>
-.form-item-control-group-wrapper {
+<style lang="scss">
+.el-form-item.is-error {
+    .form-item-control-group__wrapper {
+        border-color: var(--el-color-danger);
+    }
+}
+
+.form-item-control-group__wrapper {
     --jn-ve-input-placeholder-font-align: center;
 
     width: 100%;
@@ -173,43 +179,36 @@ const wrapperClass = (type: 'add' | 'remove') => {
     }
 
     // 控件原始边框
-    :deep(.el-input__wrapper),
-    :deep(.el-input__inner),
-    :deep(.el-select .el-input.is-focus .el-input__inner),
-    :deep(.el-select .el-input.is-focus .el-input__wrapper),
-    :deep(.el-select .el-input__wrapper.is-focus) {
+    .el-input__wrapper,
+    .el-input__inner,
+    .el-select .el-input.is-focus .el-input__inner,
+    .el-select .el-input.is-focus .el-input__wrapper,
+    .el-select .el-input__wrapper.is-focus {
         box-shadow: none !important;
     }
 
     /* el-input-number */
-    :deep(.el-input-number) {
+    .el-input-number {
         min-width: 180px;
     }
 
     /* el-radio-group */
-    :deep(.el-radio-group) {
+    .el-radio-group {
         max-height: 40px;
     }
 
     /* 禁用 */
-    :deep(.is-disabled + .control-separator) {
+    .is-disabled + .control-separator {
         background-color: var(--el-disabled-bg-color);
     }
 
     /* 组件容器 */
-    > :deep(div) {
+    > div {
         flex: 1;
     }
 }
-</style>
-<style lang="scss">
-.el-form-item.is-error {
-    .form-item-control-group-wrapper {
-        border-color: var(--el-color-danger);
-    }
-}
 
-.form-item-control-group-wrapper {
+.form-item-control-group__wrapper {
     .el-input,
     .el-radio,
     .el-checkbox,

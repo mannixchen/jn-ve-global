@@ -1,6 +1,6 @@
 import { VNode } from 'vue'
 
-export default interface Cell {
+export interface Cell {
     /**
      * 内容
      */

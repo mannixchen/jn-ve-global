@@ -12,7 +12,7 @@
 
         <!-- InputNumber -->
         <template v-if="localControlType === 'inputNumber'">
-            <el-input-number
+            <ElInputNumber
                 v-model.number="localPropRef"
                 v-bind="localControlProps"
                 @focus="emits('controlFocus')"
@@ -22,16 +22,16 @@
 
         <!-- Select -->
         <template v-if="localControlType === 'select'">
-            <el-select
+            <ElSelect
                 v-model="localPropRef"
                 style="width: 100%"
                 v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
             >
-                <el-option
+                <ElOption
                     v-for="selectOption in (controlConfig as SelectControlConfig).options"
-                    :key="selectOption.value"
+                    :key="(selectOption.value as any)"
                     :label="selectOption.label"
                     :value="selectOption.value"
                     :disabled="selectOption.disabled"
@@ -42,8 +42,8 @@
                             :render="(controlConfig as SelectControlConfig).optionRender(selectOption)"
                         />
                     </template>
-                </el-option>
-            </el-select>
+                </ElOption>
+            </ElSelect>
         </template>
 
         <!-- radio or checkbox -->
@@ -60,24 +60,24 @@
 
         <!-- Switch -->
         <template v-if="localControlType === 'switch'">
-            <el-switch v-model="localPropRef" v-bind="controlConfig.props" />
+            <ElSwitch v-model="localPropRef" v-bind="(controlConfig.props as any)" />
         </template>
 
         <!-- 选择 时间&日期 类 -->
         <template v-if="localControlType === 'timePicker'">
-            <el-time-picker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
+            <ElTimePicker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'timeSelect'">
-            <el-time-select v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
+            <ElTimeSelect v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'datePicker'">
-            <el-date-picker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
+            <ElDatePicker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
         </template>
 
         <template v-if="localControlType === 'dateTimePicker'">
-            <el-date-picker
+            <ElDatePicker
                 v-model="localPropRef"
                 type="datetime"
                 v-bind="localControlProps"
@@ -87,17 +87,17 @@
 
         <!-- Rate 打分 -->
         <template v-if="localControlType === 'rate'">
-            <el-rate v-model="localPropRef" v-bind="controlConfig.props" />
+            <ElRate v-model="localPropRef" v-bind="(controlConfig.props as any)" />
         </template>
 
         <!-- Slider 滑块 -->
         <template v-if="localControlType === 'slider'">
-            <el-slider v-model="localPropRef" v-bind="controlConfig.props" />
+            <ElSlider v-model="localPropRef" v-bind="(controlConfig.props as any)" />
         </template>
 
         <!-- ColorPicker 颜色选择器 -->
         <template v-if="localControlType === 'colorPicker'">
-            <el-color-picker v-model="localPropRef" v-bind="controlConfig.props" />
+            <ElColorPicker v-model="localPropRef" v-bind="(controlConfig.props as any)" />
         </template>
 
         <!-- 下拉树 -->
@@ -105,7 +105,7 @@
             <LGSelectTree
                 v-model="localPropRef"
                 :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
             />
         </template>
 
@@ -114,7 +114,7 @@
             <LGSelectTreeV2
                 v-model="localPropRef"
                 :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
             />
         </template>
 
@@ -124,7 +124,7 @@
                 v-model="localPropRef"
                 v-model:fileList="localUploadFileList"
                 v-model:instance="localUploadInstance"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
                 :disabled="controlDisabled"
             />
         </template>
@@ -141,7 +141,7 @@
 
         <!-- 图标选择器 -->
         <template v-if="localControlType === 'iconPicker'">
-            <LGIconPickerV2 v-model="localPropRef" v-bind="controlConfig.props" />
+            <LGIconPicker v-model="localPropRef" v-bind="(controlConfig.props as any)" />
         </template>
 
         <!-- 下拉框 多列展示（分页） -->
@@ -183,7 +183,7 @@
             <LGAddress
                 v-model="localPropRef"
                 :options="(controlConfig as AddressControlConfig).options"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
             />
         </template>
 
@@ -191,13 +191,13 @@
         <template v-if="localControlType === 'jnEditor'">
             <LJnEditor
                 v-model="localPropRef"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
                 :disabled="controlDisabled"
             />
         </template>
 
         <!-- 表格，仅做展示 -->
-        <template v-if="localControlType === 'table'">
+        <template v-if="(localControlType as any) === 'table'">
             <LGTable :config="(controlConfig.props as TableConfig<any>)" />
         </template>
 
@@ -205,7 +205,7 @@
         <template v-if="localControlType === 'collapseItem'">
             <ImitativeCollapseItem
                 :title="(formItemConfig.label as string)"
-                v-bind="controlConfig.props"
+                v-bind="(controlConfig.props as any)"
             />
         </template>
 
@@ -241,12 +241,12 @@ import {
     SelectTreeControlConfig,
     DatePickerControlConfig,
     DatePickerProps
-} from '../index'
+} from '../interface'
 import { TableConfig } from '../../index'
 import FunctionalComponent from '../../FunctionalComponent'
 import LGSelectTree from '../../GSelectTree/v1/index.vue'
 import LGFigureInput from '../../GFigureInput/index.vue'
-import LGIconPickerV2 from '../../GIconPicker/v2/index.vue'
+import LGIconPicker from '../../GIconPicker/index.vue'
 import LGUpload from '../../GUpload/index.vue'
 import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
 import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
@@ -275,7 +275,7 @@ import {
     ElColorPicker
 } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * FormItem 的配置参数
      */

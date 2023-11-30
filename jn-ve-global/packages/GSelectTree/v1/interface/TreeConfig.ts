@@ -1,6 +1,6 @@
 import { VNode } from 'vue'
 
-export default interface TreeConfig {
+export interface TreeConfig {
     /**
      * 内容为空的时候展示的文本
      */

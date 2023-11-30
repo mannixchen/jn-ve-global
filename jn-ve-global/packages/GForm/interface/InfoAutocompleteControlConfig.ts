@@ -1,5 +1,5 @@
-import { InfoColumnProps } from '../../index'
-import { VNode } from 'vue'
+import type { InfoColumnProps } from '../../GInfoSA'
+import type { VNode } from 'vue'
 
 export interface InfoAutocompleteProps {
     /**
@@ -105,7 +105,7 @@ export interface InfoAutocompleteEvents {
     onChange?: (value: string | number) => void
 }
 
-export default interface InfoSelectControlConfig {
+export interface InfoAutocompleteControlConfig {
     /**
      * 类型
      */

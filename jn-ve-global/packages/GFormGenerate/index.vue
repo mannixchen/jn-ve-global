@@ -1,6 +1,6 @@
 <template>
     <div v-loading="!loadDataFinished" class="g-form-generate">
-        <LGForm v-if="loadDataFinished" :config="localFormConfig" />
+        <LGForm v-if="loadDataFinished" :config="(localFormConfig as FormProps)" />
     </div>
 </template>
 
@@ -11,23 +11,24 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps, FormGenerateProps } from '../index'
-import LGForm from '../GForm/index.vue'
+import { watch, ref, computed, reactive, toRefs, type Ref } from 'vue'
+import { GForm as LGForm, type FormProps } from '../GForm'
+import type { FormGenerateProps } from './interface/FormGenerateProps'
 import AdvanceFormConfig from './implements/AdvanceFormConfig'
 
-interface Props {
-    /**
-     * 表单的配置，远程获取，格式：
-     *  - JSON
-     *  - 配置对象格式
-     */
-    config: string | FormGenerateProps | object
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    config: ''
-})
+const props = withDefaults(
+    defineProps<{
+        /**
+         * 表单的配置，远程获取，格式：
+         *  - JSON
+         *  - 配置对象格式
+         */
+        config: string | FormGenerateProps | object
+    }>(),
+    {
+        config: ''
+    }
+)
 
 // 只有在加载完远程数据，且映射完毕后，才创建表单
 const loadDataFinished = ref<boolean>(false)
@@ -64,11 +65,10 @@ watch(
     }
 )
 
-/**
- * 抛出实例
- */
 defineExpose({
     ...toRefs(localFormConfig)
+} as {
+    [k: string]: any
 })
 </script>
 

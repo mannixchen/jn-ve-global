@@ -1,6 +1,4 @@
-import { TreeData } from '../../GSelectTree/v1/interface/TreeData'
-import TreeV2Props from '../../GSelectTree/v1/interface/TreeV2Props'
-import TreeV2Config from '../../GSelectTree/v1/interface/TreeV2Config'
+import type { TreeData, TreeV2Props, TreeV2Config } from '../../GSelectTree'
 
 interface SelectTreeProps {
     /**
@@ -51,7 +49,7 @@ interface SelectTreeProps {
     clearable?: boolean
 }
 
-export default interface SelectTreeControlConfig {
+export interface SelectTreeControlConfig {
     type: 'selectTree'
     treeData: TreeData | TreeData[]
     props?: SelectTreeProps

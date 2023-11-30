@@ -1,7 +1,5 @@
-import { SelectProps, SelectEvents } from './SelectControlConfig'
-import TreeConfig from '../../GSelectTree/v1/interface/TreeConfig'
-import { TreeData } from '../../GSelectTree/v1/interface/TreeData'
-import TreeProps from '../../GSelectTree/v1/interface/TreeProps'
+import type { SelectProps, SelectEvents } from './SelectControlConfig'
+import type { TreeData, TreeConfig, TreeProps } from '../../GSelectTree'
 
 /**
  * v2 扩展的 tree 的 props
@@ -37,7 +35,7 @@ export interface SelectTreeV2Props {
     [k: string]: any
 }
 
-export default interface SelectTreeV2ControlConfig {
+export interface SelectTreeV2ControlConfig {
     type: 'selectTreeV2'
     treeData: TreeData | TreeData[]
     props?: TreeConfig & SelectProps & SelectEvents & SelectTreeV2Props

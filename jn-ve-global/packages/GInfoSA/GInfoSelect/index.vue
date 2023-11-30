@@ -1,7 +1,7 @@
 <template>
     <div ref="currentRootRef" class="g-info-select">
         <!-- 下拉框 -->
-        <el-select
+        <ElSelect
             ref="elSelectRef"
             style="width: 100%"
             v-bind="$attrs"
@@ -12,15 +12,15 @@
             :popper-class="`${popperClass} ${randomId}`"
             @visible-change="visibleChange"
         >
-            <el-option
+            <ElOption
                 v-for="(item, index) in localSelectOptins"
                 :key="`${item.value}-${index}`"
                 :value="valueBindObj ? item : item.value"
                 :label="item.label"
             >
                 <OptionCustomContent :columns="columns" :data="item" :index="index" />
-            </el-option>
-        </el-select>
+            </ElOption>
+        </ElSelect>
 
         <!-- 表头（依据 columns 生成）to body -->
         <InfoHeader
@@ -65,16 +65,17 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GInfoSelect',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
 import { toRef, ref, computed, onMounted, onUnmounted, watchEffect, nextTick } from 'vue'
-import InfoColumnProps from '../interface/InfoColumnProps'
-import { SelectOptionProps } from '../../index'
+import type { InfoColumnProps } from '../interface/InfoColumnProps'
+import type { SelectOptionProps } from '../../GForm/interface'
 import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import Pagination from '../component/pagination.vue'
@@ -85,7 +86,7 @@ import { packagingOptionData } from '../utils'
 import { getStyle } from '@jsjn/utils'
 import { ElSelect, ElOption } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 下拉框数据
      */

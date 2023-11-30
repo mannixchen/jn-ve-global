@@ -1,5 +1,5 @@
-import { ValidateFieldsError, RuleItem } from 'async-validator'
-import FormItemProps from './FormItemProps'
+import type { ValidateFieldsError, RuleItem } from 'async-validator'
+import type { FormItemProps } from './FormItemProps'
 
 interface Callback {
     (isValid?: boolean, invalidFields?: ValidateFieldsError): void
@@ -121,7 +121,7 @@ interface ElFormProps {
 /**
  * 自定义的表单配置字段
  */
-export default interface FormProps extends ElFormProps {
+export interface FormProps extends ElFormProps {
     /**
      * 数据模型修改历史，json 字符串 or 数据模型
      */

@@ -17,7 +17,8 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { computed, VNode } from 'vue'
+import { computed, type VNode, defineAsyncComponent } from 'vue'
+import * as loadingIcons from './components'
 
 const props = withDefaults(
     defineProps<{
@@ -34,14 +35,7 @@ const props = withDefaults(
     }
 )
 
-const loadingIcons = import.meta.glob('./components/*.vue', { eager: true })
-const currentIcon = computed<VNode>(() => {
-    const key = `./components/loading${props.i}.vue`
-    if (Object.keys(loadingIcons).some((objKey) => objKey === key)) {
-        return loadingIcons[key]['default']
-    }
-    return loadingIcons[`./components/loading1.vue`]['default']
-})
+const currentIcon = computed<VNode>(() => loadingIcons[`Loading${props.i}`])
 </script>
 
 <style lang="scss" scoped>
@@ -60,10 +54,10 @@ const currentIcon = computed<VNode>(() => {
     .box {
         transform: scale(v-bind(scale));
     }
+}
 
-    :deep(.loading) {
-        color: v-bind(color);
-    }
+.loading-next :deep(.loading) {
+    color: v-bind(color);
 }
 
 .shade-opactitys-enter-active,

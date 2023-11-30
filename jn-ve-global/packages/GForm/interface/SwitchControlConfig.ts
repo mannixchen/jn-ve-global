@@ -71,7 +71,7 @@ export interface SwitchProps {
     onChange?: (newVal: string) => void
 }
 
-export default interface SwitchControlConfig {
+export interface SwitchControlConfig {
     type: 'switch'
     props?: SwitchProps
 }

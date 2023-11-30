@@ -1,7 +1,6 @@
-import { VNode, Ref } from 'vue'
-import TableEditCellControlConfig from './TableEditCellControlConfig'
-import { BaseTableDataItem } from '../../index'
-import { Rule } from 'async-validator'
+import type { VNode, Ref } from 'vue'
+import type { TableEditCellControlConfig } from './TableEditCellControlConfig'
+import type { Rule } from 'async-validator'
 
 interface EleTableColumnProps {
     /**
@@ -151,7 +150,7 @@ interface EleTableColumnProps {
 }
 
 // 扩展属性 -----------------------------------------------------------------------
-export default interface TableColumnProps extends EleTableColumnProps {
+export interface TableColumnProps extends EleTableColumnProps {
     /**
      * 自定义渲染
      */

@@ -1,4 +1,4 @@
-import { ref, computed, reactive, watch } from 'vue'
+import { ref, computed, Ref, watch } from 'vue'
 import { TreeV2Props, TreeData } from '../../index'
 import { ElTreeV2 } from 'element-plus'
 import type { CheckedInfo, TreeKey } from 'element-plus/es/components/tree-v2/src/types'
@@ -24,7 +24,17 @@ interface Params {
     }
 }
 
-export default (p: Params) => {
+export default (
+    p: Params
+): {
+    elTreeV2Ref: Ref<any>
+    treeCheckedKeys: Ref<TreeKey[]>
+    defaultExpandedKeys: Ref<TreeKey[]>
+    localTreeData: Ref<TreeData[]>
+    enableNodesLength: Ref<number>
+    handleTreeCheck: (_: any, checkInfo: CheckedInfo) => void
+    changeNodesDisabledStatus: (keys: Array<string | number>, status: boolean) => void
+} => {
     const { props } = p
 
     const elTreeV2Ref = ref<InstanceType<typeof ElTreeV2> | null>(null)

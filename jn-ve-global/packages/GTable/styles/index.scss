@@ -24,7 +24,7 @@
         .g-table-main {
             height: 100%;
 
-            :deep(.el-table) {
+            .el-table {
                 &::before {
                     display: none;
                 }
@@ -34,8 +34,7 @@
 
     // 无数据
     &.data-empty {
-        :deep(.el-table) {
-
+        .el-table {
             .el-table__body-wrapper {
                 .el-scrollbar__view {
                     height: 100%;
@@ -48,7 +47,7 @@
     .g-table-main {
         height: calc(100% - var(--jn-ve-g-table-pagination-height));
 
-        :deep(.el-table) {
+        .el-table {
             color: var(--jn-ve-g-table-color);
             font-size: var(--jn-ve-g-table-font-size);
 

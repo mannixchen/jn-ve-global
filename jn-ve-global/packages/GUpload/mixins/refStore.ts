@@ -1,7 +1,7 @@
-import { ref, watch } from 'vue'
+import { ref, watch, type Ref } from 'vue'
 import { ElUpload } from 'element-plus'
 
-export default ({ emits }) => {
+export default ({ emits }): { uploadRef: Ref<any> } => {
     // 控件实例
     const uploadRef = ref<InstanceType<typeof ElUpload> | null>(null)
     watch(
@@ -13,7 +13,6 @@ export default ({ emits }) => {
         }
     )
 
-    // 这里我也不知道当初为什么这么抛出，但为了历史遗留问题，保留吧
     watch(
         () => uploadRef.value,
         (instance) => {

@@ -12,7 +12,6 @@
         <div v-if="showTitle" class="top">
             <span class="title">查询条件</span>
             <div v-if="moreSearchMode" :class="['more', modeClass]" @click="handleMoreSearch">
-                <img :src="tableSearchMoreIcon" alt="" srcset="">
                 <span>更多查询</span>
             </div>
         </div>
@@ -58,9 +57,9 @@
         top="5vh"
         :destroy-on-close="false"
     >
-        <el-scrollbar max-height="400px">
+        <ElScrollbar max-height="400px">
             <LGForm :config="(localSearchFormConfig as FormProps)" />
-        </el-scrollbar>
+        </ElScrollbar>
         <LGForm :config="(localSearchBtnsFormConfig as FormProps)" />
     </LGModal>
 </template>
@@ -73,16 +72,14 @@ export default {
 
 <script lang="tsx" setup>
 import { PropType, watch, ref, computed, reactive, onMounted } from 'vue'
-import { FormProps, FormItemProps } from '../../GForm'
-import LGForm from '../../GForm/index.vue'
-import tableSearchMoreIcon from '../../assets/icons/svg/old/table-search-more.svg'
 import { getStyle } from '@jsjn/utils'
-import LGModal from '../../GModal/index.vue'
 import type { BaseModuleMode } from '../../_globalConstant/baseModuleMode'
 import { ElScrollbar } from 'element-plus'
-import LGIcon from '../../GIcon/index.vue'
+import { GForm as LGForm, type FormProps, type FormItemProps } from '../../GForm'
+import { GModal as LGModal } from '../../GModal'
+import { GIcon as LGIcon } from '../../GIcon'
 
-interface Props {
+export interface Props {
     /**
      * 搜索条件表单配置
      */
@@ -193,7 +190,7 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './styles/classic-mode.scss';
 @import './styles/tabular-mode.scss';
 
@@ -221,7 +218,7 @@ defineExpose({
         }
 
         // 按钮
-        :deep(.search-btn-item) {
+        .search-btn-item {
             .el-form-item__content {
                 .el-button {
                     --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
@@ -242,8 +239,7 @@ defineExpose({
         }
     }
 }
-</style>
-<style lang="scss">
+
 .base-module-search-more-dialog {
     .el-dialog__body {
         padding: 14px 0 14px 28px;

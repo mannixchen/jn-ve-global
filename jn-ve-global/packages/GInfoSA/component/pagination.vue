@@ -1,5 +1,5 @@
 <template>
-    <el-pagination :pager-count="5" small background layout="prev, pager, next, total" />
+    <ElPagination :pager-count="5" small background layout="prev, pager, next, total" />
 </template>
 
 <script lang="ts">

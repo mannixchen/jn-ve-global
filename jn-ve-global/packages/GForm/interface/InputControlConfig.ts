@@ -1,4 +1,4 @@
-import { VNode } from 'vue'
+import type { VNode } from 'vue'
 
 type AutosizeProp =
     | {
@@ -149,7 +149,7 @@ export interface InputSlots {
     append?: VNode | JSX.Element | string
 }
 
-export default interface InputControlConfig {
+export interface InputControlConfig {
     type: 'input'
     props?: InputProps & InputSlots & InputEvents
 }

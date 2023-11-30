@@ -51,7 +51,7 @@
                     <!-- input 输入框 -->
                     <template v-if="localControlType === 'input'">
                         <div style="display: flex; width: 100%">
-                            <el-input
+                            <ElInput
                                 ref="controlRef"
                                 v-model="localPropRef"
                                 v-bind="localControlProps"
@@ -64,21 +64,21 @@
                     <!-- InputNumber -->
                     <template v-if="localControlType === 'inputNumber'">
                         <div class="inputnumber-control-wrapper">
-                            <el-input-number
+                            <ElInputNumber
                                 ref="controlRef"
                                 v-model="localPropRef"
                                 size="small"
                                 v-bind="localControlProps"
                             />
-                            <el-button text size="small" @click.stop="control2Text">
+                            <ElButton text size="small" @click.stop="control2Text">
                                 确定
-                            </el-button>
+                            </ElButton>
                         </div>
                     </template>
 
                     <!-- 下拉选择（多选情况特殊） -->
                     <template v-if="localControlType === 'select'">
-                        <el-select
+                        <ElSelect
                             v-if="
                                 !localControlProps ||
                                     localControlProps.multiple === undefined ||
@@ -95,9 +95,9 @@
                                 }
                             "
                         >
-                            <el-option
+                            <ElOption
                                 v-for="selectOption in (columnConfig.controlConfig as SelectControlConfig).options"
-                                :key="selectOption.value"
+                                :key="(selectOption.value as any)"
                                 :label="selectOption.label"
                                 :value="selectOption.value"
                                 :disabled="selectOption.disabled"
@@ -110,37 +110,37 @@
                                         :render="(columnConfig.controlConfig as SelectControlConfig).optionRender(selectOption)"
                                     />
                                 </template>
-                            </el-option>
-                        </el-select>
+                            </ElOption>
+                        </ElSelect>
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is multiple but prop is not array;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <!-- 单选框 -->
                     <template v-if="localControlType === 'radio'">
-                        <el-radio-group
+                        <ElRadioGroup
                             v-model="localPropRef"
                             v-bind="localControlProps"
                             @change="control2Text"
                         >
-                            <el-radio
+                            <ElRadio
                                 v-for="radioOption in (columnConfig.controlConfig as RadioControlConfig).options"
-                                :key="radioOption.value"
+                                :key="(radioOption.value as any)"
                                 :label="radioOption.value"
                                 :disabled="radioOption.disabled"
                                 size="small"
                             >
                                 {{ radioOption.label }}
-                            </el-radio>
-                        </el-radio-group>
+                            </ElRadio>
+                        </ElRadioGroup>
                     </template>
 
                     <!-- 选择日期&时间类 -->
                     <template v-if="localControlType === 'timePicker'">
-                        <el-time-picker
+                        <ElTimePicker
                             v-if="localPropRef instanceof Date"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -150,14 +150,14 @@
                             @change="delayControlToText"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is not Date;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <template v-if="localControlType === 'timeSelect'">
-                        <el-time-select
+                        <ElTimeSelect
                             v-if="typeof localPropRef === 'string'"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -167,14 +167,14 @@
                             @change="delayControlToText"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is not string;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <template v-if="localControlType === 'datePicker'">
-                        <el-date-picker
+                        <ElDatePicker
                             v-if="datePickerValueVerify()"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -184,14 +184,14 @@
                             @change="delayControlToText"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' prop type inconformity;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <template v-if="localControlType === 'dateTimePicker'">
-                        <el-date-picker
+                        <ElDatePicker
                             v-if="datePickerValueVerify()"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -202,42 +202,42 @@
                             @change="delayControlToText"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' prop type inconformity;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <!-- 多选框 -->
                     <template v-if="localControlType === 'checkBox'">
                         <div v-if="Array.isArray(localPropRef)" class="checkbox-wrapper">
-                            <el-checkbox-group v-model="localPropRef" v-bind="localControlProps">
-                                <el-checkbox
+                            <ElCheckboxGroup v-model="localPropRef" v-bind="localControlProps">
+                                <ElCheckbox
                                     v-for="checkBoxOption in (columnConfig.controlConfig as CheckboxControlConfig).options"
-                                    :key="checkBoxOption.value"
+                                    :key="(checkBoxOption.value as any)"
                                     :label="checkBoxOption.value"
                                     :disabled="checkBoxOption.disabled"
                                     size="small"
                                 >
                                     {{ checkBoxOption.label }}
-                                </el-checkbox>
-                            </el-checkbox-group>
+                                </ElCheckbox>
+                            </ElCheckboxGroup>
                             <div class="checkbox-confirm-btn-wrapper">
-                                <el-button size="small" type="primary" @click.stop="control2Text">
+                                <ElButton size="small" type="primary" @click.stop="control2Text">
                                     确定
-                                </el-button>
+                                </ElButton>
                             </div>
                         </div>
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is not array;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <!-- ColorPicker 颜色选择器 -->
                     <template v-if="localControlType === 'colorPicker'">
-                        <el-color-picker
+                        <ElColorPicker
                             v-model="localPropRef"
                             v-bind="localControlProps"
                             size="small"
@@ -247,7 +247,7 @@
 
                     <!-- Rate 打分 -->
                     <template v-if="localControlType === 'rate'">
-                        <el-rate
+                        <ElRate
                             v-if="typeof localPropRef === 'number'"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -255,15 +255,15 @@
                             @change="control2Text"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is not number;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
                     <!-- Slider 滑块 -->
                     <template v-if="localControlType === 'slider'">
-                        <el-slider
+                        <ElSlider
                             v-if="typeof localPropRef === 'number'"
                             v-model="localPropRef"
                             v-bind="localControlProps"
@@ -277,9 +277,9 @@
                             @change="control2Text"
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is not number;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
@@ -303,9 +303,9 @@
                             "
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is multiple but prop is not array;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
@@ -330,9 +330,9 @@
                             "
                         />
                         <div v-else>
-                            <el-tag type="danger" size="small">
+                            <ElTag type="danger" size="small">
                                 error: '{{ columnConfig.prop }}' is multiple but prop is not array;
-                            </el-tag>
+                            </ElTag>
                         </div>
                     </template>
 
@@ -400,7 +400,7 @@
 
                     <!-- 错误信息，存在 rules 即创建 -->
                     <template v-if="columnConfig.rules">
-                        <el-tooltip
+                        <ElTooltip
                             popper-class="edit-cell-error-msg-tooltip"
                             effect="dark"
                             :content="validateMsg"
@@ -412,7 +412,7 @@
                                     <!-- {{ validateMsg }} -->
                                 </span>
                             </transition>
-                        </el-tooltip>
+                        </ElTooltip>
                     </template>
                 </template>
             </div>
@@ -429,8 +429,6 @@ export default {
 <script lang="tsx" setup>
 import { toRef } from 'vue'
 import type {
-    TableColumnProps,
-    BaseTableDataItem,
     SelectControlConfig,
     RadioControlConfig,
     CheckboxControlConfig,
@@ -440,15 +438,18 @@ import type {
     InfoSelectControlConfig,
     InfoAutocompleteControlConfig,
     AddressControlConfig
-} from '../../../index'
+} from '../../../GForm'
+import type { TableColumnProps, BaseTableDataItem } from '../../interface'
 import FunctionalComponent from '../../../FunctionalComponent'
-import LGSelectTree from '../../../GSelectTree/v1/index.vue'
-import LGFigureInput from '../../../GFigureInput/index.vue'
-import LGInfoSelect from '../../../GInfoSA/GInfoSelect/index.vue'
-import LGInfoSelectAll from '../../../GInfoSA/GInfoSelectAll/index.vue'
-import LGInfoAutocomplete from '../../../GInfoSA/GInfoAutocomplete/index.vue'
-import LGSelectTreeV2 from '../../../GSelectTree/v2/index.vue'
-import LGAddress from '../../../GAddress/index.vue'
+import { GSelectTree as LGSelectTree, GSelectTreeV2 as LGSelectTreeV2 } from '../../../GSelectTree'
+import { GFigureInput as LGFigureInput } from '../../../GFigureInput'
+import {
+    GInfoSelect as LGInfoSelect,
+    GInfoSelectAll as LGInfoSelectAll,
+    GInfoAutocomplete as LGInfoAutocomplete
+} from '../../../GInfoSA'
+import { GAddress as LGAddress } from '../../../GAddress'
+
 import {
     useAddEscEvent,
     useAddValidate,
@@ -477,7 +478,7 @@ import {
     ElTooltip
 } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 当前列配置
      */
@@ -593,8 +594,8 @@ useMonitorRowEdit({
 })
 </script>
 
-<style lang="scss" scoped>
-@import './styles';
+<style lang="scss">
+@import './styles/index.scss';
 
 // 切换动画需要使用变量
 .slide-right-enter-active,
@@ -624,8 +625,7 @@ useMonitorRowEdit({
 .slide-left-leave-to {
     @extend .slide-right-enter-from;
 }
-</style>
-<style lang="scss">
+
 .edit-cell-error-msg-tooltip {
     color: #f56c6c !important;
 }

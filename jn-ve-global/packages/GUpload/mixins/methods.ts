@@ -1,5 +1,5 @@
 import { ElMessageBox, ElMessage } from 'element-plus'
-import UploadFile from '../interface/UploadFile'
+import { UploadFile } from '../interface/UploadFile'
 import { fillFileMemoryUrl } from '../utils'
 
 export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localDownloadUrl }) => {
@@ -40,9 +40,9 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localD
      * 加载文件资源
      *  - 已有：执行行为 预览 or 下载
      *  - 未有：请求接口，回调执行行为
-     * @param file 
-     * @param cb 
-     * @returns 
+     * @param file
+     * @param cb
+     * @returns
      */
     function _loadFile(file: UploadFile, cb) {
         if (!file.url) {

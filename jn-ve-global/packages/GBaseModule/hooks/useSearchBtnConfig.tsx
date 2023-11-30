@@ -1,6 +1,7 @@
 import { computed, useAttrs } from 'vue'
-import type { FormItemProps } from '../../index'
 import { RefreshLeft, Search } from '@element-plus/icons-vue'
+import type { FormItemProps } from '../../GForm'
+import { ElButton } from 'element-plus'
 
 export default ({ props, emits, tableSearchRef }) => {
     const attrs = useAttrs()
@@ -16,7 +17,7 @@ export default ({ props, emits, tableSearchRef }) => {
         render() {
             return (
                 <>
-                    <el-button
+                    <ElButton
                         icon={RefreshLeft}
                         onClick={() => {
                             // 优先执行用户传递的 reset
@@ -44,9 +45,9 @@ export default ({ props, emits, tableSearchRef }) => {
                             props.loadTableMethods?.(1)
                         }}>
                         重置
-                    </el-button>
+                    </ElButton>
                     {props.searchBtnAuthCode ? (
-                        <el-button
+                        <ElButton
                             v-auth={props.searchBtnAuthCode}
                             type='primary'
                             icon={Search}
@@ -54,16 +55,16 @@ export default ({ props, emits, tableSearchRef }) => {
                                 _searchHandle()
                             }}>
                             查询
-                        </el-button>
+                        </ElButton>
                     ) : (
-                        <el-button
+                        <ElButton
                             type='primary'
                             icon={Search}
                             onClick={() => {
                                 _searchHandle()
                             }}>
                             查询
-                        </el-button>
+                        </ElButton>
                     )}
                 </>
             )

@@ -1,4 +1,4 @@
-import { FormProps, FormItemBaseProps, ControlConfig } from '../../GForm'
+import type { FormProps, FormItemBaseProps, ControlConfig } from '../../GForm'
 
 export interface FormGenerateItemProps extends FormItemBaseProps {
     /**
@@ -11,6 +11,6 @@ export interface FormGenerateItemProps extends FormItemBaseProps {
     defaultValue?: string | number | Array<any>
 }
 
-export default interface FormGenerateProps extends FormProps {
+export interface FormGenerateProps extends FormProps {
     formItems: FormGenerateItemProps[]
 }

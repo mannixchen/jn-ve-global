@@ -14,13 +14,13 @@
         .g-button-group {
             flex: 1;
 
-            :deep(.el-button) {
+            .el-button {
                 --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
                 --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
             }
         }
 
-        :deep(.tree-icons) {
+        .tree-icons {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -63,7 +63,7 @@
         overflow: hidden;
         padding-left: var(--jn-ve-g-tree-padding-lr);
 
-        :deep(.el-tree) {
+        .el-tree {
             .el-tree-node__content {
 
                 // 展开按钮图标

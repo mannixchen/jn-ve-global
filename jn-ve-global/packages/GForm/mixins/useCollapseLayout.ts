@@ -1,5 +1,5 @@
-import { computed, ShallowRef, Ref, watch } from 'vue'
-import type { FormProps, FormItemProps, BtnProps, CollapseItemControlProps } from '../../index'
+import { computed } from 'vue'
+import type { FormProps, FormItemProps, CollapseItemControlProps } from '../interface'
 
 export interface CustomCollapseItem extends CollapseItemControlProps {
     name: string
@@ -17,7 +17,7 @@ export interface CustomCollapseItem extends CollapseItemControlProps {
     content: FormItemProps[]
 }
 
-export default (props: { config: FormProps }) => {
+export default (props: { config: FormProps }): any => {
     // 基于所有的表单项操作
     const formItems = computed<FormItemProps[]>(() => props.config.formItems)
 

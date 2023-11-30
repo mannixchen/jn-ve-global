@@ -4,7 +4,13 @@
     </div>
 </template>
 
-<script lang="ts" setup name="JnEditor">
+<script lang="ts">
+export default {
+    name: 'JnEditor'
+}
+</script>
+
+<script lang="ts" setup>
 import {
     shallowRef,
     ref,
@@ -15,12 +21,11 @@ import {
     onActivated,
     onDeactivated
 } from 'vue'
-import { TinyMCE, Editor as TinyMCEEditor, RawEditorSettings } from './interface/tinymce'
-import { v4 as uuidv4 } from 'uuid'
+import type { TinyMCE, Editor as TinyMCEEditor, RawEditorSettings } from './interface/tinymce'
 import useDom from './hooks/useDom'
 import useInitTiny from './hooks/useInitTiny'
 
-interface JnEditorProps {
+export interface JnEditorProps {
     /**
      * 双向绑定的值
      */
@@ -94,7 +99,7 @@ const emits = defineEmits([
 ])
 
 // 静态常量
-const elementId = computed(() => `${props.id}-${uuidv4()}` || uuidv4())
+const elementId = computed(() => `${props.id}-${+new Date()}` || `default-${+new Date()}`)
 // 核心变量
 const currentEditor = shallowRef<TinyMCEEditor | null>(null)
 const editorMounted = ref<boolean>(false)
@@ -149,12 +154,10 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
+<style>
 .jn-editor-wrapper {
     height: 100%;
 }
-</style>
-<style>
 .tox.tox-tinymce.tox-fullscreen {
     z-index: 99999999;
 }

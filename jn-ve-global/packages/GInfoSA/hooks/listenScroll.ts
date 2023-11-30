@@ -1,5 +1,5 @@
 import { watch, Ref } from 'vue'
-import { SelectOptionProps } from '../../index'
+import type { SelectOptionProps } from '../../GForm'
 
 export interface ListeneSrollProps {
     popperClass: string

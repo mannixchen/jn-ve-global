@@ -1,5 +1,5 @@
 <template>
-    <el-tooltip
+    <ElTooltip
         v-if="isShow"
         :placement="placement"
         :popper-class="[popperClass, 'form-item-tip__popper']"
@@ -18,22 +18,23 @@
         <span class="item-tip">
             <LGIcon :icon="icon" />
         </span>
-    </el-tooltip>
+    </ElTooltip>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'FormItemLabelTip'
-}
+})
 </script>
 
 <script lang="ts" setup>
 import { isVNode, computed } from 'vue'
-import LGIcon from '../../../../GIcon/index.vue'
-import { FormItemProps } from '../../../index'
+import { GIcon as LGIcon } from '../../../../GIcon'
+import { FormItemProps } from '../../../interface'
 import FunctionalComponent from '../../../../FunctionalComponent'
-import _ from 'lodash'
 import { ElTooltip } from 'element-plus'
+import _ from 'lodash'
 
 const props = withDefaults(
     defineProps<{

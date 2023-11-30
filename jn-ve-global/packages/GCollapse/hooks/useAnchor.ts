@@ -1,5 +1,4 @@
-import { watch, ref, computed, nextTick, Ref, onMounted, shallowRef } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
+import { ref, onMounted, shallowRef, type Ref } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import _ from 'lodash'
 import { size2Rem, getStyle } from '@jsjn/utils'
@@ -27,11 +26,23 @@ interface Params {
     }
 }
 
-export default ({ props }: Params) => {
+export default ({
+    props
+}: Params): {
+    anchorWrapperRef: Ref<any>
+    collapseItemModels: Ref<any[]>
+    collapseRef: Ref<any>
+    handleNav: (target: CollapseItemModel) => void
+    id: string
+    backTop: () => void
+    anchorItemHeight: string
+    anchorWrapperMaxH: number
+    isPackup: Ref<boolean>
+} => {
     const collapseRef = ref<InstanceType<typeof ElCollapse> | null>(null)
     const anchorWrapperRef = ref<InstanceType<typeof ElScrollbar> | null>(null)
 
-    const id = `collapse__wrapper-${uuidv4()}`
+    const id = `collapse__wrapper-${+new Date()}`
     const collapseWrapperParent = shallowRef<HTMLElement>(props.parent)
     const collapseItemModels = ref<CollapseItemModel[]>([])
     const anchorItemHeight = `${size2Rem(46)}px`

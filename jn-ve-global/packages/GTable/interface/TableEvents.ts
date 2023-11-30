@@ -5,7 +5,7 @@ interface CustomTableEvents {
     onRefresh?: () => void
 }
 
-export default interface TableEvents extends CustomTableEvents {
+export interface TableEvents extends CustomTableEvents {
     /**
      * 当用户手动勾选数据行的 Checkbox 时触发的事件	selection, row
      */

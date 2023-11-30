@@ -1,4 +1,4 @@
-export default interface TreeV2Props {
+export interface TreeV2Props {
     /**
      * 每个树节点用来作为唯一标识的属性，在整棵树中应该是唯一的
      * default: id

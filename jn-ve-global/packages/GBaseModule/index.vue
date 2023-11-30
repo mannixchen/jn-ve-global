@@ -53,11 +53,11 @@
             <slot name="core">
                 <!-- tab页 -->
                 <div v-if="!!tabs.length" class="core-tab-wrapper">
-                    <el-tabs v-model="localActiveTab">
+                    <ElTabs v-model="localActiveTab">
                         <template v-for="(tab, index) in tabs" :key="`${tab.value}-${index}`">
-                            <el-tab-pane :label="tab.label" :name="tab.value" />
+                            <ElTabPane :label="tab.label" :name="tab.value" />
                         </template>
-                    </el-tabs>
+                    </ElTabs>
                 </div>
 
                 <!-- 表格 -->
@@ -77,20 +77,24 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed, watch } from 'vue'
-import { BtnProps } from './index'
-import { FormProps } from '../GForm'
-import { TableColumnProps, BaseTableDataItem, TableConfig, PaginationProps } from '../GTable'
+import { ref, computed, Ref } from 'vue'
+import { ElTabs, ElTabPane } from 'element-plus'
+import type { FormProps } from '../GForm'
 import TableSearch from './component/TableSearch.vue'
-import LGTable from '../GTable/index.vue'
-import LGButtonGroup from '../GButtonGroup/index.vue'
+import {
+    GTable as LGTable,
+    type TableColumnProps,
+    type BaseTableDataItem,
+    type TableConfig,
+    type PaginationProps
+} from '../GTable'
+import { GButtonGroup as LGButtonGroup, type BtnProps } from '../GButtonGroup'
 import { getBaseModuleMode } from '../_globalConstant/baseModuleMode'
 import type { BaseModuleMode } from '../_globalConstant/baseModuleMode'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
-import { ElTabs, ElTabPane } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 表格列
      */
@@ -216,10 +220,14 @@ defineExpose({
     tableConfig: localTableConfig,
     tableInstance: localTableConfig.instance,
     tableSearchRef
+} as {
+    tableConfig: TableConfig
+    tableInstance: TableConfig['instance']
+    tableSearchRef: Ref<any>
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './styles/classic-mode/index.scss';
 @import './styles/tabular-mode/index.scss';
 </style>

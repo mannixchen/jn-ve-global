@@ -1,6 +1,6 @@
 <template>
     <!-- dialog 对话框 -->
-    <el-dialog
+    <ElDialog
         v-if="localType === 'dialog'"
         ref="modalRef"
         :width="localWidth"
@@ -32,10 +32,10 @@
                 />
             </slot>
         </template>
-    </el-dialog>
+    </ElDialog>
 
     <!-- drawer 抽屉 -->
-    <el-drawer
+    <ElDrawer
         v-if="localType === 'drawer'"
         ref="modalRef"
         :size="localWidth"
@@ -51,9 +51,9 @@
 
         <!-- 内容 -->
         <div class="drawer-content">
-            <el-scrollbar class="drawer-content-scrollbar">
+            <ElScrollbar class="drawer-content-scrollbar">
                 <slot />
-            </el-scrollbar>
+            </ElScrollbar>
         </div>
 
         <!-- 底 -->
@@ -66,7 +66,7 @@
                 />
             </slot>
         </div>
-    </el-drawer>
+    </ElDrawer>
 </template>
 
 <script lang="ts">
@@ -77,14 +77,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, toRefs, PropType, useAttrs } from 'vue'
-import BtnProps from '../GButtonGroup/interface/BtnProps'
-import LGButtonGroup from '../GButtonGroup/index.vue'
+import { ref, computed, useAttrs } from 'vue'
+import { GButtonGroup as LGButtonGroup, type BtnProps } from '../GButtonGroup'
 import _ from 'lodash'
 import { partitionObj2HumpObj } from '@jsjn/utils'
 import { ElDialog, ElDrawer, ElScrollbar } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 类型
      */

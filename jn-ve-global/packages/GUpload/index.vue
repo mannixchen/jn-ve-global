@@ -1,5 +1,5 @@
 <template>
-    <el-upload
+    <ElUpload
         ref="uploadRef"
         :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
@@ -8,13 +8,13 @@
         :headers="localReqHeaders"
         :disabled="disabled"
         :accept="localAccept"
-        :list-type="uploadListType"
+        :list-type="(uploadListType as any)"
         :limit="localLimit"
         :show-file-list="localShowFileList"
         :on-success="onSuccess"
         :on-error="onError"
         :before-upload="beforeUpload"
-        :on-exceed="onExceed"
+        :on-exceed="(onExceed as any)"
         :on-change="onChange"
         :on-remove="onRemove"
     >
@@ -24,9 +24,9 @@
                 <div :class="['upload-btn', uploadListType]">
                     <LGIcon v-if="['picture-card'].includes(uploadListType)" icon="el-Plus" />
 
-                    <el-button v-else size="small" type="primary" :disabled="disabled">
+                    <ElButton v-else size="small" type="primary" :disabled="disabled">
                         上传附件
-                    </el-button>
+                    </ElButton>
                 </div>
             </slot>
             <div v-else class="avatar-upload">
@@ -72,7 +72,7 @@
                 </div>
 
                 <!-- 进度条 -->
-                <el-progress
+                <ElProgress
                     v-if="file.status === 'uploading'"
                     :percentage="+file.percentage"
                     type="line"
@@ -86,10 +86,10 @@
                 </label>
             </div>
         </template>
-    </el-upload>
+    </ElUpload>
 
     <!-- 预览 -->
-    <g-modal
+    <LGModal
         v-if="currentFile"
         v-model="modalShow"
         vertical-center
@@ -110,33 +110,36 @@
 
         <!-- 连续预览 -->
         <div v-if="attrs['list-type'] !== 'avatar'" class="pre-trigger" @click="preImgHandle">
-            <g-icon icon="el-ArrowLeftBold" />
+            <LGIcon icon="el-ArrowLeftBold" />
         </div>
 
         <div v-if="attrs['list-type'] !== 'avatar'" class="next-trigger" @click="nextImgHandle">
-            <g-icon icon="el-ArrowRightBold" />
+            <LGIcon icon="el-ArrowRightBold" />
         </div>
-    </g-modal>
+    </LGModal>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GUpload',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
+import { type Ref } from 'vue'
 import { getFileType, getFileTypeIcon } from './utils'
 import { imgSuffix, officeSuffix } from './constant/fileTypeList'
-import UploadFile from './interface/UploadFile'
+import type { UploadFile } from './interface/UploadFile'
 import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
 import { ElUpload, ElButton, ElProgress, ElMessage } from 'element-plus'
-import LGFilePreview from '../GFilePreview/index.vue'
-import LGIcon from '../GIcon/index.vue'
+import { GFilePreview as LGFilePreview } from '../GFilePreview'
+import { GIcon as LGIcon } from '../GIcon'
+import { GModal as LGModal } from '../GModal'
 
-interface UploadCustomProps {
-    instance?: InstanceType<typeof ElUpload> | null
+export interface UploadCustomProps {
+    instance?: any
     /**
      * 抛出的值
      */
@@ -286,13 +289,13 @@ function _findTargetFileIndex(file: UploadFile, fileList: UploadFile[]) {
 
 defineExpose({
     uploadRef
+} as {
+    uploadRef: Ref<any>
 })
 </script>
 
-<style lang="scss" scoped>
-@import './styles';
-</style>
 <style lang="scss">
+@import './styles';
 @import './styles/preview.scss';
 
 .upload-preview-modal {

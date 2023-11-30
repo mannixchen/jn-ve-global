@@ -7,12 +7,17 @@
     />
 
     <!-- El Icon -->
-    <el-icon v-else-if="iconIsValid && elIconComponentName" v-bind="$attrs" class="g-icon">
+    <ElIcon v-else-if="iconIsValid && elIconComponentName" v-bind="$attrs" class="g-icon">
         <component :is="elIcons[elIconComponentName]" />
-    </el-icon>
+    </ElIcon>
 
     <!-- 本地svg -->
-    <svg-icon v-else-if="iconIsValid" :name="icon" v-bind="$attrs" />
+    <component
+        :is="jnIcons[localSvgCompName]"
+        v-else-if="iconIsValid"
+        :class="['custom-svg-icon', { 'svg-icon-custom-color': customColor }]"
+        v-bind="$attrs"
+    />
 </template>
 
 <script lang="ts">
@@ -24,13 +29,24 @@ export default {
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import SvgIcon from '../SvgIcon/index.vue'
-import * as elIcons from '@element-plus/icons-vue'
 import { ElIcon } from 'element-plus'
+import { camelCase } from '@jsjn/utils'
+import * as elIcons from '@element-plus/icons-vue'
+import * as jnIcons from '@jsjn/icons-vue'
 
-const props = defineProps({
-    icon: String
-})
+const props = withDefaults(
+    defineProps<{
+        icon: String
+        /**
+         * 本地 svg 存在固有设计样式颜色，需要保留
+         * 因此，需要主动开启自定义颜色
+         */
+        customColor?: boolean
+    }>(),
+    {
+        customColor: false
+    }
+)
 
 // 有值且为字符串，保险
 const iconIsValid = computed(() => props.icon && typeof props.icon === 'string')
@@ -40,6 +56,13 @@ const elIconComponentName = computed(() => {
     if (!iconIsValid.value) return null
     const name = props.icon.indexOf('el-') === 0 ? props.icon.replace(/^el-/, '') : null
     return elIcons[name] ? name : null
+})
+
+// 本地 svg 名称映射
+const localSvgCompName = computed(() => {
+    if (!iconIsValid.value) return null
+    const name = camelCase(props.icon, { pascalCase: true })
+    return jnIcons[name] ? name : null
 })
 </script>
 
@@ -53,5 +76,11 @@ const elIconComponentName = computed(() => {
     svg {
         vertical-align: top;
     }
+}
+
+.custom-svg-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: top;
 }
 </style>

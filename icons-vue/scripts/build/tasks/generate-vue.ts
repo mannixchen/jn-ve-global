@@ -1,6 +1,6 @@
 import path from 'node:path'
 import { src, dest } from 'gulp'
-import { svgRoot, pathComponents } from '../utils/paths'
+import { svgRoot, compRoot } from '../utils/paths'
 import through2 from 'through2'
 import consola from 'consola'
 import chalk from 'chalk'
@@ -88,14 +88,14 @@ export async function generateVue() {
                     cb(null, vueFile)
                 })
             )
-            .pipe(dest(pathComponents))
+            .pipe(dest(compRoot))
             .on('end', () => {
                 resolve(true)
             })
     })
 
     const code = entryFileContent.join('\n')
-    await writeFile(path.resolve(pathComponents, 'index.ts'), code, 'utf-8')
+    await writeFile(path.resolve(compRoot, 'index.ts'), code, 'utf-8')
 
     consola.success(chalk.green('生产组件完成...'))
 }

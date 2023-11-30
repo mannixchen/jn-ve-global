@@ -11,13 +11,13 @@ export default {
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import Basic from './GChartBasic/index.vue'
-import PieConfig from '../interface/PieConfig'
+import { PieConfig } from '../interface'
 import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'
 import { EChartsOption, PieSeriesOption } from 'echarts'
 
-interface Props {
+export interface Props {
     config: PieConfig
 }
 

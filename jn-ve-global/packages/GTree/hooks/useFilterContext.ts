@@ -8,7 +8,14 @@ interface Params {
     localSourceMapping: ComputedRef<TreeV2Props>
 }
 
-export default ({ emits, localSourceMapping }: Params) => {
+export default ({
+    emits,
+    localSourceMapping
+}: Params): {
+    treeRef: Ref<any>
+    filterText: Ref<string>
+    filterMethod: (query: string, node: TreeNode) => any
+} => {
     const treeRef = ref<InstanceType<typeof ElTreeV2> | null>(null)
     const filterText = ref<string>('')
 

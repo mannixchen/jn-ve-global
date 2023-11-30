@@ -71,7 +71,7 @@
                 display: flex;
                 align-items: center;
 
-                :deep(.el-checkbox) {
+                .el-checkbox {
                     margin-right: 8px !important;
                 }
             }
@@ -121,7 +121,7 @@
                 width: calc(var(--el-transfer-panel-width) - 16px * 2);
                 flex: none;
 
-                :deep(.el-input__inner) {
+                .el-input__inner {
                     height: var(--el-transfer-filter-height);
                     width: 100%;
                     font-size: 0.12rem;
@@ -136,7 +136,7 @@
                 flex: 1;
                 overflow: hidden;
 
-                :deep(.g-transfer-tree-panel__tree) {
+                .g-transfer-tree-panel__tree {
                     .el-tree-node {
                         .el-tree-node__content {
                             width: 100%;
@@ -195,7 +195,7 @@
                 display: flex;
                 align-items: center;
 
-                :deep(.el-checkbox__label) {
+                .el-checkbox__label {
                     width: 100%;
                     line-height: var(--el-component-size);
                     display: block !important;
@@ -234,13 +234,13 @@
         left: 50%;
         transform: translate(-50%, -50%);
 
-        :deep(.el-button) {
+        .el-button {
             width: var(--transfer-txt-btn-width) !important;
         }
     }
 
     &.is-disabled {
-        :deep(.el-checkbox) {
+        .el-checkbox {
             .el-checkbox__input {
                 display: none;
             }

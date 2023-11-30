@@ -1,5 +1,5 @@
 <template>
-    <el-form-item
+    <ElFormItem
         v-if="formConfig && formItemConfig"
         :class="{
             'no-colon': formConfig.colon === false,
@@ -8,13 +8,13 @@
             'field-log-tip': currentFieldHistoryInfo,
             [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
             'no-margin-b':
-                formItemConfig?.controlConfig?.type === 'table' ||
+                (formItemConfig?.controlConfig?.type as any) === 'table' ||
                 formItemConfig?.controlConfig?.type === 'collapseItem',
             'no-label':
                 formItemConfig?.controlConfig?.type === 'collapseItem' ||
                 formItemConfig?.controlConfig?.type === 'placeholder'
         }"
-        v-bind="elFormItemProps"
+        v-bind="(elFormItemProps as any)"
         :label-width="labelWidth"
     >
         <!-- 自定义 label -->
@@ -85,31 +85,32 @@
         />
 
         <!-- 字段变更历史 -->
-        <el-tooltip
+        <ElTooltip
             v-if="currentFieldHistoryInfo"
             :content="`修改前值：${currentFieldHistoryInfo.old}`"
         >
             <span class="item-tip log">
                 <LGIcon icon="xhx-public-tip-info" />
             </span>
-        </el-tooltip>
-    </el-form-item>
+        </ElTooltip>
+    </ElFormItem>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GFormItem'
-}
+})
 </script>
 
 <script lang="ts" setup>
 import { toRef, computed, isVNode } from 'vue'
-import type { FormProps, FormItemProps } from '../../index'
+import type { FormProps, FormItemProps } from '../../interface'
 import _ from 'lodash'
 import { ElFormItem, ElTooltip } from 'element-plus'
 import useHistoryLog from './hooks/useHistoryLog'
-import LGIcon from '../../../GIcon/index.vue'
 import useArgAdvance from './hooks/useArgAdvance'
+import { GIcon as LGIcon } from '../../../GIcon'
 
 // 组件
 import FunctionalComponent from '../../../FunctionalComponent'
@@ -152,7 +153,7 @@ const labelWidth = computed(() => {
 })
 
 // el-form-item 的配置
-const elFormItemProps = computed(() => {
+const elFormItemProps = computed<any>(() => {
     const {
         // 组件库扩展属性
         label,

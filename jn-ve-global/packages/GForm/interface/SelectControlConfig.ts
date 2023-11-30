@@ -1,4 +1,4 @@
-import { VNode } from 'vue'
+import type { VNode } from 'vue'
 
 export interface SelectProps {
     /**
@@ -157,7 +157,7 @@ export interface SelectOptionProps {
     [k: string]: any
 }
 
-export default interface SelectControlConfig {
+export interface SelectControlConfig {
     type: 'select'
     /**
      * 下拉框待选项

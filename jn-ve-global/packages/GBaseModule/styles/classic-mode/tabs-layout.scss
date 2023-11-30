@@ -19,7 +19,7 @@
             background-color: #f4fbff;
             flex: none;
 
-            :deep(.el-tabs) {
+            .el-tabs {
                 .el-tabs__nav-wrap {
                     &::after {
                         display: none;
@@ -63,7 +63,7 @@
             overflow: hidden;
             height: auto;
 
-            :deep(.g-table-root) {
+            .g-table-root {
                 border: none;
 
                 .g-table-main {

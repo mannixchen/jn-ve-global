@@ -1,5 +1,5 @@
 <template>
-    <el-tree-select
+    <ElTreeSelect
         default-expand-all
         highlight-current
         v-bind="$attrs"
@@ -18,13 +18,12 @@ export default {
 
 <script lang="ts" setup>
 import { computed, useAttrs } from 'vue'
-import { TreeData } from '../v1/interface/TreeData'
-import TreeProps from '../v1/interface/TreeProps'
+import type { TreeProps, TreeData } from '../v1'
 import _ from 'lodash'
 import { humpObj2PartitionObj } from '@jsjn/utils'
 import { ElTreeSelect } from 'element-plus'
 
-interface SelectTreeV2TreeProps extends TreeProps {
+export interface SelectTreeV2TreeProps extends TreeProps {
     /**
      * 指定节点 value 为节点对象的某个属性值
      */
@@ -35,7 +34,7 @@ interface SelectTreeV2TreeProps extends TreeProps {
     label?: string
 }
 
-interface CustomProps {
+export interface CustomProps {
     /**
      * 树的数据
      */

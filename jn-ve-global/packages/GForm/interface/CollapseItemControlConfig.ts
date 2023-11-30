@@ -1,4 +1,4 @@
-import type { BtnProps } from '../../index'
+import type { BtnProps } from '../../GButtonGroup'
 
 export interface CollapseItemControlProps {
     /**
@@ -31,7 +31,7 @@ export interface CollapseItemControlProps {
     tip?: string
 }
 
-export default interface CollapseItemControlConfig {
+export interface CollapseItemControlConfig {
     type: 'collapseItem'
     props?: CollapseItemControlProps
 }

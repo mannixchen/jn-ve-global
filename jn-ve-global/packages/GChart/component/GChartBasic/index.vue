@@ -3,21 +3,22 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GChartBasic',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, inject, nextTick, watch } from 'vue'
+import { ref, onMounted, onUnmounted, inject, nextTick, watch, Ref } from 'vue'
 import * as echarts from 'echarts'
 import ResizeObserver from 'resize-observer-polyfill'
 import { ECharts, EChartsOption } from 'echarts'
 import _ from 'lodash'
 import { chartInstanceKey } from '../../constant/chartInstanceKey'
 
-interface Props {
+export interface Props {
     option: EChartsOption
 }
 
@@ -95,6 +96,8 @@ onUnmounted(() => {
 // 抛出
 defineExpose({
     chartInstance
+} as {
+    chartInstance: Ref<ECharts>
 })
 </script>
 

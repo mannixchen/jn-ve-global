@@ -1,5 +1,5 @@
 <template>
-    <div ref="infoHeaderWrapRef" :class="['info-header-wrap', type]">
+    <div ref="infoHeaderWrapRef" :class="['info-header__wrapper', type]">
         <!-- 查询控件 -->
         <ul v-if="isCreateQuery && type === 'select'" class="control-wrapper">
             <li
@@ -14,25 +14,25 @@
                             (column.queryType === undefined || column.queryType === 'input')
                     "
                 >
-                    <el-input v-model.trim="localParams[column.prop]" />
+                    <ElInput v-model.trim="localParams[column.prop]" />
                 </template>
 
                 <!-- select -->
                 <template v-if="column.isQuery && column.queryType === 'select'">
-                    <el-select
+                    <ElSelect
                         v-model="localParams[column.prop]"
                         @focus="preventParentPopperHide"
                         @click="preventParentPopperHide"
                         @change="preventParentPopperHide"
                         @blur="preventParentPopperHide"
                     >
-                        <el-option
+                        <ElOption
                             v-for="option in column.querySelectOptions"
                             :key="option.value"
                             :label="option.label"
                             :value="option.value"
                         />
-                    </el-select>
+                    </ElSelect>
                 </template>
             </li>
         </ul>
@@ -58,13 +58,13 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { watch, ref, onMounted, computed, reactive, watchEffect } from 'vue'
-import InfoColumnProps from '../interface/InfoColumnProps'
+import { watch, ref, onMounted, computed, reactive, type Ref } from 'vue'
+import type { InfoColumnProps } from '../interface/InfoColumnProps'
 import { getWidth } from '../utils'
 import _ from 'lodash'
 import { ElInput, ElSelect, ElOption } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 定位：top 值
      */
@@ -191,14 +191,16 @@ const preventParentPopperHide = () => {
 defineExpose({
     el: infoHeaderWrapRef,
     height: infoHeaderHight
+} as {
+    el: Ref<HTMLElement>
+    height: Ref<number>
 })
 </script>
 
 <style lang="scss" scoped>
-@import '../styles.scss';
+@import './styles.scss';
 
-/* 头（遮挡） */
-.info-header-wrap {
+.info-header__wrapper {
     position: absolute;
     width: v-bind(width);
     z-index: v-bind(localZI);
@@ -209,13 +211,11 @@ defineExpose({
     border-radius: 4px 4px 0 0;
     box-sizing: border-box;
 
-    // 分页查询
     &.select,
     &.select-all {
         padding: 0 32px 0 20px;
     }
 
-    // 全量查询
     &.select-all {
         height: v-bind(height);
 
@@ -228,7 +228,6 @@ defineExpose({
         }
     }
 
-    // 自动补全
     &.autocomplete {
         padding: 0 20px;
     }
@@ -256,15 +255,15 @@ defineExpose({
         li {
             display: flex;
             align-items: center;
-
-            :deep(.el-input) {
-                --jn-ve-g-form-item-height: 26px;
-
-                .el-input__inner {
-                    height: 26px !important;
-                }
-            }
         }
+    }
+}
+
+.control-wrapper li :deep(.ElInput) {
+    --jn-ve-g-form-item-height: 26px;
+
+    .el-input__inner {
+        height: 26px !important;
     }
 }
 </style>

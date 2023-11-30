@@ -1,5 +1,9 @@
-/**
- * 默认代理
- *  - proBaseUrl 来自基座
- */
-export default window['__BASE_PREFIX__']
+export let prefix = window['__BASE_PREFIX__']
+
+export function setPrefix(prf: string) {
+    prefix = prf
+}
+
+export function getPrefix() {
+    return prefix
+}

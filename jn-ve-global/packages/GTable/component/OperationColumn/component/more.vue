@@ -1,5 +1,5 @@
 <template>
-    <el-dropdown
+    <ElDropdown
         :hide-on-click="false"
         @visible-change="(visible) => (dropdownIsVisible = visible)"
     >
@@ -14,13 +14,12 @@
             text
         >
             <span>更多操作...</span>
-            <!-- <LGIcon icon="el-More" /> -->
         </ElButton>
 
         <!-- 下拉 -->
         <template #dropdown>
-            <el-dropdown-menu>
-                <el-dropdown-item
+            <ElDropdownMenu>
+                <ElDropdownItem
                     v-for="(btn, index) in btns"
                     :key="`${btn.label}-${index}`"
                     class="table-row-more-operation-item"
@@ -45,10 +44,10 @@
                     >
                         {{ btn.label }}
                     </ElButton>
-                </el-dropdown-item>
-            </el-dropdown-menu>
+                </ElDropdownItem>
+            </ElDropdownMenu>
         </template>
-    </el-dropdown>
+    </ElDropdown>
 </template>
 
 <script lang="ts">
@@ -59,12 +58,11 @@ export default {
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { TableRowBtnProps } from '../../../../index'
-import LGIcon from '../../../../GIcon/index.vue'
+import { type TableRowBtnProps } from '../../../interface'
 import { getBtnProps } from '../constant/util'
 import { ElDropdown, ElButton, ElDropdownMenu, ElDropdownItem } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 按钮组
      */
@@ -97,17 +95,11 @@ const handleBtnClick = (btn: TableRowBtnProps<any>) => {
 <style lang="scss" scoped>
 .table-row-more-operation-btn {
     margin-left: 10px;
+}
 
-    :deep(i.g-icon) {
-        margin-left: 4px;
-        transition: transform 0.3s;
-    }
-
-    // &.is-visible {
-    //     :deep(i.g-icon) {
-    //         transform: rotateX(180deg);
-    //     }
-    // }
+.table-row-more-operation-btn :deep(i.g-icon) {
+    margin-left: 4px;
+    transition: transform 0.3s;
 }
 </style>
 <style lang="scss">

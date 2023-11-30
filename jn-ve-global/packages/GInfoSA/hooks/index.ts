@@ -2,7 +2,7 @@ import GetVariables, { VarableHookProps } from './variables'
 import ListenPopper from './listenPopper'
 import ListenScroll from './listenScroll'
 import ToBody from './toBody'
-import { SelectOptionProps } from '../../index'
+import type { SelectOptionProps } from '../../GForm'
 import { Ref } from 'vue'
 
 interface HooksProps {

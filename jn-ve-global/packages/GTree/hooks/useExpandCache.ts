@@ -26,9 +26,9 @@ export default ({ localSourceMapping, treeRef }: Params) => {
         }
     }
 
-    const handleNodeExpand = (...p) => _nodeExpandChange.apply(null, [...p, true])
+    const handleNodeExpand = (...p) => _nodeExpandChange.apply(null, [...p, true] as any)
 
-    const handleNodeCollapse = (...p) => _nodeExpandChange.apply(null, [...p, false])
+    const handleNodeCollapse = (...p) => _nodeExpandChange.apply(null, [...p, false] as any)
 
     const stop = watch(
         () => treeRef.value,

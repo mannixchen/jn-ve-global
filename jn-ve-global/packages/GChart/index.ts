@@ -1,4 +1,7 @@
-export { default as InitOpts } from './interface/InitOpts'
-export { default as ChartConfig } from './interface/ChartConfig'
-export { default as BarOrLineConfig } from './interface/BarOrLineConfig'
-export { default as PieConfig } from './interface/PieConfig'
+import _GChart from './index.vue'
+import _GChartBasic from './component/GChartBasic/index.vue'
+
+export * from './interface'
+
+export const GChart = _GChart
+export const GChartBasic = _GChartBasic

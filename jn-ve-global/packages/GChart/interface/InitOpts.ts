@@ -1,7 +1,7 @@
 /**
  * init 配置
  */
-export default interface InitOpts {
+export interface InitOpts {
     /**
      * 设备像素比，默认取浏览器的值window.devicePixelRatio
      */

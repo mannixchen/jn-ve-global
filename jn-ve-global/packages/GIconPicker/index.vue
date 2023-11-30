@@ -1,5 +1,5 @@
 <template>
-    <el-input
+    <ElInput
         ref="inputRef"
         v-model="localModelValue"
         class="icon-picker"
@@ -17,71 +17,79 @@
                 <LGIcon icon="el-Pointer" />
             </div>
         </template>
-    </el-input>
+    </ElInput>
 
-    <g-modal v-model="modalShow" title="选择图标" custom-class="icon-picker-modal">
-        <div>
-            <div class="title">
-                项目图标
+    <LGModal
+        v-model="modalShow"
+        title="选择图标"
+        custom-class="icon-picker-modal"
+        :vertical-center="true"
+    >
+        <ElScrollbar height="80vh">
+            <div>
+                <div class="title">
+                    项目图标
+                </div>
+                <ul class="icon-wrapper">
+                    <li
+                        v-for="icon in localIcons"
+                        :key="icon"
+                        class="icon-item local-svg"
+                        :class="{ 'is-active': icon === localModelValue }"
+                        @click="selecteHandle(icon)"
+                    >
+                        <LGIcon :icon="icon" />
+                    </li>
+                </ul>
             </div>
-            <ul class="icon-wrapper">
-                <li
-                    v-for="icon in localIcons"
-                    :key="icon"
-                    class="icon-item local-svg"
-                    :class="{ 'is-active': icon === localModelValue }"
-                    @click="selecteHandle(icon)"
-                >
-                    <LGIcon :icon="icon" />
-                </li>
-            </ul>
-        </div>
-        <div>
-            <div class="title">
-                Element
+            <div>
+                <div class="title">
+                    Element
+                </div>
+                <ul class="icon-wrapper">
+                    <li
+                        v-for="icon in elIconKeys.map((item) => `el-${item}`)"
+                        :key="icon"
+                        class="icon-item el"
+                        :class="{ 'is-active': icon === localModelValue }"
+                        @click="selecteHandle(icon)"
+                    >
+                        <LGIcon :icon="icon" />
+                    </li>
+                </ul>
             </div>
-            <ul class="icon-wrapper">
-                <li
-                    v-for="icon in elIconKeys.map((item) => `el-${item}`)"
-                    :key="icon"
-                    class="icon-item el"
-                    :class="{ 'is-active': icon === localModelValue }"
-                    @click="selecteHandle(icon)"
-                >
-                    <LGIcon :icon="icon" />
-                </li>
-            </ul>
-        </div>
-        <div>
-            <div class="title">
-                IconFont
+            <div>
+                <div class="title">
+                    IconFont
+                </div>
+                <ul class="icon-wrapper">
+                    <li
+                        v-for="icon in aliIcons"
+                        :key="icon"
+                        class="icon-item ali"
+                        :class="{ 'is-active': icon === localModelValue }"
+                        @click="selecteHandle(icon)"
+                    >
+                        <LGIcon :icon="icon" />
+                    </li>
+                </ul>
             </div>
-            <ul class="icon-wrapper">
-                <li
-                    v-for="icon in aliIcons"
-                    :key="icon"
-                    class="icon-item ali"
-                    :class="{ 'is-active': icon === localModelValue }"
-                    @click="selecteHandle(icon)"
-                >
-                    <LGIcon :icon="icon" />
-                </li>
-            </ul>
-        </div>
-    </g-modal>
+        </ElScrollbar>
+    </LGModal>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'GIconPickerV2'
+    name: 'GIconPicker'
 }
 </script>
 
 <script lang="ts" setup>
 import { watch, ref, computed, nextTick } from 'vue'
-import { elIconKeys, aliIcons, localIcons } from '../data/icons'
-import { ElInput } from 'element-plus'
-import LGIcon from '../../GIcon/index.vue'
+import { elIconKeys, aliIcons, localIcons } from './data/icons'
+import { ElInput, ElScrollbar } from 'element-plus'
+import { GIcon as LGIcon } from '../GIcon'
+import { GModal as LGModal } from '../GModal'
 
 const props = withDefaults(
     defineProps<{
@@ -129,16 +137,17 @@ const selecteHandle = (icon: string) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped></style>
+<style lang="scss">
 .icon-picker {
     --input-icon-prepend-width: 45px;
 
-    :deep(.el-input__wrapper) {
+    .el-input__wrapper {
         width: calc(100% - var(--input-icon-prepend-width) * 2);
     }
 
-    :deep(.el-input-group__prepend),
-    :deep(.el-input-group__append) {
+    .el-input-group__prepend,
+    .el-input-group__append {
         padding: 0;
         width: var(--input-icon-prepend-width);
 
@@ -160,8 +169,7 @@ const selecteHandle = (icon: string) => {
         }
     }
 }
-</style>
-<style lang="scss">
+
 .icon-picker-modal {
     .title {
         font-size: 20px;

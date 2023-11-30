@@ -4,7 +4,7 @@
         利用 Select 的绑定值如果没有 label 则默认显示 value
         Select 仅做一个显示的作用，选中的值由内部 State 维护，并抛出
     -->
-    <el-select
+    <ElSelect
         ref="elSelectRef"
         v-model="localSelectValue"
         :placeholder="placeholder"
@@ -18,8 +18,8 @@
         :filter-method="filterable ? selectFilterMethod : undefined"
         @clear="handleClear"
     >
-        <el-option value="">
-            <el-tree-v2
+        <ElOption value="">
+            <ElTreeV2
                 v-if="treeData && !redraw"
                 ref="elTreeRefV2"
                 class="select-tree-tree"
@@ -37,8 +37,8 @@
                 @current-change="handleCurrentChange"
                 @check="handleCheck"
             />
-        </el-option>
-    </el-select>
+        </ElOption>
+    </ElSelect>
 </template>
 
 <script lang="ts">
@@ -48,15 +48,14 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { nextTick, watch, ref, computed } from 'vue'
+import { nextTick, watch, ref, computed, Ref } from 'vue'
 import { findTargetByField, getAllParentNode } from '@jsjn/utils'
-import { TreeData } from './interface/TreeData'
-import TreeV2Props from './interface/TreeV2Props'
-import TreeV2Config from './interface/TreeV2Config'
 import { ElTreeV2, ElSelect, ElOption } from 'element-plus'
+
+import type { TreeV2Props, TreeV2Config, TreeData } from './index'
 import type { TreeNode } from 'element-plus/es/components/tree-v2/src/types'
 
-interface SelectTreeProps {
+export interface SelectTreeProps {
     /**
      * v-mdoel 绑定的 prop
      */
@@ -284,15 +283,16 @@ const treeFilterMethod = (query: string, node: TreeNode) => {
 defineExpose({
     elSelectRef,
     elTreeRefV2
+} as {
+    elSelectRef: Ref<any>
+    elTreeRefV2: Ref<any>
 })
 </script>
 
 <style lang="scss" scoped>
-.select-tree-select {
-    :deep(.el-tag) {
-        .el-tag__close {
-            display: none;
-        }
+.select-tree-select :deep(.el-tag) {
+    .el-tag__close {
+        display: none;
     }
 }
 </style>

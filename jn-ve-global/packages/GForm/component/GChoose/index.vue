@@ -31,20 +31,21 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GChoose',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
+import { ref, computed } from 'vue'
 import type {
     RadioOptionProps,
     RadioButtonOptionProps,
     CheckboxBoxOptionProps,
     CheckboxButtonOptionProps
-} from '../../index'
+} from '../../interface'
 import {
     ElCheckboxGroup,
     ElCheckbox,
@@ -53,7 +54,7 @@ import {
     ElRadio,
     ElRadioButton
 } from 'element-plus'
-import LGIcon from '../../../GIcon/index.vue'
+import { GIcon as LGIcon } from '../../../GIcon'
 
 const componentMapping = {
     checkBox: ElCheckbox,
@@ -115,11 +116,11 @@ const getOptionProps = (
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .g-choose {
     &.no-box {
-        :deep(.el-radio-group),
-        :deep(.el-checkbox-group) {
+        .el-radio-group,
+        .el-checkbox-group {
             .el-radio__input,
             .el-checkbox__input {
                 display: none;
@@ -162,7 +163,7 @@ const getOptionProps = (
         }
     }
 
-    :deep(.expansion-btn) {
+    .expansion-btn {
         cursor: pointer;
         height: var(--jn-ve-g-form-item-height);
     }

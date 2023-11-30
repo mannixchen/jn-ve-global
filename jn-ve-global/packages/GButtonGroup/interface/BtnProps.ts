@@ -1,7 +1,7 @@
 /**
  * 按钮组的配置
  */
-export default interface BtnProps {
+export interface BtnProps {
     /**
      * 按钮名称
      */

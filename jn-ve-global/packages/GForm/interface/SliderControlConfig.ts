@@ -94,7 +94,7 @@ export interface SliderProps {
     onInput?: (newVal: string) => void
 }
 
-export default interface SliderControlConfig {
+export interface SliderControlConfig {
     type: 'slider'
     props?: SliderProps
 }

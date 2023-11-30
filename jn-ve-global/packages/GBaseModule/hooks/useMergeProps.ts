@@ -1,8 +1,13 @@
 import { reactive, watch, nextTick, computed, useAttrs } from 'vue'
-import type { TableConfig } from '../../index'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
+import type { TableConfig } from '../../GTable'
 
-export default ({ props, emits }) => {
+export default ({
+    props,
+    emits
+}): {
+    localTableConfig: TableConfig
+} => {
     const attrs = useAttrs()
     const _humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
 

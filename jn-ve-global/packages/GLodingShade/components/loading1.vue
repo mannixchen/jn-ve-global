@@ -19,12 +19,10 @@ import LGIcon from '../../GIcon/index.vue'
     }
 }
 
-.loading {
-    :deep(.g-icon) {
-        font-size: 100px;
-        color: #399ffb;
-        font-weight: 700;
-        animation: rotate 1.5s linear infinite;
-    }
+.loading :deep(.g-icon) {
+    font-size: 100px;
+    color: #399ffb;
+    font-weight: 700;
+    animation: rotate 1.5s linear infinite;
 }
 </style>

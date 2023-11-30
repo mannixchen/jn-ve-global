@@ -42,8 +42,11 @@ pages:
         # - yarn cache clean
         # - yarn install
         # - yarn docs:build
-        # - pnpm i -w
+        - pnpm i -w
         - cd utils
+        - pnpm build
+        - cd ..
+        - cd icons-vue
         - pnpm build
         - cd ..
         - pnpm docs:build

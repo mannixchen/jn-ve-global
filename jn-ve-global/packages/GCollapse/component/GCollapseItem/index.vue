@@ -1,5 +1,5 @@
 <template>
-    <el-collapse-item
+    <ElCollapseItem
         v-bind="$attrs"
         :disabled="localDisabled"
         :class="['custom-collapse-item', `${collapseMode}-mode-item`, { 'is-shadow': shadow }]"
@@ -11,7 +11,7 @@
                     <slot name="title">
                         <span class="label__text">{{ attrs.title }}</span>
 
-                        <el-tooltip
+                        <ElTooltip
                             v-if="tip"
                             :content="tip"
                             class="box-item"
@@ -21,7 +21,7 @@
                             <span class="tooltip__trigger">
                                 <LGIcon icon="el-QuestionFilled" />
                             </span>
-                        </el-tooltip>
+                        </ElTooltip>
                     </slot>
                     <LGIcon icon="el-DArrowRight" class="active-icon" />
                 </div>
@@ -44,7 +44,7 @@
             <!-- 自定义 -->
             <slot />
         </template>
-    </el-collapse-item>
+    </ElCollapseItem>
 </template>
 
 <script lang="ts">
@@ -54,17 +54,17 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { inject, watch, ref, computed, reactive, useAttrs } from 'vue'
-import type { FormProps, TableConfig, BtnProps } from '../../../index'
-import LGIcon from '../../../GIcon/index.vue'
-import LGForm from '../../../GForm/index.vue'
-import LGTable from '../../../GTable/index.vue'
+import { inject, computed, useAttrs } from 'vue'
 import disabledKey from '../../constant/disabledKey'
 import modeKey from '../../constant/modeKey'
-import LGButtonGroup from '../../../GButtonGroup/index.vue'
-import { ElCollapseItem, ElTooltip } from 'element-plus'
 
-interface Props {
+import { ElCollapseItem, ElTooltip } from 'element-plus'
+import { GIcon as LGIcon } from '../../../GIcon'
+import { GButtonGroup as LGButtonGroup, type BtnProps } from '../../../GButtonGroup'
+import { GForm as LGForm, type FormProps } from '../../../GForm'
+import { GTable as LGTable, type TableConfig } from '../../../GTable'
+
+export interface Props {
     /**
      * 表单配置
      */
@@ -116,7 +116,7 @@ const collapseMode = inject(modeKey)
 const localDisabled = computed(() => isDisabledForParent.value ?? props.disabled)
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './styles/panel.scss';
 @import './styles/card.scss';
 

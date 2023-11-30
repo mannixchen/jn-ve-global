@@ -166,6 +166,8 @@ defineExpose({
             gatherFigureInputRef.value.focus()
         }
     }
+} as {
+    focus: () => void
 })
 </script>
 

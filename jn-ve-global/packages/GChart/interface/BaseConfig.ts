@@ -1,4 +1,4 @@
-export default interface BaseConfig {
+export interface BaseConfig {
     /**
      * 标题
      */

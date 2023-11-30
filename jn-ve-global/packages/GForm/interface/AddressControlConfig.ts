@@ -97,7 +97,7 @@ export interface AddressCascaderEvents {
     onRemoveTag?: (val: string) => void
 }
 
-export default interface AddressContrilConfig {
+export interface AddressControlConfig {
     type: 'address'
     options?: Array<any>
     props?: AddressProps & AddressCascaderEvents

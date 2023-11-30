@@ -1,6 +1,6 @@
 import { isJSON, assignOwnProp, funStr2FuncBody } from '@jsjn/utils'
 import _ from 'lodash'
-import FormGenerateProps, { FormGenerateItemProps } from '../interface/FormGenerateProps'
+import type { FormGenerateProps, FormGenerateItemProps } from '../interface/FormGenerateProps'
 import {
     FormProps,
     FormItemProps,

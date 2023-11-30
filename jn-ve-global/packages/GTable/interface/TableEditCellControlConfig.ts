@@ -18,9 +18,9 @@ import {
     InfoAutocompleteControlConfig,
     SelectTreeV2ControlConfig,
     AddressControlConfig
-} from '../../GForm'
+} from '../../GForm/interface'
 
-type TableEditCellControlConfig =
+export type TableEditCellControlConfig =
     | InputControlConfig
     | InputNumberControlConfig
     | SelectControlConfig
@@ -40,5 +40,3 @@ type TableEditCellControlConfig =
     | InfoAutocompleteControlConfig
     | SelectTreeV2ControlConfig
     | AddressControlConfig
-
-export default TableEditCellControlConfig

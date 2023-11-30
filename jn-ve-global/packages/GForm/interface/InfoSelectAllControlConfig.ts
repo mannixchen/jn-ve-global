@@ -1,6 +1,6 @@
-import { SelectOptionProps } from './SelectControlConfig'
-import { InfoColumnProps } from '../../index'
-import { VNode } from 'vue'
+import type { SelectOptionProps } from './SelectControlConfig'
+import type { InfoColumnProps } from '../../GInfoSA'
+import type { VNode } from 'vue'
 
 /**
  * 下拉框参数
@@ -162,7 +162,7 @@ export interface InfoSelectAllCustomProps {
     hideHeader?: boolean
 }
 
-export default interface InfoSelectAllControlConfig {
+export interface InfoSelectAllControlConfig {
     type: 'infoSelectAll'
     /**
      * 下拉框数据

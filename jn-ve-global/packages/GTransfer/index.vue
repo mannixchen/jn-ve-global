@@ -1,7 +1,7 @@
 <template>
     <div :class="['g-transfer-wrapper', { 'is-disabled': disabled }]">
         <!-- 穿梭框 -->
-        <el-transfer
+        <ElTransfer
             v-bind="$attrs"
             v-model="currentSelectedKeys"
             :titles="['待选', '已选']"
@@ -20,7 +20,7 @@
             </template>
 
             <template v-if="paginationShow" #left-footer>
-                <el-pagination
+                <ElPagination
                     v-model:page-size="paginationConfig.pageSize"
                     v-model:current-page="paginationConfig.currentPage"
                     small
@@ -35,7 +35,7 @@
             <template v-if="paginationShow" #right-footer>
                 <span />
             </template>
-        </el-transfer>
+        </ElTransfer>
 
         <!-- 扩展按钮 -->
         <LGButtonGroup class="transfer-ext-btns" :btns="transferExtBtns" />
@@ -43,7 +43,7 @@
         <div v-if="disabled" class="disabled-shade" />
 
         <div class="search-wrapper left">
-            <el-input
+            <ElInput
                 v-model="leftSearchQuery"
                 placeholder="请输入搜索内容"
                 :prefix-icon="Search"
@@ -64,13 +64,13 @@ export default defineComponent({
 <script lang="ts" setup>
 import { watch, ref, computed, reactive } from 'vue'
 import type { BtnProps } from '../index'
-import _ from 'lodash'
-import LGButtonGroup from '../GButtonGroup/index.vue'
-import usePagination from './hooks/usePagination'
-import { Search } from '@element-plus/icons-vue'
 import { ElTransfer, ElPagination, ElInput } from 'element-plus'
+import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
+import { Search } from '@element-plus/icons-vue'
+import usePagination from './hooks/usePagination'
+import _ from 'lodash'
 
-interface Option {
+export interface Option {
     id?: string
     name?: string
     key?: string
@@ -285,7 +285,7 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .g-transfer-wrapper {
     --transfer-txt-btns-bottom-start: 200px;
     --transfer-txt-btn-width: 60px;
@@ -300,7 +300,7 @@ defineExpose({
     width: fit-content;
     margin: 0 auto;
 
-    :deep(.g-transfer) {
+    .g-transfer {
         --el-transfer-panel-body-height: var(--custom-transfer-panel-body-height);
         --el-transfer-panel-width: var(--custom-transfer-panel-width);
         --el-transfer-panel-header-height: var(--custom-transfer-panel-header-height, 40px);
@@ -385,7 +385,7 @@ defineExpose({
     }
 
     /* 自带按钮 & 扩展按钮 */
-    :deep(.el-transfer__buttons),
+    .el-transfer__buttons,
     .transfer-ext-btns {
         padding: 0;
         position: absolute;
@@ -406,10 +406,11 @@ defineExpose({
         --el-transfer-filter-height: 32px;
         --base-boder-width: 1px;
 
-        // 搜索框宽度 = panel宽度 - 定位(maring) * 2 - 边框宽度
+        /* 搜索框宽度 = panel宽度 - 定位(maring) * 2 - 边框宽度 */
         width: calc(
-            (var(--custom-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2) -
-                var(--base-boder-width) * 2
+            (var(--custom-transfer-panel-width) - var(--custom-transfer-panel-search-pl) * 2) - var(
+                    --base-boder-width
+                ) * 2
         );
         background-color: #fff;
         position: absolute;
@@ -419,11 +420,11 @@ defineExpose({
         z-index: 2;
 
         &.left {
-            // 需要 + 上边框的宽度
+            /* 需要 + 上边框的宽度 */
             left: calc(var(--custom-transfer-panel-search-pl) + var(--base-boder-width));
         }
 
-        :deep(.el-input__inner) {
+        .el-input__inner {
             height: var(--el-transfer-filter-height);
             width: 100%;
             font-size: 12px;
@@ -434,7 +435,7 @@ defineExpose({
         }
     }
 
-    :deep(.g-transfer) {
+    .g-transfer {
         .el-transfer-panel {
             &:first-of-type {
                 .el-transfer-panel__body {
@@ -456,7 +457,7 @@ defineExpose({
     }
 
     &.is-disabled {
-        :deep(.el-checkbox) {
+        .el-checkbox {
             .el-checkbox__input {
                 display: none;
             }
@@ -467,7 +468,7 @@ defineExpose({
             }
         }
 
-        :deep(.el-transfer__buttons) {
+        .el-transfer__buttons {
             .el-button {
                 color: var(--el-button-disabled-text-color) !important;
                 cursor: not-allowed !important;
@@ -477,7 +478,7 @@ defineExpose({
             }
         }
 
-        :deep(.el-transfer-panel__header) {
+        .el-transfer-panel__header {
             .el-checkbox__label {
                 > span {
                     display: none;

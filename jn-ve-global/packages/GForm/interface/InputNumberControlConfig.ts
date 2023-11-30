@@ -61,7 +61,7 @@ export interface InputNumberProps {
     onChange?: (currentValue: number, oldValue: number) => void
 }
 
-export default interface InputNumberControlConfig {
+export interface InputNumberControlConfig {
     type: 'inputNumber'
     props?: InputNumberProps
 }

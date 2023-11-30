@@ -5,9 +5,9 @@ import {
     YAXisComponentOption,
     EChartsOption
 } from 'echarts/types/dist/echarts'
-import BaseConfig from './BaseConfig'
+import { BaseConfig } from './BaseConfig'
 
-export default interface BarOrLineConfig extends BaseConfig {
+export interface BarOrLineConfig extends BaseConfig {
     /**
      * 类型：bar
      */

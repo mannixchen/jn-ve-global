@@ -2,7 +2,7 @@
     <div class="g-button-group button-wrapper">
         <template v-for="(btn, index) in btns" :key="`${btn.label}-${index}`">
             <!-- 权限校验 -->
-            <el-button
+            <ElButton
                 v-if="btn.authCode"
                 v-show="!getStatus(btn, 'hide', index)"
                 v-auth="btn.authCode"
@@ -13,10 +13,10 @@
             >
                 <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
-            </el-button>
+            </ElButton>
 
             <!-- 无权限校验的 -->
-            <el-button
+            <ElButton
                 v-else
                 v-show="!getStatus(btn, 'hide', index)"
                 v-bind="getElButtonProps(btn)"
@@ -26,7 +26,7 @@
             >
                 <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
                 {{ btn.label }}
-            </el-button>
+            </ElButton>
         </template>
     </div>
 </template>
@@ -38,10 +38,9 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import BtnProps from './interface/BtnProps'
+import { type BtnProps } from './interface/BtnProps'
 import { ElButton } from 'element-plus'
-import LGIcon from '../GIcon/index.vue'
+import { GIcon as LGIcon } from '../GIcon'
 
 const props = withDefaults(
     defineProps<{
@@ -76,14 +75,12 @@ const getElButtonProps = (config: BtnProps) => {
 </script>
 
 <style lang="scss" scoped>
-.g-button-group {
-    :deep(.el-button) {
-        > span {
-            .custom-svg-icon,
-            > i {
-                font-size: 18px;
-                margin-right: 4px;
-            }
+.g-button-group :deep(.ElButton) {
+    > span {
+        .custom-svg-icon,
+        > i {
+            font-size: 18px;
+            margin-right: 4px;
         }
     }
 }

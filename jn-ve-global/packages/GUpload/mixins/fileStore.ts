@@ -1,10 +1,19 @@
-import { ref, computed, watch, reactive } from 'vue'
-import _ from 'lodash'
+import { ref, computed, watch, reactive, type Ref, type WritableComputedRef } from 'vue'
 import { fillFileMemoryUrl, getFileType, getFileBlobUrlByRequest } from '../utils'
-import UploadFile from '../interface/UploadFile'
+import { UploadFile } from '../interface/UploadFile'
 import { imgSuffix } from '../constant/fileTypeList'
+import _ from 'lodash'
 
-export default ({ emits, props, attrs, uploadRef, localDownloadUrl }) => {
+export default ({
+    emits,
+    props,
+    attrs,
+    uploadRef,
+    localDownloadUrl
+}): {
+    currentFile: Ref<UploadFile>
+    localFileList: WritableComputedRef<UploadFile[]>
+} => {
     /**
      * 当前活跃的 file
      *  1. 列表模式能够获取到点击的文件信息

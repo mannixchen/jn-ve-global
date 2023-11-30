@@ -1,7 +1,7 @@
 import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+// import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -45,14 +45,14 @@ export default defineUserConfig({
         viteOptions: {
             plugins: [
                 vueJsx() as any,
-                createSvgIconsPlugin({
-                    iconDirs: [
-                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/old'),
-                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/newCore'),
-                        path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/regtech')
-                    ],
-                    symbolId: 'custom-icon-[dir]-[name]'
-                }),
+                // createSvgIconsPlugin({
+                //     iconDirs: [
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/old'),
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/newCore'),
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/regtech')
+                //     ],
+                //     symbolId: 'custom-icon-[dir]-[name]'
+                // }),
                 // setup 增强，标签添加 name 属性
                 vueSetupExtend()
             ]

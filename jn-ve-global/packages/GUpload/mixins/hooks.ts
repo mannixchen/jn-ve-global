@@ -1,4 +1,4 @@
-import UploadFile from '../interface/UploadFile'
+import { UploadFile } from '../interface/UploadFile'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 

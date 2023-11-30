@@ -9,6 +9,7 @@
     "include": [
         // 只包含入口文件，就可以只生成引入文件的 .d.ts
         "packages/index.ts",
+        "packages/resolver.ts",
 
         // 环境类型文件配置
         "./global.d.ts",

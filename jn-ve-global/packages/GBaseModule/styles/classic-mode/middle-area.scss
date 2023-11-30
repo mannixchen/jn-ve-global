@@ -10,7 +10,7 @@
         width: 60%;
 
         // 按钮组
-        :deep(.g-button-group) {
+        .g-button-group {
             --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
             --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
         }

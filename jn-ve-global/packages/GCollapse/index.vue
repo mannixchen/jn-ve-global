@@ -1,5 +1,5 @@
 <template>
-    <el-collapse
+    <ElCollapse
         :id="id"
         ref="collapseRef"
         v-model="localModelValue"
@@ -8,42 +8,48 @@
         :class="['custom-collapse', `${mode}-mode`, { 'is-show-anchor': showNavBars }]"
     >
         <slot />
-    </el-collapse>
+    </ElCollapse>
 
+    <!-- 导航条
+        TODO: bug 动态增加 or 移除的节点，没有动态生成 锚点
+    -->
     <ul
         v-if="collapseItemModels?.length"
         :class="['cpllapse-nav-bars__wrapper', { 'is-packup': isPackup }]"
     >
-        <el-scrollbar ref="anchorWrapperRef" :max-height="anchorWrapperMaxH">
+        <ElScrollbar ref="anchorWrapperRef" :max-height="anchorWrapperMaxH">
             <template v-for="item in collapseItemModels" :key="item.top">
                 <li :class="{ 'is-active': item.isActive }" @click="handleNav(item as any)">
                     <span>{{ item.label }}</span>
                 </li>
             </template>
-        </el-scrollbar>
+        </ElScrollbar>
+
         <li class="back-top" @click="backTop">
             <span>返回顶部</span>
         </li>
 
         <li class="packup-trigger" @click="isPackup = !isPackup">
             <span>
-                <g-icon :icon="isPackup ? 'el-ArrowLeftBold' : 'el-ArrowRightBold'" />
+                <LGIcon :icon="isPackup ? 'el-ArrowLeftBold' : 'el-ArrowRightBold'" />
             </span>
         </li>
     </ul>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GCollapse'
-}
+})
 </script>
 <script lang="ts" setup>
-import { computed, provide, useSlots, ref, onMounted, shallowRef, watch } from 'vue'
+import { computed, provide } from 'vue'
 import disabledKey from './constant/disabledKey'
 import modeKey from './constant/modeKey'
-import { ElCollapse } from 'element-plus'
+import { ElCollapse, ElScrollbar } from 'element-plus'
 import useAnchor from './hooks/useAnchor'
+import { GIcon as LGIcon } from '../GIcon'
 
 const props = withDefaults(
     defineProps<{
@@ -128,7 +134,6 @@ const {
     border-radius: var(--bar-radius);
     transition: all 0.3s;
 
-    // 收起的
     &.is-packup {
         box-sizing: border-box;
         transform: translate(calc(var(--bars-w) - var(--packup-w)), -50%);

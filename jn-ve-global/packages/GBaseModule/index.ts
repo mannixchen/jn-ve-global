@@ -1,2 +1,4 @@
-export * from './interface/BaseModuleConfig'
+import _GBaseModule from './index.vue'
 
+export const GBaseModule = _GBaseModule
+export default _GBaseModule

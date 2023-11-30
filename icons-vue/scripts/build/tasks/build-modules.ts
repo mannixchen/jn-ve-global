@@ -3,11 +3,11 @@ import { rollup } from 'rollup'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
-import { svgRoot, pathComponents, outputEsm, outputCjs } from '../utils/paths'
+import { svgRoot, compRoot, outputEsm, outputCjs } from '../utils/paths'
 import { externalDepMapping } from '../utils/externalDepMapping'
 
 export async function buildModules() {
-    const input = [path.resolve(pathComponents, 'index.ts')]
+    const input = [path.resolve(compRoot, 'index.ts')]
 
     // 编译解析
     const bundle = await rollup({

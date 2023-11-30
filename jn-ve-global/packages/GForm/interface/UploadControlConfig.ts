@@ -1,4 +1,4 @@
-import UploadFile from '../../GUpload/interface/UploadFile'
+import type { UploadFile } from '../../GUpload'
 import { ElUpload } from 'element-plus'
 export interface BaseResponse {
     code: '000000' | '500000' | '800403'
@@ -171,7 +171,7 @@ export interface UploadCustomProps {
     downloadUrl?: string
 }
 
-export default interface UploadControlConfig {
+export interface UploadControlConfig {
     type: 'upload'
     props: UploadProps & UploadEvents & UploadCustomProps
 }

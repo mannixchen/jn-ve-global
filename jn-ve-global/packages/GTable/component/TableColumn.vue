@@ -54,11 +54,11 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { PropType, ref, computed, isProxy, onBeforeMount } from 'vue'
+import { PropType } from 'vue'
 import { TableColumnProps } from '../index'
 import { getColumnProps } from '../utils'
 import FunctionalComponent from '../../FunctionalComponent'
-import TableEditCell from '../component/TableEditCell/index.vue'
+import TableEditCell from './TableEditCell/index.vue'
 import _ from 'lodash'
 import { ElTableColumn } from 'element-plus'
 

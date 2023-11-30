@@ -6,19 +6,19 @@
                 <LGButtonGroup :btns="btns" />
             </div>
             <div class="tree-icons">
-                <el-tooltip content="展开全部" placement="bottom" popper-class="my-custom-popper">
+                <ElTooltip content="展开全部" placement="bottom" popper-class="my-custom-popper">
                     <span> <LGIcon icon="tree-list-unfold" @click="unfold" /> </span>
-                </el-tooltip>
+                </ElTooltip>
 
-                <el-tooltip content="收起全部" placement="bottom" popper-class="my-custom-popper">
+                <ElTooltip content="收起全部" placement="bottom" popper-class="my-custom-popper">
                     <span> <LGIcon icon="tree-list-pack-up" @click="packUp" /></span>
-                </el-tooltip>
+                </ElTooltip>
             </div>
         </div>
 
         <!-- 搜索框 -->
         <div v-if="!hideSearch" class="input-wrapper">
-            <el-input v-model="filterText" placeholder="请输入关键字" />
+            <ElInput v-model="filterText" placeholder="请输入关键字" />
         </div>
 
         <!-- 树 -->
@@ -29,7 +29,7 @@
                 :data="data"
                 empty-text="暂无数据"
                 :highlight-current="true"
-                :filter-method="filterMethod"
+                :filter-method="(filterMethod as any)"
                 :expand-on-click-node="false"
                 v-bind="$attrs"
                 :height="treeWrapHeight"
@@ -86,10 +86,10 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { watchEffect, ref, computed } from 'vue'
+import { watchEffect, ref, computed, type Ref } from 'vue'
 import type { TreeData, BtnProps, TreeV2Props } from '../index'
-import LGIcon from '../GIcon/index.vue'
-import LGButtonGroup from '../GButtonGroup/index.vue'
+import { GIcon as LGIcon } from '../GIcon'
+import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
 import { size2Rem, getStyle, nodeHasChildren, getAllParentNode } from '@jsjn/utils'
 import { ElTreeV2 } from 'element-plus'
 import useFilterContext from './hooks/useFilterContext'
@@ -97,7 +97,7 @@ import useExpandCache from './hooks/useExpandCache'
 import _ from 'lodash'
 import { ElTooltip, ElInput } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 树数据
      */
@@ -240,9 +240,11 @@ const packUp = () => {
 // 抛出
 defineExpose({
     treeRef
+} as {
+    treeRef: Ref<any>
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import './styles.scss';
 </style>

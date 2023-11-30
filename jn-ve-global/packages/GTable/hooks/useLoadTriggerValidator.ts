@@ -2,15 +2,19 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-02-01 11:40:38
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-02-02 11:05:58
- * @FilePath: /jn-ve-global/packages/GTable/hooks/useLoadTriggerValidator.ts
+ * @LastEditTime: 2023-11-23 15:36:52
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GTable/hooks/useLoadTriggerValidator.ts
  * @Description: 为表格（可编辑）添加主动校验方法
  */
-import { Ref, watch, nextTick, computed, ref, reactive, toRaw, provide, readonly } from 'vue'
-import { allEditCellValidatorMapKey, rowFlagKey } from '../constant/allEditCellValidator'
-import type { AllEditCellValidatorMap, CellValidator } from '../constant/allEditCellValidator'
-import type { TableConfig } from '../index'
-import Schema, { ValidateError } from 'async-validator'
+import { Ref, watch, reactive, provide } from 'vue'
+import {
+    allEditCellValidatorMapKey,
+    rowFlagKey,
+    type AllEditCellValidatorMap,
+    type CellValidator
+} from '../constant/allEditCellValidator'
+import type { TableConfig } from '../interface'
+import { ValidateError } from 'async-validator'
 
 interface Props {
     props: {

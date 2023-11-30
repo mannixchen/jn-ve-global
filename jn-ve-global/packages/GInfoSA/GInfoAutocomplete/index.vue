@@ -1,6 +1,6 @@
 <template>
     <div ref="currentRootRef" class="g-info-autocomplete">
-        <el-autocomplete
+        <ElAutocomplete
             style="width: 100%"
             v-bind="$attrs"
             :fetch-suggestions="fetchSuggestions"
@@ -15,7 +15,7 @@
                     type="autocomplete"
                 />
             </template>
-        </el-autocomplete>
+        </ElAutocomplete>
 
         <!-- 表头（依据 columns 生成） -->
         <InfoHeader
@@ -34,15 +34,16 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GInfoAutocomplete',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted } from 'vue'
-import InfoColumnProps from '../interface/InfoColumnProps'
+import { InfoColumnProps } from '../interface/InfoColumnProps'
 import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import _ from 'lodash'
@@ -50,7 +51,7 @@ import useMainLogic from '../hooks'
 import { getStyle } from '@jsjn/utils'
 import { ElAutocomplete } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * option 展示的列
      */

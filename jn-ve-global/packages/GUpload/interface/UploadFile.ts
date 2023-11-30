@@ -2,11 +2,11 @@ export type ListType = 'text' | 'picture' | 'picture-card'
 
 export type UploadStatus = 'ready' | 'uploading' | 'success' | 'fail'
 
-export interface ElFile extends File {
+interface ElFile extends File {
     uid: number
 }
 
-export default interface UploadFile {
+export interface UploadFile {
     /**
      * 预览 or 下载时的 loading
      */

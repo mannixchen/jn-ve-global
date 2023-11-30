@@ -29,4 +29,8 @@ interface Window {
      * regtech 监管 | uums 统一管理平台 | financing 江苏省再保融资租赁系统 | maintenance 后台运维系统
      */
     __VUE_APP_MODE__: string
+    /**
+     * 系统请求代理统一前缀
+     */
+    __BASE_PREFIX__: string
 }

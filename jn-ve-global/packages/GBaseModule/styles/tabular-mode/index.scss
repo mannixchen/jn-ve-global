@@ -42,7 +42,7 @@
             flex: 1;
             display: flex;
 
-            :deep(.g-button-group) {
+            .g-button-group {
                 --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
                 --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
             }
@@ -72,7 +72,7 @@
             height: 100%;
             position: relative;
 
-            :deep(.g-table-root) {
+            .g-table-root {
                 border: none;
 
                 .g-table-pagination {
@@ -96,7 +96,7 @@
         .core-tab-wrapper {
             background-color: #f4fbff;
 
-            :deep(.el-tabs) {
+            .el-tabs {
                 .el-tabs__nav-wrap {
                     &::after {
                         display: none;

@@ -1,6 +1,6 @@
 <template>
     <div :class="['g-address', { 'is-hide-detail': hideDetail }]">
-        <el-cascader
+        <ElCascader
             ref="elCascaderRef"
             v-bind="attrs"
             v-model="selectedRegion"
@@ -9,7 +9,7 @@
             :props="localCascaderProps"
             @visible-change="tableEditHide"
         />
-        <el-input
+        <ElInput
             v-if="!hideDetail"
             v-model.trim="detailAddress"
             placeholder="详细地址"
@@ -21,16 +21,17 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GAddress'
-}
+})
 </script>
 
 <script lang="ts" setup>
-import { toRaw, computed, useAttrs, watch, ref } from 'vue'
+import { toRaw, computed, useAttrs, watch, ref, Ref } from 'vue'
 import { ElCascader, ElInput } from 'element-plus'
 import myAxios from '../_http/http'
-import prefix from '../_http/prefix'
+import { getPrefix } from '../_http/prefix'
 
 const props = withDefaults(
     defineProps<{
@@ -124,30 +125,40 @@ const tableEditHide = (val) => {
 
 // 请求后台获取全国行政区划
 function getAllAdministrative() {
-    myAxios.get(`${prefix ?? ''}/kinso-basic-open-server/v1/area/treeByAuth`).then((res: any) => {
-        if (res.code === '000000') {
-            // 这里也可能外部采用了接口加载数据，有可能在初始化后，又改变了数据
-            // 避免万一重复覆盖，这里再响应回来后，再次判断下
-            if (!props.options) {
-                localRegionData.value = res.data
+    myAxios
+        .get(`${getPrefix() ?? ''}/kinso-basic-open-server/v1/area/treeByAuth`)
+        .then((res: any) => {
+            if (res.code === '000000') {
+                // 这里也可能外部采用了接口加载数据，有可能在初始化后，又改变了数据
+                // 避免万一重复覆盖，这里再响应回来后，再次判断下
+                if (!props.options) {
+                    localRegionData.value = res.data
+                }
             }
-        }
-    })
+        })
 }
 
+/**
+ * TODO: 这里不进行断言的话，编译时，会导致出现
+ *  - TS7056
+ *  - TS2742
+ */
 defineExpose({
     regionData: localRegionData,
-    elCascaderRef
+    elCascaderRef: elCascaderRef
+} as {
+    regionData: Ref<any[]>
+    elCascaderRef: Ref<any>
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .g-address {
     width: 100%;
     display: flex;
     justify-content: space-between;
 
-    :deep(.el-cascader) {
+    .el-cascader {
         width: 40%;
     }
 
@@ -156,7 +167,7 @@ defineExpose({
     }
 
     &.is-hide-detail {
-        :deep(.el-cascader) {
+        .el-cascader {
             width: 100%;
         }
     }

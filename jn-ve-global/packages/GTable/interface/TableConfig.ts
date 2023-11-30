@@ -1,5 +1,5 @@
-import { TableColumnProps, TableProps, TableMethods as TableInstance } from '../index'
-import { BtnProps } from '../../index'
+import type { TableColumnProps, TableProps, TableMethods as TableInstance } from './index'
+import type { BtnProps } from '../../GButtonGroup'
 
 export interface PaginationProps {
     show?: boolean
@@ -17,7 +17,7 @@ export interface TableRowBtnProps<TBD> extends BtnProps {
     onClick?: (row?: TBD, index?: number) => void
 }
 
-export default interface TableConfig<TBD = any> extends TableProps<TBD> {
+export interface TableConfig<TBD = any> extends TableProps<TBD> {
     /**
      * 列的配置
      */

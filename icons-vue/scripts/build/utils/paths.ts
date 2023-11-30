@@ -3,11 +3,11 @@ import { fileURLToPath } from 'node:url'
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
-export const pathRoot = resolve(dir, '..', '..', '..')
-export const pathSrc = resolve(pathRoot, 'vue', 'src')
-export const pathComponents = resolve(pathSrc, 'components')
-export const svgRoot = resolve(pathRoot, 'svg')
+export const root = resolve(dir, '..', '..', '..')
+export const srcRoot = resolve(root, 'vue', 'src')
+export const compRoot = resolve(srcRoot, 'components')
+export const svgRoot = resolve(root, 'svg')
 
-export const output = resolve(pathRoot, 'dist')
-export const outputEsm = resolve(pathRoot, 'es')
-export const outputCjs = resolve(pathRoot, 'lib')
+export const output = resolve(root, 'dist')
+export const outputEsm = resolve(root, 'es')
+export const outputCjs = resolve(root, 'lib')

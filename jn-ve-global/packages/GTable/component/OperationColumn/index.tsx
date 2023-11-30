@@ -1,5 +1,10 @@
-import { TableConfig, TableRowBtnProps, BaseTableDataItem, TableColumnProps } from '../../../index'
-import More from './component/more.vue'
+import type {
+    TableConfig,
+    TableRowBtnProps,
+    BaseTableDataItem,
+    TableColumnProps
+} from '../../interface'
+import MoreCom from './component/more.vue'
 import { getBtnProps } from './constant/util'
 import { watch, nextTick, reactive, onMounted } from 'vue'
 import { assignOwnProp } from '@jsjn/utils'
@@ -64,7 +69,7 @@ export default (config: TableConfig<any>) => {
                             .map((btn) => createBtn(btn, row, index))}
 
                         {/*  更多操作 */}
-                        <More
+                        <MoreCom
                             row={row}
                             index={index}
                             btns={btns

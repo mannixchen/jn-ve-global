@@ -1,5 +1,5 @@
-import { Ref, watch } from 'vue'
-import {
+import { type Ref, watch } from 'vue'
+import type {
     FormItemProps,
     SelectControlConfig,
     CheckboxButtonControlConfig,
@@ -7,7 +7,7 @@ import {
     RadioButtonControlConfig,
     CheckboxControlConfig,
     SelectTreeV2ControlConfig
-} from '../index'
+} from '../interface'
 import myAxios from '../../_http/http'
 
 // 参数存储字段名称列表

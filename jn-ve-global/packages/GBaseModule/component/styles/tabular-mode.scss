@@ -5,7 +5,7 @@
     position: relative;
 
     &.show-more {
-        :deep(.search-btn-item) {
+        .search-btn-item {
             .el-form-item__content {
                 justify-content: flex-end;
                 padding-right: 120px;
@@ -27,7 +27,7 @@
         display: flex;
         align-items: center;
 
-        :deep(.g-icon) {
+        .g-icon {
             margin-left: 10px;
         }
     }

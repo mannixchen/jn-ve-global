@@ -1,5 +1,3 @@
-import { BaseTableDataItem } from '../index'
-
 export interface TableMethodsExtend {
     validate?: (props?: {
         /**
@@ -13,7 +11,7 @@ export interface TableMethodsExtend {
     }) => Promise<PromiseSettledResult<any>[]>
 }
 
-export default interface TableMethods extends TableMethodsExtend {
+export interface TableMethods extends TableMethodsExtend {
     /**
      * 用于多选表格，清空用户的选择
      */

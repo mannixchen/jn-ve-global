@@ -1,9 +1,9 @@
 import fs from 'fs-extra'
-import { pathComponents, outputCjs, outputEsm, output } from '../utils/paths'
+import { compRoot, outputCjs, outputEsm, output } from '../utils/paths'
 
 export async function clean() {
     await Promise.all([
-        fs.remove(pathComponents),
+        fs.remove(compRoot),
         fs.remove(outputCjs),
         fs.remove(outputEsm),
         fs.remove(output)

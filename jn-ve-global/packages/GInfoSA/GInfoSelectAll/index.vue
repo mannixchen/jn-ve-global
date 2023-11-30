@@ -1,7 +1,7 @@
 <template>
     <div ref="currentRootRef" class="g-info-select-all">
         <!-- 下拉框，虚拟滚动 -->
-        <el-select-v2
+        <ElSelectV2
             filterable
             :options="localSelectOptins"
             v-bind="$attrs"
@@ -14,7 +14,7 @@
             <template #default="{ item, $index }">
                 <OptionCustomContent :columns="columns" :data="item" :index="$index" />
             </template>
-        </el-select-v2>
+        </ElSelectV2>
 
         <!-- 表头（依据 columns 生成） -->
         <InfoHeader
@@ -35,16 +35,17 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GInfoSelectAll',
     inheritAttrs: false
-}
+})
 </script>
 
 <script lang="ts" setup>
 import { computed, toRef } from 'vue'
-import InfoColumnProps from '../interface/InfoColumnProps'
-import { SelectOptionProps } from '../../index'
+import type { InfoColumnProps } from '../interface/InfoColumnProps'
+import type { SelectOptionProps } from '../../GForm/interface'
 import InfoHeader from '../component/infoHeader.vue'
 import OptionCustomContent from '../component/optionCustomContent.vue'
 import _ from 'lodash'
@@ -53,7 +54,7 @@ import useMainLogic from '../hooks'
 import { getStyle } from '@jsjn/utils'
 import { ElSelectV2 } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 下拉框数据
      */
@@ -161,11 +162,11 @@ const visibleChange = (flag: boolean) => {
 <style lang="scss" scoped>
 .g-info-select-all {
     width: 100%;
+}
 
-    :deep(.is-filterable) {
-        > div {
-            width: 100%;
-        }
+.g-info-select-all :deep(.is-filterable) {
+    > div {
+        width: 100%;
     }
 }
 </style>

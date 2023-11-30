@@ -9,7 +9,7 @@ import ZARFileTypeImg from './assets/images/ZAR.png'
 import DefaulrFileLogo from './assets/images/Other.png'
 import myAxios from '../_http/http'
 import { imgSuffix } from './constant/fileTypeList'
-import UploadFile from './interface/UploadFile'
+import { UploadFile } from './interface/UploadFile'
 
 /**
  * 根据文件名称获取文件类型，转换小写

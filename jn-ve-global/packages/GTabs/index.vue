@@ -1,12 +1,12 @@
 <template>
-    <el-tabs
+    <ElTabs
         v-bind="$attrs"
         :class="['g-tabs', type ? `custom-${type}` : '']"
-        :type="localType"
+        :type="(localType as any)"
         @tab-click="tabChange"
     >
         <template v-for="item in list" :key="item.value">
-            <el-tab-pane
+            <ElTabPane
                 v-if="
                     item.hide === undefined || (_.isFunction(item.hide) ? !item.hide() : !item.hide)
                 "
@@ -16,9 +16,9 @@
                 <template #label>
                     <span class="tabs-item-label">{{ item.label }}</span>
                 </template>
-            </el-tab-pane>
+            </ElTabPane>
         </template>
-    </el-tabs>
+    </ElTabs>
     <div v-if="slots.default" class="g-tabs-content">
         <slot />
     </div>
@@ -32,9 +32,9 @@ export default {
 
 <script lang="ts" setup>
 import { computed, useSlots } from 'vue'
-import { TabPaneProps } from './index'
-import _ from 'lodash'
 import { ElTabs, ElTabPane } from 'element-plus'
+import type { TabPaneProps } from './interface/TabPaneProps'
+import _ from 'lodash'
 
 const props = withDefaults(
     defineProps<{
@@ -60,9 +60,9 @@ const tabChange = (index) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .g-tabs {
-    :deep(.el-tabs__header) {
+    .el-tabs__header {
         margin: 0;
 
         .el-tabs__item {
@@ -101,7 +101,7 @@ const tabChange = (index) => {
         }
     }
 
-    :deep(.el-tabs__content) {
+    .el-tabs__content {
         display: none;
     }
 
@@ -112,7 +112,7 @@ const tabChange = (index) => {
         border-radius: 6px 6px 0 0;
         overflow: hidden;
 
-        :deep(.el-tabs__header) {
+        .el-tabs__header {
             border: none;
             background-color: #f4fbff;
             height: initial;

@@ -1,18 +1,19 @@
 <template>
-    <el-button
+    <ElButton
         class="debounce-button"
         type="primary"
         v-bind="$attrs"
-        @click="handleDebounce as any"
+        @click="(handleDebounce as any)"
     >
         <slot />
-    </el-button>
+    </ElButton>
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GDButton'
-}
+})
 </script>
 
 <script lang="ts" setup>
@@ -20,7 +21,7 @@ import { computed } from 'vue'
 import _ from 'lodash'
 import { ElButton } from 'element-plus'
 
-interface Props {
+export interface Props {
     /**
      * 是否开启防抖
      */

@@ -14,7 +14,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import LGIcon from '../../GIcon/index.vue'
+import { GIcon as LGIcon } from '../../GIcon'
 
 const props = withDefaults(
     defineProps<{
@@ -41,7 +41,7 @@ const props = withDefaults(
 )
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 $--icon-size: 16px;
 $--icon-l: 10px;
 
@@ -56,7 +56,7 @@ $--icon-l: 10px;
     align-items: center;
     cursor: default;
 
-    :deep(.active-icon) {
+    .active-icon {
         font-size: $--icon-size;
         transform: rotate(-90deg);
         margin-left: $--icon-l;
@@ -64,13 +64,13 @@ $--icon-l: 10px;
         color: #c2c2c2;
     }
 
-    :deep(.prefix-icon) {
+    .prefix-icon {
         font-size: inherit;
         margin-right: 4px;
     }
 
     &.is-active {
-        :deep(.active-icon) {
+        .active-icon {
             transform: rotate(-90deg) rotateY(180deg);
         }
     }

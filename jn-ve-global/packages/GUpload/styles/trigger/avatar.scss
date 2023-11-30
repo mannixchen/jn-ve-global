@@ -1,7 +1,7 @@
 @mixin trigger-avatar {
     &.avatar {
-        :deep(.el-upload) {
-            
+        .el-upload {
+
             // 自定义触发器
             .avatar-upload {
                 position: relative;

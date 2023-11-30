@@ -1,4 +1,4 @@
-import { InputProps, InputEvents, InputSlots } from './InputControlConfig'
+import type { InputProps, InputEvents, InputSlots } from './InputControlConfig'
 
 export interface FigureInputProps extends InputProps, InputEvents, InputSlots {
     /**
@@ -27,7 +27,7 @@ export interface FigureInputProps extends InputProps, InputEvents, InputSlots {
     valDecimalsLength?: number
 }
 
-export default interface FigureInputControlConfig {
+export interface FigureInputControlConfig {
     type: 'figureInput'
     props?: FigureInputProps
 }

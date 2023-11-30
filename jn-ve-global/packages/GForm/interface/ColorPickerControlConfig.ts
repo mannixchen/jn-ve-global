@@ -36,7 +36,7 @@ export interface ColorPickerProps {
     onActiveChange?: (color: string) => void
 }
 
-export default interface ColorPickerControlConfig {
+export interface ColorPickerControlConfig {
     type: 'colorPicker'
     props?: ColorPickerProps
 }

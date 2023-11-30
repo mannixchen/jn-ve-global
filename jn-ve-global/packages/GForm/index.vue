@@ -1,6 +1,6 @@
 <template>
     <div :class="{ 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }">
-        <el-form
+        <ElForm
             v-if="config && refreshLoad"
             ref="localInstance"
             :class="['g-form', { 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }]"
@@ -11,7 +11,7 @@
             - 可以自定义表单内容的渲染
             - 配合拖拽平台
          -->
-            <slot :form-items="localConfig.formItems">
+            <slot :form-items="(localConfig.formItems as FormItemProps[])">
                 <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
                 <LGFormRow
                     v-if="baseFormItems.length"
@@ -65,36 +65,40 @@
                     </template>
                 </LGCollapse>
             </slot>
-        </el-form>
+        </ElForm>
     </div>
 </template>
+
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+export default defineComponent({
     name: 'GForm'
-}
+})
 </script>
 
 <script lang="ts" setup>
-import { watch, provide, ref, toRef, nextTick, computed, Ref } from 'vue'
-import type { FormProps, FormInstance, FormItemProps } from './index'
+import { watch, provide, ref, toRef, nextTick, computed, type Ref } from 'vue'
+import type { FormProps, FormInstance, FormItemProps } from './interface'
 import formConfigProvideKey from './constant/formConfigProvideKey'
-import _ from 'lodash'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
+import useCollapseLayout from './mixins/useCollapseLayout'
+import { ElForm } from 'element-plus'
+import _ from 'lodash'
+
 // 本地组件
 import LGFormRow from './component/GFormRow/index.vue'
 import LGColFormItem from './component/GColFormItem/index.vue'
-import LGCollapse from '../GCollapse/index.vue'
-import LGCollapseItem from '../GCollapse/component/GCollapseItem/index.vue'
-import useCollapseLayout from './mixins/useCollapseLayout'
-import { ElForm } from 'element-plus'
+import { GCollapse as LGCollapse, GCollapseItem as LGCollapseItem } from '../GCollapse'
 
-interface Props {
-    config: FormProps
-}
 
-const props = withDefaults(defineProps<Props>(), {
-    config: () => null
-})
+const props = withDefaults(
+    defineProps<{
+        config: FormProps
+    }>(),
+    {
+        config: () => null
+    }
+)
 
 provide(formConfigProvideKey, toRef(props, 'config'))
 
@@ -182,12 +186,13 @@ function advanceInstance(instance: FormInstance) {
 defineExpose({
     instance: localInstance,
     config: localConfig
+} as {
+    instance: Ref<FormInstance>
+    config: Ref<FormProps>
 })
 </script>
 
 <style lang="scss" scoped>
-@import './styles';
-
 .is-show-anchor {
     height: 100%;
     overflow: auto;
@@ -195,5 +200,6 @@ defineExpose({
 }
 </style>
 <style lang="scss">
+@import './styles/index.scss';
 @import './styles/index.global.scss';
 </style>

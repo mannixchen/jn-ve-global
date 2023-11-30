@@ -1,11 +1,18 @@
 <template>
-    <el-row :gutter="formConfig?.gutter ?? 20" class="form-item-row">
+    <ElRow :gutter="formConfig?.gutter ?? 20" class="form-item-row">
         <slot />
-    </el-row>
+    </ElRow>
 </template>
 
-<script lang="ts" setup name="GFormRow">
-import type { FormProps } from '../../index'
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: 'GFormRow'
+})
+</script>
+
+<script lang="ts" setup>
+import type { FormProps } from '../../interface'
 import { ElRow } from 'element-plus'
 
 const props = withDefaults(

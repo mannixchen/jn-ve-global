@@ -84,7 +84,7 @@ export interface RateProps {
     onChange?: (newValue: string | number) => void
 }
 
-export default interface RateControlConfig {
+export interface RateControlConfig {
     type: 'rate'
     props?: RateProps
 }

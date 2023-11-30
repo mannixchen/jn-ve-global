@@ -28,10 +28,10 @@ export default {
 
 <script lang="ts" setup>
 import { watch, ref } from 'vue'
-import type Cell from './interface/Cell'
+import type { Cell } from './interface/Cell'
 import AdvanceTd from './components/advanceTd.vue'
 
-interface Props {
+export interface Props {
     /**
      * 表格有限行数
      */

@@ -76,6 +76,9 @@ export default ({ previewType }: Params) => {
             // 加载前置资源
             for (let index = 0; index < preSourceMappings.length; index++) {
                 const preItem = preSourceMappings[index]
+                
+                console.log(`%c 加载资源 ${preItem.globalName} ==== `, 'color: #67c23a;', window[preItem.globalName])
+
                 if (!window[preItem.globalName]) {
                     await loadScript(preItem.js, preItem.globalName)
                 }

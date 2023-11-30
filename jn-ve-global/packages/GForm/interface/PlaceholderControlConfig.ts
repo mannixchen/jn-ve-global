@@ -1,4 +1,4 @@
-export default interface PlaceholderControlConfig {
+export interface PlaceholderControlConfig {
     type: 'placeholder'
     props?: {}
 }

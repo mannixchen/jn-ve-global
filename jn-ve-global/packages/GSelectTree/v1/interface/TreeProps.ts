@@ -1,4 +1,4 @@
-export default interface TreeProps {
+export interface TreeProps {
     /**
      * 指定节点标签为节点对象的某个属性值
      */

@@ -1,4 +1,4 @@
-import { TableEvents } from '../index'
+import type { TableEvents } from './TableEvents'
 
 export interface BaseTableDataItem {
     id: string | number
@@ -6,7 +6,7 @@ export interface BaseTableDataItem {
     [k: string]: any
 }
 
-export default interface TableProps<TBD> extends TableEvents {
+export interface TableProps<TBD> extends TableEvents {
     /**
      * 显示的数据
      */

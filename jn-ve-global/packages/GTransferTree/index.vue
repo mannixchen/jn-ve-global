@@ -11,7 +11,7 @@
                         <span>{{ enableNodesLength }}</span>
                     </span>
 
-                    <el-tooltip
+                    <ElTooltip
                         v-if="checkStrictly === undefined"
                         :visible="tipVisible"
                         effect="dark"
@@ -25,13 +25,13 @@
                             ]"
                             @click="localCheckStrictly = !localCheckStrictly"
                         >
-                            <g-icon icon="org" />
+                            <LGIcon icon="org" />
                         </span>
-                    </el-tooltip>
+                    </ElTooltip>
                 </span>
             </p>
             <div class="g-transfer-tree-panel__body">
-                <el-input
+                <ElInput
                     v-if="filterable"
                     v-model="filterTextLeft"
                     class="g-transfer-tree-panel__filter"
@@ -42,7 +42,7 @@
                 />
 
                 <div class="g-transfer-tree-panel__list">
-                    <el-tree-v2
+                    <ElTreeV2
                         ref="elTreeV2Ref"
                         class="g-transfer-tree-panel__tree"
                         :show-checkbox="true"
@@ -51,7 +51,7 @@
                         :props="sourceMapping"
                         :default-expanded-keys="defaultExpandedKeys"
                         :height="size2Rem(450 - 32 - 30 - 10)"
-                        :filter-method="filterable ? treeFilterMethod : undefined"
+                        :filter-method="(filterable ? treeFilterMethod : undefined as any)"
                         v-bind="$attrs"
                         @check="handleTreeCheck"
                         @node-expand="handleExpand"
@@ -62,7 +62,7 @@
                                 {{ node.label }}
                             </span>
                         </template>
-                    </el-tree-v2>
+                    </ElTreeV2>
                 </div>
             </div>
             <!-- <div class="g-transfer-tree-panel__footer"></div> -->
@@ -75,11 +75,11 @@
         <div class="g-transfer-tree-panel">
             <p class="g-transfer-tree-panel__header">
                 <span class="check">
-                    <el-checkbox
+                    <ElCheckbox
                         v-model="checkAll"
                         :disabled="checkedPanelNodes.length === 0"
                         :indeterminate="isIndeterminate"
-                        @change="handleCheckAllChange"
+                        @change="(handleCheckAllChange as any)"
                     />
                     <span>{{ titles[1] }}</span>
                 </span>
@@ -90,7 +90,7 @@
                 </span>
             </p>
             <div class="g-transfer-tree-panel__body">
-                <el-input
+                <ElInput
                     v-if="filterable"
                     v-model="filterTextRight"
                     class="g-transfer-tree-panel__filter"
@@ -100,13 +100,13 @@
                 />
 
                 <div class="g-transfer-tree-panel__list">
-                    <el-scrollbar>
-                        <el-checkbox-group v-model="checkedPanelCheckedKeys">
+                    <ElScrollbar>
+                        <ElCheckboxGroup v-model="checkedPanelCheckedKeys">
                             <template
                                 v-for="node in checkedPanelNodes"
                                 :key="node[sourceMapping.value]"
                             >
-                                <el-checkbox
+                                <ElCheckbox
                                     :class="[
                                         'g-transfer-tree-panel__checked-item',
                                         { 'is-hide': node.isHide }
@@ -116,10 +116,10 @@
                                     <span :title="node[sourceMapping.label]">
                                         {{ node[sourceMapping.label] }}
                                     </span>
-                                </el-checkbox>
+                                </ElCheckbox>
                             </template>
-                        </el-checkbox-group>
-                    </el-scrollbar>
+                        </ElCheckboxGroup>
+                    </ElScrollbar>
 
                     <p v-if="checkedPanelIsEmpty" class="empty">
                         暂无数据
@@ -139,10 +139,10 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { reactive, nextTick, watch, ref, computed, onMounted } from 'vue'
+import { reactive, nextTick, watch, ref, Ref, onMounted } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import { size2Rem } from '@jsjn/utils'
-import LGButtonGroup from '../GButtonGroup/index.vue'
+import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
 import type { BtnProps, TreeData } from '../index'
 import _ from 'lodash'
 import {
@@ -153,12 +153,12 @@ import {
     ElScrollbar,
     ElCheckboxGroup
 } from 'element-plus'
-import LGIcon from '../GIcon/index.vue'
 import useCheckedContext from './hooks/useCheckedContext'
 import useTreeContext, { TreeProps } from './hooks/useTreeContext'
 import useFilterContext from './hooks/useFilterContext'
 import useLazyContext from './hooks/useLazyContext'
 import type { TreeNodeData, TreeNode } from 'element-plus/es/components/tree-v2/src/types'
+import { GIcon as LGIcon } from '../GIcon'
 
 const props = withDefaults(
     defineProps<{
@@ -332,10 +332,14 @@ defineExpose({
     filterTextLeft,
     filterTextRight,
     treeData: localTreeData
+} as {
+    treeRef: Ref<any>
+    filterTextLeft: Ref<string>
+    filterTextRight: Ref<string>
+    treeData: Ref<any>
 })
 </script>
 
-<style lang="scss" scoped>
-/*! scopecss-disable */
+<style lang="scss">
 @import './styles';
 </style>

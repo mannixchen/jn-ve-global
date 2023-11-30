@@ -1,7 +1,7 @@
 import { PieSeriesOption } from 'echarts/types/dist/echarts'
-import BaseConfig from './BaseConfig'
+import { BaseConfig } from './BaseConfig'
 
-export default interface PieConfig extends BaseConfig {
+export interface PieConfig extends BaseConfig {
     /**
      * 类型：饼图
      */

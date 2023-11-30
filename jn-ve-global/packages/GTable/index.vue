@@ -9,7 +9,7 @@
         <template v-if="localConfig && refreshLoad">
             <!-- 表格 -->
             <div class="g-table-main">
-                <el-table
+                <ElTable
                     ref="localInstance"
                     :tooltip-options="{
                         popperClass: 'table-tooltip-popper max-h-200'
@@ -26,10 +26,10 @@
                     @select-all="localSelectAll"
                 >
                     <!-- 一键开启多选 -->
-                    <el-table-column
+                    <ElTableColumn
                         v-if="localConfig.showSelection"
                         :width="size2Rem(55)"
-                        v-bind="localConfig.selectionColumns"
+                        v-bind="localConfig.selectionColumns as any"
                         type="selection"
                         class-name="table-selection-column"
                     />
@@ -60,7 +60,7 @@
                             />
                         </p>
                     </template>
-                </el-table>
+                </ElTable>
             </div>
 
             <!-- 分页 -->
@@ -72,7 +72,7 @@
                 "
                 class="g-table-pagination"
             >
-                <el-pagination
+                <ElPagination
                     v-if="isCreatePagination"
                     v-model:page-size="localConfig.pagination.pageSize"
                     v-model:current-page="localConfig.pagination.currentPage"
@@ -88,26 +88,34 @@
     </div>
 </template>
 
-<script lang="ts" setup name="GTable">
+<script lang="ts">
+export default {
+    name: 'GTable'
+}
+</script>
+
+<script lang="ts" setup>
 import { watch, nextTick, computed, ref, provide } from 'vue'
-import { TableConfig, TableMethods as TableInstance } from './index'
-import { getTableProps } from './utils'
-import LGIcon from '../GIcon/index.vue'
-import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
-import TableColumn from './component/TableColumn.vue'
-import useAddOperationColumn from './component/OperationColumn/index'
+import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
 import { size2Rem } from '@jsjn/utils'
+import { GIcon as LGIcon } from '../GIcon'
+
+import type { TableConfig, TableMethods as TableInstance } from './interface'
+import { getTableProps } from './utils'
+import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
 import useTimeoutCreate from './hooks/useTimeoutCreate'
-import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
+import TableColumn from './component/TableColumn.vue'
+import useAddOperationColumn from './component/OperationColumn/index'
 
-interface Props {
-    config: TableConfig
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    config: null
-})
+const props = withDefaults(
+    defineProps<{
+        config: TableConfig
+    }>(),
+    {
+        config: null
+    }
+)
 
 const { isCreate: isCreatePagination } = useTimeoutCreate()
 
@@ -274,6 +282,6 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
-@import './styles';
+<style lang="scss">
+@import './styles/index.scss';
 </style>

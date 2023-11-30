@@ -3,13 +3,13 @@ import { rollup } from 'rollup'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import esbuild, { minify as minifyPlugin } from 'rollup-plugin-esbuild'
-import { pathComponents, output } from '../utils/paths'
+import { compRoot, output } from '../utils/paths'
 import { PKG_CAMELCASE_NAME } from '../utils/constants'
 import { externalDepMapping } from '../utils/externalDepMapping'
 
 const build = async (minify: boolean) => {
     // 入口
-    const input = [path.resolve(pathComponents, 'index.ts')]
+    const input = [path.resolve(compRoot, 'index.ts')]
     const target = 'es2017'
 
     // 编译解析

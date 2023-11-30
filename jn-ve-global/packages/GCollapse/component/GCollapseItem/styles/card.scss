@@ -7,7 +7,7 @@
         box-shadow: var(--el-box-shadow-light);
     }
 
-    :deep(.el-collapse-item__header) {
+    .el-collapse-item__header {
         cursor: default !important;
         color: var(--el-collapse-header-text-color) !important;
         font-weight: 600;
@@ -25,7 +25,7 @@
         }
     }
 
-    :deep(.el-collapse-item__wrap) {
+    .el-collapse-item__wrap {
         border: none;
         margin-bottom: 20px;
 

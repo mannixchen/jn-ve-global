@@ -6,7 +6,7 @@ import {
     RawEditorSettings
 } from '../interface/tinymce'
 
-import JnEditorProps from '../interface/JnEditorProps'
+import { JnEditorProps } from '../interface/JnEditorProps'
 import { getStrSize, Local } from '@jsjn/utils'
 import { ElMessage } from 'element-plus'
 import { imgCompress } from './utils'
@@ -98,8 +98,10 @@ export default (
         min_height: 440,
         elementpath: false, // 底栏的元素路径
         placeholder: '请输入...',
+        fontsize_formats:
+            '初号=42pt 小初=36pt 一号=26pt 小一=24pt 二号=22pt 小二=18pt 三号=16pt 小三=15pt 四号=14pt 小四=12pt 五号=10.5pt 小五=9pt 六号=7.5pt',
         font_formats:
-            '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
+            '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;方正仿宋_GBK=FZFangSong-Z02;方正小标宋_GBK=FZXiaoBiaoSong-B05,方正小标宋,serif;方正黑体_GBK=FZHei-B01;方正楷体_GBK=FZKai-Z03;方正舒体=FZShuTi;方正姚体=FZYaoTi-M06;黑体=SimHei,sans-serif;Times new roman=Times new roman;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
         plugins: functionalList.plugins,
         axupimgs_filetype: imgSuffix.join(','), // 多图片上传，文件类型
         powerpaste_allow_local_images: true, // 设置为 时true，粘贴后不会删除复制内容中使用数据 URI 的 Base64 编码图像

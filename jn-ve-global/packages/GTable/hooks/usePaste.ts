@@ -1,3 +1,12 @@
+/*
+ * @Author: Zyunchao 18651805393@163.com
+ * @Date: 2023-09-18 09:28:19
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2023-11-23 17:02:32
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GTable/hooks/usePaste.ts
+ * @Description: 表格粘贴功能，!废弃
+ */
+// !表格粘贴功能，模块已废弃
 import { watch, ref, computed, nextTick, Ref, ComputedRef } from 'vue'
 import Schema, { ValidateError, ValidateFieldsError, Rules } from 'async-validator'
 import { ElMessage } from 'element-plus'

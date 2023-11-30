@@ -1,6 +1,6 @@
 import { TinyMCE, Editor as TinyMCEEditor, RawEditorSettings } from './tinymce'
 
-export default interface JnEditorProps {
+export interface JnEditorProps {
     /**
      * 双向绑定的值
      */

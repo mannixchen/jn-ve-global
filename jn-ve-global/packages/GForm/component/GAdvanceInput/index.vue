@@ -8,13 +8,13 @@
 
     <!-- 仅展示作用 -->
     <template v-if="inputDisabled && exceedBoxWidth">
-        <el-tooltip
+        <ElTooltip
             :content="localModelValue"
             placement="top-start"
             popper-class="input-lang-word-popper"
         >
             <InputCore :model-value="localModelValue" v-bind="$attrs" />
-        </el-tooltip>
+        </ElTooltip>
     </template>
 </template>
 
@@ -30,9 +30,12 @@ import useInputDisabledTooltip from './mixins/useInputDisabledTooltip'
 import InputCore from './core.vue'
 import { ElInput as ElInputCom, ElTooltip } from 'element-plus'
 
+/**
+ * TODO: elInputRef?: InstanceType<typeof ElInputCom> | null
+ */
 const props = withDefaults(
     defineProps<{
-        elInputRef?: InstanceType<typeof ElInputCom> | null
+        elInputRef?: any
         modelValue: string | number | any
     }>(),
     {

@@ -8,7 +8,7 @@
 
     font-size: var(--jn-ve-g-form-font-size);
 
-    :deep(.el-form-item) {
+    .el-form-item {
 
         .el-form-item__label {
             @include item-label;

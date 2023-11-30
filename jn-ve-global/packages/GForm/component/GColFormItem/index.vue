@@ -1,5 +1,5 @@
 <template>
-    <el-col
+    <ElCol
         v-if="formItemConfig && !formItemConfig.hide"
         :class="[
             'design-item-box',
@@ -11,10 +11,17 @@
         v-bind="getElColConfigs(formItemConfig)"
     >
         <LGFormItem v-bind="props" />
-    </el-col>
+    </ElCol>
 </template>
 
-<script lang="ts" setup name="GColFormItem">
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: 'GColFormItem'
+})
+</script>
+
+<script lang="ts" setup>
 import { FormItemProps, FormProps } from '../../index'
 import LGFormItem from '../GFormItem/index.vue'
 import { ElCol } from 'element-plus'
@@ -37,7 +44,7 @@ const props = withDefaults(
 )
 
 // el col 的配置：响应式布局 || span 布局
-const getElColConfigs = (item: FormItemProps) => {
+const getElColConfigs = (item: FormItemProps): any => {
     const baseConfig = {
         offset: item.offset ?? 0
     }

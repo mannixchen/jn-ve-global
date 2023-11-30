@@ -1,7 +1,5 @@
 node_modules
 .DS_Store
-dist
-uums
 dist-ssr
 *.local
 # yarn.lock
@@ -16,3 +14,10 @@ jn-ve-global/jn-ve-global
 @types
 # pnpm-lock.yaml
 .husky
+test-vueuse-core
+dist
+es
+lib
+
+auto-imports.d.ts
+components.d.ts

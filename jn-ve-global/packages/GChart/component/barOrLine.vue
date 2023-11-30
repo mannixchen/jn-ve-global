@@ -10,7 +10,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, onMounted } from 'vue'
-import BarOrLineConfig from '../interface/BarOrLineConfig'
+import { BarOrLineConfig } from '../interface'
 import Basic from './GChartBasic/index.vue'
 import {
     BarSeriesOption,
@@ -23,7 +23,7 @@ import _ from 'lodash'
 import { size2Rem, isObject } from '../utils'
 import defaultColors from '../constant/colors'
 
-interface Props {
+export interface Props {
     config: BarOrLineConfig
 }
 

@@ -58,6 +58,14 @@ export default defineConfig({
                 manualChunks: (id) => {
                     // 将 node_modules 中的代码单独打包成一个 JS 文件
                     if (id.includes('node_modules')) {
+                        if (id.includes('element-plus')) {
+                            return 'vendor-element-plus'
+                        }
+
+                        if (id.includes('jn-ve')) {
+                            return 'vendor-jn-ve-global'
+                        }
+
                         return 'vendor'
                     }
                 }

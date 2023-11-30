@@ -1,5 +1,4 @@
 import path from 'path'
-import { readFileSync } from 'fs'
 import { rollup } from 'rollup'
 import { nodeResolve } from '@rollup/plugin-node-resolve'
 import vue from '@vitejs/plugin-vue'
@@ -11,6 +10,8 @@ import cssnano from 'cssnano'
 import image from '@rollup/plugin-image'
 import postcss from 'rollup-plugin-postcss'
 import json from '@rollup/plugin-json'
+import myIconfontRaw from '../plugins/rollup-plugin-raw'
+import setVersion from '../plugins/rollup-plugin-setv'
 
 import { compRoot, output } from '../utils/paths'
 import { PKG_CAMELCASE_NAME, target } from '../utils/constants'
@@ -68,35 +69,8 @@ const build = async (minify: boolean) => {
                     }
                 ]
             }),
-            // 图标选择器，获取 ali 的资源列表（源文件）
-            {
-                name: 'rollup-plugin-raw',
-                resolveId(importee, importer) {
-                    const prefix = /^\.\.?\//
-                    const suffix = /\?raw$/
-                    if (suffix.test(importee)) {
-                        if (prefix.test(importee)) {
-                            return path.resolve(
-                                <string>importer,
-                                '..',
-                                importee.replace(suffix, '')
-                            )
-                        } else {
-                            return path.resolve(process.cwd(), importee.replace(suffix, ''))
-                        }
-                    }
-                },
-                transform(_, id) {
-                    if (id.includes('/icons/ali/iconfont.txt')) {
-                        const filePath = path.resolve(process.cwd(), id)
-                        const fileContent = readFileSync(filePath, 'utf-8')
-                        return {
-                            code: `export default ${JSON.stringify(fileContent)};`,
-                            map: { mappings: '' }
-                        }
-                    }
-                }
-            }
+            myIconfontRaw(),
+            setVersion()
         ],
         treeshake: true,
         external: [...Object.keys(externalDepMapping)]

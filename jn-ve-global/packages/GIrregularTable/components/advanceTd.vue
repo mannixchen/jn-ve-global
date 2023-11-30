@@ -17,7 +17,7 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import type Cell from '../interface/Cell'
+import type { Cell } from '../interface/Cell'
 
 const props = withDefaults(
     defineProps<{

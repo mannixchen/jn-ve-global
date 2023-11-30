@@ -1,4 +1,4 @@
-import { ref, onMounted, watch, watchEffect, Ref } from 'vue'
+import { ref, onMounted, watch, watchEffect, type Ref } from 'vue'
 import { getStyle } from '@jsjn/utils'
 import { useMutationObserver } from '@vueuse/core'
 import { ElInput as ElInputCom } from 'element-plus'
@@ -6,7 +6,13 @@ import { ElInput as ElInputCom } from 'element-plus'
 /**
  * input 禁用时，tooltip 处理
  */
-export default (modelValue: Ref<string | number>) => {
+export default (
+    modelValue: Ref<string | number>
+): {
+    elInputRef: Ref<any>
+    inputDisabled: Ref<boolean>
+    exceedBoxWidth: Ref<boolean>
+} => {
     const elInputRef = ref<InstanceType<typeof ElInputCom> | null>(null)
     const inputDisabled = ref<boolean>(null)
     const exceedBoxWidth = ref<boolean>(false)
@@ -22,7 +28,7 @@ export default (modelValue: Ref<string | number>) => {
     // 监听属性变化
     onMounted(() => {
         useMutationObserver(
-            elInputRef,
+            elInputRef as any,
             (mutations) => {
                 for (let mutation of mutations) {
                     if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
@@ -33,13 +39,6 @@ export default (modelValue: Ref<string | number>) => {
             { attributes: true }
         )
     })
-
-    // watch(
-    //     () => elInputRef.value,
-    //     (instance) => {
-    //         console.log(`%c input instance ============= `, 'color: #f56c6c;', instance)
-    //     }
-    // )
 
     watchEffect(() => {
         if (!modelValue.value) {

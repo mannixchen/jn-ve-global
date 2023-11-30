@@ -1,6 +1,6 @@
-import { VNode, Ref } from 'vue'
-import { ExtendRuleItem } from './FormProps'
-import {
+import type { VNode, Ref } from 'vue'
+import type { ExtendRuleItem } from './FormProps'
+import type {
     InputControlConfig,
     InputNumberControlConfig,
     SelectControlConfig,
@@ -29,7 +29,7 @@ import {
     FormItemTableTableConfig,
     CollapseItemControlConfig,
     PlaceholderControlConfig
-} from '../index'
+} from './index'
 
 /**
  * 控件配置：
@@ -304,6 +304,4 @@ export interface RenderFormItem extends FormItemBaseProps {
     controlConfig?: ControlConfig
 }
 
-type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem
-
-export default FormItemProps
+export type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem

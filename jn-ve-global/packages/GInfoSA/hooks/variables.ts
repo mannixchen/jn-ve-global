@@ -1,12 +1,11 @@
 import { ref, computed } from 'vue'
-import { v4 as uuidv4 } from 'uuid'
 
 export interface VarableHookProps {
     type: 'info-select' | 'info-select-all' | 'info-autocomplete'
 }
 
 export default (props: VarableHookProps) => {
-    const randomId = `random-id-${uuidv4()}`
+    const randomId = `random-id-${+new Date()}`
     const popperClass = `${props.type}-popper`
     const dropdownShow = ref<boolean>(false)
     const animationFlag = ref<boolean>(true)
