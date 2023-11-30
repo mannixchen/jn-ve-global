@@ -42,13 +42,13 @@ pages:
         # - yarn cache clean
         # - yarn install
         # - yarn docs:build
-        - pnpm i
-        - cd utils
-        - pnpm build
-        - cd ..
-        - cd icons-vue
-        - pnpm build
-        - cd ..
+        # - pnpm i
+        # - cd utils
+        # - pnpm build
+        # - cd ..
+        # - cd icons-vue
+        # - pnpm build
+        # - cd ..
         - pnpm docs:build
         - rm -fr public
         - mkdir public && cp -fr docs/.vuepress/dist/* public
