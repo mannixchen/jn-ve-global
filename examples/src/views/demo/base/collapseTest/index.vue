@@ -1,9 +1,20 @@
 <template>
+    <el-button @click="handleCreate">
+        创建 or 销毁
+    </el-button>
+
     <div class="examples-base-wrapper">
         <g-button-group :btns="btns" />
         <!-- <g-form :config="formConfig" /> -->
         <g-collapse v-model="activeNames" :mode="mode" :show-nav-bars="true" @change="handleChange">
-            <!-- <GCollapseItem title="表单" name="1" :form-config="formConfig" :btns="btns" /> -->
+            <GCollapseItem
+                v-if="create"
+                title="表单"
+                name="1"
+                :form-config="formConfig"
+                :btns="btns"
+            />
+
             <GCollapseItem
                 :disabled="isDisabled"
                 title="表格"
@@ -50,11 +61,16 @@ import _ from 'lodash'
 const activeNames = ref<string[]>(['1', '2', '3', '4'])
 const isDisabled = ref<boolean>(false)
 const mode = ref<string>('panel')
+const create = ref<boolean>(false)
 
 const formConfig = FormConfig()
 
 const handleChange = (val) => {
     console.log(val)
+}
+
+const handleCreate = () => {
+    create.value = !create.value
 }
 
 const btns = reactive<BtnProps[]>([
@@ -226,6 +242,9 @@ const tableConfig = reactive<TableConfig<any>>({
 .examples-base-wrapper {
     background-color: transparent !important;
     box-shadow: none;
+    position: relative;
+    height: calc(100% - 50px);
+    // padding: 0;
 
     .g-button-group {
         margin-bottom: 20px;

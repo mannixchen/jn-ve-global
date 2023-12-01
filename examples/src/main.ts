@@ -11,7 +11,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
-// 组件库（workspace 引用）
+// 组件库（开发测试时 workspace 引用入口）
 import JnVeGlobal from 'jn-ve-global/packages/index'
 import 'jn-ve-global/packages/assets/icons/ali/iconfont.css'
 // import 'jn-ve-global/es/fonts/iconfont.css'

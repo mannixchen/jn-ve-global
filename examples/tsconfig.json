@@ -9,14 +9,16 @@
             "@/*": ["src/*"],
             "@component/*": ["../jn-ve-global/packages/*"],
             "@ROOT/*": ["../*"]
-        }
+        },
+        "types": [
+            "element-plus/global",
+            "jn-ve-global/es/global",
+            "@types/node",
+            "../source.d.ts",
+            "../vite-env.d.ts"
+            // "./auto-imports.d.ts",
+            // "./components.d.ts"
+        ]
     },
-    "include": [
-        "./src/**/*.ts",
-        "./src/**/*.tsx",
-        "./src/**/*.vue",
-
-        "../source.d.ts",
-        "../vite-env.d.ts"
-    ]
+    "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.vue"]
 }
