@@ -4,6 +4,10 @@ export default [
         link: '/components/index.md'
     },
     {
+        text: '升级指南',
+        link: '/components/Updateguide.md'
+    },
+    {
         text: '控制组件',
         children: [
             { text: 'Form', link: '/components/Form.md' },
