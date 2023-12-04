@@ -2,82 +2,59 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-import dts from 'vite-plugin-dts'
 import eslintPlugin from 'vite-plugin-eslint'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import esbuild from 'rollup-plugin-esbuild'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { compRoot, output } from './scripts/build/utils/paths'
+import { PKG_CAMELCASE_NAME, target } from './scripts/build/utils/constants'
 
 export default defineConfig({
     plugins: [
         vue(),
         vueJsx(),
-        // 生成 .d.ts
-        dts({
-            outputDir: resolve(__dirname, '@types'),
-            include: [
-                'packages/**/*.ts',
-                'packages/**/*.d.ts',
-                'packages/**/*.tsx',
-                'packages/**/*.vue'
-            ],
-            exclude: [
-                'packages/**/utils/**/*.ts',
-                'packages/**/mixins/**/*.ts',
-                'packages/**/hooks/**/*.ts',
-                'packages/**/utils.ts'
-            ],
-            beforeWriteFile(filePath: string, content: string) {
-                return {
-                    filePath: filePath.replace('/packages', ''),
-                    content
-                }
-            },
-            insertTypesEntry: false
-        }),
-        createSvgIconsPlugin({
-            // 指定需要缓存的图标文件夹
-            iconDirs: [
-                resolve(process.cwd(), 'packages/assets/icons/svg/newCore'),
-                resolve(process.cwd(), 'packages/assets/icons/svg/old'),
-                resolve(process.cwd(), 'packages/assets/icons/svg/regtech')
-            ],
-            // 指定symbolId格式
-            symbolId: 'custom-icon-[dir]-[name]'
-        }),
-        // setup 增强，标签添加 name 属性
-        vueSetupExtend(),
-        // vite eslint 集成
         eslintPlugin({
             include: ['packages/**/*.{js,jsx,ts,tsx,vue}']
         }),
         {
             ...esbuild({
-                target: 'chrome70',
+                target,
                 include: /[\.vue,\.tsx,\.ts]$/,
                 loaders: {
                     '.vue': 'js'
-                }
+                },
+                treeShaking: true
             }),
             enforce: 'post'
-        } as any
+        } as any,
+        viteStaticCopy({
+            targets: [
+                {
+                    src: [
+                        `${compRoot}/assets/icons/ali/*.ttf`,
+                        `${compRoot}/assets/icons/ali/*.woff`,
+                        `${compRoot}/assets/icons/ali/*.woff2`,
+                        `${compRoot}/assets/icons/ali/*.css`
+                    ],
+                    dest: `${output}/fonts`
+                }
+            ]
+        })
     ],
 
     build: {
-        target: 'es2015',
+        target,
         minify: 'esbuild',
         sourcemap: false,
         lib: {
-            entry: resolve(__dirname, 'packages/register.ts'),
-            name: 'VeGlobal',
-            fileName: 'jn-ve-global',
-            formats: ['es', 'umd']
+            entry: resolve(__dirname, 'packages', 'index.ts'),
+            name: PKG_CAMELCASE_NAME,
+            fileName: 'index',
+            formats: [/* 'es', */ 'umd']
         },
         rollupOptions: {
             // 确保外部化处理那些你不想打包进库的依赖
             external: [
                 'vue',
-                'vue-router',
                 'element-plus',
                 '@element-plus/icons-vue',
                 'lodash',
@@ -86,9 +63,11 @@ export default defineConfig({
                 '@vue-office/excel',
                 '@vue-office/docx',
                 '@vue-office/pdf',
-                'axios',
-                '@jsjn/icons-vue',
-                '@jsjn/utils'
+                '@jsjn/icons-vue'
+                // '@jsjn/utils',
+                // '@vueuse/core',
+                // 'axios',
+                // 'async-validator'
             ],
             output: {
                 /**
@@ -97,7 +76,6 @@ export default defineConfig({
                  */
                 globals: {
                     vue: 'Vue',
-                    'vue-router': 'VueRouter',
                     'element-plus': 'ElementPlus',
                     '@element-plus/icons-vue': 'ElementPlusIconsVue',
                     lodash: '_',
@@ -106,9 +84,11 @@ export default defineConfig({
                     '@vue-office/excel': 'vue-office-excel',
                     '@vue-office/docx': 'vue-office-docx',
                     '@vue-office/pdf': 'vue-office-pdf',
-                    'axios': 'axios',
-                    '@jsjn/icons-vue': 'JnIconsVue',
-                    '@jsjn/utils': 'JnUtils'
+                    '@jsjn/icons-vue': 'JnIconsVue'
+                    // '@jsjn/utils': 'JnUtils',
+                    // '@vueuse/core': 'VueUse',
+                    // 'axios': 'axios',
+                    // 'async-validator': 'Schema'
                 }
             }
         }

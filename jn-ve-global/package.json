@@ -1,7 +1,8 @@
 {
     "name": "jn-ve-global",
-    "version": "3.0.0-beta.2",
+    "version": "3.0.0",
     "author": "zyc",
+    "type": "module",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
         "dist",
@@ -10,12 +11,12 @@
         "es",
         "lib"
     ],
-    "main": "dist/index.min.js",
+    "main": "lib/index.js",
     "module": "es/index.mjs",
     "types": "es/index.d.ts",
     "exports": {
         ".": {
-            "types": "./@types/index.d.ts",
+            "types": "./es/index.d.ts",
             "import": "./es/index.mjs",
             "require": "./lib/index.js"
         },
@@ -30,7 +31,6 @@
     "scripts": {
         "build": "gulp --require @esbuild-kit/cjs-loader -f scripts/build/index.ts",
         "build:vite": "vite build",
-        "build:push": "vite build",
         "build:px": "vite build -- --px"
     },
     "publishConfig": {
