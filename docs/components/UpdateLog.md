@@ -6,13 +6,13 @@
 
 <template #version>
 
-3.0.0-beta.2
+3.0.0
 
 </template>
 
 <template #date>
 
-2023-12-01
+2023-12-04
 
 </template>
 
