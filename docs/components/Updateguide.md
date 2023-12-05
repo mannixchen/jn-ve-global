@@ -153,15 +153,16 @@ VUE_APP_VE_GLOBAL_V=3.0.0
             "@types/webpack-env",
             "element-plus/global",
             "jn-ve-global/es/global",
-            "../global.d.ts",
-            "../source.d.ts",
-            "../shims-vue.d.ts"
         ]
     },
     "include": [
         "./src/**/*.ts",
         "./src/**/*.tsx",
         "./src/**/*.vue",
+
+        "../global.d.ts",
+        "../source.d.ts",
+        "../shims-vue.d.ts"
     ]
 }
 ```
