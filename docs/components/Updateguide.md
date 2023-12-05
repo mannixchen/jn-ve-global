@@ -50,6 +50,8 @@ VUE_APP_VE_GLOBAL_V=3.0.0
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/vuex/vuex.global<%= NODE_ENV === 'development' ? '' : '.prod' %>.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/@element-plus/icons-vue/index.iife.min.js"></script>
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/element-plus/index.full<%= NODE_ENV === 'development' ? '' : '.min' %>.js?v=<%= VUE_APP_ELEP_V%>"></script>
+    <!-- 如果微应用中有使用到 echarts 请把这一行注释打开 -->
+    <!-- <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/echarts/echarts.min.js"></script> -->
 
     <!-- 组件库 -->
     <script src="<%= NODE_ENV === 'development' ? VUE_APP_BASE_APP_SERVER : '/basic' %>/lib/@jsjn/icons-vue/index.min.js"></script>
