@@ -7,6 +7,7 @@ import esbuild from 'rollup-plugin-esbuild'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import { compRoot, output } from './scripts/build/utils/paths'
 import { PKG_CAMELCASE_NAME, target } from './scripts/build/utils/constants'
+import RollupPluginSetV from './scripts/build/plugins/rollup-plugin-setv'
 
 export default defineConfig({
     plugins: [
@@ -52,6 +53,9 @@ export default defineConfig({
             formats: [/* 'es', */ 'umd']
         },
         rollupOptions: {
+            plugins: [
+                RollupPluginSetV() as any
+            ],
             // 确保外部化处理那些你不想打包进库的依赖
             external: [
                 'vue',
