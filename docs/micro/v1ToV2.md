@@ -231,7 +231,7 @@ app.use(ElementPlus, { locale })
 
 1. 网关增加配置，如下：
 
-![网关配置](/images/micro/getwayconfig.jpg)
+![网关配置](/images/micro/getwayconfig2.jpg)
 
 2. Nginx 配置路径
 

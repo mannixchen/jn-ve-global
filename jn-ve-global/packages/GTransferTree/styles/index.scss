@@ -104,9 +104,9 @@
 
         .g-transfer-tree-panel__body {
             height: var(--el-transfer-panel-body-height);
-            border-left: 0.01rem solid var(--el-transfer-border-color);
-            border-right: 0.01rem solid var(--el-transfer-border-color);
-            border-bottom: 0.01rem solid var(--el-transfer-border-color);
+            border-left: 1px solid var(--el-transfer-border-color);
+            border-right: 1px solid var(--el-transfer-border-color);
+            border-bottom: 1px solid var(--el-transfer-border-color);
             border-bottom-left-radius: var(--el-transfer-border-radius);
             border-bottom-right-radius: var(--el-transfer-border-radius);
             overflow: hidden;
@@ -115,7 +115,7 @@
 
             .g-transfer-tree-panel__filter {
                 text-align: center;
-                margin: 0.15rem;
+                margin: 15px;
                 -webkit-box-sizing: border-box;
                 box-sizing: border-box;
                 width: calc(var(--el-transfer-panel-width) - 16px * 2);
@@ -124,7 +124,7 @@
                 .el-input__inner {
                     height: var(--el-transfer-filter-height);
                     width: 100%;
-                    font-size: 0.12rem;
+                    font-size: 12px;
                     display: inline-block;
                     -webkit-box-sizing: border-box;
                     box-sizing: border-box;
@@ -190,7 +190,7 @@
 
                 height: var(--el-component-size);
                 line-height: var(--el-component-size);
-                padding-left: 0.15rem;
+                padding-left: 15px;
                 width: 100%;
                 display: flex;
                 align-items: center;
@@ -222,7 +222,7 @@
             background: var(--el-bg-color-overlay);
             margin: 0;
             padding: 0;
-            border: 0.01rem solid var(--el-transfer-border-color);
+            border: 1px solid var(--el-transfer-border-color);
             border-bottom-left-radius: var(--el-transfer-border-radius);
             border-bottom-right-radius: var(--el-transfer-border-radius);
         }
