@@ -16,6 +16,7 @@ export default [
             { text: 'FigureInput', link: '/components/FigureInput.md' },
             { text: 'IconPicker', link: '/components/IconPicker.md' },
             { text: 'Upload', link: '/components/Upload.md' },
+            { text: 'UploadFolder', link: '/components/UploadFolder.md' },
             { text: 'InfoSelect', link: '/components/InfoSAA/InfoSelect.md' },
             { text: 'InfoSelectAll', link: '/components/InfoSAA/InfoSelectAll.md' },
             { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' },
