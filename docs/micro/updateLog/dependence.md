@@ -13,7 +13,7 @@
 "@jsjn/micro-core-router": "^2.1.1",
 "@jsjn/micro-core-store": "^2.1.0",
 "@jsjn/micro-core-utils": "^2.1.1",
-"@jsjn/micro-core-views": "^2.3.1",
+"@jsjn/micro-core-views": "^2.3.3",
 "@jsjn/types": "^1.4.7",
 "@jsjn/utils": "^1.6.1",
 "jn-ve-global": "2.11.0",
