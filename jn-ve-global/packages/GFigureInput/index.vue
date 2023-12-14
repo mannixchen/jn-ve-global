@@ -29,9 +29,8 @@ export default {
 
 <script lang="ts" setup>
 import { nextTick, ref, computed, watch } from 'vue'
-import { FigureInputProps } from '../GForm'
 import { ElInput as ElInputCom } from 'element-plus'
-import LGAdvanceInput from '../GForm/component/GAdvanceInput/core.vue'
+import { GAdvanceInput as LGAdvanceInput, type FigureInputProps } from '../GForm'
 import { toThousands, restrictDecimals, clearNoNum, getNumUnit } from '@jsjn/utils'
 
 const props = withDefaults(
@@ -64,6 +63,10 @@ const props = withDefaults(
          * 输入时小数位长度
          */
         valDecimalsLength?: number
+        /**
+         * 单位进制，如 label 单位为 万元，则单位进制为 10000
+         */
+        unitNumeralSystem?: number
     }>(),
     {
         format: null,
@@ -82,7 +85,11 @@ const gatherFigureInputRef = ref<InstanceType<typeof ElInputCom> | null>(null)
 // 展示框 ref
 const showFigureInputRef = ref<InstanceType<typeof ElInputCom> | null>(null)
 // 单位
-const unit = computed(() => (props.showUnitTip ? getNumUnit(props.modelValue as number) : ''))
+const unit = computed(() =>
+    props.showUnitTip
+        ? getNumUnit((props.unitNumeralSystem || 1) * ((props.modelValue as number) ?? 0))
+        : ''
+)
 
 // 搜集数据输入框绑定值，主要做限制数字
 const gatherFigureInputVal = computed({

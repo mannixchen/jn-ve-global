@@ -29,6 +29,7 @@ export * from './GTransfer'
 export * from './GTransferTree'
 export * from './GTree'
 export * from './GUpload'
+export * from './GUploadFolder'
 export * from './JnEditor'
 
 export default install

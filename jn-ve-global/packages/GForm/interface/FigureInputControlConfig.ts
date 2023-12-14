@@ -25,6 +25,10 @@ export interface FigureInputProps extends InputProps, InputEvents, InputSlots {
      * 输入时小数位长度
      */
     valDecimalsLength?: number
+    /**
+     * 单位进制，如 label 单位为 万元，则单位进制为 10000
+     */
+    unitNumeralSystem?: number
 }
 
 export interface FigureInputControlConfig {

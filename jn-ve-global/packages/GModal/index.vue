@@ -7,6 +7,8 @@
         destroy-on-close
         top="5vh"
         append-to-body
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
         v-bind="eleProps"
         :class="`g-custom-dialog
             ${attrs['custom-class'] ? ' ' + attrs['custom-class'] : ''}`"

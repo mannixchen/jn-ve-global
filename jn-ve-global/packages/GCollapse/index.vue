@@ -10,9 +10,6 @@
         <slot />
     </ElCollapse>
 
-    <!-- 导航条
-        TODO: bug 动态增加 or 移除的节点，没有动态生成 锚点
-    -->
     <ul
         v-if="collapseItemModels?.length"
         :class="['cpllapse-nav-bars__wrapper', { 'is-packup': isPackup }]"
@@ -119,16 +116,17 @@ const {
 }
 
 .cpllapse-nav-bars__wrapper {
-    --bars-w: 180px;
+    --navbar-zindex: 1999;
+    --bars-w: 160px;
     --bar-radius: 6px;
     --packup-w: 40px;
 
     position: fixed;
-    top: 50%;
+    top: 55%;
     transform: translateY(-50%);
     right: 0;
     width: var(--bars-w);
-    z-index: 1999;
+    z-index: var(--navbar-zindex);
     background: #ffffff;
     box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
     border-radius: var(--bar-radius);
@@ -153,7 +151,7 @@ const {
         white-space: nowrap;
         text-overflow: ellipsis;
         color: #4e5966;
-        font-size: 18px;
+        font-size: 16px;
         text-align: center;
         font-weight: 600;
         line-height: v-bind(anchorItemHeight);

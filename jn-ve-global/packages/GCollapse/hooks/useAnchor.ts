@@ -64,11 +64,11 @@ export default ({
     const collapseWrapperParent = shallowRef<HTMLElement>(props.parent)
     const collapseItemModels = ref<CollapseItemModel[]>([])
     const isAnchorNav = ref<boolean>(false)
-    const isPackup = ref<boolean>(false)
+    const isPackup = ref<boolean>(true)
 
     // 导航条 panel 相关
-    const anchorMaxItem = 10
-    const anchorItemHeight = `${size2Rem(46)}px`
+    const anchorMaxItem = 7
+    const anchorItemHeight = `${size2Rem(40)}px`
     const anchorWrapperMaxH = anchorMaxItem * parseInt(anchorItemHeight)
 
     // el-collapse 距离滚动容器的顶部距离
@@ -170,7 +170,7 @@ export default ({
     function _getCollapseItemModels() {
         // TODO: 这里为了保持激活上次选中的锚点节点，使用 label 判断上一节点，理论上来说，业务侧不会有重复的名称，否则需要改动
         let preActiveLabel = collapseItemModels.value.find((item) => item.isActive)?.label
-        
+
         const $collapseItems = document.querySelectorAll(`#${id} > .el-collapse-item`)
         // 收集每个 item 的信息
         collapseItemModels.value = [].map.call(
