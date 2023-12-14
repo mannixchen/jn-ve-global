@@ -1,0 +1,161 @@
+[
+    {
+        "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案",
+        "id": "1",
+        "children": [
+            {
+                "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同1",
+                "id": "1-1",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "3",
+                        "name": "李雷雷-前端-金农-百力奥推荐4.20.pdf",
+                        "fileId": "7,393c9b833275"
+                    },
+                    {
+                        "id": "4",
+                        "name": "docxjs.docx",
+                        "fileId": "3,393d97a114f9"
+                    }
+                ]
+            },
+            {
+                "name": "合同2",
+                "id": "1-2",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "5",
+                        "name": "工作簿1.xlsx",
+                        "fileId": "7,393e70c684fe"
+                    }
+                ]
+            },
+            {
+                "name": "合同3",
+                "id": "1-3",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "1",
+                        "name": "sun3.webp",
+                        "fileId": "7,393a8da0dedb"
+                    },
+                    {
+                        "id": "2",
+                        "name": "sun2.webp",
+                        "fileId": "6,393b2bfbebe9"
+                    }
+                ]
+            }
+        ],
+        "disabled": false
+    },
+    {
+        "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案",
+        "id": "1",
+        "children": [
+            {
+                "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同1",
+                "id": "1-1",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "3",
+                        "name": "李雷雷-前端-金农-百力奥推荐4.20.pdf",
+                        "fileId": "7,393c9b833275"
+                    },
+                    {
+                        "id": "4",
+                        "name": "docxjs.docx",
+                        "fileId": "3,393d97a114f9"
+                    }
+                ]
+            },
+            {
+                "name": "合同2",
+                "id": "1-2",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "5",
+                        "name": "工作簿1.xlsx",
+                        "fileId": "7,393e70c684fe"
+                    }
+                ]
+            },
+            {
+                "name": "合同3",
+                "id": "1-3",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "1",
+                        "name": "sun3.webp",
+                        "fileId": "7,393a8da0dedb"
+                    },
+                    {
+                        "id": "2",
+                        "name": "sun2.webp",
+                        "fileId": "6,393b2bfbebe9"
+                    }
+                ]
+            }
+        ],
+        "disabled": false
+    },
+    {
+        "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案",
+        "id": "1",
+        "children": [
+            {
+                "name": "合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同档案合同1",
+                "id": "1-1",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "3",
+                        "name": "李雷雷-前端-金农-百力奥推荐4.20.pdf",
+                        "fileId": "7,393c9b833275"
+                    },
+                    {
+                        "id": "4",
+                        "name": "docxjs.docx",
+                        "fileId": "3,393d97a114f9"
+                    }
+                ]
+            },
+            {
+                "name": "合同2",
+                "id": "1-2",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "5",
+                        "name": "工作簿1.xlsx",
+                        "fileId": "7,393e70c684fe"
+                    }
+                ]
+            },
+            {
+                "name": "合同3",
+                "id": "1-3",
+                "disabled": false,
+                "files": [
+                    {
+                        "id": "1",
+                        "name": "sun3.webp",
+                        "fileId": "7,393a8da0dedb"
+                    },
+                    {
+                        "id": "2",
+                        "name": "sun2.webp",
+                        "fileId": "6,393b2bfbebe9"
+                    }
+                ]
+            }
+        ],
+        "disabled": false
+    }
+]

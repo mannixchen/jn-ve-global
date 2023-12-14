@@ -165,6 +165,14 @@ const routes: Array<RouteConfig> = [
                             title: 'FilePreview'
                         },
                         component: () => import('@/views/demo/base/uploadTest/preview.vue')
+                    },
+                    {
+                        path: 'folderTest',
+                        name: 'folderTest',
+                        meta: {
+                            title: 'FolderTest'
+                        },
+                        component: () => import('@/views/demo/base/uploadTest/folderTest.vue')
                     }
                 ]
             },
