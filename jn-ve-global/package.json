@@ -1,15 +1,14 @@
 {
     "name": "jn-ve-global",
-    "version": "3.1.0",
+    "version": "3.2.0",
     "author": "zyc",
     "type": "module",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
     "files": [
         "dist",
-        "packages",
-        "@types",
         "es",
-        "lib"
+        "lib",
+        "packages"
     ],
     "main": "lib/index.js",
     "module": "es/index.mjs",
@@ -20,21 +19,45 @@
             "import": "./es/index.mjs",
             "require": "./lib/index.js"
         },
-        "./es": "./es/index.mjs",
-        "./lib": "./lib/index.js",
-        "./es/*.mjs": "./es/*.mjs",
-        "./es/*": "./es/*",
-        "./lib/*.js": "./lib/*.js",
-        "./lib/*": "./lib/*",
+        "./global": {
+            "types": "./es/global.d.ts"
+        },
+        "./es": {
+            "types": "./es/index.d.ts",
+            "import": "./es/index.mjs"
+        },
+        "./lib": {
+            "types": "./lib/index.d.ts",
+            "require": "./lib/index.js"
+        },
+        "./es/*.mjs": {
+            "types": "./es/*.d.ts",
+            "import": "./es/*.mjs"
+        },
+        "./es/*": {
+            "types": [
+                "./es/*.d.ts",
+                "./es/*/index.d.ts"
+            ],
+            "import": "./es/*.mjs"
+        },
+        "./lib/*.js": {
+            "types": "./lib/*.d.ts",
+            "require": "./lib/*.js"
+        },
+        "./lib/*": {
+            "types": [
+                "./lib/*.d.ts",
+                "./lib/*/index.d.ts"
+            ],
+            "require": "./lib/*.js"
+        },
         "./*": "./*"
     },
     "scripts": {
         "build": "gulp --require @esbuild-kit/cjs-loader -f scripts/build/index.ts",
         "build:vite": "vite build",
         "build:px": "pnpm build --px"
-    },
-    "publishConfig": {
-        "registry": "http://172.31.71.159/repository/npm-release/"
     },
     "devDependencies": {
         "@esbuild-kit/cjs-loader": "^2.4.4",
@@ -73,5 +96,8 @@
         "lib/**/*.scss",
         "es/**/style/*",
         "lib/**/style/*"
-    ]
+    ],
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-release/"
+    }
 }
