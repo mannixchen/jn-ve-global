@@ -95,6 +95,8 @@
         vertical-center
         :title="currentFile.name"
         :show-close="true"
+        :close-on-click-modal="true"
+        :close-on-press-escape="true"
         :custom-class="`upload-preview-modal 
         ${imgSuffix.includes(getFileType(currentFile.name)) ? 'img-modal' : ''} 
         ${officeSuffix.includes(getFileType(currentFile.name)) ? 'office-modal' : ''}`"
