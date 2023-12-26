@@ -55,6 +55,8 @@
         title="更多查询"
         width="80%"
         top="5vh"
+        :close-on-click-modal="true"
+        :close-on-press-escape="true"
         :destroy-on-close="false"
     >
         <ElScrollbar max-height="400px">
@@ -71,13 +73,15 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { PropType, watch, ref, computed, reactive, onMounted } from 'vue'
+import { PropType, watch, ref, computed, reactive, onMounted, nextTick } from 'vue'
 import { getStyle } from '@jsjn/utils'
 import type { BaseModuleMode } from '../../_globalConstant/baseModuleMode'
 import { ElScrollbar } from 'element-plus'
 import { GForm as LGForm, type FormProps, type FormItemProps } from '../../GForm'
 import { GModal as LGModal } from '../../GModal'
 import { GIcon as LGIcon } from '../../GIcon'
+import { assignOwnProp } from '@jsjn/utils'
+import _ from 'lodash'
 
 export interface Props {
     /**
@@ -176,7 +180,33 @@ onMounted(() => {
 // 更多查询
 const handleMoreSearch = () => {
     if (props.moreSearchMode === 'popup') {
+        /**
+         * bugfix: 一级展示的表单项，会有一个 form.instance，弹框弹出的，也会产生一个 form.instance
+         * 后打开创建的 form.instance 会覆盖掉一级的 form.instance
+         * 故：组件外部操作的实际是弹框的 form.instance，但是操作的都是同一个 form.model
+         * 所以在重置时，依然可以重置表单项的数据
+         *
+         * 但是，二级弹框表单在创建之前，用户可能已经有所输入，导致重置时，无法重置到初始状态
+         * 而是重置到用户输入的状态
+         *
+         * 解决方案：
+         *  1. 在弹框弹出之前，缓存用户输入的数据
+         *  2. 同时重置用户的输入
+         *  3. 在弹框打开后，将缓存的数据赋值给弹框的 form.model，造成一个没有变化的假象
+         *
+         * 这样一来，就可以保证，每次弹框打开，都是一个干净的表单
+         *
+         * 重点是：表单的 form.instance 覆盖了一级 form.instance，但是 form.model 是同一个
+         * 
+         * TODO: 还存在两个 form.instance 校验的问题，暂时不影响使用，后续再解决
+         */
+        const userInputModelCache = _.cloneDeep(localSearchFormConfig.value.model)
+        localSearchFormConfig.value.instance.init()
         dialogVisible.value = true
+
+        nextTick(() => {
+            assignOwnProp(localSearchFormConfig.value.model, userInputModelCache)
+        })
     } else if (props.moreSearchMode === 'pull-down') {
         pullDownFlag.value = !pullDownFlag.value
     }
