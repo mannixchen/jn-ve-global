@@ -3,6 +3,7 @@
     <ElDialog
         v-if="localType === 'dialog'"
         ref="modalRef"
+        v-model="modalShowSource"
         :width="localWidth"
         destroy-on-close
         top="5vh"
@@ -40,11 +41,12 @@
     <ElDrawer
         v-if="localType === 'drawer'"
         ref="modalRef"
+        v-model="modalShowSource"
         :size="localWidth"
         destroy-on-close
         append-to-body
         v-bind="eleProps"
-        :custom-class="`g-custom-drawer ${attrs['custom-class'] || ''}`"
+        :class="`g-custom-drawer ${attrs['custom-class'] || ''}`"
     >
         <!-- title -->
         <template v-if="$slots.title" #header>
@@ -79,13 +81,14 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { ref, computed, useAttrs } from 'vue'
+import { ref, computed, useAttrs, watch } from 'vue'
 import { GButtonGroup as LGButtonGroup, type BtnProps } from '../GButtonGroup'
 import _ from 'lodash'
 import { partitionObj2HumpObj } from '@jsjn/utils'
 import { ElDialog, ElDrawer, ElScrollbar } from 'element-plus'
 
 export interface Props {
+    modelValue?: boolean
     /**
      * 类型
      */
@@ -117,6 +120,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const attrs = useAttrs()
+const emits = defineEmits(['update:modelValue'])
 const eleProps = computed(() => {
     const obj = partitionObj2HumpObj(attrs) as any
 
@@ -124,10 +128,25 @@ const eleProps = computed(() => {
         const { alignCenter, customClass, ...dialogEleProps } = obj
         return dialogEleProps
     } else {
-        const { alignCenter, ...drawerEleProps } = obj
+        const { alignCenter, customClass, ...drawerEleProps } = obj
         return drawerEleProps
     }
 })
+
+// 本地自控制打开状态，通过实例方法 open 和 close 控制，适配低代码平台
+const modalShowSource = ref<boolean>(props.modelValue ?? false)
+watch(
+    () => modalShowSource.value,
+    (flag) => {
+        emits('update:modelValue', flag)
+    }
+)
+watch(
+    () => props.modelValue,
+    (flag) => {
+        modalShowSource.value = flag ?? false
+    }
+)
 
 // 本地类型（做统一化控制）
 const localType = computed(() => props.type)
@@ -140,9 +159,19 @@ const localWidth = computed(() => {
     return '50%'
 })
 
+function open() {
+    modalShowSource.value = true
+}
+
+function close() {
+    modalShowSource.value = false
+}
+
 defineExpose({
     localType,
-    modalRef
+    modalRef,
+    open,
+    close
 })
 </script>
 

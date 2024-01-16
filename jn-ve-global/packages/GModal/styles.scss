@@ -25,6 +25,8 @@ $--close-btn-font-size: 22px;
 // 底部
 @mixin footerStyle {
     padding: 22px $--dialog-base-left-p;
+    display: flex;
+    justify-content: center;
 
     .el-button {
         --jn-ve-g-btn-height: var(--jn-ve-g-btn-b-height);
