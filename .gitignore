@@ -18,6 +18,7 @@ test-vueuse-core
 dist
 es
 lib
+!examples/public/lib
 
 auto-imports.d.ts
 components.d.ts
