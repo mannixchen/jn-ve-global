@@ -40,15 +40,15 @@ export default defineConfig({
             ],
             // 指定symbolId格式
             symbolId: 'custom-icon-[dir]-[name]'
-        })
+        }),
 
         /**
          * 使用外部库，类似webpack的externals，但现在只支持浏览器环境。
          * https://github.com/crcong/vite-plugin-externals/blob/HEAD/README.zh-CN.md
          */
-        // viteExternalsPlugin({
-        //     vue: 'Vue'
-        // })
+        viteExternalsPlugin({
+            vue: 'Vue'
+        })
     ],
 
     // 打包配置
@@ -89,7 +89,9 @@ export default defineConfig({
         host: '0.0.0.0',
         proxy: {
             '/proxy': {
-                target: 'http://172.31.33.70',
+                // target: 'http://172.31.33.70',
+                target: 'http://172.31.33.84',
+                // target: 'https://dfjr.jsjngf.com',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/proxy/, '')
             }
