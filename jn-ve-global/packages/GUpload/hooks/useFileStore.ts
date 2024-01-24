@@ -1,8 +1,9 @@
-import { ref, computed, watch, reactive, type Ref, type WritableComputedRef } from 'vue'
-import { fillFileMemoryUrl, getFileType, getFileBlobUrlByRequest } from '../utils'
-import { UploadFile } from '../interface/UploadFile'
-import { imgSuffix } from '../constant/fileTypeList'
+import { ref, computed, watch, reactive, Ref, WritableComputedRef } from 'vue'
 import _ from 'lodash'
+import { fillFileMemoryUrl, getFileBlobUrlByRequest } from '../utils'
+import { getFileType } from '../../GFilePreview/utils'
+import { UploadFile } from '../interface/UploadFile'
+import { IMG_EXT } from '../../GFilePreview'
 
 export default ({
     emits,
@@ -35,7 +36,7 @@ export default ({
                     const fileType = getFileType(file.name)
 
                     // 只有图片（缩略图）才进行 预加载 url，避免性能浪费
-                    if (imgSuffix.includes(fileType)) {
+                    if (IMG_EXT.includes(fileType)) {
                         fillFileMemoryUrl(proxyFile, localDownloadUrl.value, props.timeout)
                     }
                 }

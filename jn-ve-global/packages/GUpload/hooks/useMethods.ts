@@ -1,8 +1,20 @@
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { UploadFile } from '../interface/UploadFile'
-import { fillFileMemoryUrl } from '../utils'
+import { fillFileMemoryUrl, fillFileWpsPreviewUrl } from '../utils'
+import { typeIsValid } from '../../GFilePreview/utils'
+import { PreviewMode, WPS_PREVIEW_EXT } from '../../GFilePreview'
 
-export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localDownloadUrl }) => {
+export default ({
+    uploadRef,
+    currentFile,
+    props,
+    modalShow,
+    attrs,
+    emits,
+    localDownloadUrl,
+    isWpsPreview,
+    localGetWpsEditLinkApi
+}) => {
     // 预览
     const filePreview = (file: UploadFile) => {
         // 预览行为，覆盖本地
@@ -11,8 +23,17 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localD
             return
         }
 
-        _loadFile(file, () => {
-            // 组件预览默认行为
+        // wps 预览
+        if (isWpsPreview(file.name)) {
+            wpsPreview(file).then(() => {
+                currentFile.value = file
+                modalShow.value = true
+            })
+            return
+        }
+
+        // 默认预览行为
+        loadFile(file).then(() => {
             currentFile.value = file
             modalShow.value = true
         })
@@ -26,7 +47,7 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localD
             return
         }
 
-        _loadFile(file, () => {
+        loadFile(file).then(() => {
             // 默认下载行为
             let aDom = document.createElement('a')
             aDom.href = file.url
@@ -34,28 +55,6 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localD
             aDom.click()
             aDom = null
         })
-    }
-
-    /**
-     * 加载文件资源
-     *  - 已有：执行行为 预览 or 下载
-     *  - 未有：请求接口，回调执行行为
-     * @param file
-     * @param cb
-     * @returns
-     */
-    function _loadFile(file: UploadFile, cb) {
-        if (!file.url) {
-            fillFileMemoryUrl(file, localDownloadUrl.value, props.timeout).then((res) => {
-                if (res.url) {
-                    cb?.()
-                } else {
-                    ElMessage.error('获取文件出错，请检查！')
-                }
-            })
-            return
-        }
-        cb?.()
     }
 
     /**
@@ -103,10 +102,63 @@ export default ({ uploadRef, currentFile, props, modalShow, attrs, emits, localD
         })
     }
 
+    /**
+     * 使用 wps 预览：使用的是 wps 的收费 sdk，需要用户自己购买
+     *  - 监管购买了
+     *  - 新核心不能用
+     */
+    function wpsPreview(file: UploadFile) {
+        return new Promise<UploadFile>((resolve, reject) => {
+            if (file.wpsPreviewUrl) {
+                resolve(file)
+            } else {
+                fillFileWpsPreviewUrl(file, localGetWpsEditLinkApi.value, props.timeout).then(
+                    (res) => {
+                        if (res.wpsPreviewUrl) {
+                            resolve(file)
+                        } else {
+                            const msg = '获取 wps 预览地址失败，请检查！'
+                            ElMessage.error(msg)
+                            reject(new Error(msg))
+                        }
+                    }
+                )
+            }
+        })
+    }
+
+    /**
+     * 加载文件资源
+     *  - 已有：执行行为 预览 or 下载
+     *  - 未有：请求接口，回调执行行为
+     * @param file
+     * @param cb
+     * @returns
+     */
+    function loadFile(file: UploadFile) {
+        return new Promise<UploadFile>((resolve, reject) => {
+            if (file.url) {
+                resolve(file)
+            } else {
+                fillFileMemoryUrl(file, localDownloadUrl.value, props.timeout).then((res) => {
+                    if (res.url) {
+                        resolve(file)
+                    } else {
+                        const msg = '获取文件出错，请检查！'
+                        ElMessage.error(msg)
+                        reject(new Error(msg))
+                    }
+                })
+            }
+        })
+    }
+
     return {
         filePreview,
         fileDownload,
         delAvatar,
-        delFile
+        delFile,
+        wpsPreview,
+        loadFile
     }
 }

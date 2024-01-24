@@ -96,23 +96,31 @@ export default (props) => {
         return attrs.value['list-type'] === 'avatar' ? 'image/*' : attrs.value['accept']
     })
 
-    // 兼容无界微应用
+    /**
+     * 默认地址，处理兼容无界
+     */
     const localUploadUrl = computed(() => {
         if (!attrs.value['action']) return attrs.value['action']
-        const uploadUrl: string = attrs.value['action']
-        if (window['__MAIN_HOST_PATH__'] && !uploadUrl.includes(window['__MAIN_HOST_PATH__'])) {
-            return `${window['__MAIN_HOST_PATH__']}${uploadUrl}`
-        }
-        return uploadUrl
+        return _compatibilityUrl(attrs.value['action'])
     })
+
     const localDownloadUrl = computed(() => {
         if (!props.downloadUrl) return props.downloadUrl
-        const downloadUrl = props.downloadUrl
-        if (window['__MAIN_HOST_PATH__'] && !downloadUrl.includes(window['__MAIN_HOST_PATH__'])) {
-            return `${window['__MAIN_HOST_PATH__']}${downloadUrl}`
-        }
-        return downloadUrl
+        return _compatibilityUrl(props.downloadUrl)
     })
+
+    const localGetWpsEditLinkApi = computed(() => {
+        if (!props.getWpsEditLinkApi) return props.getWpsEditLinkApi
+        return _compatibilityUrl(props.getWpsEditLinkApi)
+    })
+
+    function _compatibilityUrl(url: string) {
+        if (!url) return url
+        if (window['__MAIN_HOST_PATH__'] && !url.includes(window['__MAIN_HOST_PATH__'])) {
+            return `${window['__MAIN_HOST_PATH__']}${url}`
+        }
+        return url
+    }
 
     return {
         modalShow,
@@ -124,6 +132,7 @@ export default (props) => {
         localLimit,
         localAccept,
         localUploadUrl,
-        localDownloadUrl
+        localDownloadUrl,
+        localGetWpsEditLinkApi
     }
 }

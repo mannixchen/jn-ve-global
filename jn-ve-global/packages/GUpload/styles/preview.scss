@@ -7,8 +7,11 @@
 }
 
 .g-custom-dialog.upload-preview-modal {
+    border-radius: 2px !important;
+
     .el-dialog__body {
-        padding: 10px;
+        padding: 2px;
+        overflow: hidden;
     }
 
     &.img-modal {
@@ -23,6 +26,13 @@
         .el-dialog__body {
             width: fit-content;
             height: fit-content;
+        }
+    }
+
+    &.is-fullscreen {
+        .el-dialog__body {
+            padding: 0;
+            overflow: hidden;
         }
     }
 }

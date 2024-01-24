@@ -32,5 +32,9 @@ export interface UploadFile {
     uid?: number
     raw?: ElFile
     type?: string
+    /**
+     * 监管的 wps 预览地址
+     */
+    wpsPreviewUrl?: string
     [k: string]: any
 }

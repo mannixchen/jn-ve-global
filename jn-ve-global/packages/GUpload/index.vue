@@ -1,9 +1,9 @@
 <template>
-    <ElUpload
+    <el-upload
         ref="uploadRef"
         :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
-        v-bind="getUploadProps()"
+        v-bind="_getUploadProps()"
         :action="localUploadUrl"
         :headers="localReqHeaders"
         :disabled="disabled"
@@ -24,9 +24,9 @@
                 <div :class="['upload-btn', uploadListType]">
                     <LGIcon v-if="['picture-card'].includes(uploadListType)" icon="el-Plus" />
 
-                    <ElButton v-else size="small" type="primary" :disabled="disabled">
+                    <el-button v-else size="small" type="primary" :disabled="disabled">
                         上传附件
-                    </ElButton>
+                    </el-button>
                 </div>
             </slot>
             <div v-else class="avatar-upload">
@@ -57,8 +57,16 @@
 
                 <!-- 按钮 -->
                 <div class="btns">
+                    <!-- 显示预览按钮：wps可预览文件类型 & 本地文件预览类型不一致 -->
                     <LGIcon
-                        v-if="showPreview(file.name)"
+                        v-if="
+                            typeIsValid(
+                                localPreviewMode === PreviewMode.WPS
+                                    ? [...IMG_EXT, ...WPS_PREVIEW_EXT]
+                                    : [...IMG_EXT, ...LOCAL_OFFICE_EXT],
+                                file.name
+                            )
+                        "
                         icon="el-View"
                         @click="filePreview(file)"
                     />
@@ -72,7 +80,7 @@
                 </div>
 
                 <!-- 进度条 -->
-                <ElProgress
+                <el-progress
                     v-if="file.status === 'uploading'"
                     :percentage="+file.percentage"
                     type="line"
@@ -86,7 +94,7 @@
                 </label>
             </div>
         </template>
-    </ElUpload>
+    </el-upload>
 
     <!-- 预览 -->
     <LGModal
@@ -94,13 +102,27 @@
         v-model="modalShow"
         vertical-center
         :title="currentFile.name"
+        :fullscreen="isFullscreen"
         :show-close="true"
         :close-on-click-modal="true"
         :close-on-press-escape="true"
+        :modal="!typeIsValid(IMG_EXT, currentFile.name)"
         :custom-class="`upload-preview-modal 
-        ${imgSuffix.includes(getFileType(currentFile.name)) ? 'img-modal' : ''} 
-        ${officeSuffix.includes(getFileType(currentFile.name)) ? 'office-modal' : ''}`"
+        ${typeIsValid(IMG_EXT, currentFile.name) ? 'img-modal' : ''} 
+        ${typeIsValid(WPS_PREVIEW_EXT, currentFile.name) ? 'office-modal' : ''}
+        ${isFullscreen ? 'is-fullscreen' : ''}`"
     >
+        <!-- 带有全屏操作 -->
+        <template #title>
+            <div class="preview-modal-title__wrapper">
+                <span>{{ currentFile.name }}</span>
+                <LGIcon
+                    :icon="isFullscreen ? 'ali-icon-quxiaoquanping_o' : 'ali-icon-quanping_o'"
+                    @click="isFullscreen = !isFullscreen"
+                />
+            </div>
+        </template>
+
         <!-- 预览组件 -->
         <LGFilePreview
             :file-name="currentFile.name"
@@ -108,13 +130,17 @@
             :file-id="currentFile.url ? undefined : currentFile.fileId"
             :download-url="localDownloadUrl"
             :timeout="timeout"
+            :content-height="isFullscreen ? `calc(100vh - ${size2Rem(57)}px)` : '90vh'"
+            :wps-preview-url="currentFile.wpsPreviewUrl"
+            :preview-mode="localPreviewMode"
+            :get-wps-edit-link-api="localGetWpsEditLinkApi"
+            @close="modalShow = false"
         />
 
         <!-- 连续预览 -->
         <div v-if="attrs['list-type'] !== 'avatar'" class="pre-trigger" @click="preImgHandle">
             <LGIcon icon="el-ArrowLeftBold" />
         </div>
-
         <div v-if="attrs['list-type'] !== 'avatar'" class="next-trigger" @click="nextImgHandle">
             <LGIcon icon="el-ArrowRightBold" />
         </div>
@@ -122,23 +148,37 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
+export default {
     name: 'GUpload',
     inheritAttrs: false
-})
+}
 </script>
 
 <script lang="ts" setup>
-import { type Ref } from 'vue'
-import { getFileType, getFileTypeIcon } from './utils'
-import { imgSuffix, officeSuffix } from './constant/fileTypeList'
-import type { UploadFile } from './interface/UploadFile'
-import { getHooks, getMethods, getUtils, getRefStore, getFileStore, getConstant } from './mixins'
-import { ElUpload, ElButton, ElProgress, ElMessage } from 'element-plus'
-import { GFilePreview as LGFilePreview } from '../GFilePreview'
+import { computed, ref, watch, Ref } from 'vue'
+import { getFileTypeIcon } from './utils'
+import { UploadFile } from './interface/UploadFile'
+import {
+    useHooks,
+    useMethods,
+    useRefStore,
+    useFileStore,
+    useConstant,
+    useContinuousPreview
+} from './hooks'
+import { ElUpload, ElButton, ElProgress } from 'element-plus'
+import {
+    GFilePreview as LGFilePreview,
+    IMG_EXT,
+    WPS_PREVIEW_EXT,
+    LOCAL_OFFICE_EXT,
+    PreviewMode
+} from '../GFilePreview'
 import { GIcon as LGIcon } from '../GIcon'
 import { GModal as LGModal } from '../GModal'
+import { global, size2Rem } from '@jsjn/utils'
+import useLocalPreviewMode from '../GFilePreview/hooks/useLocalPreviewMode'
+import { typeIsValid } from '../GFilePreview/utils'
 
 export interface UploadCustomProps {
     instance?: any
@@ -190,6 +230,14 @@ export interface UploadCustomProps {
      * 下载的请求超时时间
      */
     timeout?: number
+    /**
+     * 使用 wps 预览的接口 url
+     */
+    getWpsEditLinkApi?: string
+    /**
+     * 预览模式
+     */
+    previewMode?: PreviewMode
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
@@ -205,6 +253,7 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     delHide: false,
     successNoMsg: false,
     downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
+    getWpsEditLinkApi: '/supervision-publicuse-server/v1/wps/preview',
     timeout: 1000 * 20
 })
 
@@ -214,6 +263,10 @@ const emits = defineEmits([
     'getUploadRef',
     'update:instance'
 ])
+
+const isFullscreen = ref<boolean>(true)
+const { localPreviewMode, isWpsPreview } = useLocalPreviewMode({ props })
+const { uploadRef } = useRefStore({ emits })
 
 const {
     modalShow,
@@ -225,14 +278,12 @@ const {
     localLimit,
     localAccept,
     localUploadUrl,
-    localDownloadUrl
-} = getConstant(props)
-
-// elUpload ref
-const { uploadRef } = getRefStore({ emits })
+    localDownloadUrl,
+    localGetWpsEditLinkApi
+} = useConstant(props)
 
 // 文件、文件列表（回填）
-const { currentFile, localFileList } = getFileStore({
+const { currentFile, localFileList } = useFileStore({
     props,
     emits,
     attrs,
@@ -241,7 +292,7 @@ const { currentFile, localFileList } = getFileStore({
 })
 
 // 钩子
-const { beforeUpload, onExceed, onSuccess, onError, onChange, onRemove } = getHooks({
+const { beforeUpload, onExceed, onSuccess, onError, onChange, onRemove } = useHooks({
     attrs,
     emits,
     localFileList,
@@ -252,41 +303,55 @@ const { beforeUpload, onExceed, onSuccess, onError, onChange, onRemove } = getHo
 })
 
 // 方法
-const { filePreview, fileDownload, delAvatar, delFile } = getMethods({
+const { filePreview, fileDownload, delAvatar, delFile, loadFile, wpsPreview } = useMethods({
     attrs,
     emits,
     uploadRef,
     currentFile,
     props,
     modalShow,
-    localDownloadUrl
+    localDownloadUrl,
+    isWpsPreview,
+    localGetWpsEditLinkApi
 })
 
-// 工具
-const { getUploadProps, showPreview } = getUtils({ attrs })
-
 // 连续预览
-const preImgHandle = () => {
-    const tIndex = _findTargetFileIndex(currentFile.value, localFileList.value)
-    const preIndex = tIndex - 1
-    if (preIndex < 0) {
-        ElMessage.warning('没有了!')
-        return
-    }
-    currentFile.value = localFileList.value[preIndex]
-}
-const nextImgHandle = () => {
-    const tIndex = _findTargetFileIndex(currentFile.value, localFileList.value)
-    const preIndex = tIndex + 1
-    if (preIndex >= localFileList.value.length) {
-        ElMessage.warning('到底了!')
-        return
-    }
-    currentFile.value = localFileList.value[preIndex]
-}
+const { preImgHandle, nextImgHandle } = useContinuousPreview({
+    currentFile,
+    localFileList,
+    isWpsPreview,
+    wpsPreview,
+    loadFile
+})
 
-function _findTargetFileIndex(file: UploadFile, fileList: UploadFile[]) {
-    return fileList.findIndex((item) => item.fileId === file.fileId)
+/**
+ * 过滤自定义参数
+ */
+function _getUploadProps() {
+    let props = {}
+    Object.keys(attrs.value).forEach((key) => {
+        if (
+            ![
+                'accept',
+                'list-type',
+                'limit',
+                'size',
+                'imgUrl',
+                'show-file-list',
+                'on-success',
+                'on-error',
+                'before-upload',
+                'on-exceed',
+                'on-change',
+                'on-remove',
+                'headers'
+            ].includes(key)
+        ) {
+            props[key] = attrs.value[key]
+        }
+    })
+
+    return props
 }
 
 defineExpose({
@@ -296,8 +361,10 @@ defineExpose({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './styles';
+</style>
+<style lang="scss">
 @import './styles/preview.scss';
 
 .upload-preview-modal {
@@ -310,17 +377,18 @@ defineExpose({
         width: var(--btn-size);
         height: var(--btn-size);
         border-radius: 50%;
-        background-color: rgba($color: #fff, $alpha: 0.8);
+        background-color: #606266;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        opacity: 0.5;
+        opacity: 0.8;
         transition: all 0.2s;
-        position: absolute;
+        position: fixed;
         top: calc(50% - var(--btn-size));
-        left: -50px;
+        left: 100px;
         z-index: 29999;
+        color: #fff;
 
         &:hover {
             opacity: 1;
@@ -333,7 +401,28 @@ defineExpose({
 
     .next-trigger {
         left: initial;
-        right: -50px;
+        right: 100px;
+    }
+}
+
+.preview-modal-title__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-right: 40px;
+
+    span {
+        font-size: 24px;
+        color: #333333;
+        font-weight: 600;
+        letter-spacing: 1px;
+        line-height: var(--el-dialog-font-line-height);
+    }
+
+    i {
+        cursor: pointer;
+        font-size: 22px;
     }
 }
 </style>

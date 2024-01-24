@@ -1,8 +1,9 @@
 import { ref, ComputedRef, shallowRef } from 'vue'
 import { loadCss, loadScript } from '@jsjn/utils'
+import { PreviewType } from '../constant/enums'
 
 interface Params {
-    previewType?: ComputedRef<'img' | 'pdf' | 'docx' | 'excel'>
+    previewType?: ComputedRef<PreviewType>
 }
 
 interface SourceMapping {
@@ -32,24 +33,13 @@ const preSourceMappings: SourceMapping[] = [
     {
         globalName: 'VueDemi',
         js: '/vue-demi/lib/index.iife.js'
-    },
-    {
-        globalName: 'pdfjs-dist/build/pdf',
-        js: '/pdfjs.3.17.107/pdf.js'
     }
 ]
 
 const sourceMappings: {
-    'pdf'?: SourceMapping
     'excel'?: SourceMapping
     'docx'?: SourceMapping
 } = {
-    pdf: {
-        globalName: 'vue-office-pdf',
-        baseDir: '/vue-office/pdf',
-        css: null,
-        js: '/vue-office-pdf.umd.js'
-    },
     excel: {
         globalName: 'vue-office-excel',
         baseDir: '/vue-office/excel',
@@ -76,9 +66,6 @@ export default ({ previewType }: Params) => {
             // 加载前置资源
             for (let index = 0; index < preSourceMappings.length; index++) {
                 const preItem = preSourceMappings[index]
-                
-                console.log(`%c 加载资源 ${preItem.globalName} ==== `, 'color: #67c23a;', window[preItem.globalName])
-
                 if (!window[preItem.globalName]) {
                     await loadScript(preItem.js, preItem.globalName)
                 }
