@@ -1,5 +1,5 @@
 <template>
-    <el-upload
+    <ElUpload
         ref="uploadRef"
         :class="[{ 'g-upload': true, 'is-disabled': disabled }, attrs['list-type']]"
         :file-list="localFileList"
@@ -94,7 +94,7 @@
                 </label>
             </div>
         </template>
-    </el-upload>
+    </ElUpload>
 
     <!-- 预览 -->
     <LGModal
@@ -166,7 +166,7 @@ import {
     useConstant,
     useContinuousPreview
 } from './hooks'
-import { ElUpload, ElButton, ElProgress } from 'element-plus'
+import { ElUpload, ElButton, ElProgress, ElMessage } from 'element-plus'
 import {
     GFilePreview as LGFilePreview,
     IMG_EXT,
@@ -361,10 +361,9 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
-@import './styles';
-</style>
+<style lang="scss" scoped></style>
 <style lang="scss">
+@import './styles';
 @import './styles/preview.scss';
 
 .upload-preview-modal {
