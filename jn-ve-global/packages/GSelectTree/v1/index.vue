@@ -36,7 +36,13 @@
                 :default-expanded-keys="defaultExpandedKeys"
                 @current-change="handleCurrentChange"
                 @check="handleCheck"
-            />
+            >
+                <template #default="{ node }">
+                    <span :class="{ 'is-disabled': node[treeProps.disabled] }">
+                        {{ node.label }}
+                    </span>
+                </template>
+            </ElTreeV2>
         </ElOption>
     </ElSelect>
 </template>
@@ -211,7 +217,7 @@ const localSelectValue = computed({
     }
 })
 
-// Bugfix 树收起时，点击空白处，实际触发的是 单个 el-option 的选中，但是值为空，以此替换清空操作时的值初始化抛出
+// Bugfix 树收起时，点击空白处，实际触发的是 单个 ElOption 的选中，但是值为空，以此替换清空操作时的值初始化抛出
 const handleClear = () => {
     const val = props.multiple ? [] : ''
     emits('update:modelValue', val)
@@ -237,6 +243,10 @@ watch(
  */
 const handleCurrentChange = (data) => {
     if (props.multiple) return
+
+    if (data[props.treeProps.disabled]) {
+        return
+    }
 
     // 是否都可选择
     if (props.everyChoose) {
@@ -322,6 +332,11 @@ defineExpose({
                     margin-right: 4px;
                     margin-left: 4px;
                     padding: 0;
+                }
+
+                .is-disabled {
+                    color: var(--el-disabled-text-color);
+                    cursor: no-drop;
                 }
             }
         }

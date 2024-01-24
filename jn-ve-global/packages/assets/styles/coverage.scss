@@ -67,3 +67,23 @@
         }
     }
 }
+
+// el 滚动条样式加粗加黑
+.el-scrollbar__bar {
+    --scrollbar-strong: 8px;
+
+    .el-scrollbar__thumb {
+        --el-scrollbar-bg-color: #595959;
+        --el-scrollbar-opacity: 0.6;
+        --el-scrollbar-hover-opacity: 0.8;
+        --el-scrollbar-hover-bg-color: #606266;
+    }
+
+    &.is-horizontal {
+        height: var(--scrollbar-strong);
+    }
+
+    &.is-vertical {
+        width: var(--scrollbar-strong);
+    }
+}

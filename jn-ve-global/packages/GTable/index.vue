@@ -14,6 +14,7 @@
                     :tooltip-options="{
                         popperClass: 'table-tooltip-popper max-h-200'
                     }"
+                    scrollbar-always-on
                     v-bind="tableProps"
                     :height="
                         tableProps.height !== undefined
