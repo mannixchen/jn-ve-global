@@ -25,8 +25,14 @@
 <script lang="ts" setup>
 import { localIcons } from 'jn-ve-global/packages/GIconPicker/data/icons'
 
-const regtechIcons = localIcons.filter((name) => name.startsWith('jg-'))
-const newCore = localIcons.filter((name) => name.startsWith('xhx-'))
+function camelToKebab(camelCase: string): string {
+    return camelCase.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase()
+}
+
+const kebabNames = localIcons.map((name) => camelToKebab(name))
+
+const regtechIcons = kebabNames.filter((name) => name.startsWith('jg-'))
+const newCore = kebabNames.filter((name) => name.startsWith('xhx-'))
 </script>
 
 <style lang="scss" scoped>
