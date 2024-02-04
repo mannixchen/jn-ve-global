@@ -46,7 +46,10 @@
 
         <!-- 文件列表 -->
         <template #file="{ file }">
-            <div v-loading="file.isLoading" :class="['file-list-item', uploadListType]">
+            <div
+                v-loading="file.isLoading"
+                :class="['file-list-item', uploadListType, `btntype-${localFileListBtnType}`]"
+            >
                 <!-- 略缩 -->
                 <div class="info">
                     <img class="preview" :src="getFileTypeIcon(file.name, file.url)">
@@ -56,9 +59,9 @@
                 </div>
 
                 <!-- 按钮 -->
-                <div class="btns">
+                <div :class="['btns']">
                     <!-- 显示预览按钮：wps可预览文件类型 & 本地文件预览类型不一致 -->
-                    <LGIcon
+                    <span
                         v-if="
                             typeIsValid(
                                 localPreviewMode === PreviewMode.WPS
@@ -67,16 +70,31 @@
                                 file.name
                             )
                         "
-                        icon="el-View"
                         @click="filePreview(file)"
-                    />
-                    <LGIcon v-if="!downloadHide" icon="el-Bottom" @click="fileDownload(file)" />
-                    <LGIcon
-                        v-if="!delHide"
-                        icon="el-Delete"
-                        class="del-btn-icon"
-                        @click="delFile(file)"
-                    />
+                    >
+                        <LGIcon
+                            v-if="localFileListBtnType === FileListBtnType.ICON"
+                            icon="el-View"
+                        />
+                        <span v-else class="preview">预览</span>
+                    </span>
+
+                    <span v-if="!downloadHide" @click="fileDownload(file)">
+                        <LGIcon
+                            v-if="localFileListBtnType === FileListBtnType.ICON"
+                            icon="el-Bottom"
+                        />
+                        <span v-else class="download">下载</span>
+                    </span>
+
+                    <span v-if="!delHide" @click="delFile(file)">
+                        <LGIcon
+                            v-if="localFileListBtnType === FileListBtnType.ICON"
+                            icon="el-Delete"
+                            class="del-btn-icon"
+                        />
+                        <span v-else class="del">删除</span>
+                    </span>
                 </div>
 
                 <!-- 进度条 -->
@@ -172,7 +190,8 @@ import {
     IMG_EXT,
     WPS_PREVIEW_EXT,
     LOCAL_OFFICE_EXT,
-    PreviewMode
+    PreviewMode,
+    FileListBtnType
 } from '../GFilePreview'
 import { GIcon as LGIcon } from '../GIcon'
 import { GModal as LGModal } from '../GModal'
@@ -238,6 +257,12 @@ export interface UploadCustomProps {
      * 预览模式
      */
     previewMode?: PreviewMode
+    /**
+     * 文件列表的按钮展示形式
+     *  - text：文本
+     *  - icon：图标
+     */
+    fileListBtnType?: FileListBtnType
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
@@ -265,7 +290,7 @@ const emits = defineEmits([
 ])
 
 const isFullscreen = ref<boolean>(true)
-const { localPreviewMode, isWpsPreview } = useLocalPreviewMode({ props })
+const { localPreviewMode, isWpsPreview, localFileListBtnType } = useLocalPreviewMode({ props })
 const { uploadRef } = useRefStore({ emits })
 
 const {

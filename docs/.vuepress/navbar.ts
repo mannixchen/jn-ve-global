@@ -28,7 +28,7 @@ export default [
         text: '更新日志',
         children: [
             {
-                text: '组件库@3.3.0-beta.2',
+                text: '组件库@3.3.0-beta.3',
                 link: '/components/UpdateLog.md'
             },
             {

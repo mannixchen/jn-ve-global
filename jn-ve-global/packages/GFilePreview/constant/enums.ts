@@ -9,6 +9,17 @@ export enum PreviewMode {
     LOCAL = 'local'
 }
 
+export enum FileListBtnType {
+    /**
+     * 文字
+     */
+    TEXT = 'text',
+    /**
+     * 图标
+     */
+    ICON = 'icon'
+}
+
 export enum PreviewType {
     IMG = 'img',
     PDF = 'pdf',

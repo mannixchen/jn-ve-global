@@ -1,12 +1,16 @@
 @mixin file-list-text {
     &.el-upload-list--text {
         .file-list-item {
-            $--btn-wrapper-width: 60px;
-            $--btn-wrapper-right: 20px;
-            $--text-item-height: 24px;
+            --btn-wrapper-width: 60px;
+            --btn-wrapper-right: 20px;
+            --text-item-height: 24px;
+
+            &.btntype-text {
+                --btn-wrapper-width: 100px;
+            }
 
             width: 100%;
-            height: $--text-item-height;
+            height: var(--text-item-height);
             overflow: hidden;
             margin-bottom: 5px;
             position: relative;
@@ -25,10 +29,10 @@
 
             // 信息
             .info {
-                width: calc(100% - $--btn-wrapper-width - $--btn-wrapper-right);
+                width: calc(100% - var(--btn-wrapper-width) - var(--btn-wrapper-right));
                 display: flex;
                 align-items: center;
-                height: $--text-item-height;
+                height: var(--text-item-height);
 
                 img.preview {
                     width: 20px;
@@ -46,9 +50,9 @@
 
             // 按钮组
             .btns {
-                width: $--btn-wrapper-width;
-                height: $--text-item-height;
-                right: $--btn-wrapper-right;
+                width: var(--btn-wrapper-width);
+                height: var(--text-item-height);
+                right: var(--btn-wrapper-right);
                 position: absolute;
                 top: 0;
                 display: flex;
@@ -63,6 +67,19 @@
 
                     &:hover {
                         color: #399ffb;
+                    }
+                }
+
+                >span>span {
+                    font-size: 14px;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: #399ffb;
+                    }
+
+                    &.del {
+                        color: var(--el-color-danger);
                     }
                 }
             }

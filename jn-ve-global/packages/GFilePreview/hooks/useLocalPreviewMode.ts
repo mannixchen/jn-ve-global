@@ -1,7 +1,6 @@
 import { watch, ref, computed, nextTick, Ref, ComputedRef } from 'vue'
-import { PreviewMode } from '../constant/enums'
+import { PreviewMode, FileListBtnType } from '../constant/enums'
 import { global } from '@jsjn/utils'
-import { UploadFile } from '../../GUpload/interface/UploadFile'
 import { WPS_PREVIEW_EXT } from '../constant/fileTypeList'
 import { typeIsValid } from '../utils'
 
@@ -20,6 +19,7 @@ export default ({
 }: Params): {
     localPreviewMode: ComputedRef<PreviewMode>
     isWpsPreview: (fileName: string) => boolean
+    localFileListBtnType: ComputedRef<FileListBtnType>
 } => {
     /**
      * 预览模式
@@ -35,6 +35,17 @@ export default ({
     )
 
     /**
+     * 文件列表的操作按钮展示形式（监管要文字的）
+     */
+    const localFileListBtnType = computed(
+        () =>
+            props.fileListBtnType ||
+            (['regtech'].includes(global.__VUE_APP_MODE__)
+                ? FileListBtnType.TEXT
+                : FileListBtnType.ICON)
+    )
+
+    /**
      * 判断是否需要前往 wps 预览
      * @param file
      * @returns
@@ -45,6 +56,7 @@ export default ({
 
     return {
         localPreviewMode,
-        isWpsPreview
+        isWpsPreview,
+        localFileListBtnType
     }
 }

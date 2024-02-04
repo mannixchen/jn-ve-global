@@ -35,6 +35,21 @@
 
                 .btns {
                     @include shade;
+
+                    >span>span {
+                        font-size: 14px;
+                        cursor: pointer;
+                        color: #fff;
+                        margin: 0 5px;
+
+                        &:hover {
+                            color: #399ffb;
+                        }
+
+                        &.del {
+                            color: var(--el-color-danger);
+                        }
+                    }
                 }
 
                 .status-label {
