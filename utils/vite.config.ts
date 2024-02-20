@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import { resolve } from 'path'
+import { resolve, normalize } from 'path'
 
 export default defineConfig({
     plugins: [
@@ -10,7 +10,7 @@ export default defineConfig({
             copyDtsFiles: false,
             beforeWriteFile(filePath: string, content: string) {
                 return {
-                    filePath: filePath.replace('/utils/@types/utils', '/utils/@types/'),
+                    filePath: filePath.replace(normalize('/utils/@types/utils'), normalize('/utils/@types/')),
                     content: content.replace(/\.\/utils/g, '.')
                 }
             }

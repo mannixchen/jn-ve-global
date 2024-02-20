@@ -2,8 +2,8 @@ node_modules
 .DS_Store
 dist-ssr
 *.local
-# yarn.lock
-# package-lock.json
+yarn.lock
+package-lock.json
 *.zip
 *.7z
 .temp 
@@ -12,7 +12,7 @@ zyunchao.github.io
 jvb-doc
 jn-ve-global/jn-ve-global
 @types
-# pnpm-lock.yaml
+pnpm-lock.yaml
 .husky
 test-vueuse-core
 dist
