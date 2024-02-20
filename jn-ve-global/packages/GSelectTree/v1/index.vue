@@ -38,7 +38,7 @@
                 @check="handleCheck"
             >
                 <template #default="{ node }">
-                    <span :class="{ 'is-disabled': node[treeProps.disabled] }">
+                    <span :class="{ 'is-disabled': node['disabled'] }">
                         {{ node.label }}
                     </span>
                 </template>
