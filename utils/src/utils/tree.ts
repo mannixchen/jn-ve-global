@@ -282,3 +282,69 @@ export function findAncestors<T>(
     let isHasTarge: boolean = recursion(source, fieldVal, fieldKey, includeSelf)
     return temp
 }
+
+/**
+ * 移动节点（改变源数据）
+ * @param tree 
+ * @param sourceId 
+ * @param targetId 
+ */
+export function moveNode(tree: any, sourceId: string, targetId: string) {
+    let sourceNode: any = null
+    let targetNode: any = null
+    let parentNode: any = null
+
+    function dfs(node, parent) {
+        if (node.id === sourceId) {
+            sourceNode = node
+            parentNode = parent
+        } else if (node.id === targetId) {
+            targetNode = node
+        } else if (node.children) {
+            for (let child of node.children) {
+                dfs(child, node)
+            }
+        }
+    }
+
+    for (let root of tree) {
+        dfs(root, null)
+    }
+
+    if (sourceNode && targetNode) {
+        // 从父节点中移除源节点
+        const index = parentNode.children.indexOf(sourceNode)
+        if (index !== -1) {
+            parentNode.children.splice(index, 1)
+        }
+
+        // 将源节点添加到目标节点的子节点中
+        if (!targetNode.children) {
+            targetNode.children = []
+        }
+        targetNode.children.push(sourceNode)
+    }
+}
+
+/**
+ * 删除节点（返回新数组）
+ * @param tree 
+ * @param targetId 
+ * @returns 
+ */
+export function deleteNode(tree: any[], targetId: string): any[] {
+    return tree.reduce((acc: any[], node: any) => {
+        if (node.id === targetId) {
+            // 如果找到目标节点，不将其添加到新的数组中，从而实现删除
+            return acc
+        } else {
+            // 如果当前节点有子节点，递归处理子节点
+            if (node.children) {
+                node.children = deleteNode(node.children, targetId)
+            }
+            // 将当前节点添加到新的数组中
+            acc.push(node)
+            return acc
+        }
+    }, [])
+}
