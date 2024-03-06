@@ -1,26 +1,29 @@
 <template>
-    <InputCore
-        v-show="!inputDisabled || !exceedBoxWidth"
-        v-model="localModelValue"
-        v-model:el-input-ref="localInputRef"
-        v-bind="$attrs"
-    />
+    <div style="width: 100%">
+        <InputCore
+            v-show="!inputDisabled || !exceedBoxWidth"
+            v-model="localModelValue"
+            v-model:el-input-ref="localInputRef"
+            v-bind="$attrs"
+        />
 
-    <!-- 仅展示作用 -->
-    <template v-if="inputDisabled && exceedBoxWidth">
-        <ElTooltip
-            :content="localModelValue"
-            placement="top-start"
-            popper-class="input-lang-word-popper"
-        >
-            <InputCore :model-value="localModelValue" v-bind="$attrs" />
-        </ElTooltip>
-    </template>
+        <!-- 仅展示作用 -->
+        <template v-if="inputDisabled && exceedBoxWidth">
+            <ElTooltip
+                :content="localModelValue"
+                placement="top-start"
+                popper-class="input-lang-word-popper"
+            >
+                <InputCore :model-value="localModelValue" v-bind="$attrs" />
+            </ElTooltip>
+        </template>
+    </div>
 </template>
 
 <script lang="ts">
 export default {
-    name: 'GAdvanceInput'
+    name: 'GAdvanceInput',
+    inheritAttrs: false
 }
 </script>
 

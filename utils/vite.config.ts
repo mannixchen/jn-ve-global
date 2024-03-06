@@ -6,14 +6,14 @@ export default defineConfig({
     plugins: [
         // 生成 .d.ts
         dts({
-            outputDir: resolve(__dirname, '@types'),
-            copyDtsFiles: false,
-            beforeWriteFile(filePath: string, content: string) {
-                return {
-                    filePath: filePath.replace(normalize('/utils/@types/utils'), normalize('/utils/@types/')),
-                    content: content.replace(/\.\/utils/g, '.')
-                }
-            }
+            outputDir: resolve(__dirname, 'dist'),
+            copyDtsFiles: false
+            // beforeWriteFile(filePath: string, content: string) {
+            //     return {
+            //         filePath: filePath.replace(normalize('/utils/@types/utils'), normalize('/utils/@types/')),
+            //         content: content.replace(/\.\/utils/g, '.')
+            //     }
+            // }
         })
     ],
     build: {
