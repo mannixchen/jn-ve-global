@@ -53,7 +53,7 @@
     "*.ts": "$(capture).test.ts, $(capture).test.tsx",
     "*.tsx": "$(capture).test.ts, $(capture).test.tsx",
     "*.env": "$(capture).env.*",
-    "package.json": ".prettierrc,.stylelintrc.js,.eslintrc.cjs,pnpm-lock.yaml,yarn.lock,LICENSE,README*,CHANGELOG*,CNAME,.gitattributes,.eslintrc-auto-import.json,.gitignore,prettier.config.js,stylelint.config.js,commitlint.config.js,.stylelintignore,.prettierignore,.gitpod.yml,.eslintrc.js,.eslintignore,.npmrc,.prettierrc.js,.browserslistrc,lint-staged.config.js,pnpm-workspace.yaml,postcss.config.js,.cz-config.js"
+    "package.json": ".cz-config.cjs,.prettierrc,.stylelintrc.js,.eslintrc.cjs,pnpm-lock.yaml,yarn.lock,LICENSE,README*,CHANGELOG*,CNAME,.gitattributes,.eslintrc-auto-import.json,.gitignore,prettier.config.js,stylelint.config.js,commitlint.config.js,.stylelintignore,.prettierignore,.gitpod.yml,.eslintrc.js,.eslintignore,.npmrc,.prettierrc.js,.browserslistrc,lint-staged.config.js,pnpm-workspace.yaml,postcss.config.js,.cz-config.js"
   },
   "terminal.integrated.scrollback": 10000
 }
