@@ -115,7 +115,8 @@ const isMounted = ref<boolean>(false)
 
 // pdfjs 提供的 viewer 预览地址
 const localPdfjsViewerUrl = computed(
-    () => `${global.location.origin}/lib/pdfjs-4.0.379/web/viewer.html?file=${fileUrl.value}`
+    () =>
+        `${global.location.origin}${global.location.pathname}lib/pdfjs-4.0.379/web/viewer.html?file=${fileUrl.value}`
 )
 
 onMounted(() => {
