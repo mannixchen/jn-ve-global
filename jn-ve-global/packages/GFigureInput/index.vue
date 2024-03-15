@@ -31,7 +31,7 @@ export default {
 import { nextTick, ref, computed, watch } from 'vue'
 import { ElInput as ElInputCom } from 'element-plus'
 import { GAdvanceInput as LGAdvanceInput, type FigureInputProps } from '../GForm'
-import { toThousands, restrictDecimals, clearNoNum, getNumUnit } from '@jsjn/utils'
+import { toThousands as reToThousands, restrictDecimals, clearNoNum, getNumUnit } from '@jsjn/utils'
 
 const props = withDefaults(
     defineProps<{
@@ -135,7 +135,7 @@ const showFigureInputVal = computed(() => {
     }
     // 千分位
     if (props.toThousands && showVal) {
-        showVal = toThousands(showVal)
+        showVal = reToThousands(showVal)
     }
 
     // 原展示
