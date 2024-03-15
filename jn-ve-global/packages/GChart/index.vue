@@ -33,7 +33,7 @@ const props = defineProps({
 })
 
 // 向下抛出 echarts 实例容器
-const chartInstance = ref<ECharts>(null)
+const chartInstance = ref<ECharts>()
 provide(chartInstanceKey, chartInstance)
 
 const chartType = computed(() => props.config.type)
