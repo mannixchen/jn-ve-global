@@ -31,7 +31,7 @@ pages:
             - node_modules/
 
     script:
-        - n 18.15.0
+        - n install 18.15.0
         - n use 18.15.0
         - node -v
         # - npm i pnpm -g
