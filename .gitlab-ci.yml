@@ -31,6 +31,7 @@ pages:
             - node_modules/
 
     script:
+        - n list
         - n i 20.11.1
         - n use 20.11.1
         - node -v
