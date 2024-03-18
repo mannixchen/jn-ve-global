@@ -31,8 +31,9 @@ pages:
             - node_modules/
 
     script:
-        - n i 20.11.1
-        - n use 20.11.1
+        # - n list
+        # - n i 20.11.1
+        # - n use 20.11.1
         - node -v
         # - npm i pnpm -g
         # - npm config get registry
