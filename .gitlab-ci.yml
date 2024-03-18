@@ -31,8 +31,8 @@ pages:
             - node_modules/
 
     script:
-        - n install 18.15.0
-        - n use 18.15.0
+        - n i 20.11.1
+        - n use 20.11.1
         - node -v
         # - npm i pnpm -g
         # - npm config get registry
