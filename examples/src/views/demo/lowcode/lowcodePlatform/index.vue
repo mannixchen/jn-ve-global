@@ -9,7 +9,7 @@
     </div>
 </template>
 
-<script lang="ts" setup name="LowcodePlatform">
+<script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import useFormConfig from './components/useFormConfig'
 import { BtnProps } from 'jn-ve-global'

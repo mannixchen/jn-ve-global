@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "3.4.0",
+    "version": "3.4.1",
     "author": "zyc",
     "type": "module",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
@@ -37,6 +37,10 @@
         "./lib/*.js": {
             "types": "./lib/*.d.ts",
             "require": "./lib/*.js"
+        },
+        "./packages/*": {
+            "types": "./packages/index.ts",
+            "import": "./packages/*"
         },
         "./*": "./*"
     },

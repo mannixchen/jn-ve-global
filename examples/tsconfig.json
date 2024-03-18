@@ -1,6 +1,7 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
+        "moduleResolution": "bundler",
         // "outDir": "./dist",
         "composite": false,
         "rootDir": "../",
@@ -12,7 +13,7 @@
         },
         "types": [
             "element-plus/global",
-            "jn-ve-global/es/global",
+            "jn-ve-global/global",
             "@types/node",
             "../source.d.ts",
             "../vite-env.d.ts"

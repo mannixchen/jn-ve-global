@@ -5,7 +5,6 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import path from 'path'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { searchPlugin } from '@vuepress/plugin-search'
@@ -44,7 +43,7 @@ export default defineUserConfig({
     bundler: viteBundler({
         viteOptions: {
             plugins: [
-                vueJsx() as any,
+                vueJsx() as any
                 // createSvgIconsPlugin({
                 //     iconDirs: [
                 //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/old'),
@@ -53,8 +52,6 @@ export default defineUserConfig({
                 //     ],
                 //     symbolId: 'custom-icon-[dir]-[name]'
                 // }),
-                // setup 增强，标签添加 name 属性
-                vueSetupExtend()
             ]
         }
     }),

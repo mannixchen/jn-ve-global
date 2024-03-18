@@ -3,9 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
 import eslintPlugin from 'vite-plugin-eslint'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import esbuild from 'rollup-plugin-esbuild'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import { viteExternalsPlugin } from 'vite-plugin-externals'
 import commonjs from '@rollup/plugin-commonjs'
 
@@ -14,8 +12,6 @@ export default defineConfig({
         commonjs() as any,
         vue(),
         vueJsx(),
-        // setup 增强，标签添加 name 属性
-        vueSetupExtend(),
         // vite eslint 集成
         eslintPlugin({
             include: ['src/**/*.{js,jsx,ts,tsx,vue}']
@@ -31,17 +27,6 @@ export default defineConfig({
             enforce: 'post'
         } as any,
 
-        createSvgIconsPlugin({
-            // 指定需要缓存的图标文件夹
-            iconDirs: [
-                resolve(process.cwd(), '../jn-ve-global/packages/assets/icons/svg/newCore'),
-                resolve(process.cwd(), '../jn-ve-global/packages/assets/icons/svg/old'),
-                resolve(process.cwd(), '../jn-ve-global/packages/assets/icons/svg/regtech')
-            ],
-            // 指定symbolId格式
-            symbolId: 'custom-icon-[dir]-[name]'
-        }),
-
         /**
          * 使用外部库，类似webpack的externals，但现在只支持浏览器环境。
          * https://github.com/crcong/vite-plugin-externals/blob/HEAD/README.zh-CN.md
@@ -50,28 +35,6 @@ export default defineConfig({
             vue: 'Vue'
         })
     ],
-
-    // 打包配置
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks: (id) => {
-                    // 将 node_modules 中的代码单独打包成一个 JS 文件
-                    if (id.includes('node_modules')) {
-                        if (id.includes('element-plus')) {
-                            return 'vendor-element-plus'
-                        }
-
-                        if (id.includes('jn-ve')) {
-                            return 'vendor-jn-ve-global'
-                        }
-
-                        return 'vendor'
-                    }
-                }
-            }
-        }
-    },
 
     // 别名
     resolve: {

@@ -6,8 +6,5 @@
         "build": "vite build",
         "serve": "vite preview",
         "build:px": "vite build --px"
-    },
-    "resolutions": {
-        "vue": "3.2.31"
     }
 }

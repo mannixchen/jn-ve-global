@@ -8,7 +8,7 @@
     <jn-code-editor ref="editorRef" v-model="code" @change="changeHadnle" />
 </template>
 
-<script lang="ts" setup name="Test">
+<script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { Editor as JnCodeEditor } from '@jsjn/code-editor'
 import '@jsjn/code-editor/style.css'

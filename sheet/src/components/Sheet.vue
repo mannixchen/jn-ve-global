@@ -15,11 +15,15 @@
     />
 </template>
 
-<script lang="ts" setup name="JnSheet">
+<script lang="ts" setup>
 import { onMounted, nextTick, ref, shallowRef, watch } from 'vue'
 import { v4 as uuidv4 } from 'uuid'
 import { getGlobal } from '@jsjn/utils'
 import { loadSource } from './loadSource'
+
+defineOptions({
+    name: 'JnSheet'
+})
 
 const props = withDefaults(
     defineProps<{

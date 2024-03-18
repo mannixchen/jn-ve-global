@@ -3,7 +3,6 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import eslintPlugin from 'vite-plugin-eslint'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import requireTransform from 'vite-plugin-require-transform'
 import dts from 'vite-plugin-dts'
 
@@ -13,7 +12,6 @@ export default defineConfig({
             // reactivityTransform: false // 响应性语法糖
         }),
         vueJsx(),
-        vueSetupExtend(), // setup 增强，标签添加 name 属性
         // 生成 .d.ts
         dts({
             outputDir: resolve(__dirname, '@types'),

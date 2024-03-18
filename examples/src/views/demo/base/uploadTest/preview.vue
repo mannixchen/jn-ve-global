@@ -11,7 +11,7 @@
     </g-modal>
 </template>
 
-<script lang="ts" setup name="FilePreview">
+<script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { BtnProps } from 'jn-ve-global'
 import fileList from './fileList.json'

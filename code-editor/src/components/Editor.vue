@@ -2,10 +2,14 @@
     <div ref="editorContainer" class="code-editor" />
 </template>
 
-<script lang="ts" setup name="Editor">
+<script lang="ts" setup>
 import { computed, onMounted, shallowRef } from 'vue'
 import monaco from './customMonaco'
 import type { editor as MonacoEditor } from 'monaco-editor'
+
+defineOptions({
+    name: 'Editor'
+})
 
 const props = withDefaults(
     defineProps<{

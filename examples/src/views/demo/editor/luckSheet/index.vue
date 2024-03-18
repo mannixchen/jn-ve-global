@@ -5,7 +5,7 @@
     <JnSheet :title="title" />
 </template>
 
-<script lang="ts" setup name="App">
+<script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 import { JnSheet } from '@jsjn/sheet'
 
