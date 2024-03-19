@@ -17,7 +17,7 @@
                 :key="`${item.value}-${index}`"
                 :value="valueBindObj ? item : item.value"
                 :label="item.label"
-                v-bind="item"
+                :disabled="item.disabled"
             >
                 <OptionCustomContent :columns="columns" :data="item" :index="index" />
             </ElOption>
