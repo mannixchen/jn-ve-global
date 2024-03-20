@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>首页-正常</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="svg切图" transform="translate(-63.000000, -9.000000)">
+            <g id="首页-正常" transform="translate(63.000000, 9.000000)">
+                <path d="M16.0721468,2.84720528 L25.751549,9.80813839 C26.535363,10.3718175 27,11.2782712 27,12.2437238 L27,24 C27,25.6568542 25.6568542,27 24,27 L6,27 C4.34314575,27 3,25.6568542 3,24 L3,12.227864 C3,11.271287 3.45618098,10.3720557 4.22807567,9.80706166 L13.7231646,2.85706062 C14.4215491,2.34587291 15.3694976,2.34189572 16.0721468,2.84720528 Z M16,12 L14,12 L14,22 L16,22 L16,12 Z" id="形状" fill="#979797"></path>
+                <rect id="矩形" x="0" y="0" width="30" height="30"></rect>
+            </g>
+        </g>
+    </g>
+</svg>
