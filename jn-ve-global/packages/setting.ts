@@ -5,6 +5,7 @@ import {
     setDefauleMode
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
+import { type CollapseMode, getCollapseMode, setCollapseMode } from './_globalConstant/CollapseMode'
 import {
     setIterceptorsReqHandle,
     setIterceptorsResHandle,
@@ -13,12 +14,34 @@ import {
 } from './_http/httpInterceptors'
 import { setPrefix } from './_http/prefix'
 
-export interface Settings {
+export interface VeGlobalSetting {
+    /**
+     * 应用模式
+     */
     appMode?: string
+    /**
+     * 基座模式（微应用单独设置）
+     */
     baseModuleMode?: BaseModuleMode
+    /**
+     * 基座默认模式
+     */
     baseModuleDefaultMode?: BaseModuleMode
+    /**
+     * collapse 的模式
+     */
+    collapseMode?: CollapseMode
+    /**
+     * 请求拦截器
+     */
     interceptorsReqHandle: ReqHandle
+    /**
+     * 响应拦截器
+     */
     interceptorsResHandle: ResHandle
+    /**
+     * 请求前缀
+     */
     prefix?: string
 }
 
@@ -27,7 +50,7 @@ export interface Settings {
  * @param props
  * @returns
  */
-export function setting(props: Settings) {
+export function setting(props: VeGlobalSetting) {
     if (!props) return
 
     const {
@@ -36,7 +59,8 @@ export function setting(props: Settings) {
         baseModuleMode,
         interceptorsReqHandle,
         interceptorsResHandle,
-        prefix
+        prefix,
+        collapseMode
     } = props
 
     if (appMode) {
@@ -58,6 +82,11 @@ export function setting(props: Settings) {
         setBaseModuleMode(baseModuleMode)
     } else {
         setBaseModuleMode(getDefauleMode())
+    }
+
+    // collapse 模式：事业部和研发部（默认）
+    if (collapseMode) {
+        setCollapseMode(collapseMode)
     }
 
     // 请求相关配置

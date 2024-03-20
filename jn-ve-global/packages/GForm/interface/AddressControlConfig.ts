@@ -14,6 +14,10 @@ export interface AddressProps {
      */
     hideDetail?: boolean
     /**
+     * 禁用
+     */
+    disabled?: boolean
+    /**
      * 级联选择的节点 props 配置
      */
     props?: {

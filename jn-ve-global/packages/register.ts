@@ -1,6 +1,6 @@
 import type { App } from 'vue'
 import { elIconKeys, aliIcons, localIcons } from './GIconPicker/data/icons'
-import { setting, type Settings } from './setting'
+import { setting, type VeGlobalSetting } from './setting'
 
 import { default as FunctionalComponent } from './FunctionalComponent'
 import { GAddress } from './GAddress'
@@ -78,7 +78,7 @@ const components = [
  */
 export default {
     version: '__VERSION__',
-    install(app: App, props?: Settings) {
+    install(app: App, props?: VeGlobalSetting) {
         // vue 模板组件
         components.forEach((item, index) => {
             app.component(item.name, item)

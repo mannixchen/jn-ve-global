@@ -2,12 +2,25 @@
     <ElCollapseItem
         v-bind="$attrs"
         :disabled="localDisabled"
-        :class="['custom-collapse-item', `${collapseMode}-mode-item`, { 'is-shadow': shadow }]"
+        :class="[
+            'custom-collapse-item',
+            `${collapseMode}-mode-item`,
+            { 'is-shadow': shadow },
+            `${collapsStyleMode}-style-mode`
+        ]"
     >
         <template #title>
             <div class="collapse-item-title">
                 <div class="label">
                     <LGIcon v-if="prefix" :icon="prefix" class="prefix-icon" />
+
+                    <!-- 事业部的风格修改 -->
+                    <LGIcon
+                        v-if="collapsStyleMode === ('syb' as any)"
+                        icon="syb-collpase-icon"
+                        class="active-icon"
+                    />
+
                     <slot name="title">
                         <span class="label__text">{{ attrs.title }}</span>
 
@@ -23,9 +36,23 @@
                             </span>
                         </ElTooltip>
                     </slot>
-                    <LGIcon icon="el-DArrowRight" class="active-icon" />
+
+                    <LGIcon
+                        v-if="collapsStyleMode !== ('syb' as any)"
+                        icon="el-DArrowRight"
+                        class="active-icon"
+                    />
                 </div>
-                <LGButtonGroup v-if="btns && btns.length" :btns="btns" @click.stop="void 0" />
+
+                <div class="right-oper__slot__wrapper">
+                    <slot name="right-oper">
+                        <LGButtonGroup
+                            v-if="btns && btns.length"
+                            :btns="btns"
+                            @click.stop="void 0"
+                        />
+                    </slot>
+                </div>
             </div>
         </template>
 
@@ -63,6 +90,7 @@ import { GIcon as LGIcon } from '../../../GIcon'
 import { GButtonGroup as LGButtonGroup, type BtnProps } from '../../../GButtonGroup'
 import { GForm as LGForm, type FormProps } from '../../../GForm'
 import { GTable as LGTable, type TableConfig } from '../../../GTable'
+import { getCollapseMode } from '../../../_globalConstant/CollapseMode'
 
 export interface Props {
     /**
@@ -109,6 +137,9 @@ const props = withDefaults(defineProps<Props>(), {
     shadow: false
 })
 
+// 样式模式
+const collapsStyleMode = getCollapseMode()
+
 const attrs = useAttrs()
 const tableHeight = computed(() => `${props.height}px`)
 const isDisabledForParent = inject(disabledKey)
@@ -119,6 +150,7 @@ const localDisabled = computed(() => isDisabledForParent.value ?? props.disabled
 <style lang="scss">
 @import './styles/panel.scss';
 @import './styles/card.scss';
+@import './styles/theme.scss';
 
 .custom-collapse-item {
     .table-wrapper {

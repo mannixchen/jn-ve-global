@@ -11,7 +11,7 @@
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
-                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
+                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color style="margin-right: 4px;" />
                 {{ btn.label }}
             </ElButton>
 
@@ -24,7 +24,7 @@
                 :disabled="getStatus(btn, 'disabled', index)"
                 :loading="getStatus(btn, 'loading', index)"
             >
-                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color />
+                <LGIcon v-if="btn.icon" :icon="btn.icon" custom-color style="margin-right: 4px;" />
                 {{ btn.label }}
             </ElButton>
         </template>
