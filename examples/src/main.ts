@@ -13,6 +13,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 // 组件库（开发测试时 workspace 引用入口）
 import JnVeGlobal from 'jn-ve-global/packages/index'
+import { VeGlobalSetting } from 'jn-ve-global'
 import 'jn-ve-global/packages/assets/icons/ali/iconfont.css'
 // import 'jn-ve-global/es/fonts/iconfont.css'
 
@@ -29,10 +30,11 @@ app.use(directives)
     .use(ElementPlus, { locale: zhCn })
     .use(router)
     .use(store, key)
-    .use(JnVeGlobal, {
+    .use<VeGlobalSetting>(JnVeGlobal, {
         // 基座确定 baseModule 的默认模式
         baseModuleDefaultMode: 'tabular',
         interceptorsReqHandle,
-        interceptorsResHandle
+        interceptorsResHandle,
+        collapseMode: 'syb'
     })
     .mount('#app')

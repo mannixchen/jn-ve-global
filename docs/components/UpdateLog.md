@@ -6,6 +6,43 @@
 
 <template #version>
 
+3.4.2
+
+</template>
+
+<template #date>
+
+2024-03-20
+
+</template>
+
+<h3>New</h3>
+
+<h4>公用</h4>
+
+1. 补充 form control 的 types 类型
+2. 抛出组件库全局配置的类型接口 `VeGlobalSetting`
+
+<h4>CollapseItem</h4>
+
+1. 增加全局环境变量配置
+2. 增加 数据报送系统定制的样式
+3. 增加 `right-oper` 插槽
+
+<h3>BugFix</h3>
+
+<h4>GInfoSelect</h4>
+
+1. 解决升级 vue@3.4 导致的参数解析覆盖问题
+
+</update-log-block>
+
+<!-- ================== 3.3.0-beta.3 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
 3.3.0-beta.3
 
 </template>
