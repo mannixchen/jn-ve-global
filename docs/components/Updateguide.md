@@ -97,7 +97,7 @@ VUE_APP_VE_GLOBAL_V=3.0.0
 
 升级类型提示之后，可以在编辑器环境下获取到全局组件的类型提示，如下所示
 
-![全局组件类型支持](@imgs/global-com-types-tip.jpg)
+![全局组件类型支持](/images/global-com-types-tip.jpg)
 
 支持方式主要通过指定 ts 的 `types` 范围，引用组件库提供的类型文件
 

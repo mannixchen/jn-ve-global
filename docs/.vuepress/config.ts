@@ -5,9 +5,12 @@ import { viteBundler } from '@vuepress/bundler-vite'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
+// import path from 'path'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { searchPlugin } from '@vuepress/plugin-search'
+import { getDirname, path } from '@vuepress/utils'
+
+const __dirname = getDirname(import.meta.url)
 
 /**
  * 部署站点的基础路径
@@ -25,8 +28,7 @@ export default defineUserConfig({
 
     // 定义路径别名
     alias: {
-        '@': path.resolve(__dirname, '../../examples/src'),
-        '@imgs': path.resolve(__dirname, './public/images')
+        '@': path.resolve(__dirname, '../../examples/src')
     },
 
     // 主题配置

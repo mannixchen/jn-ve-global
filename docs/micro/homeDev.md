@@ -55,7 +55,7 @@ HTTP:
 
 1. 在 `cards` 下，新建卡片目录，目录结构遵循组件开发
 
-![卡片](@imgs/micro/卡片.png)
+![卡片](/images/micro/卡片.png)
 
 2. 使用 `homeBaseCardLayout` 增强容器组件
 
@@ -160,7 +160,7 @@ new Promise((res, rej) => {
 
 在业务系统中，进入 `基本信息设置 > 卡片管理 > 新增`
 
-![卡片管理](@imgs/micro/卡片管理.png)
+![卡片管理](/images/micro/卡片管理.png)
 
 ### 设计布局
 
