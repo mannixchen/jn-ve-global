@@ -16,6 +16,9 @@ import { useRoute } from 'vue-router'
 import { OpenMode } from '@jsjn/types/entity/AppFunc'
 import { detectBrowser } from '@jsjn/utils'
 import useGetSystemSafeInfo from '@/login/hooks/useGetSystemSafeInfo'
+import { version } from 'element-plus'
+
+console.log(`%c ele version === `, 'color: #67c23a;', version)
 
 useGetSystemSafeInfo()
 
