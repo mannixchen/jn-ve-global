@@ -37,10 +37,12 @@
                 @current-change="handleCurrentChange"
                 @check="handleCheck"
             >
-                <template #default="{ node }">
-                    <span :class="{ 'is-disabled': node['disabled'] }">
-                        {{ node.label }}
-                    </span>
+                <template #default="{ node, data }">
+                    <slot name="treeNode" :node="node" :data="data">
+                        <span :class="{ 'is-disabled': node['disabled'] }">
+                            {{ node.label }}
+                        </span>
+                    </slot>
                 </template>
             </ElTreeV2>
         </ElOption>

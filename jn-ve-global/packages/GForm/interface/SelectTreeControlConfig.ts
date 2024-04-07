@@ -1,3 +1,4 @@
+import { VNode } from 'vue'
 import type { TreeData, TreeV2Props, TreeV2Config } from '../../GSelectTree'
 
 interface SelectTreeProps {
@@ -47,6 +48,12 @@ interface SelectTreeProps {
      * 是否可清空
      */
     clearable?: boolean
+    /**
+     * 插槽
+     */
+    slots?: {
+        treeNode?: (data: any, node: any) => VNode | JSX.Element
+    }
 }
 
 export interface SelectTreeControlConfig {

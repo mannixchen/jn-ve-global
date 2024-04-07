@@ -44,7 +44,8 @@
                         v-if="['institution', 'default'].includes(mode)"
                         :class="[
                             'tree-node__icon-wrapper',
-                            { 'no-icon': !data.industryId && !data.children?.length }
+                            { 'no-icon': !data.industryId && !data.children?.length },
+                            getNodeClass(data)
                         ]"
                     >
                         <!-- 一级节点 -->
@@ -65,7 +66,7 @@
                     </span>
 
                     <!-- 节点文本 -->
-                    <span class="tree-node__label">
+                    <span :class="['tree-node__label', getNodeClass(data)]">
                         <slot name="tree-node" :node="node" :data="data">
                             <span :title="node.label">{{ node.label }}</span>
                         </slot>
@@ -136,6 +137,10 @@ export interface Props {
      * 默认展开全部
      */
     defaultExpandAll?: boolean
+    /**
+     * 节点的 class 名称（默认渲染的情况下）
+     */
+    nodeClass?: string | ((node: any) => string)
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -235,6 +240,17 @@ const unfold = () => {
 const packUp = () => {
     treeRef.value.setExpandedKeys([])
     expandNodeKeys.value = []
+}
+
+/**
+ * 获取 节点的 class
+ * @param data
+ */
+function getNodeClass(data: TreeData) {
+    if (typeof props.nodeClass === 'function') {
+        return props.nodeClass(data)
+    }
+    return props.nodeClass
 }
 
 // 抛出

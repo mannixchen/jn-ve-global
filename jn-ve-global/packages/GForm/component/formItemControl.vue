@@ -106,7 +106,12 @@
                 v-model="localPropRef"
                 :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
                 v-bind="(controlConfig.props as any)"
-            />
+            >
+                <template v-if="(controlConfig as SelectTreeControlConfig)?.props?.slots?.treeNode" #treeNode="{ node, data }">
+                    <!-- {{ (controlConfig as SelectTreeControlConfig).props.slots.treeNode(node) }} -->
+                    <component :is="(controlConfig as SelectTreeControlConfig).props.slots.treeNode(data, node)" />
+                </template>
+            </LGSelectTree>
         </template>
 
         <!-- 下拉树版本2 -->
