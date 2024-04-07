@@ -20,9 +20,13 @@ export default [
             }
         ]
     },
+    // {
+    //     text: 'v1升v2指南',
+    //     link: '/micro/v1ToV2.md'
+    // },
     {
-        text: 'v1升v2指南',
-        link: '/micro/v1ToV2.md'
+        text: '适配基座2.5+',
+        link: '/micro/basic2_5.md'
     },
     {
         text: '仓库管理[淘汰]',
