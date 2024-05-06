@@ -80,6 +80,22 @@ const routes: Array<RouteConfig> = [
                     title: 'choose'
                 },
                 component: () => import('@/views/demo/form/choose.vue')
+            },
+            {
+                path: 'formItems',
+                name: 'formItems',
+                meta: {
+                    title: 'formItems'
+                },
+                component: () => import('@/views/demo/form/formItems.vue')
+            },
+            {
+                path: 'businessUI',
+                name: 'businessUI',
+                meta: {
+                    title: 'businessUI'
+                },
+                component: () => import('@/views/demo/form/businessUI.vue')
             }
             // {
             //     path: 'formGenerateTest',

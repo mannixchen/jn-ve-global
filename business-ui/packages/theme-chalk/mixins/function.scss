@@ -1,0 +1,65 @@
+@use "config";
+
+// BEM support Func
+
+@function selectorToString($selector) {
+  // inspect($value) 将列表转换成字符串
+  $selector: inspect($selector);
+  // str-slice($string, $start-at, $end-at) 截取字符串
+  $selector: str-slice($selector, 2, -2);
+  @return $selector;
+}
+
+// 选择器是否包含修饰符
+@function containsModifier($selector) {
+  $selector: selectorToString($selector);
+
+  @if str-index($selector, config.$modifier-separator) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containWhenFlag($selector) {
+  $selector: selectorToString($selector);
+  // 是否包含状态前缀
+  @if str-index($selector, "." + config.$state-prefix) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function containPseudoClass($selector) {
+  $selector: selectorToString($selector);
+  // 是否包含伪类
+  @if str-index($selector, ":") {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// 判断是否存在特殊嵌套 包含修饰器，包含状态 包含伪类
+@function hitAllSpecialNestRule($selector) {
+  @return containsModifier($selector) or containWhenFlag($selector) or containPseudoClass($selector);
+}
+
+@function joinVarName($list) {
+  $name: '--' + config.$namespace;
+  @each $item in $list {
+    @if $item != '' {
+      $name: $name + '-' + $item;
+    }
+  }
+  @return $name;
+}
+
+@function getCssVarName($args...) {
+  @return joinVarName($args);
+}
+
+@function getCssVar($args...) {
+  @return var(#{joinVarName($args)});
+}

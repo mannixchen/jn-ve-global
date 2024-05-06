@@ -1,0 +1,19 @@
+{
+    "name": "@jsjn/business-ui",
+    "private": false,
+    "author": "zyc/zj",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "基于vue3+element-plus的二次封装库，应用于江苏低代码平台 -- 江苏金农内部库",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "build:px": "pnpm build -- --px"
+    },
+    "dependencies": {},
+    "devDependencies": {},
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-release/"
+    }
+}
