@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 16:22:02
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-03-18 10:22:40
+ * @LastEditTime: 2024-05-09 09:34:45
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\radio\index.vue
  * @Description: 
  * 
@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs, withDefaults } from 'vue'
-import BiRadioProps from './type'
+import { BiRadioProps } from './type'
 import { ElRadio, ElRadioGroup } from 'element-plus'
 import { RadioOptionProps } from 'jn-ve-global'
 // import { UPDATE_MODEL_EVENT } from '../../constants'

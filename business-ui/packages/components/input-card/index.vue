@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 15:13:34
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-22 14:07:09
+ * @LastEditTime: 2024-05-22 15:43:08
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-card\index.vue
  * @Description: 
  * 
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<BiInputProps>(), {
     placeholder: '请输入身份证号'
 })
 
-console.log(COMPONENT_NAME)
+// console.log(COMPONENT_NAME)
 
 // const props =defineProps({
 //     modelValue: {

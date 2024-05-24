@@ -96,6 +96,14 @@ const routes: Array<RouteConfig> = [
                     title: 'businessUI'
                 },
                 component: () => import('@/views/demo/form/businessUI.vue')
+            },
+            {
+                path: 'detail',
+                name: 'detail',
+                meta: {
+                    title: 'detail'
+                },
+                component: () => import('@/views/demo/form/detail.vue')
             }
             // {
             //     path: 'formGenerateTest',

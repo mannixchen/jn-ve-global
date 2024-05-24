@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 13:54:53
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-22 11:23:56
+ * @LastEditTime: 2024-05-22 14:19:56
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\index.ts
  * @Description: 
  * 
@@ -18,6 +18,14 @@ import { BiInputEmail } from './input-email'
 import { BiCheckbox } from './checkbox'
 import { BiRadio } from './radio'
 import { BiSelectDepartment } from './select-department'
+import { BiDetail } from './detail'
+import { BiForm } from './form'
+
+
+import { BiFiInputCard } from './input-card'
+import { BiFiInputEmail } from './input-email'
+import { BiFiDetail } from './detail'
+
 
 
 export * from './input-number'
@@ -30,6 +38,8 @@ export * from './input-phone'
 export * from './checkbox'
 export * from './radio'
 export * from './select-department'
+export * from './detail'
+export * from './form'
 
 
 export const components = [
@@ -42,5 +52,12 @@ export const components = [
     BiInputEmail,
     BiCheckbox,
     BiRadio,
-    BiSelectDepartment
+    BiSelectDepartment,
+    BiDetail,
+    BiForm,
+
+
+    BiFiInputCard,
+    BiFiInputEmail,
+    BiFiDetail
 ]

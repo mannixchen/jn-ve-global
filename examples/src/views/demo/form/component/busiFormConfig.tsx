@@ -128,10 +128,26 @@ export const getFormConfig = (): FormProps => {
                 label: '身份证',
                 span,
                 rules: [
+                    // {
+                    //     validator(rule, value, callback, source, options) {
+                    //         validateIdNo(rule, value, callback)
+                    //     }
+                    // },
                     {
-                        validator(rule, value, callback, source, options) {
-                            validateIdNo(rule, value, callback)
-                        }
+                        type: 'email',
+                        message: '邮箱格式错误'
+                    },
+                    {
+                        required: true,
+                        message: '比填'
+                    },
+                    {
+                        max: 10,
+                        message: '超出最大长度'
+                    },
+                    {
+                        min: 2,
+                        message: '未达到最小长度'
                     }
                 ],
                 controlConfig: {

@@ -12,7 +12,7 @@ import type { RadioOptionProps } from 'jn-ve-global'
 
 export type { RadioOptionProps } from 'jn-ve-global'
 
-export default interface BiRadioProps {
+export interface BiRadioProps {
     /**
      * modelValue 输入框内绑定的值
      */

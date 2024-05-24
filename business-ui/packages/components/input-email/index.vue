@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 15:13:34
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-22 14:08:17
+ * @LastEditTime: 2024-05-22 16:16:58
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-email\index.vue
  * @Description: 
  * 
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<BiInputProps>(), {
     placeholder: '请输入邮箱'
 })
 
-console.log('BiInputEmail')
+// console.log('BiInputEmail')
 
 // const props =defineProps({
 //     modelValue: {
