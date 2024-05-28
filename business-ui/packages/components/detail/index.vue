@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-06 15:32:03
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-24 14:21:46
+ * @LastEditTime: 2024-05-28 11:00:09
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\index.vue
  * @Description: 
  * 
@@ -244,41 +244,22 @@
                 />
             </div>
         </template>
-        <!-- <slot /> -->
-        <!-- <slot name="head" />
-
-        <template v-for="item in slots.default()" :key="item">
-            <el-form-item>
-                <component :is="item" />
-            </el-form-item>
-        </template> -->
-
-        <!-- <div class="add-btn-wrapper">
-            <el-button :icon="Plus" @click="add">
-                {{ addButtonLabel }}
-            </el-button>
-        </div> -->
     </div>
 </template>
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs, useSlots, onMounted, nextTick } from 'vue'
-import { ElButton, ElButtonGroup, ElMessage, ElFormItem } from 'element-plus'
+import { ElButton, ElButtonGroup, ElMessage, ElFormItem, ElPagination } from 'element-plus'
 import type { DetailProps, OperationParams } from './type'
 import { GCollapse, GCollapseItem } from 'jn-ve-global'
-// import { ElForm } from 'element-plus'
 import { BiForm, FormProps as BiFormProps } from '../form'
 import { Plus } from '@element-plus/icons-vue'
 import { __is_simulator_env__ } from '../../constants'
-import { useFormProps, useClearModel } from '../../hooks'
+import { useFormProps, useClearModel, useNamespace } from '../../hooks'
 import {
     useBtns,
     useDefaultProps,
-    // useTableHeader,
     useTableColumns,
-    // useTableHeaderStyle,
-    // useTableCellStyle,
-    // useTableCellClassNames,
     useSimulatorTableStyle,
     useTableScrollClass,
     usePagination
@@ -291,10 +272,6 @@ const COMPONENT_NAME = 'BiDetail'
 defineOptions({
     name: COMPONENT_NAME
 })
-
-// console.log('COMPONENT_NAME', COMPONENT_NAME)
-
-// let __is_simulator_env__ = false
 
 const props = withDefaults(defineProps<DetailProps>(), useDefaultProps())
 
@@ -310,22 +287,21 @@ const emits = defineEmits<{
     downMove: [param: Omit<OperationParams, 'emits' | 'index'>]
 }>()
 
-// const detailRef = ref()
-
 const isSimulator = computed<boolean>(() => __is_simulator_env__)
 // const isSimulator = ref<boolean>(__is_simulator_env__)
 
 const slots = computed(() => {
     const defaultSlots = useSlots()?.default()
     const biDetailChildren = props.slotFromParent ? defaultSlots?.[0]?.children : defaultSlots
-    return (biDetailChildren as any)?.filter((item) => !item.children)
+    return (biDetailChildren as any[])?.some((item) => item?.props?.__schema)
+        ? biDetailChildren
+        : (biDetailChildren as any)?.filter((item) => !item.children)
+    // return biDetailChildren
 })
+console.log('slots', useSlots(), useSlots()?.default(), slots)
 
-const showSerial = computed<boolean>(() => props?.showSerial && slots.value?.length > 0)
-// console.log('slots', useSlots().default())
-// console.log('active-slots', slots.value)
+// const showSerial = computed<boolean>(() => props?.showSerial && slots.value?.length > 0)
 
-// const activeNames = ref<string[]>(props.expand ? [`${props.serialName}1`] : [])
 const activeNames = computed<string[]>(() => {
     let names: string[] = []
 
@@ -340,11 +316,6 @@ const activeNames = computed<string[]>(() => {
 
 // 新增按钮可见
 const addBtnVisible = computed<boolean>(() => !props.disabled && !props.hideAddBtn)
-
-// 获取表头内联样式
-// const getTableHeaderStyle = (label: string) => {
-
-// }
 
 const formConfig = computed<BiFormProps>(() => {
     const { labelPosition, labelWidth } = props
@@ -368,12 +339,6 @@ const formConfigs = ref(
         })
         : [cloneDeep(baseForm)]
 )
-// [
-//     // useFormProps(formConfig.value, slots.default(), {
-//     //     name: `${props.serialName}`
-//     // })
-//     cloneDeep(baseForm)
-// ]
 
 const {
     currentPage,
@@ -387,21 +352,13 @@ const {
     nextClick
 } = usePagination(props, formConfigs.value)
 
-// console.log('slots', slots.default())
-
 // 操作按钮
 const btns = useBtns(props, emits, getCurrentPage)
-const showOperation = computed<boolean>(
-    () => props.showOperation && btns.value?.length > 0 && slots.value?.length > 0
-)
+const showOperation = computed<boolean>(() => props.showOperation && btns.value?.length > 0)
 
 // 表头
-// const simulatorScrollRef = ref()
-// const tableRef = ref()
-
 const scrollWrapRef = ref()
 const tableRef = ref()
-// const tableHeader = useTableHeader(props, btns.value, slots)
 const {
     columns,
     getFormItemProp,
@@ -413,39 +370,24 @@ const {
 
 // let index = 1
 const add = () => {
-    // console.log('add', __is_simulator_env__)
-    // __is_simulator_env__ = false
-    // isSimulator.value = false
     if (__is_simulator_env__) return
     if (props.max && formConfigs.value.length === props.max) {
         ElMessage.warning(`最多可添加${props.max}项`)
         return
     }
     // index++
-    // const form = cloneDeep(formConfigs.value[0])
     const form = cloneDeep(baseForm)
     // useClearModel(form)
     form.id = uuidV4()
-    // form.instance = null
-    // form.id = form.id.split('-')?.[0] + '-' + index
-    // form.activeName = `${props.serialName}${index}`
-    // form.index = `${index}`
     formConfigs.value.push(form)
     getCurrentPage(formConfigs.value?.length - 1)
     emits('add', {
         forms: formConfigs.value,
         form
     })
-    // formConfigs.value = [...formConfigs.value, form]?.map((item, index) => ({
-    //     ...item,
-    //     name: `${props.serialName}${index + 1}`
-    // }))
-    // activeNames.value.push(`${props.serialName}${index}`)
-    // activeNames.value = formConfigs.value?.map((item, index) => `${props.serialName}${index + 1}`)
 }
 
 onMounted(async () => {
-    // if(props.display !== 'table' || __is_simulator_env__) return
     // console.log('onMounted')
     if (props.display === 'form') return
     await nextTick()
@@ -461,12 +403,12 @@ watch(
     (value) => {
         ;(paginationProps.value.total as any) = value.length
         getCurrentRecords()
+        // console.log('watch-formConfigs', value)
         emits(
             'update:modelValue',
             value.map((item) => item?.model ?? {})
         )
 
-        // console.log('watch-formConfigs', value)
     },
     {
         deep: true
@@ -508,11 +450,11 @@ defineExpose({
 .table-field-is-simulator {
     overflow-x: auto;
 
-    &::-webkit-scrollbar {
-        margin-top: 10px;
-        width: 16px;
-        border: 5px solid #fff;
-    }
+    //&::-webkit-scrollbar {
+       // margin-top: 10px;
+        //width: 16px;
+        //border: 5px solid #fff;
+    //}
 }
 
 .table-wrapper-is-simulator {
@@ -529,11 +471,12 @@ defineExpose({
         display: inline-flex;
         flex-direction: row;
         align-items: stretch;
-        // width: 100%;
+        width: 100%;
         margin-bottom: 10px;
         //max-width: 100%;
     }
     :deep(.el-form-item) {
+        flex: 1;
         flex-direction: column;
         border-bottom: solid 1px #dcdfe6;
         margin-bottom: 0 !important;
@@ -554,6 +497,12 @@ defineExpose({
 
         &.form-item-border {
             border-right: solid 1px #dcdfe6;
+        }
+
+        &.serial-column,
+        &.operation-column {
+            flex-grow: 0;
+            flex-shrink: 0;
         }
     }
 }
@@ -637,6 +586,9 @@ defineExpose({
             :deep(.el-form-item) {
                 margin-bottom: 0 !important;
                 .el-form-item__label-wrap {
+                    display: none !important;
+                }
+                .el-form-item__label {
                     display: none !important;
                 }
             }
@@ -763,5 +715,26 @@ defineExpose({
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px 14px;
+}
+
+/*滚动条样式*/
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e8e8e8;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a5a3a3;
+    cursor: pointer;
 }
 </style>

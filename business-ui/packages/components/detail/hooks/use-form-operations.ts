@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-10 16:00:14
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-23 13:40:42
+ * @LastEditTime: 2024-05-24 14:28:23
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\hooks\use-form-operations.ts
  * @Description:
  *
@@ -10,7 +10,7 @@
  */
 import { ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash'
-import { FormProps } from '../../form'
+// import { FormProps } from '../../form'
 import { v4 as uuidV4 } from 'uuid'
 import { DetailProps, OperationParams } from '../type'
 
@@ -72,30 +72,3 @@ export const useOperation = (props: DetailProps, emits, getCurrentPage: Function
         downMove
     }
 }
-
-// export const useDelete = ({ forms, form, index, emits }: OperationParams) => {
-//     forms.splice(index, 1)
-//     emits('delete', { forms, form })
-// }
-
-// export const useCopy = ({ forms, form, index, emits }: OperationParams) => {
-//     const copyForm = cloneDeep(form)
-//     copyForm.id = uuidV4()
-//     copyForm.instance = null
-//     forms.splice(index + 1, 0, copyForm)
-//     emits('delete', { forms, form })
-// }
-
-// export const useUpMove = ({ forms, form, index, emits }: OperationParams) => {
-//     // console.log('useUpMove')
-//     if (index === 0) return
-//     ;[forms[index - 1], forms[index]] = [forms[index], forms[index - 1]]
-//     emits('delete', { forms, form })
-// }
-
-// export const useDownMove = ({ forms, form, index, emits }: OperationParams) => {
-//     const lastIndex = forms?.length - 1
-//     if (index === lastIndex || lastIndex === 0) return
-//     ;[forms[index], forms[index + 1]] = [forms[index + 1], forms[index]]
-//     emits('delete', { forms, form })
-// }

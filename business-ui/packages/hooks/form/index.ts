@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-09 10:47:34
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-23 16:58:38
+ * @LastEditTime: 2024-05-27 10:52:20
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\hooks\form\index.ts
  * @Description:
  *
@@ -28,7 +28,7 @@ export const useFormProps = (
         if (slot?.props?.prop) {
             formModel[slot.props.prop] = null
         } else {
-            throw new Error(`请为${label}表单项绑定变量`)
+            // throw new Error(`请为${label}表单项绑定变量`)
         }
     })
     console.log('formModel', formModel)

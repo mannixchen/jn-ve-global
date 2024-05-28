@@ -1,5 +1,5 @@
 import { computed, CSSProperties, Ref, onUpdated, watch, reactive, toRefs, nextTick } from 'vue'
-import { useEventListener } from '@vueuse/core'
+import { useEventListener, useMutationObserver } from '@vueuse/core'
 import { DetailProps, BtnProps, ColumnProps } from '../type'
 import {
     DEFAULT_COLUMN_WIDTH,
@@ -8,6 +8,9 @@ import {
     DEFAULT_SERIAL_COLUMN_WIDTH
 } from '../const'
 import { castArray } from 'lodash'
+import { __is_simulator_env__ } from '../../../constants'
+import { useNamespace } from '../../../hooks'
+
 // import { useBtns } from './use-btns'
 
 export const useTableColumns = (props: DetailProps, showOperation: boolean, slots) => {
@@ -22,7 +25,9 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
     const getTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
         // const prop = formItemSlot?.props?.prop ?? formItemSlot?.type?.props?.prop?.default ?? ''
-        if (!prop) return
+        if (!prop) {
+            throw new Error('请设置表单项prop')
+        }
         const targetIndex = columns.findIndex((item) => item.prop === prop)
         let left = 0
         for (let i = 0; i < columns.length; i++) {
@@ -145,7 +150,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
     const getColumns = (props: DetailProps, showOperation: boolean) => {
         const { showSerial, operationWidth } = props
         let columns = slots
-            ?.filter((item) => !item.children)
+            // ?.filter((item) => !item.children)
             ?.map((item, index) => {
                 return {
                     prop: getFormItemProp(item),
@@ -158,8 +163,6 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
                         width: DEFAULT_COLUMN_WIDTH,
                         minWidth: DEFAULT_MIN_COLUMN_WIDTH,
                         maxWidth: DEFAULT_COLUMN_WIDTH,
-                        // left: useTableCellStyle(showSerial ? index - 1 : index, showSerial)
-                        //     .left as string
                         left: 0
                     }
                 }
@@ -208,6 +211,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
     }
 
     state.columns = getColumns(props, showOperation)
+    // console.log('columns', state.columns)
 
     // onUpdated(() => {
     //     state.columns = getColumns(props, showOperation)
@@ -238,137 +242,6 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
     // return computed<ColumnProps[]>()
 }
-
-// export const useTableHeader = (props: DetailProps, btns: BtnProps[], slots): Ref<ColumnProps[]> => {
-//     return computed<ColumnProps[]>(() => {
-//         const { showSerial, showOperation, disabled } = props
-//         let columns = slots
-//             ?.filter((item) => !item.children)
-//             ?.map((item) => {
-//                 return {
-//                     label: item?.props?.label ?? item?.type?.props?.label?.default ?? '',
-//                     type: 'form'
-//                 }
-//             })
-//         if (showSerial) {
-//             columns = [{ label: '序号', type: 'serial' }, ...columns]
-//         }
-//         if (showOperation && !disabled && btns?.length > 0) {
-//             columns = [...columns, { label: '操作', type: 'operation' }]
-//         }
-//         return columns
-//     })
-// }
-
-// export const useTableHeaderStyle = (
-//     label: string,
-//     labelIndex: number,
-//     showSerial: boolean,
-//     operationWidth?: string | number
-// ): CSSProperties => {
-//     // return computed(() => {
-//     // })
-//     // console.log('useTableHeaderStyle')
-//     let width: string, minWidth: string, maxWidth: string, left: string, right: string
-//     if (label === '序号') {
-//         width = DEFAULT_SERIAL_COLUMN_WIDTH
-//         minWidth = width
-//         maxWidth = width
-//         left = '0px'
-//     } else if (label === '操作') {
-//         width = operationWidth
-//             ? String(operationWidth)?.replace(/[^0-9]/gi, '') + 'px'
-//             : DEFAULT_OPERATION_COLUMN_WIDTH
-//         minWidth = width
-//         maxWidth = width
-//         right = '0px'
-//     } else {
-//         width = DEFAULT_COLUMN_WIDTH
-//         minWidth = DEFAULT_MIN_COLUMN_WIDTH
-//         maxWidth = DEFAULT_COLUMN_WIDTH
-//         left = useTableCellStyle(showSerial ? labelIndex - 1 : labelIndex, showSerial)
-//             .left as string
-//     }
-//     return label === '操作'
-//         ? {
-//             width,
-//             minWidth,
-//             maxWidth,
-//             right,
-//             textAlign: 'left'
-//         }
-//         : {
-//             width,
-//             minWidth,
-//             maxWidth,
-//             left,
-//             textAlign: 'left'
-//         }
-// }
-
-// export const useTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
-//     // const prop = formItemSlot?.props?.prop ?? formItemSlot?.type?.props?.prop?.default ?? ''
-//     if (!prop) return
-//     const targetIndex = columns.findIndex((item) => item.prop === prop)
-//     let left = 0
-//     for (let i = 0; i < columns.length; i++) {
-//         if (i < targetIndex) {
-//             const { width, minWidth } = columns[i].style
-//             const columnWidth = width || minWidth
-//             left += Number(String(columnWidth)?.replace(/[^0-9]/gi, ''))
-//         } else {
-//             return
-//         }
-//     }
-//     return {
-//         left: left + 'px'
-//     }
-// }
-
-// export const useTableCellStyle = (
-//     formItemIndex: number,
-//     showSerial: boolean,
-//     showOperation?: boolean
-// ): CSSProperties => {
-//     let left: string
-//     const width = Number(DEFAULT_COLUMN_WIDTH?.replace(/[^0-9]/gi, ''))
-//     const serialWidth = Number(DEFAULT_SERIAL_COLUMN_WIDTH?.replace(/[^0-9]/gi, ''))
-//     left = showSerial ? `${serialWidth + width * formItemIndex}px` : `${width * formItemIndex}px`
-//     return {
-//         left
-//     }
-// }
-
-// export const useTableCellClassNames = (
-//     type: ColumnProps['type'],
-//     props: DetailProps,
-//     classNames?: string[],
-//     index?: Number
-// ): string[] => {
-//     // console.log('useTableCellClassNames')
-//     const { showSerial, leftFixedColumns, fixedOperation } = props
-//     let fixedClassNames = []
-//     const fixedColumnsQuantity = Number(leftFixedColumns)
-//     if (!fixedColumnsQuantity) return [...(classNames ?? []), 'table-cell']
-//     if (type === 'serial') {
-//         fixedClassNames =
-//             fixedColumnsQuantity === 1 ? ['sticky-start', 'sticky-start-shadow'] : ['sticky-start']
-//     } else if (type === 'operation') {
-//         fixedClassNames = fixedOperation ? ['sticky-end', 'sticky-end-shadow'] : []
-//     } else {
-//         const lastFixedFormItemIndex = showSerial
-//             ? fixedColumnsQuantity - 2
-//             : fixedColumnsQuantity - 1
-//         if (lastFixedFormItemIndex < Number(index)) {
-//             fixedClassNames = []
-//         } else if (lastFixedFormItemIndex === index) {
-//             fixedClassNames = ['sticky-start', 'sticky-start-shadow']
-//         } else {
-//             fixedClassNames = ['sticky-start']
-//         }
-//     }
-//     return [...(classNames ?? []), ...fixedClassNames, 'table-cell']
-// }
 
 export const useTableScrollClass = (scrollEl: any, tableEl: any, columns: ColumnProps[]) => {
     // console.log('useTableScrollClass', scrollEl, tableEl)
@@ -448,7 +321,13 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
         if (!el) return
         const borderClass = border ? 'form-item-border' : ''
         el.className = Array.from(
-            new Set([...Array.from(el.classList), borderClass, ...classList])
+            new Set([
+                ...Array.from(el.classList)
+                    ?.filter((item) => item !== 'form-item-border')
+                    ?.filter((item) => !(item as string)?.startsWith('sticky-')),
+                borderClass,
+                ...classList
+            ])
         )?.join(' ')
     }
 
@@ -497,8 +376,8 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             setStyle(el, {
                 // right: '0px',
                 width: DEFAULT_COLUMN_WIDTH,
-                minWidth: DEFAULT_COLUMN_WIDTH,
-                maxWidth: DEFAULT_COLUMN_WIDTH
+                // maxWidth: DEFAULT_COLUMN_WIDTH,
+                minWidth: DEFAULT_COLUMN_WIDTH
             })
             setClass(el, getLeftFixedClass(index))
         }
@@ -516,4 +395,65 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
 
         // index ++
     }
+
+    useMutationObserver(
+        tableEl,
+        (mutations) => {
+            // console.log('mutations', mutations)
+            useSimulatorTableStyle(props, tableEl)
+        },
+        {
+            childList: true
+        }
+    )
+
+    //
+    watch(
+        () => props?.border,
+        (val) => {
+            // for (const el of tableEl?.children) {
+            //     const classList = Array.from(el.classList)?.filter(
+            //         (item) => item !== 'form-item-border'
+            //     )
+            //     const borderClass = val ? 'form-item-border' : ''
+            //     el.className = [...classList, borderClass]?.join(' ')
+            // }
+            useSimulatorTableStyle(props, tableEl)
+
+        }
+    )
+
+    watch(
+        () => props?.fixedOperation,
+        (val) => {
+            // console.log('watch-fixedOperation', props)
+            useSimulatorTableStyle(props, tableEl)
+        }
+    )
+
+    watch(
+        () => props?.leftFixedColumns,
+        (val) => {
+            useSimulatorTableStyle(props, tableEl)
+        }
+    )
+
+    watch(
+        () => props?.operationWidth,
+        (val) => {
+            // console.log('watch-operationWidth', val)
+            // const index = tableEl?.children?.length - 1
+            // const width = val
+            //     ? String(val)?.replace(/[^0-9]/gi, '') + 'px'
+            //     : DEFAULT_OPERATION_COLUMN_WIDTH
+
+            // setStyle(tableEl.children[index], {
+            //     right: '0px',
+            //     width: width,
+            //     minWidth: width,
+            //     maxWidth: width
+            // })
+            useSimulatorTableStyle(props, tableEl)
+        }
+    )
 }
