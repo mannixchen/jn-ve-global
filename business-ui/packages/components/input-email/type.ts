@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 15:20:14
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-13 15:54:08
+ * @LastEditTime: 2024-05-29 10:34:09
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-email\type.ts
  * @Description:
  *
@@ -20,11 +20,11 @@ export interface BiInputProps {
     /**
      * 未输入时的默认值（占位符）
      */
-    placeholder: string
+    placeholder?: string
     /**
      * 是否禁用
      */
-    disabled: boolean
+    disabled?: boolean
 }
 
 export type FiInputProps = BiInputProps & ElFormItemProps

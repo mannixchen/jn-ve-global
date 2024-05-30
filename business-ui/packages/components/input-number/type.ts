@@ -2,23 +2,16 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-11 10:56:09
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-22 16:43:22
+ * @LastEditTime: 2024-05-30 15:36:26
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-number\type.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
+import { FormItemProps as ElFormItemProps } from 'element-plus'
 import { InputNumberDisplayTypes, Currency } from './const'
 import { AmountUnits } from '../../constants/index'
 
-// export type InputNumberDisplayType =
-//     | InputNumberDisplayTypes.NUMBER
-//     | InputNumberDisplayTypes.PERCENTAGE
-//     | InputNumberDisplayTypes.THOUSANDTH
-//     | InputNumberDisplayTypes.TEN_THOUSANDTH
-//     | AmountUnits.YUAN
-//     | AmountUnits.WAN_YUAN
-//     | AmountUnits.YI_YUAN
 export type InputNumberDisplayType = InputNumberDisplayTypes | AmountUnits
 
 export type InputNumberValue = string | number | null | undefined
@@ -86,3 +79,6 @@ export interface InputNumberProps {
      */
     currency?: Currency
 }
+
+
+export type FiInputNumberProps = InputNumberProps & ElFormItemProps

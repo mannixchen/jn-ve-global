@@ -1,9 +1,20 @@
-import {
+import type {
     FormProps as ElFormProps,
-    FormInstance,
-    FormItemProps as ElFormItemProps
+    FormItemProps as ElFormItemProps,
+    ColorPickerProps,
+    RateProps,
+    SliderProps,
+    SwitchProps,
+    DatePickerProps,
+    TimePickerDefaultProps,
+    ISelectV2Props,
+    TransferProps,
+    FormInstance
+    // formProps,
+    // formItemProps
 } from 'element-plus'
-import { ExtendRuleItem } from 'jn-ve-global'
+import { ExtendRuleItem, TimeSelectProps } from 'jn-ve-global'
+// import type { ExtractPublicPropTypes} from 'vue'
 
 export interface RuleItem extends ExtendRuleItem {
     active?: boolean
@@ -89,7 +100,12 @@ import {
     InputNumberProps,
     InputNumberRangeProps,
     InputYearRangeProps,
-    DetailProps
+    DetailProps,
+    CascaderProps,
+    TreeSelectProps,
+    BiAdvanceInputProps,
+    BiAddressProps,
+    BiUploadProps
 } from '../index'
 
 export type ControlProps =
@@ -100,5 +116,19 @@ export type ControlProps =
     | InputNumberRangeProps
     | InputYearRangeProps
     | DetailProps
+    | ColorPickerProps
+    | RateProps
+    | SliderProps
+    | SwitchProps
+    | DatePickerProps
+    | TimePickerDefaultProps
+    | TimeSelectProps
+    | ISelectV2Props
+    | TransferProps
+    | CascaderProps
+    | TreeSelectProps
+    | BiAdvanceInputProps
+    | BiAddressProps
+    | BiUploadProps
 
 export type FormItemProps = ControlProps & ElFormItemProps

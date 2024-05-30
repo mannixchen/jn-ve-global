@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-07 17:07:20
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-16 09:36:44
+ * @LastEditTime: 2024-05-28 15:39:00
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-email\form-item.vue
  * @Description: 
  * 
@@ -10,22 +10,17 @@
 -->
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <bi-input-email
-            v-model="localModelValue"
-            :disabled="disabled"
-            :placeholder="placeholder"
-            v-bind="$attrs"
-        />
+        <bi-input-email v-model="localModelValue" v-bind="inputEmailProps" />
     </el-form-item>
 </template>
 
 <script lang="ts" setup>
-import { toRef, watch, ref, computed, reactive, toRefs, inject } from 'vue'
+import { toRef, useAttrs, inject } from 'vue'
 import { ElFormItem } from 'element-plus'
 import type { FiInputProps, InputValue } from '../input-email/type'
 import BiInputEmail from './index.vue'
 import { modelKey } from '../../constants'
-import { useFormItemProps } from '../../hooks'
+import { useFormItemProps, useControlProps } from '../../hooks'
 
 const COMPONENT_NAME = 'BiFiInputEmail'
 defineOptions({
@@ -39,10 +34,14 @@ const props = withDefaults(defineProps<FiInputProps>(), {
     showMessage: true
 })
 
-const elFormItemProps = useFormItemProps(props, [{
-    type: 'email',
-    message: '请输入正确的邮箱格式'
-}])
+const elFormItemProps = useFormItemProps(props, [
+    {
+        type: 'email',
+        message: '请输入正确的邮箱格式'
+    }
+])
+
+const inputEmailProps = useControlProps(props, useAttrs()) as any
 
 const formModel = inject(modelKey)
 
@@ -50,8 +49,8 @@ const modelValue = defineModel<InputValue>({ default: null })
 
 const localModelValue = formModel
     ? toRef(formModel, props.prop as string)
-    // : defineModel<InputValue>({ default: null })
-    : modelValue
+    : // : defineModel<InputValue>({ default: null })
+    modelValue
 </script>
 
 <style lang="scss" scoped></style>

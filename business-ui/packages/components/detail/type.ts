@@ -129,7 +129,7 @@ export interface DetailProps {
      * 自定义其他列，排列方式为table时有效
      */
     customColumns?: boolean
-    
+
     /**
      * 是否展开，排列方式为form时有效
      */
@@ -207,6 +207,3 @@ export interface DetailProps {
 }
 
 export type FiDetailProps = DetailProps & ElFormItemProps
-
-
-

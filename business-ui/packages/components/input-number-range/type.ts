@@ -2,12 +2,13 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-21 14:45:03
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-24 10:27:25
+ * @LastEditTime: 2024-05-28 16:07:04
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-number-range\type.ts
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
  */
+import { FormItemProps as ElFormItemProps } from 'element-plus'
 import { InputValue } from '../input-email'
 import { InputNumberProps } from '../input-number'
 import { Boundary } from './const'
@@ -59,3 +60,5 @@ export interface InputNumberRangeProps
      */
     boundary?: Boundary.INCLUDE | Boundary.NOT_INCLUDE
 }
+
+export type FiInputNumberRangeProps = InputNumberRangeProps & ElFormItemProps
