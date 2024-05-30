@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-14 10:37:37
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-04-22 14:05:49
+ * @LastEditTime: 2024-05-29 09:59:39
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\checkbox\index.vue
  * @Description: 
  * 
@@ -10,7 +10,10 @@
 -->
 <template>
     <el-checkbox-group v-model="localModelValue" :disabled="disabled" v-bind="$attrs">
-        <template v-for="(checkboxOptionProps, index) in options" :key="`${checkboxOptionProps.value}-${index}`">
+        <template
+            v-for="(checkboxOptionProps, index) in options"
+            :key="`${checkboxOptionProps.value}-${index}`"
+        >
             <el-checkbox v-bind="checkboxOptionProps" />
         </template>
     </el-checkbox-group>
@@ -30,7 +33,9 @@ defineOptions({
 
 console.log(COMPONENT_NAME)
 
-const props = withDefaults(defineProps<BiCheckboxProps>(), {})
+const props = withDefaults(defineProps<BiCheckboxProps>(), {
+    options: null
+})
 
 // const props =defineProps({
 //     modelValue: {
@@ -47,9 +52,9 @@ const disabled = computed<boolean>(() => props.disabled)
 
 const options = computed<CheckboxOptionProps[]>(() => props.options)
 
-// const localModelValue = computed<string | number | boolean>({    
+// const localModelValue = computed<string | number | boolean>({
 //     get: () => props.modelValue,
-//     set: (val) => {  
+//     set: (val) => {
 //         emits(UPDATE_MODEL_EVENT, val)
 //     }
 // })

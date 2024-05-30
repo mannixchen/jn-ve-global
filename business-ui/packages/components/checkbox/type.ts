@@ -1,4 +1,5 @@
-// import type { CheckboxBoxOptionProps } from 'jn-ve-global'
+import type { checkboxProps, FormItemProps as ElFormItemProps } from 'element-plus'
+import type { CheckboxBoxOptionProps } from 'jn-ve-global'
 
 export interface CheckboxOptionProps {
     /**
@@ -43,13 +44,16 @@ export interface BiCheckboxProps {
     /**
      * 是否禁用
      */
-    disabled: boolean
+    disabled?: boolean
     /**
      * 选项
      */
-    options: CheckboxOptionProps[]
+    options?: CheckboxOptionProps[]
     /**
      * Radio-group Events
      */
     onChange?: (value: string[] | number[]) => void
 }
+
+
+export type FiCheckboxProps = BiCheckboxProps & ElFormItemProps
