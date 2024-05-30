@@ -2,13 +2,13 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-09 10:47:34
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-27 10:52:20
+ * @LastEditTime: 2024-05-30 15:59:03
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\hooks\form\index.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
-import { computed, Ref } from 'vue'
+import { computed, Ref, SetupContext } from 'vue'
 import { FormItemProps as ElFormItemProps, FormProps, FormItemRule } from 'element-plus'
 import {
     FormItemProps as BiFormItemProps,
@@ -79,14 +79,16 @@ export const useFormItemProps = (
             showMessage,
             inlineMessage,
             size,
+            for: props?.for,
             validateStatus
         }
     })
 }
 
 export const useControlProps = (
-    props: BiFormItemProps
-): Ref<ControlProps> => {
+    props: BiFormItemProps,
+    attrs?: SetupContext['attrs']
+): Ref<Omit<ControlProps, 'modelValue'> & Record<string, any>> => {
     return computed(() => {
         const {
             prop = '',
@@ -100,9 +102,13 @@ export const useControlProps = (
             size,
             // for,
             validateStatus,
+            modelValue,
+            modelModifiers,
             ...controlProps
-        } = props
+        } = props as any
+        delete(controlProps['for'])
         // const activeRules = rules
-        return controlProps as ControlProps
+        // console.log('useControlProps', props, attrs, controlProps)
+        return attrs ? { ...controlProps, ...attrs } : { ...controlProps }
     })
 }
