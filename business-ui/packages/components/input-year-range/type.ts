@@ -1,3 +1,15 @@
+/*
+ * @Author: “zhujin” zhujin@jsjngf.com
+ * @Date: 2024-04-02 10:46:24
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-05-28 16:16:39
+ * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-year-range\type.ts
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ */
+import { FormItemProps as ElFormItemProps } from 'element-plus'
+
 export type Year = Date | string
 
 export interface InputYearRangeProps {
@@ -34,3 +46,6 @@ export interface InputYearRangeProps {
      */
     valueFormat?: string
 }
+
+export type FiInputYearRangeProps = InputYearRangeProps & ElFormItemProps
+

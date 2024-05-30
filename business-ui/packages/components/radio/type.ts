@@ -9,6 +9,8 @@
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 import type { RadioOptionProps } from 'jn-ve-global'
+import { FormItemProps as ElFormItemProps } from 'element-plus'
+
 
 export type { RadioOptionProps } from 'jn-ve-global'
 
@@ -30,3 +32,5 @@ export interface BiRadioProps {
      */
     onChange?: (value: string | number | boolean) => void
 }
+
+export type FiRadioProps = BiRadioProps & ElFormItemProps
