@@ -1,6 +1,6 @@
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-time-picker v-model="localModelValue" v-bind="timePickerProps" />
+        <el-time-picker v-model="localModelValue" v-bind="timePickerProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

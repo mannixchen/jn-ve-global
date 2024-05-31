@@ -1,6 +1,6 @@
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-cascader v-model="localModelValue" v-bind="cascaderProps" />
+        <el-cascader v-model="localModelValue" v-bind="cascaderProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

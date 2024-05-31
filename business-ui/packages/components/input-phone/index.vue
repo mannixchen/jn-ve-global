@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 15:13:34
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-03-20 16:13:17
+ * @LastEditTime: 2024-05-31 14:26:43
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\input-phone\index.vue
  * @Description: 
  * 
@@ -35,7 +35,7 @@ const props = withDefaults(defineProps<BiInputProps>(), {
     placeholder: '请输入电话号码'
 })
 
-console.log(COMPONENT_NAME)
+// console.log(COMPONENT_NAME)
 
 // const props =defineProps({
 //     modelValue: {

@@ -1,6 +1,6 @@
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-tree-select v-model="localModelValue" v-bind="treeSelectProps" />
+        <el-tree-select v-model="localModelValue" v-bind="treeSelectProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

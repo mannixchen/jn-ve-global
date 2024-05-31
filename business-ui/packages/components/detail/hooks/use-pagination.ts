@@ -74,7 +74,8 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
         state.currentPage = currentPage
     }
 
-    const change = (currentPage: number, pageSize: number) => {
+    // const change = (currentPage: number, pageSize: number) => {
+    const change = (value: number) => {
         // console.log('change')
         getCurrentRecords()
     }

@@ -30,7 +30,7 @@ const switchProps = useControlProps(props, useAttrs())
 
 const formModel = inject(modelKey)
 
-const modelValue = defineModel<string | number | boolean>({ default: null })
+const modelValue = defineModel<string | number | boolean>({ default: false })
 
 const localModelValue = formModel ? toRef(formModel, props.prop as string) : modelValue
 </script>

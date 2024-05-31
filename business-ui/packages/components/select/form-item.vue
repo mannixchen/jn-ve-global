@@ -1,6 +1,16 @@
+<!--
+ * @Author: “zhujin” zhujin@jsjngf.com
+ * @Date: 2024-05-30 15:48:26
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-05-31 11:14:14
+ * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\select\form-item.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-select-v2 v-model="localModelValue" v-bind="selectProps" />
+        <el-select-v2 v-model="localModelValue" v-bind="selectProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

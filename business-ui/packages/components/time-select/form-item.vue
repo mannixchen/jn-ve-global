@@ -10,7 +10,7 @@
 -->
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-time-select v-model="localModelValue" v-bind="timeSelectProps" />
+        <el-time-select v-model="localModelValue" v-bind="timeSelectProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

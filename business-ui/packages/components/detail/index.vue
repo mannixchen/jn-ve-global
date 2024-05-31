@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-06 15:32:03
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-28 11:00:09
+ * @LastEditTime: 2024-05-31 14:54:57
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\index.vue
  * @Description: 
  * 
@@ -238,7 +238,7 @@
                     v-model:page-size="pageSize"
                     class="foot-pagination-wrapper"
                     v-bind="paginationProps"
-                    @change="change"
+                    @current-change="change"
                     @prev-click="prevClick"
                     @next-click="nextClick"
                 />

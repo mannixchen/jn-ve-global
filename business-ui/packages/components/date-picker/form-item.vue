@@ -1,6 +1,6 @@
 <template>
     <el-form-item v-bind="elFormItemProps">
-        <el-date-picker v-model="localModelValue" v-bind="datePickerProps" />
+        <el-date-picker v-model="localModelValue" v-bind="datePickerProps" style="width: 100%;" />
     </el-form-item>
 </template>
 

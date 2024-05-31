@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-30 11:08:29
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-30 11:36:10
+ * @LastEditTime: 2024-05-31 10:22:31
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\upload\form-item.vue
  * @Description: 
  * 
@@ -47,7 +47,7 @@ const uploadProps = useControlProps(props, useAttrs()) as any
 
 const formModel = inject(modelKey)
 
-const modelValue = defineModel<string[] | number[]>({ default: null })
+const modelValue = defineModel<string[] | number[]>({ default: [] })
 
 const localModelValue = formModel ? toRef(formModel, props.prop as string) : modelValue
 </script>
