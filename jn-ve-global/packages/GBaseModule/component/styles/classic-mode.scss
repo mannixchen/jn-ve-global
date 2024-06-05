@@ -24,6 +24,17 @@
             span {
                 line-height: 1;
                 margin-left: 10px;
+                margin-right: 4px;
+            }
+
+            i.g-icon {
+                transform: rotate(90deg);
+            }
+
+            &.active {
+                i.g-icon {
+                    transform: rotate(-90deg);
+                }
             }
 
             img {

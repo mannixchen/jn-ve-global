@@ -69,15 +69,8 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'GForm'
-})
-</script>
-
 <script lang="ts" setup>
-import { watch, provide, ref, toRef, nextTick, computed, type Ref } from 'vue'
+import { watch, provide, ref, toRef, nextTick, computed, type Ref, watchEffect } from 'vue'
 import type { FormProps, FormInstance, FormItemProps } from './interface'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
@@ -90,6 +83,9 @@ import LGFormRow from './component/GFormRow/index.vue'
 import LGColFormItem from './component/GColFormItem/index.vue'
 import { GCollapse as LGCollapse, GCollapseItem as LGCollapseItem } from '../GCollapse'
 
+defineOptions({
+    name: 'GForm'
+})
 
 const props = withDefaults(
     defineProps<{
@@ -141,7 +137,11 @@ watch(
     (instance) => {
         if (instance) {
             advanceInstance(instance)
-            localConfig.value.instance = instance
+            if (localConfig.value.instance === null) {
+                localConfig.value.instance = instance
+            } else if (_.isObject(localConfig.value.instance)) {
+                _.assign(localConfig.value.instance, instance)
+            }
         }
     }
 )
