@@ -12,8 +12,8 @@
         <div v-if="showTitle" class="top">
             <span class="title">查询条件</span>
             <div v-if="moreSearchMode" :class="['more', modeClass]" @click="handleMoreSearch">
-                <span>更多</span>
-                <LGIcon icon="el-DArrowRight" />
+                <LGIcon :icon="`pull-${modeClass.includes('active') ? 'up' : 'down'}`" />
+                <span>更多查询</span>
             </div>
         </div>
 
@@ -160,6 +160,13 @@ const modeClass = computed<string>(() => {
         props.moreSearchMode === 'pull-down' && pullDownFlag.value ? 'active' : ''
     }`
 })
+
+watch(
+    () => modeClass.value,
+    (val) => {
+        console.log(`%c modeClass === `, 'color: #67c23a;', val)
+    }
+)
 
 const modeTriggerLabel = computed<string>(() =>
     props.moreSearchMode === 'pull-down' ? (!pullDownFlag.value ? '展开' : '收起') : '查看更多'
