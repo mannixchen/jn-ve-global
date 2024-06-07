@@ -127,7 +127,7 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
             //         message: '年龄在 0 - 10 之间'
             //     }
             // ]
-        }
+        },
         // {
         //     prop: 'select',
         //     label: '食物-Select',
@@ -239,21 +239,28 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
         //         }
         //     }
         // },
-        // {
-        //     prop: 'datePicker',
-        //     label: '生日-DatePicker',
-        //     width: 220,
-        //     editable: true,
-        //     controlConfig: {
-        //         type: 'datePicker',
-        //         props: {
-        //             valueFormat: 'YYYY-MM-DD'
-        //         }
-        //     },
-        //     render(row) {
-        //         return dayjs(row.datePicker).format('YYYY-MM-DD')
-        //     }
-        // },
+        {
+            prop: 'datePicker',
+            label: '生日-DatePicker',
+            width: 220,
+            editable: true,
+            controlConfig: {
+                type: 'datePicker',
+                props: {
+                    valueFormat: 'YYYY-MM-DD',
+                    clearable: true,
+                    onChange(val) {
+                        if (val === null) {
+                            const { row } = arguments[arguments.length - 1]
+                            row.datePicker = ''
+                        }
+                    }
+                }
+            },
+            render(row) {
+                return dayjs(row.datePicker).format('YYYY-MM-DD')
+            }
+        }
         // {
         //     prop: 'dateTimePicker',
         //     label: '生日-DateTimePicker',

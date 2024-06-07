@@ -146,7 +146,6 @@
                             v-bind="localControlProps"
                             style="width: 100%"
                             size="small"
-                            :clearable="false"
                             @change="delayControlToText"
                         />
                         <div v-else>
@@ -163,7 +162,6 @@
                             v-bind="localControlProps"
                             style="width: 100%"
                             size="small"
-                            :clearable="false"
                             @change="delayControlToText"
                         />
                         <div v-else>
@@ -180,7 +178,6 @@
                             v-bind="localControlProps"
                             style="width: 100%"
                             size="small"
-                            :clearable="false"
                             @change="delayControlToText"
                         />
                         <div v-else>
@@ -198,7 +195,6 @@
                             type="datetime"
                             style="width: 100%"
                             size="small"
-                            :clearable="false"
                             @change="delayControlToText"
                         />
                         <div v-else>
