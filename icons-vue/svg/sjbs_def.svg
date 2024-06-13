@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>sjbs_def</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="svg切图" transform="translate(-103.000000, -51.000000)">
+            <g id="sjbs_def" transform="translate(103.000000, 51.000000)">
+                <g id="行业报告" transform="translate(4.000000, 4.000000)">
+                    <path d="M21.3959077,0.632649351 C21.7827015,1.03772793 22,1.58713238 22,2.15999999 L22,15.84 C22,16.4128676 21.7827015,16.9622721 21.3959077,17.3673506 C21.009114,17.7724292 20.484509,18 19.9375,18 L2.0625,18 C0.923412702,18 0,17.0329351 0,15.84 L0,2.15999999 C0,0.967064938 0.923412702,0 2.0625,0 L19.9375,0 C20.484509,0 21.009114,0.227570775 21.3959077,0.632649351 Z" id="路径" stroke="#979797" stroke-width="2" fill-rule="nonzero"></path>
+                    <rect id="矩形" fill="#979797" x="4" y="21" width="14" height="2" rx="1"></rect>
+                    <polyline id="路径-2" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="3.75512695 13.5237238 8.98449707 8.46073553 11.4188232 11 16.3787842 6.08158514"></polyline>
+                    <polyline id="路径-3" stroke="#979797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="12.7429199 5.18961737 16.8244629 5.18961737 16.8244629 9"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
