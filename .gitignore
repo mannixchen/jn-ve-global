@@ -25,3 +25,5 @@ components.d.ts
 
 !icons-vue/es
 !icons-vue/dist
+
+element-component
