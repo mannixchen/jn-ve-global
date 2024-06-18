@@ -11,9 +11,9 @@ import { writeFile } from 'node:fs/promises'
 
 /**
  * 格式化代码
- * @param code 
- * @param parser 
- * @returns 
+ * @param code
+ * @param parser
+ * @returns
  */
 const formatCode = (code: string, parser: BuiltInParserName = 'typescript') => {
     return format(code, {
@@ -25,11 +25,12 @@ const formatCode = (code: string, parser: BuiltInParserName = 'typescript') => {
 
 /**
  * svg 的内容转换成 vue 模版
- * @param content 
- * @param componentName 
- * @returns 
+ * @param content
+ * @param componentName
+ * @returns
  */
 const svgContent2VueComponent = async (content: string, componentName: string) => {
+    content = content.replace(/<title>.*<\/title>/, '')
     return await formatCode(
         `
 <template>
