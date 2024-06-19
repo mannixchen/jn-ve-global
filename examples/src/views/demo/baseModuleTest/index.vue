@@ -1,11 +1,11 @@
 <template>
     <g-base-module
         v-model:selected-rows="selectedRows"
-        mode="tabular"
+        mode="classic"
         :show-selection="true"
         highlight-current-row
         no-search-label
-        more-search-mode="popup"
+        more-search-mode="pull-down"
         search-btn-horizontal
         :search-form-props="searchFormConfig"
         :btns="btns"

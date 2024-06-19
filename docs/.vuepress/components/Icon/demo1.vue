@@ -20,6 +20,16 @@
             </div>
         </template>
     </div>
+
+    <h2>其他（共{{ other.length }}个）：</h2>
+    <div class="icon-wrapper">
+        <template v-for="icon in other" :key="icon">
+            <div class="item">
+                <g-icon :icon="icon" />
+                <p>{{ icon }}</p>
+            </div>
+        </template>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -33,6 +43,7 @@ const kebabNames = localIcons.map((name) => camelToKebab(name))
 
 const regtechIcons = kebabNames.filter((name) => name.startsWith('jg-'))
 const newCore = kebabNames.filter((name) => name.startsWith('xhx-'))
+const other = kebabNames.filter((name) => !name.startsWith('jg-') && !name.startsWith('xhx-'))
 </script>
 
 <style lang="scss" scoped>

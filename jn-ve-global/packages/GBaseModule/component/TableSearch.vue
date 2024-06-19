@@ -12,6 +12,7 @@
         <div v-if="showTitle" class="top">
             <span class="title">查询条件</span>
             <div v-if="moreSearchMode" :class="['more', modeClass]" @click="handleMoreSearch">
+                <LGIcon :icon="`pull-${modeClass.includes('active') ? 'up' : 'down'}`" />
                 <span>更多查询</span>
             </div>
         </div>
@@ -160,6 +161,13 @@ const modeClass = computed<string>(() => {
     }`
 })
 
+watch(
+    () => modeClass.value,
+    (val) => {
+        console.log(`%c modeClass === `, 'color: #67c23a;', val)
+    }
+)
+
 const modeTriggerLabel = computed<string>(() =>
     props.moreSearchMode === 'pull-down' ? (!pullDownFlag.value ? '展开' : '收起') : '查看更多'
 )
@@ -197,7 +205,7 @@ const handleMoreSearch = () => {
          * 这样一来，就可以保证，每次弹框打开，都是一个干净的表单
          *
          * 重点是：表单的 form.instance 覆盖了一级 form.instance，但是 form.model 是同一个
-         * 
+         *
          * TODO: 还存在两个 form.instance 校验的问题，暂时不影响使用，后续再解决
          */
         const userInputModelCache = _.cloneDeep(localSearchFormConfig.value.model)

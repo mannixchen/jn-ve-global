@@ -16,7 +16,7 @@
         </template>
 
         <span class="item-tip">
-            <LGIcon :icon="icon" />
+            <LGIcon :icon="icon" :custom-color="true" />
         </span>
     </ElTooltip>
 </template>
