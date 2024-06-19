@@ -34,7 +34,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
             if (i < targetIndex) {
                 const { width, minWidth } = columns[i].style
                 const columnWidth = width || minWidth
-                left += Number(String(columnWidth)?.replace(/[^0-9]/gi, ''))
+                left += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
             } else {
                 break
             }
@@ -185,7 +185,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         }
         if (showOperation) {
             const width = operationWidth
-                ? String(operationWidth)?.replace(/[^0-9]/gi, '') + 'px'
+                ? String(operationWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, '') + 'px'
                 : DEFAULT_OPERATION_COLUMN_WIDTH
             columns = [
                 ...columns,
@@ -251,7 +251,7 @@ export const useTableScrollClass = (scrollEl: any, tableEl: any, columns: Column
     columns.forEach((item) => {
         const { width, minWidth } = item?.style ?? {}
         const columnWidth = width || minWidth
-        tableMinWidth += Number(String(columnWidth)?.replace(/[^0-9]/gi, ''))
+        tableMinWidth += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
     })
 
     const scrollX = tableMinWidth > tableClientWidth
@@ -358,7 +358,7 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             setClass(el, getLeftFixedClass(index))
         } else if (el?.className?.includes('operation-column')) {
             const width = operationWidth
-                ? String(operationWidth)?.replace(/[^0-9]/gi, '') + 'px'
+                ? String(operationWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, '') + 'px'
                 : DEFAULT_OPERATION_COLUMN_WIDTH
 
             setStyle(el, {
@@ -391,7 +391,7 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             })
         }
 
-        left += Number(String(columnWidth)?.replace(/[^0-9]/gi, ''))
+        left += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
 
         // index ++
     }
@@ -444,7 +444,7 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             // console.log('watch-operationWidth', val)
             // const index = tableEl?.children?.length - 1
             // const width = val
-            //     ? String(val)?.replace(/[^0-9]/gi, '') + 'px'
+            //     ? String(val)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, '') + 'px'
             //     : DEFAULT_OPERATION_COLUMN_WIDTH
 
             // setStyle(tableEl.children[index], {
