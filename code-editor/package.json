@@ -27,6 +27,6 @@
         "build:push": "vue-tsc --noEmit && vite build && yalc push --private"
     },
     "publishConfig": {
-        "registry": "http://172.31.71.159/repository/npm-release/"
+        "registry": "http://172.31.71.159/repository/npm-jsjngf/"
     }
 }
