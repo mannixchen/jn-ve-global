@@ -80,6 +80,14 @@ const routes: Array<RouteConfig> = [
                     title: 'choose'
                 },
                 component: () => import('@/views/demo/form/choose.vue')
+            },
+            {
+                path: 'free',
+                name: 'free',
+                meta: {
+                    title: '插槽自由组装'
+                },
+                component: () => import('@/views/demo/form/free.vue')
             }
             // {
             //     path: 'formGenerateTest',
