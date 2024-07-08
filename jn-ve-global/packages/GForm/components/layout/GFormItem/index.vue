@@ -68,26 +68,26 @@
                     :prop="toRef(rootFormConfig.model, formItemConfig.prop)"
                 />
             </template>
-
-            <!-- 提醒：append -->
-            <FormItemLabelTip
-                v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
-                :content="formItemConfig.tip"
-                :icon="formItemConfig.tipIcon"
-                :popper-class="formItemConfig.tipPopperClass"
-                :placement="formItemConfig.tipPlacement"
-            />
-
-            <!-- 字段变更历史 -->
-            <ElTooltip
-                v-if="currentFieldHistoryInfo"
-                :content="`修改前值：${currentFieldHistoryInfo.old}`"
-            >
-                <span class="item-tip log">
-                    <LGIcon icon="xhx-public-tip-info" />
-                </span>
-            </ElTooltip>
         </slot>
+
+        <!-- 提醒：append -->
+        <FormItemLabelTip
+            v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
+            :content="formItemConfig.tip"
+            :icon="formItemConfig.tipIcon"
+            :popper-class="formItemConfig.tipPopperClass"
+            :placement="formItemConfig.tipPlacement"
+        />
+
+        <!-- 字段变更历史 -->
+        <ElTooltip
+            v-if="currentFieldHistoryInfo"
+            :content="`修改前值：${currentFieldHistoryInfo.old}`"
+        >
+            <span class="item-tip log">
+                <LGIcon icon="xhx-public-tip-info" />
+            </span>
+        </ElTooltip>
     </ElFormItem>
 </template>
 

@@ -140,8 +140,10 @@ export interface FormProps extends ElFormProps {
     instance: FormInstance | null
     /**
      * 生成表单 item 的配置列表
+     *  - 配置化时，是必须的
+     *  - 插槽化时，非必须
      */
-    formItems: FormItemProps[]
+    formItems?: FormItemProps[]
     /**
      * 栅格间隔
      * default: 20
