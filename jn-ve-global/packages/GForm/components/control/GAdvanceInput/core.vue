@@ -22,7 +22,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, useAttrs } from 'vue'
-import useInputSlots from './mixins/useInputSlots'
+import useInputSlots from './hooks/useInputSlots'
 import type { InputControlConfig } from '../../../interface'
 import { stringIsIcon } from '@jsjn/utils'
 import { GIcon as LGIcon } from '../../../../GIcon'

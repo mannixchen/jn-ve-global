@@ -159,13 +159,16 @@ watch(
     () => localInstance.value,
     (instance) => {
         if (!instance) return
-        
+
         if (localConfig.value.instance === null) {
             localConfig.value.instance = instance
-        } else if (_.isObject(localConfig.value.instance)) {
+        } else if (
+            _.isObject(localConfig.value.instance) &&
+            _.isEmpty(localConfig.value.instance)
+        ) {
             _.assign(localConfig.value.instance, instance)
         }
-        
+
         /**
          * 较少情况下会有布局错乱，使用 ele 提供的方法重新布局
          */

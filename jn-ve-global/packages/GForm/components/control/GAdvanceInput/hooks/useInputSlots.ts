@@ -1,5 +1,5 @@
 import { watch, reactive, ref, nextTick, Ref } from 'vue'
-import type { InputControlConfig } from '../../../interface'
+import type { InputControlConfig } from '../../../../interface'
 
 export default (attrs: InputControlConfig['props']) => {
     /**

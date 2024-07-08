@@ -29,7 +29,7 @@ export default {
 
 <script lang="ts" setup>
 import { computed, watch } from 'vue'
-import useInputDisabledTooltip from './mixins/useInputDisabledTooltip'
+import useInputDisabledTooltip from './hooks/useInputDisabledTooltip'
 import InputCore from './core.vue'
 import { ElInput as ElInputCom, ElTooltip } from 'element-plus'
 
