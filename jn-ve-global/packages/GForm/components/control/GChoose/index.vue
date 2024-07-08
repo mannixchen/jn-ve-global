@@ -45,7 +45,7 @@ import type {
     RadioButtonOptionProps,
     CheckboxBoxOptionProps,
     CheckboxButtonOptionProps
-} from '../../interface'
+} from '../../../interface'
 import {
     ElCheckboxGroup,
     ElCheckbox,
@@ -54,7 +54,7 @@ import {
     ElRadio,
     ElRadioButton
 } from 'element-plus'
-import { GIcon as LGIcon } from '../../../GIcon'
+import { GIcon as LGIcon } from '../../../../GIcon'
 
 const componentMapping = {
     checkBox: ElCheckbox,

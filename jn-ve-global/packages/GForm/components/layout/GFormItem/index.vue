@@ -105,17 +105,17 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import { toRef, computed, isVNode } from 'vue'
-import type { FormProps, FormItemProps } from '../../interface'
+import type { FormProps, FormItemProps } from '../../../interface'
 import _ from 'lodash'
 import { ElFormItem, ElTooltip } from 'element-plus'
 import useHistoryLog from './hooks/useHistoryLog'
 import useArgAdvance from './hooks/useArgAdvance'
-import { GIcon as LGIcon } from '../../../GIcon'
+import { GIcon as LGIcon } from '../../../../GIcon'
 
 // 组件
-import FunctionalComponent from '../../../FunctionalComponent'
-import FormItemControl from '../formItemControl.vue'
-import FormItemControlGroup from '../formItemControlGroup.vue'
+import FunctionalComponent from '../../../../FunctionalComponent'
+import FormItemControl from './components/formItemControl.vue'
+import FormItemControlGroup from './components/formItemControlGroup.vue'
 import FormItemLabelTip from './components/labelTip.vue'
 
 const props = withDefaults(

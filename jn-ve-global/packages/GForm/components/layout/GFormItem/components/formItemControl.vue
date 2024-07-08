@@ -211,14 +211,6 @@
             <LGTable :config="(controlConfig.props as TableConfig<any>)" />
         </template>
 
-        <!-- 虚假的 collapseItem，仅做展示效果，为拖拽设计器服务 -->
-        <template v-if="localControlType === 'collapseItem'">
-            <ImitativeCollapseItem
-                :title="(formItemConfig.label as string)"
-                v-bind="(controlConfig.props as any)"
-            />
-        </template>
-
         <!-- 占据排版的占位符 -->
         <template v-if="localControlType === 'placeholder'">
             <div class="form-item-placeholder" />
@@ -251,26 +243,25 @@ import {
     SelectTreeControlConfig,
     DatePickerControlConfig,
     DatePickerProps
-} from '../interface'
-import { TableConfig } from '../../index'
-import FunctionalComponent from '../../FunctionalComponent'
-import LGSelectTree from '../../GSelectTree/v1/index.vue'
-import LGFigureInput from '../../GFigureInput/index.vue'
-import LGIconPicker from '../../GIconPicker/index.vue'
-import LGUpload from '../../GUpload/index.vue'
-import LGInfoSelect from '../../GInfoSA/GInfoSelect/index.vue'
-import LGInfoSelectAll from '../../GInfoSA/GInfoSelectAll/index.vue'
-import LGInfoAutocomplete from '../../GInfoSA/GInfoAutocomplete/index.vue'
-import LGSelectTreeV2 from '../../GSelectTree/v2/index.vue'
-import LGAddress from '../../GAddress/index.vue'
-import LJnEditor from '../../JnEditor/index.vue'
-import LGAdvanceInput from './GAdvanceInput/index.vue'
-import LGTable from '../../GTable/index.vue'
-import ImitativeCollapseItem from './imitativeCollapseItem.vue'
-import LGChoose from './GChoose/index.vue'
+} from '../../../../interface'
+import { TableConfig } from '../../../../../index'
+import FunctionalComponent from '../../../../../FunctionalComponent'
+import LGSelectTree from '../../../../../GSelectTree/v1/index.vue'
+import LGFigureInput from '../../../../../GFigureInput/index.vue'
+import LGIconPicker from '../../../../../GIconPicker/index.vue'
+import LGUpload from '../../../../../GUpload/index.vue'
+import LGInfoSelect from '../../../../../GInfoSA/GInfoSelect/index.vue'
+import LGInfoSelectAll from '../../../../../GInfoSA/GInfoSelectAll/index.vue'
+import LGInfoAutocomplete from '../../../../../GInfoSA/GInfoAutocomplete/index.vue'
+import LGSelectTreeV2 from '../../../../../GSelectTree/v2/index.vue'
+import LGAddress from '../../../../../GAddress/index.vue'
+import LJnEditor from '../../../../../JnEditor/index.vue'
+import LGAdvanceInput from '../../../control/GAdvanceInput/index.vue'
+import LGTable from '../../../../../GTable/index.vue'
+import LGChoose from '../../../control/GChoose/index.vue'
 
-import formConfigProvideKey from '../constant/formConfigProvideKey'
-import getControlOprions from '../mixins/getControlOprions'
+import formConfigProvideKey from '../../../../constant/formConfigProvideKey'
+import getControlOprions from '../../../../hooks/getControlOprions'
 
 import {
     ElInputNumber,

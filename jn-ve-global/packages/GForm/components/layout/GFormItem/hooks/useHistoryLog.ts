@@ -1,5 +1,5 @@
 import { watch, ref, computed, nextTick, Ref, ComputedRef } from 'vue'
-import type { FormProps, FormItemProps, FieldHistoryLog } from '../../../index'
+import type { FormProps, FormItemProps, FieldHistoryLog } from '../../../../index'
 import _ from 'lodash'
 
 interface Params {

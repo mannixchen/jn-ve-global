@@ -22,7 +22,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import { FormItemProps, FormProps } from '../../index'
+import { FormItemProps, FormProps } from '../../../index'
 import LGFormItem from '../GFormItem/index.vue'
 import { ElCol } from 'element-plus'
 

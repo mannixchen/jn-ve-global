@@ -12,7 +12,7 @@ export default defineComponent({
 </script>
 
 <script lang="ts" setup>
-import type { FormProps } from '../../interface'
+import type { FormProps } from '../../../interface'
 import { ElRow } from 'element-plus'
 
 const props = withDefaults(

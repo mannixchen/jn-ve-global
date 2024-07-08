@@ -23,9 +23,9 @@ export default {
 <script lang="ts" setup>
 import { computed, useAttrs } from 'vue'
 import useInputSlots from './mixins/useInputSlots'
-import type { InputControlConfig } from '../../interface'
+import type { InputControlConfig } from '../../../interface'
 import { stringIsIcon } from '@jsjn/utils'
-import { GIcon as LGIcon } from '../../../GIcon'
+import { GIcon as LGIcon } from '../../../../GIcon'
 import { ElInput as ElInputCom } from 'element-plus'
 
 const props = withDefaults(

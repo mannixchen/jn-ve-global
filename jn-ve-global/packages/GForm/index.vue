@@ -74,13 +74,13 @@ import { watch, provide, ref, toRef, nextTick, computed, type Ref, watchEffect }
 import type { FormProps, FormInstance, FormItemProps } from './interface'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
-import useCollapseLayout from './mixins/useCollapseLayout'
+import useCollapseLayout from './hooks/useCollapseLayout'
 import { ElForm } from 'element-plus'
 import _ from 'lodash'
 
 // 本地组件
-import LGFormRow from './component/GFormRow/index.vue'
-import LGColFormItem from './component/GColFormItem/index.vue'
+import LGFormRow from './components/layout/GFormRow/index.vue'
+import LGColFormItem from './components/layout/GColFormItem/index.vue'
 import { GCollapse as LGCollapse, GCollapseItem as LGCollapseItem } from '../GCollapse'
 
 defineOptions({

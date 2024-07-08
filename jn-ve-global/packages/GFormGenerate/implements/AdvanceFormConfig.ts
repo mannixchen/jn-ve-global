@@ -16,7 +16,7 @@ import {
 import {
     loadOptionsControlTyeps,
     loadTreeDataControlType
-} from '../../GForm/mixins/getControlOprions'
+} from '../../GForm/hooks/getControlOprions'
 
 export default class AdvanceFormConfig {
     private formConfigRef: FormProps

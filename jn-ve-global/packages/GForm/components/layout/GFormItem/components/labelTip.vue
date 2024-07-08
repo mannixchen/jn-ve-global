@@ -30,9 +30,9 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import { isVNode, computed } from 'vue'
-import { GIcon as LGIcon } from '../../../../GIcon'
-import { FormItemProps } from '../../../interface'
-import FunctionalComponent from '../../../../FunctionalComponent'
+import { GIcon as LGIcon } from '../../../../../GIcon'
+import { FormItemProps } from '../../../../interface'
+import FunctionalComponent from '../../../../../FunctionalComponent'
 import { ElTooltip } from 'element-plus'
 import _ from 'lodash'
 

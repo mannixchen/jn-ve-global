@@ -33,7 +33,7 @@ export default {
 
 <script lang="ts" setup>
 import { ref, toRef, watch, reactive, computed } from 'vue'
-import type { FormItemProps, ExtendControlConfig, ControlConfig } from '../interface'
+import type { FormItemProps, ExtendControlConfig, ControlConfig } from '../../../../interface'
 import FormItemControl from './formItemControl.vue'
 import _ from 'lodash'
 
