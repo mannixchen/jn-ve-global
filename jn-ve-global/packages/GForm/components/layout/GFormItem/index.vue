@@ -1,20 +1,8 @@
 <template>
     <ElFormItem
-        v-if="formConfig && formItemConfig"
-        :class="{
-            'no-colon': formConfig.colon === false,
-            'g-form-item': true,
-            'show-tip': formItemConfig.tip || currentFieldHistoryInfo,
-            'field-log-tip': currentFieldHistoryInfo,
-            [`tip-${formItemConfig.tipPosition || 'append'}`]: formItemConfig.tip,
-            'no-margin-b':
-                (formItemConfig?.controlConfig?.type as any) === 'table' ||
-                formItemConfig?.controlConfig?.type === 'collapseItem',
-            'no-label':
-                formItemConfig?.controlConfig?.type === 'collapseItem' ||
-                formItemConfig?.controlConfig?.type === 'placeholder'
-        }"
-        v-bind="(elFormItemProps as any)"
+        v-if="formItemConfig"
+        :class="currentClasss"
+        v-bind="elFormItemProps"
         :label-width="labelWidth"
     >
         <!-- 自定义 label -->
@@ -42,71 +30,71 @@
             />
         </template>
 
-        <!-- 优先级1：自定义 Render 控件 -->
-        <template v-if="formItemConfig.render">
-            <FunctionalComponent
-                :render="
-                    formItemConfig.render(
-                        toRef(formConfig.model, formItemConfig.prop),
-                        formItemConfig.prop
-                    )
+        <slot
+            :item-config="(formItemConfig as FormItemProps)"
+            :vmodel="(toRef(rootFormConfig.model, formItemConfig.prop) as Ref<any>)"
+        >
+            <!-- 优先级1：自定义 Render 控件 -->
+            <template v-if="formItemConfig.render">
+                <FunctionalComponent
+                    :render="
+                        formItemConfig.render(
+                            toRef(rootFormConfig.model, formItemConfig.prop),
+                            formItemConfig.prop
+                        )
+                    "
+                />
+            </template>
+
+            <!-- 优先级2：配置式控件（组） -->
+            <template
+                v-else-if="
+                    formItemConfig.controlConfigs && formItemConfig.controlConfigs.length > 0
                 "
+            >
+                <FormItemControlGroup
+                    :form-item-config="formItemConfig"
+                    :control-configs="formItemConfig.controlConfigs"
+                    :source-model="rootFormConfig.model"
+                    :prop-key="formItemConfig.prop"
+                />
+            </template>
+
+            <!-- 优先级3：配置式控件（单） -->
+            <template v-else-if="formItemConfig.controlConfig">
+                <FormItemControl
+                    :form-item-config="formItemConfig"
+                    :control-config="formItemConfig.controlConfig"
+                    :prop="toRef(rootFormConfig.model, formItemConfig.prop)"
+                />
+            </template>
+
+            <!-- 提醒：append -->
+            <FormItemLabelTip
+                v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
+                :content="formItemConfig.tip"
+                :icon="formItemConfig.tipIcon"
+                :popper-class="formItemConfig.tipPopperClass"
+                :placement="formItemConfig.tipPlacement"
             />
-        </template>
 
-        <!-- 优先级2：配置式控件（组） -->
-        <template
-            v-else-if="formItemConfig.controlConfigs && formItemConfig.controlConfigs.length > 0"
-        >
-            <FormItemControlGroup
-                :form-item-config="formItemConfig"
-                :control-configs="formItemConfig.controlConfigs"
-                :source-model="formConfig.model"
-                :prop-key="formItemConfig.prop"
-            />
-        </template>
-
-        <!-- 优先级3：配置式控件（单） -->
-        <template v-else-if="formItemConfig.controlConfig">
-            <FormItemControl
-                :form-item-config="formItemConfig"
-                :control-config="formItemConfig.controlConfig"
-                :prop="toRef(formConfig.model, formItemConfig.prop)"
-            />
-        </template>
-
-        <!-- 提醒：append -->
-        <FormItemLabelTip
-            v-if="formItemConfig.tip && formItemConfig.tipPosition !== 'label'"
-            :content="formItemConfig.tip"
-            :icon="formItemConfig.tipIcon"
-            :popper-class="formItemConfig.tipPopperClass"
-            :placement="formItemConfig.tipPlacement"
-        />
-
-        <!-- 字段变更历史 -->
-        <ElTooltip
-            v-if="currentFieldHistoryInfo"
-            :content="`修改前值：${currentFieldHistoryInfo.old}`"
-        >
-            <span class="item-tip log">
-                <LGIcon icon="xhx-public-tip-info" />
-            </span>
-        </ElTooltip>
+            <!-- 字段变更历史 -->
+            <ElTooltip
+                v-if="currentFieldHistoryInfo"
+                :content="`修改前值：${currentFieldHistoryInfo.old}`"
+            >
+                <span class="item-tip log">
+                    <LGIcon icon="xhx-public-tip-info" />
+                </span>
+            </ElTooltip>
+        </slot>
     </ElFormItem>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'GFormItem'
-})
-</script>
-
 <script lang="ts" setup>
-import { toRef, computed, isVNode } from 'vue'
-import type { FormProps, FormItemProps } from '../../../interface'
+import { toRef, computed, isVNode, inject, type Ref } from 'vue'
 import _ from 'lodash'
+import type { FormItemProps } from '../../../interface'
 import { ElFormItem, ElTooltip } from 'element-plus'
 import useHistoryLog from './hooks/useHistoryLog'
 import useArgAdvance from './hooks/useArgAdvance'
@@ -118,37 +106,54 @@ import FormItemControl from './components/formItemControl.vue'
 import FormItemControlGroup from './components/formItemControlGroup.vue'
 import FormItemLabelTip from './components/labelTip.vue'
 
+import formConfigProvideKey from '../../../constant/formConfigProvideKey'
+
+defineOptions({
+    name: 'GFormItem'
+})
+
 const props = withDefaults(
     defineProps<{
         /**
          * 表单 item 配置参数
          */
         formItemConfig: FormItemProps
-        /**
-         * 表单配置对象
-         */
-        formConfig: FormProps
     }>(),
     {
-        formItemConfig: null,
-        formConfig: null
+        formItemConfig: null
     }
 )
 
+const rootFormConfig = inject(formConfigProvideKey)
+
 // 字段配置属性包装
-useArgAdvance(props)
+useArgAdvance({ ...props, formConfig: rootFormConfig.value })
 
 // 字段历史变更记录
 const { currentFieldHistoryInfo } = useHistoryLog({
-    formConfig: props.formConfig,
+    formConfig: rootFormConfig.value,
     formItemConfig: props.formItemConfig
+})
+
+const currentClasss = computed(() => {
+    const type = props.formItemConfig?.controlConfig?.type
+
+    return {
+        'no-colon': rootFormConfig.value?.colon === false,
+        'g-form-item': true,
+        'show-tip': props.formItemConfig.tip || currentFieldHistoryInfo,
+        'field-log-tip': currentFieldHistoryInfo.value,
+        [`tip-${props.formItemConfig.tipPosition || 'append'}`]: props.formItemConfig.tip,
+        'no-margin-b': ['table', 'collapseItem'].includes(type),
+        'no-label': ['collapseItem', 'placeholder'].includes(type)
+    }
 })
 
 // 没有 label 的控件列表：将 labelWidth 置为 0
 const labelWidth = computed(() => {
     if (!props.formItemConfig.label) return '0px'
     if (props.formItemConfig.labelWidth) return props.formItemConfig.labelWidth
-    if (props.formConfig?.labelWidth) return props.formConfig.labelWidth
+    if (rootFormConfig.value?.labelWidth) return rootFormConfig.value.labelWidth
     return 'auto'
 })
 
@@ -170,14 +175,6 @@ const elFormItemProps = computed<any>(() => {
         lg,
         xl,
         tip,
-
-        // 拖拽平台扩展属性
-        selected,
-        default: defaultval,
-        _control_propertys_,
-        _events_provide_,
-        _events_holding_,
-        _extend_properties_,
 
         // 剩余原生 element 有效属性
         ...formItemProps

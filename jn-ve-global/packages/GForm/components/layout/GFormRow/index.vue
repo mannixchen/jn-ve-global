@@ -1,28 +1,20 @@
 <template>
-    <ElRow :gutter="formConfig?.gutter ?? 20" class="form-item-row">
+    <ElRow :gutter="rootFormConfig?.gutter ?? 20" class="form-item-row">
         <slot />
     </ElRow>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'GFormRow'
-})
-</script>
-
 <script lang="ts" setup>
+import { inject } from 'vue'
 import type { FormProps } from '../../../interface'
 import { ElRow } from 'element-plus'
+import formConfigProvideKey from '../../../constant/formConfigProvideKey'
 
-const props = withDefaults(
-    defineProps<{
-        formConfig?: FormProps
-    }>(),
-    {
-        formConfig: null
-    }
-)
+defineOptions({
+    name: 'GFormRow'
+})
+
+const rootFormConfig = inject(formConfigProvideKey)
 </script>
 
 <style lang="scss" scoped>

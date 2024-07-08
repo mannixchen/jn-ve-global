@@ -10,40 +10,37 @@
         ]"
         v-bind="getElColConfigs(formItemConfig)"
     >
-        <LGFormItem v-bind="props" />
+        <LGFormItem v-bind="props">
+            <!-- 针对低码平台，这里要有一个 slot 占位，作为容器 -->
+            <template #default="{ itemConfig, vmodel }">
+                <slot :item-config="(itemConfig as FormItemProps)" :vmodel="(vmodel as Ref<any>)" />
+            </template>
+        </LGFormItem>
     </ElCol>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
+<script lang="ts" setup>
+import { type Ref } from 'vue'
+import { type FormItemProps } from '../../../interface'
+import { ElCol } from 'element-plus'
+import LGFormItem from '../GFormItem/index.vue'
+
+defineOptions({
     name: 'GColFormItem'
 })
-</script>
-
-<script lang="ts" setup>
-import { FormItemProps, FormProps } from '../../../index'
-import LGFormItem from '../GFormItem/index.vue'
-import { ElCol } from 'element-plus'
 
 const props = withDefaults(
     defineProps<{
-        /**
-         * 表单 item 配置参数
-         */
         formItemConfig: FormItemProps
-        /**
-         * 表单配置对象
-         */
-        formConfig: FormProps
     }>(),
     {
-        formItemConfig: null,
-        formConfig: null
+        formItemConfig: null
     }
 )
 
-// el col 的配置：响应式布局 || span 布局
+/**
+ * 从统一的 FormItemProps 中，提取出 el-col 的配置参数
+ */
 const getElColConfigs = (item: FormItemProps): any => {
     const baseConfig = {
         offset: item.offset ?? 0

@@ -258,4 +258,4 @@ export interface RenderFormItem extends FormItemBaseProps {
     controlConfig?: ControlConfig
 }
 
-export type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem
+export type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem | FormItemBaseProps
