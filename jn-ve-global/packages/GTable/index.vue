@@ -100,6 +100,7 @@ import { watch, nextTick, computed, ref, provide } from 'vue'
 import { ElTable, ElTableColumn, ElPagination } from 'element-plus'
 import { size2Rem } from '@jsjn/utils'
 import { GIcon as LGIcon } from '../GIcon'
+import _ from 'lodash'
 
 import type { TableConfig, TableMethods as TableInstance } from './interface'
 import { getTableProps } from './utils'
@@ -158,7 +159,13 @@ watch(
     () => localInstance.value,
     (instance) => {
         if (!instance) return
-        localConfig.value.instance = instance
+        
+        if (localConfig.value.instance === null) {
+            localConfig.value.instance = instance
+        } else if (_.isObject(localConfig.value.instance)) {
+            _.assign(localConfig.value.instance, instance)
+        }
+        
         /**
          * 较少情况下会有布局错乱，使用 ele 提供的方法重新布局
          */

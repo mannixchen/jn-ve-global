@@ -107,9 +107,14 @@
                 :tree-data="(controlConfig as SelectTreeControlConfig).treeData"
                 v-bind="(controlConfig.props as any)"
             >
-                <template v-if="(controlConfig as SelectTreeControlConfig)?.props?.slots?.treeNode" #treeNode="{ node, data }">
+                <template
+                    v-if="(controlConfig as SelectTreeControlConfig)?.props?.slots?.treeNode"
+                    #treeNode="{ node, data }"
+                >
                     <!-- {{ (controlConfig as SelectTreeControlConfig).props.slots.treeNode(node) }} -->
-                    <component :is="(controlConfig as SelectTreeControlConfig).props.slots.treeNode(data, node)" />
+                    <component
+                        :is="(controlConfig as SelectTreeControlConfig).props.slots.treeNode(data, node)"
+                    />
                 </template>
             </LGSelectTree>
         </template>

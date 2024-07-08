@@ -1,9 +1,9 @@
 <template>
-    <div :class="{ 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }">
+    <div :class="{ 'is-show-anchor': localConfig?.showNavBars && isCollapseLayout }">
         <ElForm
             v-if="config && refreshLoad"
             ref="localInstance"
-            :class="['g-form', { 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }]"
+            :class="['g-form', { 'is-show-anchor': localConfig?.showNavBars && isCollapseLayout }]"
             v-bind="formRootConfigs"
         >
             <!-- 
@@ -125,6 +125,14 @@ watch(
         localConfig.value = config
         modelCache.value = _.cloneDeep(config.model)
     }
+)
+
+watch(
+    () => props.config,
+    (config) => {
+        console.log(`%c ********* 表单配置 *********`, 'color: #67c23a;', config)
+    },
+    { deep: true, immediate: true }
 )
 
 /**
