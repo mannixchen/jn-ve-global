@@ -1,3 +1,13 @@
+/*
+ * @Author: “zhujin” zhujin@jsjngf.com
+ * @Date: 2024-02-18 14:59:56
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-07-04 17:41:31
+ * @FilePath: \@jsjn-librar-monorepo\examples\src\views\demo\baseModuleTest\component\TableColumns.tsx
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ */
 import { reactive } from 'vue'
 import { TableColumnProps } from 'jn-ve-global'
 
@@ -13,6 +23,7 @@ export default () =>
             prop: 'name',
             label: '姓名',
             width: 480,
+            fixed: true,
             showOverflowTooltip: true
         },
         {
@@ -33,13 +44,13 @@ export default () =>
             }
         },
         {
-            prop: 'tag',
-            label: '标签',
+            prop: 'tag1',
+            label: '标签1',
             width: 480,
             render(row) {
                 return (
                     <el-switch
-                        v-model={row.tag}
+                        v-model={row.tag1}
                         class='ml-2'
                         active-color='#13ce66'
                         inactive-color='#ff4949'

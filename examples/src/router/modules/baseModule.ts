@@ -34,6 +34,15 @@ const routes: Array<RouteConfig> = [
                     isBlurry: true
                 },
                 component: () => import('@/views/demo/baseModuleTest/selectionDemo.vue')
+            },
+            {
+                path: 'baseModuleV2',
+                name: 'baseModule-v2',
+                meta: {
+                    title: '总览V2',
+                    isBlurry: true
+                },
+                component: () => import('@/views/demo/baseModuleTest/baseModuleV2.vue')
             }
         ]
     }
