@@ -79,6 +79,7 @@
         "@types/node": "^18.19.39",
         "@types/nprogress": "^0.2.3",
         "@types/qs": "^6.9.15",
+        "@types/sortablejs": "^1.15.8",
         "@types/through2": "^2.0.41",
         "@types/uuid": "^9.0.8",
         "@types/vinyl": "^2.0.12",

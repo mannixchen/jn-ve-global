@@ -107,12 +107,11 @@
 <script lang="ts" setup>
 import { onMounted, watch, ref, computed, reactive, toRefs } from 'vue'
 import { Delete, QuestionFilled, Plus, Search } from '@element-plus/icons-vue'
-import { TableColumnProps } from '@component/GTable'
+import { type TableColumnProps } from '../../GTable'
 import { Order, orderOptions } from '../constant'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 import type { RuleOption, OrderProps } from '../interface'
-
 
 const COMPONENT_NAME = 'Sort'
 defineOptions({

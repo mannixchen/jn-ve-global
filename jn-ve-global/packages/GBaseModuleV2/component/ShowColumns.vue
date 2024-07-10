@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-07-05 15:42:48
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-07-10 16:37:41
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/ShowColumns.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -103,7 +103,7 @@
 
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed, reactive, toRefs, inject, onMounted } from 'vue'
-import { TableColumnProps } from '@component/GTable'
+import { type TableColumnProps } from '../../GTable'
 import { tableColumnsKey } from '../constant'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import { cloneDeep } from 'lodash'
