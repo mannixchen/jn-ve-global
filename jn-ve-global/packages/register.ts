@@ -6,6 +6,7 @@ import { default as FunctionalComponent } from './FunctionalComponent'
 import { GAddress } from './GAddress'
 import { GBaseDrawerContent } from './GBaseDrawerContent'
 import { GBaseModule } from './GBaseModule'
+import { GBaseModuleV2 } from './GBaseModuleV2'
 import { GButtonGroup } from './GButtonGroup'
 import { GChart, GChartBasic } from './GChart'
 import { GCollapse, GCollapseItem } from './GCollapse'
@@ -38,6 +39,7 @@ const components = [
     GAddress,
     GBaseDrawerContent,
     GBaseModule,
+    GBaseModuleV2,
     GButtonGroup,
     GChart,
     GChartBasic,

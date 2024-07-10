@@ -189,6 +189,21 @@ if (localConfig.value.pagination) {
     )
 }
 
+//监听列变化
+watch(
+    () => localConfig.value.columns,
+    (val) => {
+        refreshLoad.value = false
+        nextTick(() => {
+            refreshLoad.value = true
+            setSelectRow(localConfig.value.selectedRows)
+        })
+    },
+    {
+        deep: true
+    }
+)
+
 const isRefresh = ref<boolean>(false)
 const handleEmptyRefresh = () => {
     isRefresh.value = true

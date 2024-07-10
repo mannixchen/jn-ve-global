@@ -1,0 +1,30 @@
+@mixin middle-area {
+    margin-top: 20px;
+    padding: 0 var(--jn-ve-g-base-module-padding-lr);
+    margin-bottom: 10px;
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+
+    /* 左 */
+    .middle-left-wrapper {
+        width: 42%;
+
+        // 按钮组
+        .g-button-group {
+            //margin-top: 3px;
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+            --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+        }
+    }
+
+    /* 右 */
+    .middle-right-wrapper {
+        width: 55%;
+        display: flex;
+
+        .search-input-wrapper {
+            width: 300px;
+        }
+    }
+}
