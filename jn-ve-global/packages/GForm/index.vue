@@ -1,9 +1,9 @@
 <template>
-    <div :class="{ 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }">
+    <div :class="{ 'is-show-anchor': localConfig?.showNavBars && isCollapseLayout }">
         <ElForm
             v-if="config && refreshLoad"
             ref="localInstance"
-            :class="['g-form', { 'is-show-anchor': localConfig.showNavBars && isCollapseLayout }]"
+            :class="['g-form', { 'is-show-anchor': localConfig?.showNavBars && isCollapseLayout }]"
             v-bind="formRootConfigs"
         >
             <!-- 
@@ -15,14 +15,10 @@
                 <!-- 默认表单项 || 不被 Collapse 控制的表单项 -->
                 <LGFormRow
                     v-if="baseFormItems.length"
-                    :form-config="(localConfig as FormProps)"
                     :class="{ 'is-collapse-layout': isCollapseLayout }"
                 >
                     <template v-for="(item, index) in baseFormItems" :key="`${item.prop}-${index}`">
-                        <LGColFormItem
-                            :form-config="(localConfig as FormProps)"
-                            :form-item-config="(item as FormItemProps)"
-                        />
+                        <LGColFormItem :form-item-config="item" />
                     </template>
                 </LGFormRow>
 
@@ -38,27 +34,18 @@
                         :key="`${collapseItem.title}-${index}`"
                     >
                         <LGCollapseItem
-                            :title="collapseItem.title"
-                            :name="collapseItem.name"
-                            :disabled="collapseItem.disabled"
-                            :prefix="collapseItem.prefix"
-                            :btns="collapseItem.btns"
-                            :shadow="collapseItem.shadow"
-                            :tip="collapseItem.tip"
+                            v-bind="collapseItem"
                             :class="{
                                 'form-item-classify': true,
                                 'is-tail': collapseItem.isTail
                             }"
                         >
-                            <LGFormRow :form-config="(localConfig as FormProps)">
+                            <LGFormRow>
                                 <template
                                     v-for="(item, index) in collapseItem.content"
                                     :key="`${item.prop}-${index}`"
                                 >
-                                    <LGColFormItem
-                                        :form-config="(localConfig as FormProps)"
-                                        :form-item-config="item"
-                                    />
+                                    <LGColFormItem :form-item-config="item" />
                                 </template>
                             </LGFormRow>
                         </LGCollapseItem>
@@ -74,13 +61,13 @@ import { watch, provide, ref, toRef, nextTick, computed, type Ref, watchEffect }
 import type { FormProps, FormInstance, FormItemProps } from './interface'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
-import useCollapseLayout from './mixins/useCollapseLayout'
+import useCollapseLayout from './hooks/useCollapseLayout'
 import { ElForm } from 'element-plus'
 import _ from 'lodash'
 
 // 本地组件
-import LGFormRow from './component/GFormRow/index.vue'
-import LGColFormItem from './component/GColFormItem/index.vue'
+import LGFormRow from './components/layout/GFormRow/index.vue'
+import LGColFormItem from './components/layout/GColFormItem/index.vue'
 import { GCollapse as LGCollapse, GCollapseItem as LGCollapseItem } from '../GCollapse'
 
 defineOptions({
@@ -125,6 +112,14 @@ watch(
         localConfig.value = config
         modelCache.value = _.cloneDeep(config.model)
     }
+)
+
+watch(
+    () => props.config,
+    (config) => {
+        console.log(`%c ********* 表单配置 *********`, 'color: #67c23a;', config)
+    },
+    { deep: true, immediate: true }
 )
 
 /**

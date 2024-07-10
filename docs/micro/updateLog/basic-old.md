@@ -173,9 +173,9 @@
 
 <h3>资源</h3>
 
-新核心：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-new-core/-/basic-new-core-1.0.2.tgz) <br/>
-监&nbsp; &nbsp; 管：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-regtech/-/basic-regtech-1.0.2.tgz)<br/>
-C &nbsp; &nbsp; 端：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-consumer/-/basic-consumer-1.0.2.tgz)<br/>
+新核心：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-new-core/-/basic-new-core-1.0.2.tgz) <br/>
+监&nbsp; &nbsp; 管：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-regtech/-/basic-regtech-1.0.2.tgz)<br/>
+C &nbsp; &nbsp; 端：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-consumer/-/basic-consumer-1.0.2.tgz)<br/>
 
 <h3>BugFix</h3>
 
@@ -213,9 +213,9 @@ C &nbsp; &nbsp; 端：[下载](http://172.31.71.159/repository/npm-release/@jsjn
 
 <h3>资源</h3>
 
-新核心：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-new-core/-/basic-new-core-1.0.1.tgz) <br/>
-监&nbsp; &nbsp; 管：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-regtech/-/basic-regtech-1.0.1.tgz)<br/>
-C &nbsp; &nbsp; 端：[下载](http://172.31.71.159/repository/npm-release/@jsjn/basic-consumer/-/basic-consumer-1.0.1.tgz)<br/>
+新核心：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-new-core/-/basic-new-core-1.0.1.tgz) <br/>
+监&nbsp; &nbsp; 管：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-regtech/-/basic-regtech-1.0.1.tgz)<br/>
+C &nbsp; &nbsp; 端：[下载](http://172.31.71.159/repository/npm-jsjngf/@jsjn/basic-consumer/-/basic-consumer-1.0.1.tgz)<br/>
 
 <h3>基座所包含的功能</h3>
 

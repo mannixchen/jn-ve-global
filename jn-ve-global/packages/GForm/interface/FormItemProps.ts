@@ -89,53 +89,7 @@ export type ExtendControlConfig = ControlConfig & {
     after: string
 }
 
-// 适配低码平台的额外属性
-interface _LowCodeFormItemCustomProps {
-    /**
-     * 控件的默认值（适用拖拽平台）
-     */
-    default?: any
-    /**
-     * item 是否选中（适用拖拽平台）
-     */
-    selected?: boolean
-    /**
-     * 表单 item 的配置项
-     *  - 控件配置项
-     *
-     * 用来表述表单控件的可配置属性的配置对象，取值方式依赖于 g-form 的对应的控件接口
-     * 每个字段都代表了源控件的一个配置属性，字段取值因为是要生成表单控件（属性配置菜单）
-     *  故：属性值为控件配置对象
-     */
-    _control_propertys_?: FormItemProps[]
-    /**
-     * 可供选择的事件
-     */
-    _events_provide_?: string[]
-    /**
-     * 持有的事件
-     */
-    _events_holding_?: {
-        [k: string]: string
-    }
-    /**
-     * 扩展属性待选列表，一般来说，扩展属性的配置较为复杂
-     * 需要自定义组件的处理
-     * 且扩展属性属于通用型属性
-     */
-    _extend_properties_?: Array<
-        | 'treeData'
-        | 'getOptionsUrl'
-        | 'mapOptionsCb'
-        | 'options'
-        | 'columns'
-        | 'optionProps'
-        | 'fetchSuggestions'
-        | 'valueKey'
-    >
-}
-
-export interface FormItemCustomProps extends _LowCodeFormItemCustomProps {
+export interface FormItemCustomProps {
     /**
      * 标签文本
      * 原生需要一个字符串，
@@ -304,4 +258,4 @@ export interface RenderFormItem extends FormItemBaseProps {
     controlConfig?: ControlConfig
 }
 
-export type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem
+export type FormItemProps = ControlFormItem | RenderFormItem | ControlsFormItem | FormItemBaseProps

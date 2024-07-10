@@ -104,6 +104,14 @@ const routes: Array<RouteConfig> = [
                     title: 'detail'
                 },
                 component: () => import('@/views/demo/form/detail.vue')
+            },
+            {
+                path: 'free',
+                name: 'free',
+                meta: {
+                    title: '插槽自由组装'
+                },
+                component: () => import('@/views/demo/form/free.vue')
             }
             // {
             //     path: 'formGenerateTest',

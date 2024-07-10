@@ -1,9 +1,9 @@
 import _GForm from './index.vue'
-import _GFormRow from './component/GFormRow/index.vue'
-import _GFormItem from './component/GFormItem/index.vue'
-import _GColFormItem from './component/GColFormItem/index.vue'
-import _GChoose from './component/GChoose/index.vue'
-import _GAdvanceInput from './component/GAdvanceInput/index.vue'
+import _GFormRow from './components/layout/GFormRow/index.vue'
+import _GFormItem from './components/layout/GFormItem/index.vue'
+import _GColFormItem from './components/layout/GColFormItem/index.vue'
+import _GChoose from './components/control/GChoose/index.vue'
+import _GAdvanceInput from './components/control/GAdvanceInput/index.vue'
 
 export * from './interface'
 

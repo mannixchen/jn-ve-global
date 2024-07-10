@@ -8,9 +8,9 @@ import WordFileTypeImg from './assets/images/Word.png'
 import ZARFileTypeImg from './assets/images/ZAR.png'
 import DefaulrFileLogo from './assets/images/Other.png'
 import myAxios from '../_http/http'
-import { IMG_EXT, PDF_EXT, WORD_EXT, EXCEL_EXT, PPT_EXT } from '../GFilePreview'
 import { UploadFile } from './interface/UploadFile'
 import { global } from '@jsjn/utils'
+import { IMG_EXT, PDF_EXT, WORD_EXT, EXCEL_EXT, PPT_EXT } from '../GFilePreview/constant/fileTypeList'
 import { getFileType } from '../GFilePreview/utils'
 
 /**

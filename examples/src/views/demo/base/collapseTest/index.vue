@@ -19,7 +19,7 @@
                 :disabled="isDisabled"
                 title="表格"
                 name="2"
-                :table-config="tableConfig"
+                :table-config="_.cloneDeep(tableConfig)"
                 :height="500"
             />
 
@@ -30,16 +30,16 @@
                 <p>自定义内容........</p>
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
-                <GTable :config="tableConfig" />
+                <GTable :config="_.cloneDeep(tableConfig)" />
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
-                <GTable :config="tableConfig" />
+                <GTable :config="_.cloneDeep(tableConfig)" />
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
-                <GTable :config="tableConfig" />
+                <GTable :config="_.cloneDeep(tableConfig)" />
             </GCollapseItem>
             <GCollapseItem title="自定义2自定义2自定义2自定义2" name="4">
-                <GTable :config="tableConfig" />
+                <GTable :config="_.cloneDeep(tableConfig)" />
             </GCollapseItem>
         </g-collapse>
     </div>

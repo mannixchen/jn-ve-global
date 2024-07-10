@@ -30,7 +30,8 @@ export default {
 <script lang="ts" setup>
 import { nextTick, ref, computed, watch } from 'vue'
 import { ElInput as ElInputCom } from 'element-plus'
-import { GAdvanceInput as LGAdvanceInput, type FigureInputProps } from '../GForm'
+import LGAdvanceInput from '../GForm/components/control/GAdvanceInput/index.vue'
+import { type FigureInputProps } from '../GForm/interface'
 import { toThousands as reToThousands, restrictDecimals, clearNoNum, getNumUnit } from '@jsjn/utils'
 
 const props = withDefaults(
