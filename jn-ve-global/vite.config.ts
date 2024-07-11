@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, normalizePath } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
@@ -27,6 +27,10 @@ const externals = {
     // 'async-validator': 'Schema'
 }
 
+function getIconsFilePath(fileex) {
+    return normalizePath(resolve(compRoot, 'assets', 'icons', 'ali', fileex))
+}
+
 export default defineConfig({
     plugins: [
         vue(),
@@ -49,12 +53,17 @@ export default defineConfig({
             targets: [
                 {
                     src: [
-                        `${compRoot}/assets/icons/ali/*.ttf`,
-                        `${compRoot}/assets/icons/ali/*.woff`,
-                        `${compRoot}/assets/icons/ali/*.woff2`,
-                        `${compRoot}/assets/icons/ali/*.css`
+                        // `${compRoot}/assets/icons/ali/*.ttf`,
+                        // `${compRoot}/assets/icons/ali/*.woff`,
+                        // `${compRoot}/assets/icons/ali/*.woff2`,
+                        // `${compRoot}/assets/icons/ali/*.css`
+
+                        getIconsFilePath('*.ttf'),
+                        getIconsFilePath('*.woff'),
+                        getIconsFilePath('*.woff2'),
+                        getIconsFilePath('*.css')
                     ],
-                    dest: `${output}/fonts`
+                    dest: normalizePath(resolve(output, 'fonts')) // `${output}/fonts`
                 }
             ]
         })
