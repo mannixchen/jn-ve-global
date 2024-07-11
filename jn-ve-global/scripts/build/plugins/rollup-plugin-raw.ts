@@ -5,10 +5,10 @@ const os = require('os')
 // 判断操作系统类型
 const platform = os.platform()
 let filePath = ''
-if (platform === 'darwin') {
-    filePath = '/icons/ali/iconfont.txt'
-} else if (platform === 'win32') {
+if (platform === 'win32') {
     filePath = '\\icons\\ali\\iconfont.txt'
+} else {
+    filePath = '/icons/ali/iconfont.txt'
 }
 
 export default function RollupPluginRaw() {
