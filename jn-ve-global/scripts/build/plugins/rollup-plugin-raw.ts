@@ -1,5 +1,16 @@
 import path from 'path'
 import { readFileSync } from 'fs'
+const os = require('os');
+
+// 判断操作系统类型
+const platform = os.platform();
+let filePath = ''
+if (platform === 'darwin') {
+    filePath = '/icons/ali/iconfont.txt'
+
+} else if (platform === 'win32') {
+    filePath = '\\icons\\ali\\iconfont.txt'
+}
 
 export default function RollupPluginRaw() {
     return {
@@ -17,7 +28,7 @@ export default function RollupPluginRaw() {
             }
         },
         transform(_, id) {
-            if (id.includes('/icons/ali/iconfont.txt')) {
+            if (id.includes(filePath)) {
                 const filePath = path.resolve(process.cwd(), id)
                 const fileContent = readFileSync(filePath, 'utf-8')
                 return {
