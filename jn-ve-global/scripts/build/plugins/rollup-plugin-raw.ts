@@ -1,13 +1,12 @@
 import path from 'path'
 import { readFileSync } from 'fs'
-const os = require('os');
+const os = require('os')
 
 // 判断操作系统类型
-const platform = os.platform();
+const platform = os.platform()
 let filePath = ''
 if (platform === 'darwin') {
     filePath = '/icons/ali/iconfont.txt'
-
 } else if (platform === 'win32') {
     filePath = '\\icons\\ali\\iconfont.txt'
 }

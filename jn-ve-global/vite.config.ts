@@ -53,17 +53,12 @@ export default defineConfig({
             targets: [
                 {
                     src: [
-                        // `${compRoot}/assets/icons/ali/*.ttf`,
-                        // `${compRoot}/assets/icons/ali/*.woff`,
-                        // `${compRoot}/assets/icons/ali/*.woff2`,
-                        // `${compRoot}/assets/icons/ali/*.css`
-
                         getIconsFilePath('*.ttf'),
                         getIconsFilePath('*.woff'),
                         getIconsFilePath('*.woff2'),
                         getIconsFilePath('*.css')
                     ],
-                    dest: normalizePath(resolve(output, 'fonts')) // `${output}/fonts`
+                    dest: normalizePath(resolve(output, 'fonts'))
                 }
             ]
         })
