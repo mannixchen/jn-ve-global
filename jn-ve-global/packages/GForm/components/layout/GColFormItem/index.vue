@@ -48,7 +48,7 @@ const getElColConfigs = (item: FormItemProps): any => {
 
     const spanConfig = {
         ...baseConfig,
-        span: item.span ?? 6
+        span: item.span ?? 8
     }
 
     const bootstrapConfig = {
@@ -60,8 +60,8 @@ const getElColConfigs = (item: FormItemProps): any => {
         xl: item.xl ?? 8
     }
 
-    if (item.span) return spanConfig
     if (item.xs || item.sm || item.md || item.lg || item.xl) return bootstrapConfig
+    if (item.span) return spanConfig
     return spanConfig
 }
 </script>
