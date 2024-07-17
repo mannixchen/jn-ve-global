@@ -29,7 +29,7 @@ export interface BtnProps {
     /**
      * 事件
      */
-    onClick?: () => void
+    onClick?: (row?: any, index?: number) => void
     /**
      * 按钮尺寸
      */

@@ -14,7 +14,7 @@ export interface TableRowBtnProps<TBD> extends BtnProps {
     /**
      * 按钮点击事件
      */
-    onClick?: (row?: TBD, index?: number) => void
+    onClick?: (row: TBD, index: number) => void
 }
 
 export interface TableConfig<TBD = any> extends TableProps<TBD> {

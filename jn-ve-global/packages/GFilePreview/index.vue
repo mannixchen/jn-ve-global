@@ -2,7 +2,7 @@
     <div
         v-if="previewType && !loadComSourceErr"
         v-loading="loadingSourceFlag || loadComSourceFlag"
-        class="g-file-preview__wrapper"
+        :class="['g-file-preview__wrapper', { 'is-expand': expand }]"
         :style="`height: ${[PreviewType.IMG].includes(previewType) ? 0 : contentHeight}`"
     >
         <!-- 图片预览 -->
@@ -16,10 +16,7 @@
         <component
             :is="currentOfficeCom"
             v-if="
-                fileUrl &&
-                    [PreviewType.DOCX, PreviewType.EXCEL].includes(previewType) &&
-                    currentOfficeCom &&
-                    isMounted
+                fileUrl && [PreviewType.DOCX].includes(previewType) && currentOfficeCom && isMounted
             "
             :src="fileUrl"
             :style="`height: ${contentHeight}`"
@@ -40,6 +37,25 @@
             frameborder="0"
             :style="`width: 100%; height: ${contentHeight}; padding: 0; margin: 0`"
         />
+
+        <div
+            v-if="
+                fileUrl &&
+                    [PreviewType.DOCX, PreviewType.EXCEL].includes(previewType) &&
+                    currentOfficeCom &&
+                    isMounted
+            "
+            class="doc-size__trigger"
+            @click="expand = !expand"
+        >
+            <ElTooltip
+                content="点击扩大展示区域，文档展示不全时，可尝试该方案"
+                effect="dark"
+                placement="top"
+            >
+                <LGIcon icon="ali-icon-biaodanzujian-shurukuang" />
+            </ElTooltip>
+        </div>
     </div>
 
     <div v-else class="error">
@@ -60,11 +76,12 @@ import { IMG_EXT } from './constant/fileTypeList'
 import { getFileType } from './utils'
 import _ from 'lodash'
 import useSource from './hooks/useSource'
-import { ElImageViewer } from 'element-plus'
+import { ElImageViewer, ElTooltip } from 'element-plus'
 import { getFileBlobUrlByRequest, getFileWpsPreviewUrl } from '../GUpload/utils'
 import { global } from '@jsjn/utils'
 import { PreviewMode, PreviewType } from './constant/enums'
 import useLocalPreviewMode from './hooks/useLocalPreviewMode'
+import { GIcon as LGIcon } from '../GIcon'
 
 const props = withDefaults(
     defineProps<{
@@ -104,6 +121,7 @@ const props = withDefaults(
 const emits = defineEmits(['close'])
 
 const { localPreviewMode, isWpsPreview } = useLocalPreviewMode({ props })
+const expand = ref<boolean>(false)
 
 const documentTitleCache = global.document.title
 onUnmounted(() => (global.document.title = documentTitleCache))
@@ -261,5 +279,35 @@ onUnmounted(() => {
 <style>
 .x-spreadsheet-contextmenu {
     display: none !important;
+}
+
+.g-file-preview__wrapper {
+    position: relative;
+
+    .doc-size__trigger {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        font-size: 30px;
+        z-index: 999;
+        transition: color 0.3s;
+        color: #fff;
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 0 14px;
+        border-radius: 4px;
+
+        &:hover {
+            color: var(--el-color-primary);
+        }
+    }
+
+    &.is-expand {
+        .docx-wrapper {
+            .docx {
+                width: auto !important;
+            }
+        }
+    }
 }
 </style>

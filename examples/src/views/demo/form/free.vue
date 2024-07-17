@@ -2,11 +2,27 @@
     <el-button @click="print">
         打印
     </el-button>
+
+    <br>
+    <br>
+
     <g-form :config="formConfig">
         <g-form-row>
-            <g-col-form-item :form-item-config="{ label: '测试22', prop: 'name' }">
-                <template #default="{ itemConfig, vmodel }">
+            <g-col-form-item
+                :form-item-config="{
+                    label: '姓名',
+                    prop: 'name',
+                    tip: 'qwer'
+                }"
+            >
+                <template #default="{ vmodel }">
                     <el-input v-model="vmodel.value" />
+                </template>
+            </g-col-form-item>
+
+            <g-col-form-item :form-item-config="{ label: '年龄', prop: 'age' }">
+                <template #default="{ vmodel }">
+                    <el-input-number v-model="vmodel.value" />
                 </template>
             </g-col-form-item>
         </g-form-row>
@@ -24,11 +40,11 @@ defineOptions({
 const formConfig = reactive<FormProps>({
     instance: null,
     model: {
-        name: ''
+        name: '',
+        age: 18
     },
-    formItems: [],
     colon: false,
-    disabled: true
+    disabled: false
 })
 
 const print = () => {
