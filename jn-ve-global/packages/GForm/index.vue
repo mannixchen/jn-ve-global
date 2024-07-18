@@ -114,14 +114,6 @@ watch(
     }
 )
 
-watch(
-    () => props.config,
-    (config) => {
-        console.log(`%c ********* 表单配置 *********`, 'color: #67c23a;', config)
-    },
-    { deep: true, immediate: true }
-)
-
 /**
  * 监听实例的变化
  *  - 抛出
