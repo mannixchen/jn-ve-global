@@ -16,7 +16,10 @@
         <component
             :is="currentOfficeCom"
             v-if="
-                fileUrl && [PreviewType.DOCX].includes(previewType) && currentOfficeCom && isMounted
+                fileUrl &&
+                    [PreviewType.DOCX, PreviewType.EXCEL].includes(previewType) &&
+                    currentOfficeCom &&
+                    isMounted
             "
             :src="fileUrl"
             :style="`height: ${contentHeight}`"
@@ -40,10 +43,7 @@
 
         <div
             v-if="
-                fileUrl &&
-                    [PreviewType.DOCX, PreviewType.EXCEL].includes(previewType) &&
-                    currentOfficeCom &&
-                    isMounted
+                fileUrl && [PreviewType.DOCX].includes(previewType) && currentOfficeCom && isMounted
             "
             class="doc-size__trigger"
             @click="expand = !expand"
