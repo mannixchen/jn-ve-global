@@ -51,7 +51,7 @@
             <ElTooltip
                 content="点击扩大展示区域，文档展示不全时，可尝试该方案"
                 effect="dark"
-                placement="top"
+                placement="left"
             >
                 <LGIcon icon="ali-icon-biaodanzujian-shurukuang" />
             </ElTooltip>
