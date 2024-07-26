@@ -27,7 +27,7 @@ export function getGlobal(win: Window & typeof globalThis = window): Window & ty
  * 获取 url 中的参数，并转换为对象
  * @returns
  */
-export function getUrlParams(queryString: string = (global || getGlobal()).location.href) {
+export function getUrlParams(queryString: string = (global || getGlobal()).location.href): any {
     let result = {}
     let reg = /[?&][^?&]+=[^?&]+/g
     let newSearch = queryString.match(reg)
