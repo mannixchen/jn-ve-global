@@ -89,6 +89,32 @@ export type ExtendControlConfig = ControlConfig & {
     after: string
 }
 
+/**
+ * 为 低代码引擎扩展的字段
+ */
+export interface FormItemLowcodeEngineProps {
+    /**
+     * 字段禁用，常作用于  prop 的处理
+     */
+    __disabled?: boolean
+    /**
+     * 字段数据类型，对应后台字段类型
+     */
+    __type?: string
+    /**
+     * 字段长度
+     */
+    __length?: number
+    /**
+     * 默认值
+     */
+    __defaultVal?: any
+    /**
+     * 描述
+     */
+    __description?: string
+}
+
 export interface FormItemCustomProps {
     /**
      * 标签文本
@@ -176,7 +202,7 @@ export interface FormItemCustomProps {
 }
 
 // formItem 基础参数
-export interface FormItemBaseProps extends FormItemCustomProps {
+export interface FormItemBaseProps extends FormItemCustomProps, FormItemLowcodeEngineProps {
     /**
      * 表单域 model 字段，在使用 validate、resetFields 方法的情况下，该属性是必填的
      */
