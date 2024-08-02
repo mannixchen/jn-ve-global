@@ -19,12 +19,16 @@
 
 // 覆盖自定义 icon 的自定义颜色
 .svg-icon-custom-color {
-    path,
-    rect,
-    polyline {
+    path {
         fill: currentColor;
-        stroke: currentColor;
     }
+    
+    // path,
+    // rect,
+    // polyline {
+    //     fill: currentColor;
+    //     stroke: currentColor;
+    // }
 }
 
 // TinyMce 富文本编辑器
@@ -47,7 +51,6 @@
 // ele 原生弹框样式覆盖
 .el-drawer,
 .el-dialog {
-
     .el-drawer__header,
     .el-dialog__header {
         display: flex;
