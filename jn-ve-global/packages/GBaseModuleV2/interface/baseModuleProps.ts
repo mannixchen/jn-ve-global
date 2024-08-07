@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-07-10 10:54:58
+ * @LastEditTime: 2024-07-30 11:28:29
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
  * @Description:
  *
@@ -38,7 +38,7 @@ export interface OperationProps {
 }
 
 export interface ExtraInfo {
-    appId?: string
+    clientId?: string
     funcId?: string
     pageId?: string
     tableId?: string
@@ -79,8 +79,13 @@ export interface BaseModuleProps {
     /**
      * 核心加载 table 数据的方法
      */
+    loadTableService?: (params?: any, replace?: Record<string, string | number>) => Promise<any>
     // loadTableMethods?: (page?: number) => void
-    loadTableService?: (params?: any) => Promise<any>
+
+     /**
+     * 替代接口路径中大括号中的变量
+     */
+     replace?: Record<string, string | number>
 
     /**
      * 下载表格
@@ -90,10 +95,11 @@ export interface BaseModuleProps {
      * 下载表格
      */
     exportMethod?: (params?: any) => void
+
     /**
      * 表格 loading flag
      */
-    tableLoading?: boolean
+    // tableLoading?: boolean
 
     /**
      * 多用途 api 去除 label，包括

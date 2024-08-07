@@ -1,3 +1,13 @@
+<!--
+ * @Author: “zhujin” zhujin@jsjngf.com
+ * @Date: 2024-07-10 16:42:17
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-08-06 19:21:23
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\index.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
     <div
         :class="[
@@ -23,10 +33,7 @@
 
         <!-- 中间操作区域 -->
         <div class="middle-area">
-            <div
-                v-if="(btns && btns.length) || $slots['middle-right'] || $slots['middle-left']"
-                class="middle-opertion-wrapper"
-            >
+            <div class="middle-opertion-wrapper">
                 <!-- 左 按钮组-->
                 <div class="middle-left-wrapper">
                     <slot name="middle-left">
@@ -43,20 +50,23 @@
                     <slot name="middle-right" />
                 </div> -->
                 <div class="middle-right-wrapper">
-                    <SearchCondition
-                        :form-config="props.searchFormProps"
-                        @confirm="confirmCondition"
-                    />
-                    <el-input
+                    <g-advance-input
                         v-model.trim="keyword"
                         class="search-input-wrapper"
                         placeholder="请输入关键字"
                         clearable
-                        :suffix-icon="Search"
+                        suffix="jg-public-dingbu-sousuo"
                         @change="loadTable"
+                    />
+                    <SearchCondition
+                        :form-config="props.searchFormProps"
+                        @confirm="confirmCondition"
                     />
                     <ShowColumns v-model="showColumns" />
                     <Sort :columns="props.tableColumns" @confirm="confirmSort" />
+                    <el-icon class="icon-wrapper" @click="loadTable">
+                        <RefreshRight />
+                    </el-icon>
                 </div>
             </div>
         </div>
@@ -99,7 +109,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed, Ref, provide, toRef, watch } from 'vue'
+import { ref, computed, Ref, provide, toRef, watch, onBeforeMount } from 'vue'
 import { ElTabs, ElTabPane } from 'element-plus'
 import TableSearch from './component/TableSearch.vue'
 import { GTable as LGTable, TableColumnProps, type TableConfig } from '../GTable'
@@ -107,12 +117,16 @@ import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
 import { GUpload } from '../GUpload'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
-import type { BaseModuleProps, QueryProps, OrderProps } from './interface'
+import type { BaseModuleProps, QueryProps, OrderProps, QueryParams } from './interface'
 import { tableColumnsKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
 import Sort from './component/Sort.vue'
 import SearchCondition from './component/SearchCondition.vue'
-import { Search } from '@element-plus/icons-vue'
+import { Search, RefreshRight } from '@element-plus/icons-vue'
+
+onBeforeMount(() => {
+    loadTable()
+})
 
 const props = withDefaults(defineProps<BaseModuleProps>(), {
     searchBtnsConfig: null,
@@ -121,7 +135,7 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     tablePagination: null,
     btns: () => [],
     searchBtnHorizontal: false,
-    tableLoading: false,
+    // tableLoading: false,
     noSearchLabel: false,
     searchBtnAuthCode: '',
     moreSearchMode: undefined,
@@ -134,8 +148,15 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     actionParams: null
 })
 
-const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
+const emits = defineEmits([
+    'getTableInstance',
+    'update:activeTab',
+    'update:selectedRows',
+    'update:tableData'
+])
 const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
+
+const tableLoading = ref<boolean>(false)
 
 const showColumns = ref<TableColumnProps[]>(props.tableColumns)
 
@@ -194,53 +215,71 @@ const { localTableConfig } = useMergeProps({ props, emits, showColumns, loadTabl
 //         // immediate: true
 //     }
 // )
-
-
+let params: QueryParams = {
+    order: {},
+    isOr: false,
+    queryList: []
+}
 const confirmCondition = (queryList: QueryProps[], isOr: boolean) => {
-    loadTable({ queryList, isOr })
+    params.isOr = isOr
+    params.queryList = queryList
+    // loadTable({ queryList, isOr })
+    loadTable()
 }
 const confirmSort = (order: OrderProps) => {
-    loadTable({ order })
+    params.order = order
+    // loadTable({ order })
+    loadTable()
 }
 
-function loadTable ({
-    order,
-    isOr,
-    queryList
-}: {
-    order?: OrderProps
-    isOr?: boolean
-    queryList?: QueryProps[]
-}) {
-    const { appId, funcId, pageId, tableId } = props?.extraInfo ?? {}
+// function loadTable(params?: QueryParams) {
+function loadTable(cb?: (data?: Record<string, any>[]) => void) {
+    if (props?.loadTableService) {
+        tableLoading.value = true
+    }
+    const { clientId, funcId, pageId, tableId } = props?.extraInfo ?? {}
+    const { order = {}, isOr = false, queryList = [] } = params ?? {}
     const req = {
-        exInfo: { appId, funcId, pageId, tableId },
-        order: order ?? {},
-        isOr: isOr ?? false,
+        extInfo: { clientId, funcId, pageId, tableId },
+        order,
+        isOr,
         paging: {
             current: localTableConfig.pagination.currentPage ?? 1,
             size: localTableConfig.pagination.pageSize ?? 10
         },
-        queryList: queryList ?? [],
+        queryList: queryList?.filter((item) => !['', null, undefined].includes(item.value)),
         allQuery: keyword.value
     }
-    props.loadTableService(req).then((res) => {
-        if (res?.code === '000000') {
-            localTableConfig.data = res?.data?.records ?? []
-            localTableConfig.pagination.total = res?.data?.total ?? 0
-        }
-    })
+
+    console.log('req', req)
+    props?.loadTableService &&
+        props
+            .loadTableService(req, props?.replace)
+            .then((res) => {
+                tableLoading.value = false
+                if (res?.code === '000000') {
+                    localTableConfig.data = res?.data?.records ?? []
+                    localTableConfig.pagination.total = res?.data?.total ?? 0
+
+                    cb?.(res?.data?.records ?? [])
+                }
+            })
+            .catch(() => {
+                tableLoading.value = false
+            })
 }
 
 // 抛出
 defineExpose({
     tableConfig: localTableConfig,
     tableInstance: localTableConfig.instance,
-    tableSearchRef
+    tableSearchRef,
+    loadTable
 } as {
     tableConfig: TableConfig
     tableInstance: TableConfig['instance']
     tableSearchRef: Ref<any>
+    loadTable: Function
 })
 </script>
 

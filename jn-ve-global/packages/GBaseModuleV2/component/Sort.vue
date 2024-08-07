@@ -3,20 +3,24 @@
         v-model:visible="sortPopoverVisible"
         placement="bottom-start"
         trigger="click"
-        :width="400"
+        width="4rem"
+        :popper-options="options"
     >
         <template #reference>
-            <el-button type="primary" text>
+            <!-- <el-button type="primary" text>
                 排序
-            </el-button>
+            </el-button> -->
+            <div class="sort-icon-wrapper">
+                <g-icon icon="sort" custom-color />
+            </div>
         </template>
         <div class="sort-wrapper">
             <div class="header-wrapper">
                 <div class="title-wrapper">
                     <div class="title">
-                        显示列
+                        排序
                     </div>
-                    <el-tooltip effect="dark" content="xxx" placement="top-start">
+                    <el-tooltip effect="dark" content="设置查询排序规则" placement="top-start">
                         <el-icon class="tip-icon" color="#C1C1C1">
                             <QuestionFilled />
                         </el-icon>
@@ -90,6 +94,11 @@
                                 {{ item.label }}
                             </el-radio>
                         </el-radio-group>
+                        <el-tooltip effect="dark" content="拖动改变字段顺序" placement="top-start">
+                            <div class="drag-icon-wrapper">
+                                <g-icon icon="drag" custom-color />
+                            </div>
+                        </el-tooltip>
                     </div>
                     <el-icon class="delete-rule-btn" @click="deleteRule(option)">
                         <Delete />
@@ -112,6 +121,8 @@ import { Order, orderOptions } from '../constant'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 import type { RuleOption, OrderProps } from '../interface'
+// import { global } from '@jsjn/utils'
+
 
 const COMPONENT_NAME = 'Sort'
 defineOptions({
@@ -126,6 +137,24 @@ const props = withDefaults(
         columns: () => []
     }
 )
+
+const options = {
+    modifiers: [
+        {
+            name: 'preventOverflow',
+            options: {
+                // rootBoundary: global.document.querySelector('.micro-view')
+                rootBoundary: document.querySelector('html')
+            }
+        },
+        {
+            name: 'flip',
+            options: {
+                rootBoundary: document.querySelector('html')
+            }
+        }
+    ]
+}
 
 // const order = defineModel<OrderProps>({default: {
 //     asc: [],
@@ -188,11 +217,11 @@ const confirm = () => {
         asc:
             selectedRuleOptions.value
                 .filter((item) => item.order === Order.ASCENT)
-                ?.map((item) => item.order) ?? [],
+                ?.map((item) => item.prop) ?? [],
         desc:
             selectedRuleOptions.value
                 .filter((item) => item.order === Order.DESCENT)
-                ?.map((item) => item.order) ?? []
+                ?.map((item) => item.prop) ?? []
     })
 }
 
@@ -232,6 +261,18 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
+.sort-icon-wrapper {
+    cursor: pointer;
+    margin-right: 18px;
+
+    :deep(.custom-svg-icon) {
+        color: #989898;
+        &:hover {
+            color: #409eff;
+        }
+    }
+}
+
 .sort-wrapper {
     padding: 5px 10px 0 10px;
 
@@ -269,7 +310,8 @@ onMounted(() => {
         padding-left: 8px;
         overflow-y: scroll;
         scroll-behavior: smooth;
-        height: calc(100% - 40px);
+        max-height: 260px;
+        //height: calc(100% - 40px);
     }
 
     .not-selected-item-wrapper {
@@ -311,9 +353,10 @@ onMounted(() => {
             align-items: center;
             border: 1px solid rgba(213, 213, 213, 1);
             border-radius: 4px;
-            width: 90%;
-            justify-content: space-between;
+            width: 93%;
+            justify-content: flex-end;
             cursor: pointer;
+            height: 100%;
 
             &:hover {
                 border-color: var(--el-color-primary);
@@ -324,15 +367,31 @@ onMounted(() => {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 margin: 0 11px;
+                flex: 1;
             }
 
             .order-radio-group {
                 flex-wrap: nowrap;
+                align-self: flex-end;
             }
         }
 
         .delete-rule-btn {
             cursor: pointer;
+        }
+
+        .drag-icon-wrapper {
+            //cursor: grab;
+            width: 25px;
+            height: 100%;
+            margin-top: 7px;
+
+            :deep(.custom-svg-icon) {
+                color: #989898;
+                &:hover {
+                    color: #409eff;
+                }
+            }
         }
     }
 }

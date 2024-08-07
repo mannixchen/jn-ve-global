@@ -37,7 +37,6 @@ export default ({
     watch(
         () => localTableConfig.selectedRows,
         (list) => {
-            console.log('selectedRows')
             emits('update:selectedRows', list)
         }
     )
@@ -54,10 +53,16 @@ export default ({
     )
 
     // 数据
+    // watch(
+    //     () => props.tableData,
+    //     (data) => {
+    //         localTableConfig.data = data
+    //     }
+    // )
     watch(
-        () => props.tableData,
+        () => localTableConfig.data,
         (data) => {
-            localTableConfig.data = data
+            emits('update:tableData', data)
         }
     )
 
