@@ -1,6 +1,6 @@
 import * as elIcons from '@element-plus/icons-vue'
 import * as jnIcons from '@jsjn/icons-vue'
-import AliIconfontClass from '../../assets/icons/ali/iconfont.txt?raw'
+import AliIconfontsData from '../../assets/icons/ali/iconfont.json'
 
 /**
  * el icon 组件名字 list
@@ -22,10 +22,6 @@ export const localIcons: string[] = Object.keys(jnIcons)
  * @returns
  */
 function getAliIconNames(): string[] {
-    return AliIconfontClass.split(`\n`)
-        .filter((item) => item.indexOf(':before') !== -1)
-        .map((item: string) => {
-            const newStr = item.substring(1)
-            return newStr.split(':before')[0]
-        })
+    const { css_prefix_text: prefix, glyphs } = AliIconfontsData
+    return glyphs.map((item) => `${prefix}${item.font_class}`)
 }

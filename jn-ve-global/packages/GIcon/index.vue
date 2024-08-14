@@ -1,7 +1,7 @@
 <template>
     <!-- 阿里图标 -->
     <i
-        v-if="iconIsValid && ['icon-'].some((prefix) => icon.indexOf(prefix) === 0)"
+        v-if="iconIsValid && ['icon-', 'ali-'].some((prefix) => icon.indexOf(prefix) === 0)"
         :class="[icon, 'iconfont']"
         v-bind="$attrs"
     />
