@@ -68,7 +68,8 @@ const btns = computed<BtnProps[]>(() => [
     {
         label: '获取 edit 实例',
         onClick() {
-            console.log(`%c jnEditorRef === `, 'color: #67c23a;', jnEditorRef.value)
+            // console.log(`%c jnEditorRef === `, 'color: #67c23a;', jnEditorRef.value)
+            console.log(`%c  html=== `, 'color: #67c23a;', html.value)
         }
     }
 ])
