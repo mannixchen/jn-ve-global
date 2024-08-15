@@ -8,9 +8,15 @@ import WordFileTypeImg from './assets/images/Word.png'
 import ZARFileTypeImg from './assets/images/ZAR.png'
 import DefaulrFileLogo from './assets/images/Other.png'
 import myAxios from '../_http/http'
-import { UploadFile } from './interface/UploadFile'
+import { type UploadFile } from './interface/UploadFile'
 import { global } from '@jsjn/utils'
-import { IMG_EXT, PDF_EXT, WORD_EXT, EXCEL_EXT, PPT_EXT } from '../GFilePreview/constant/fileTypeList'
+import {
+    IMG_EXT,
+    PDF_EXT,
+    WORD_EXT,
+    EXCEL_EXT,
+    PPT_EXT
+} from '../GFilePreview/constant/fileTypeList'
 import { getFileType } from '../GFilePreview/utils'
 
 /**
@@ -19,11 +25,11 @@ import { getFileType } from '../GFilePreview/utils'
  * @param url 文件 url
  * @returns 文件略缩图
  */
-export function getFileTypeIcon(fileName: string, url?: string) {
-    const fileType = getFileType(fileName)
+export function getFileTypeIcon(file?: UploadFile) {
+    const fileType = getFileType(file.name)
 
     // 图片取原url
-    if (IMG_EXT.includes(fileType)) return url
+    if (IMG_EXT.includes(fileType)) return file['thumb']
 
     // word
     if (WORD_EXT.includes(fileType)) return WordFileTypeImg
@@ -98,14 +104,15 @@ export async function getFileWpsPreviewUrl(url: string, timeout: number) {
 export async function fillFileMemoryUrl(
     proxyFile: UploadFile,
     downloadUrl: string,
-    timeout: number
+    timeout: number,
+    fillField: string = 'url'
 ): Promise<UploadFile> {
     proxyFile.isLoading = true
     const fileType = getFileType(proxyFile.name)
     const reqUrl = `${downloadUrl}/${proxyFile.fileId}`
     const resUrl = await getFileBlobUrlByRequest(reqUrl, fileType, timeout)
     proxyFile.isLoading = false
-    proxyFile.url = resUrl
+    proxyFile[fillField] = resUrl
     return proxyFile
 }
 

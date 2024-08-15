@@ -52,7 +52,7 @@
             >
                 <!-- 略缩 -->
                 <div class="info">
-                    <img class="preview" :src="getFileTypeIcon(file.name, file.url)">
+                    <img class="preview" :src="getFileTypeIcon(file)">
                     <span class="file-name">
                         {{ file.name }}
                     </span>

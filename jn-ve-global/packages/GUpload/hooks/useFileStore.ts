@@ -35,9 +35,9 @@ export default ({
                 if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
 
-                    // 只有图片（缩略图）才进行 预加载 url，避免性能浪费
+                    // 加载及装填图片的 “缩略图” ，来自服务器裁剪的图片资源
                     if (IMG_EXT.includes(fileType)) {
-                        fillFileMemoryUrl(proxyFile, localDownloadUrl.value, props.timeout)
+                        fillFileMemoryUrl(proxyFile, localDownloadUrl.value, props.timeout, 'thumb')
                     }
                 }
                 return proxyFile

@@ -22,6 +22,10 @@ export interface UploadFile {
      */
     url?: string
     /**
+     * 图片文件缩略图
+     */
+    thumb?: string
+    /**
      * 业务中的文件服务器的文件 id
      */
     fileId?: string
