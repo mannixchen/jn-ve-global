@@ -1,3 +1,5 @@
+import { OrderProps } from './sort'
+
 export interface ConditionProps {
   value: string
   label: string
@@ -12,4 +14,11 @@ export interface QueryProps {
   type: string
   value: string
   valueType?: string
+}
+
+export interface QueryParams {
+  order?: OrderProps
+  isOr?: boolean
+  queryList?: QueryProps[]
+  // reset?: boolean
 }

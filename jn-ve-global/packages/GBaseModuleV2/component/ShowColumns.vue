@@ -1,19 +1,22 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-07-10 16:37:41
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/ShowColumns.vue
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-08-07 09:16:28
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover placement="bottom-start" trigger="click" :width="400">
+    <el-popover placement="bottom-start" trigger="click" width="4rem" :popper-options="options">
         <template #reference>
-            <el-button type="primary" text>
+            <!-- <el-button type="primary" text>
                 显示列
-            </el-button>
+            </el-button> -->
+            <div class="show-column-icon-wrapper">
+                <g-icon icon="show-column" custom-color />
+            </div>
         </template>
         <div class="set-columns-wrapper">
             <div class="header-wrapper">
@@ -21,7 +24,7 @@
                     <div class="title">
                         显示列
                     </div>
-                    <el-tooltip effect="dark" content="xxx" placement="top-start">
+                    <el-tooltip effect="dark" content="设置显示列和冻结列" placement="top-start">
                         <el-icon class="tip-icon" color="#C1C1C1">
                             <QuestionFilled />
                         </el-icon>
@@ -81,22 +84,28 @@
                                 placement="top-start"
                             >
                                 <div class="fix-column" @click.stop.prevent="fixColumn(column)">
-                                    <g-icon v-if="column.fixed" icon="el-BellFilled" />
-                                    <g-icon v-else icon="el-Bell" />
+                                    <g-icon v-if="column.fixed" icon="affix-filled" />
+                                    <g-icon v-else icon="affix" />
                                 </div>
                             </el-tooltip>
-                            <div v-show="showAll" class="last-icon">
-                                <g-icon icon="new" />
-                            </div>
+                            <el-tooltip
+                                effect="dark"
+                                content="拖动改变字段顺序"
+                                placement="top-start"
+                            >
+                                <div v-show="showAll" class="last-icon">
+                                    <g-icon icon="drag" custom-color />
+                                </div>
+                            </el-tooltip>
                         </div>
                     </div>
                 </el-checkbox>
             </el-checkbox-group>
-            <div class="confirm-btn-wrapper">
+            <!-- <div class="confirm-btn-wrapper">
                 <el-button type="primary" @click="confirm">
                     确认
                 </el-button>
-            </div>
+            </div> -->
         </div>
     </el-popover>
 </template>
@@ -108,6 +117,7 @@ import { tableColumnsKey } from '../constant'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
+// import { global } from '@jsjn/utils'
 
 const COMPONENT_NAME = 'ShowColumns'
 defineOptions({
@@ -126,6 +136,23 @@ defineOptions({
 // const emits = defineEmits<{
 //     'reset': [val?: TableColumnProps[]]
 // }>()
+
+const options = {
+    modifiers: [
+        {
+            name: 'preventOverflow',
+            options: {
+                rootBoundary: document.querySelector('html')
+            }
+        },
+        {
+            name: 'flip',
+            options: {
+                rootBoundary: document.querySelector('html')
+            }
+        }
+    ]
+}
 
 const columns = defineModel<TableColumnProps[]>({ default: [] })
 
@@ -345,6 +372,19 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.show-column-icon-wrapper {
+    cursor: pointer;
+    margin-right: 18px;
+    //margin-left: 18px;
+
+    :deep(.custom-svg-icon) {
+        color: #989898;
+        &:hover {
+            color: #409eff;
+        }
+    }
+}
+
 .set-columns-wrapper {
     padding: 5px 10px 0 10px;
 
@@ -387,6 +427,9 @@ watch(
 .column-checkbox-group-wrapper {
     display: flex;
     flex-direction: column;
+    max-height: 350px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
 
     :deep(.el-checkbox) {
         //display: flex;
@@ -426,6 +469,12 @@ watch(
 
         .last-icon {
             padding: 12px 0;
+            :deep(.custom-svg-icon) {
+                color: #989898;
+                &:hover {
+                    color: #409eff;
+                }
+            }
         }
 
         .label {

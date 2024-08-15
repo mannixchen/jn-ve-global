@@ -2,18 +2,30 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-07-10 14:38:48
+ * @LastEditTime: 2024-08-07 09:15:19
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover placement="bottom-start" trigger="click" :width="850" :visible="popoverVisible">
+    <el-popover
+        placement="bottom-start"
+        trigger="click"
+        width="8.5rem"
+        :visible="popoverVisible"
+        :popper-options="options"
+    >
         <template #reference>
-            <el-button type="primary" text @click="openPopover">
-                筛选
-            </el-button>
+            <!-- <el-button type="primary" text @click="openPopover">
+                {{ selectedQueryList.length > 0 ? `筛选${selectedQueryList.length}` : '筛选' }}
+            </el-button> -->
+            <div class="filter-btn-wrapper" @click="openPopover">
+                <g-icon custom-color icon="filter" />
+                <div class="label">
+                    {{ selectedQueryList.length > 0 ? `${selectedQueryList.length}项` : '筛选' }}
+                </div>
+            </div>
         </template>
         <div class="search-conditions-wrapper">
             <div class="header-wrapper">
@@ -21,7 +33,11 @@
                     <div class="title">
                         筛选
                     </div>
-                    <el-tooltip effect="dark" content="xxx" placement="top-start">
+                    <el-tooltip
+                        effect="dark"
+                        content="选择不同的查询条件查询列表"
+                        placement="top-start"
+                    >
                         <el-icon class="tip-icon" color="#C1C1C1">
                             <QuestionFilled />
                         </el-icon>
@@ -105,6 +121,8 @@ import { FunctionalComponent, SelectOptionProps } from 'jn-ve-global'
 import useBetweenFormItem from '../hooks/useBetweenFormItem'
 import type { FormProps, FormItemProps } from '../../GForm'
 import type { ConditionProps, QueryProps } from '../interface'
+// import { global } from '@jsjn/utils'
+
 
 const COMPONENT_NAME = 'SearchCondition'
 defineOptions({
@@ -124,6 +142,23 @@ const emits = defineEmits<{
     'confirm': [queryList: QueryProps[], isOr: boolean]
 }>()
 
+const options = {
+    modifiers: [
+        {
+            name: 'preventOverflow',
+            options: {
+                rootBoundary: document.querySelector('html')
+            }
+        },
+        {
+            name: 'flip',
+            options: {
+                rootBoundary: document.querySelector('html')
+            }
+        }
+    ]
+}
+
 const popoverVisible = ref<boolean>(false)
 
 const keyword = ref<string>('')
@@ -140,6 +175,8 @@ const allSearchConditions = ref<ConditionProps[]>(
 const searchResults = ref<ConditionProps[]>(allSearchConditions.value)
 
 const selectedConditions = ref<FormProps[]>([])
+
+const selectedQueryList = ref<QueryProps[]>([])
 
 const openPopover = () => {
     popoverVisible.value = true
@@ -344,10 +381,12 @@ const getConditionForm = (prop: string): FormProps => {
                     props: {
                         onChange: (...args) => {
                             console.log('change-logicType', args)
-                            ;(args as any)[1].model.value = ''
+                            // ;(args as any)[1].model.value = ''
+                            const prop = (args as any)[1].prop
+                            ;(args as any)[1].model.value = props?.formConfig?.model?.[prop] ?? null
                             ;(args as any)[1].formItems[3] = getValueFormItem(
                                 (args as any)[0],
-                                (args as any)[1].prop
+                                prop
                             )
                         }
                     }
@@ -414,15 +453,48 @@ const confirm = () => {
             isAuto: true,
             isHump: true,
             type,
-            value: type === 'between' ? value?.join() : value,
+            // value: type === 'between' ? value?.join() : value,
+            value: Array.isArray(value) ? value?.join() : value,
             valueType: 'String'
         }
     })
+    selectedQueryList.value = queryList.filter(
+        (item) => !['', null, undefined].includes(item.value)
+    )
     emits('confirm', queryList, selectedConditions.value?.[0]?.model?.isOr)
 }
 </script>
 
 <style lang="scss" scoped>
+.filter-btn-wrapper {
+    display: flex;
+    border: 1px solid rgba(213, 213, 213, 1);
+    border-radius: 4px;
+    font-size: 16px;
+    color: #989898;
+    text-align: center;
+    font-weight: 400;
+    cursor: pointer;
+    align-items: center;
+    padding: 7px 10px;
+    margin-right: 18px;
+
+    .label {
+        margin-left: 5px;
+    }
+
+    &:hover {
+        border-color: #409eff;
+        color: #409eff;
+
+        .custom-color {
+            :deep(.custom-svg-icon) {
+                color: #409eff;
+            }
+        }
+    }
+}
+
 .search-conditions-wrapper {
     padding: 5px 10px 0 10px;
 
@@ -447,7 +519,7 @@ const confirm = () => {
     }
 
     .btns-wrapper {
-        margin-bottom: 20px;
+        margin-bottom: 18px;
         .clear-btn-wrapper {
             margin-left: 10px;
         }
@@ -461,7 +533,7 @@ const confirm = () => {
         padding-left: 8px;
         overflow-y: scroll;
         scroll-behavior: smooth;
-        height: calc(100% - 40px);
+        max-height: 410px;
     }
 
     .condition-item-wrapper {
@@ -509,6 +581,7 @@ const confirm = () => {
         color: #606266;
         align-items: center;
         justify-content: space-between;
+        margin-top: 2px;
 
         --jn-ve-g-form-item-margin-b: 10px;
 
