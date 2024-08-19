@@ -5,6 +5,13 @@ import { getFileType } from '../../GFilePreview/utils'
 import { UploadFile } from '../interface/UploadFile'
 import { IMG_EXT } from '../../GFilePreview'
 
+const sizeMapping = {
+    text: 20,
+    'picture-card': 146,
+    'picture': 70,
+    avatar: 146
+}
+
 export default ({
     emits,
     props,
@@ -35,9 +42,15 @@ export default ({
                 if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
 
-                    // 加载及装填图片的 “缩略图” ，来自服务器裁剪的图片资源
+                    // 加载及装填图片的 “缩略图” ，来自服务器裁剪的图片资源，TODO: 等后台接口返回缩略图，测试
                     if (IMG_EXT.includes(fileType)) {
-                        fillFileMemoryUrl(proxyFile, localDownloadUrl.value, props.timeout, 'thumb')
+                        fillFileMemoryUrl(
+                            proxyFile,
+                            `${localDownloadUrl.value}`,
+                            props.timeout,
+                            'thumb',
+                            `?width=${sizeMapping[attrs.value['list-type']]}`
+                        )
                     }
                 }
                 return proxyFile

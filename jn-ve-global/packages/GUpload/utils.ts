@@ -105,11 +105,12 @@ export async function fillFileMemoryUrl(
     proxyFile: UploadFile,
     downloadUrl: string,
     timeout: number,
-    fillField: string = 'url'
+    fillField: string = 'url',
+    params?: string
 ): Promise<UploadFile> {
     proxyFile.isLoading = true
     const fileType = getFileType(proxyFile.name)
-    const reqUrl = `${downloadUrl}/${proxyFile.fileId}`
+    const reqUrl = `${downloadUrl}/${proxyFile.fileId}` + (params ? params : '')
     const resUrl = await getFileBlobUrlByRequest(reqUrl, fileType, timeout)
     proxyFile.isLoading = false
     proxyFile[fillField] = resUrl

@@ -1,6 +1,6 @@
 {
     "name": "jn-ve-global",
-    "version": "3.5.0",
+    "version": "3.6.0",
     "author": "zyc",
     "type": "module",
     "description": "基于 vue3+element-plus+ts 的二次封装库 -- 江苏金农内部库",
@@ -49,7 +49,6 @@
         "build:vite": "vite build",
         "build:px": "pnpm build --px"
     },
-    "devDependencies": {},
     "sideEffects": [
         "dist/*",
         "es/**/*.css",
