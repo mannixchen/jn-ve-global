@@ -19,16 +19,11 @@ export default [
         link: '/utilsDocs/',
         activeMatch: '^/utilsDocs/'
     },
-    // {
-    //     text: '前端知识分享',
-    //     link: '/blog/',
-    //     activeMatch: '^/blog/'
-    // },
     {
         text: '更新日志',
         children: [
             {
-                text: '组件库@3.5.0',
+                text: '组件库@3.6.0',
                 link: '/components/UpdateLog.md'
             },
             {
