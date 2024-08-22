@@ -1,6 +1,8 @@
 import { UploadFile } from '../interface/UploadFile'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
+import { getFileType } from '../../GFilePreview/utils'
+import { IMG_EXT } from '../../GFilePreview'
 
 export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, localLimit }) => {
     // 上传文件之前的钩子
@@ -58,7 +60,14 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
             file['fileId'] = _.isArray(res.data) ? res.data[0].fileId : res.data.fileId
 
             // 本地上传，可以直接操作原 file，添加 url 的内存地址
-            file['url'] = URL.createObjectURL(file.raw!)
+            const localFileUrl = URL.createObjectURL(file.raw!)
+            file['url'] = localFileUrl
+            
+            // 略缩图（由于还在本地，直接采用文件源）
+            const fileType = getFileType(file.name)
+            if (IMG_EXT.includes(fileType)) {
+                file['thumb'] = localFileUrl
+            }
 
             /**
              * avatar 可以理解为单选模式，每次上传成功后的 file
