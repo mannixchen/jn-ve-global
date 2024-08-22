@@ -22,8 +22,8 @@
     .middle-right-wrapper {
         width: 55%;
         display: flex;
-        justify-content: end;
-        align-items: end;
+        justify-content: flex-end;
+        align-items: flex-end;
 
         .g-advance-input-wrapper {
             width: fit-content !important;
