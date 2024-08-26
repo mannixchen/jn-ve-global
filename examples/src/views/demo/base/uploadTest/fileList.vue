@@ -12,6 +12,7 @@
                 :action="FILE_UPLOAD_URL"
                 list-type="text"
                 :download-url="FILE_DOWNLOAD_URL"
+                :size="3000"
             />
         </div>
 
@@ -21,7 +22,6 @@
             v-model:fileList="fileList"
             :action="FILE_UPLOAD_URL"
             list-type="picture-card"
-            download-hide
             :download-url="FILE_DOWNLOAD_URL"
             :timeout="1000 * 60"
         />

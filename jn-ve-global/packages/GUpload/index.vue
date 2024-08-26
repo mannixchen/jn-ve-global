@@ -79,7 +79,10 @@
                         <span v-else class="preview">预览</span>
                     </span>
 
-                    <span v-if="!downloadHide" @click="fileDownload(file)">
+                    <span
+                        v-if="!downloadHide && file.status !== 'uploading'"
+                        @click="fileDownload(file)"
+                    >
                         <LGIcon
                             v-if="localFileListBtnType === FileListBtnType.ICON"
                             icon="el-Bottom"

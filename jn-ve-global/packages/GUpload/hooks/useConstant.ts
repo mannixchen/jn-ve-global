@@ -1,5 +1,6 @@
 import { computed, useAttrs, ref } from 'vue'
 import { humpObj2PartitionObj, Local } from '@jsjn/utils'
+import { token as tokenCache, vuexCache } from '../../_globalConstant/vuexCache'
 
 export default (props) => {
     const attrsSource = useAttrs()
@@ -19,15 +20,12 @@ export default (props) => {
      * header 携带 token
      */
     const localReqHeaders = computed(() => {
-        const vuexCache = Local.get('vuex')
         const transitiveHeader = attrs.value.headers
         let Authorization = transitiveHeader ? transitiveHeader.Authorization : ''
 
         // 缓存的优先级较高，会覆盖用户传递的
         if (vuexCache && vuexCache.loginInfo) {
-            Authorization = vuexCache.loginInfo['access_token']
-                ? `Bearer ${vuexCache.loginInfo['access_token']}`
-                : Authorization
+            Authorization = tokenCache ? `Bearer ${tokenCache}` : Authorization
         }
 
         if (Authorization) {

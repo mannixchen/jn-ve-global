@@ -3,6 +3,7 @@ import { UploadFile } from '../interface/UploadFile'
 import { fillFileMemoryUrl, fillFileWpsPreviewUrl } from '../utils'
 import { typeIsValid } from '../../GFilePreview/utils'
 import { PreviewMode, WPS_PREVIEW_EXT } from '../../GFilePreview'
+import { token as tokenCache } from '../../_globalConstant/vuexCache'
 
 export default ({
     uploadRef,
@@ -47,14 +48,26 @@ export default ({
             return
         }
 
-        loadFile(file).then(() => {
-            // 默认下载行为
-            let aDom = document.createElement('a')
-            aDom.href = file.url
-            aDom.setAttribute('download', file.name)
-            aDom.click()
-            aDom = null
-        })
+        /**
+         * url 直接交由浏览器下载：url + fileId + token
+         */
+        let aDom = document.createElement('a')
+        aDom.href = file.url
+            ? file.url
+            : `${localDownloadUrl.value}/${file.fileId}?token=${tokenCache}`
+        aDom.setAttribute('download', file.name)
+        aDom.click()
+        aDom = null
+
+        // 先走 js 内存下载
+        // loadFile(file).then(() => {
+        //     // 默认下载行为
+        //     let aDom = document.createElement('a')
+        //     aDom.href = file.url
+        //     aDom.setAttribute('download', file.name)
+        //     aDom.click()
+        //     aDom = null
+        // })
     }
 
     /**
