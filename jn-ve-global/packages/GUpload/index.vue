@@ -207,7 +207,7 @@ export interface UploadCustomProps {
     /**
      * 抛出的值
      */
-    modelValue: string | Array<string>
+    modelValue?: string | Array<string>
     /**
      * 文件列表（双向绑定）
      */

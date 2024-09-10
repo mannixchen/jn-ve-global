@@ -5,10 +5,6 @@
             --btn-wrapper-right: 20px;
             --text-item-height: 24px;
 
-            &.btntype-text {
-                --btn-wrapper-width: 100px;
-            }
-
             width: 100%;
             height: var(--text-item-height);
             overflow: hidden;
@@ -16,6 +12,10 @@
             position: relative;
             border-radius: 3px;
             transition: background-color 0.4s;
+
+            &.btntype-text {
+                --btn-wrapper-width: 100px;
+            }
 
             &:hover {
                 background-color: var(--el-fill-color-light);
@@ -62,7 +62,8 @@
                 i {
                     font-size: 18px;
                     opacity: 0;
-                    transition: opacity var(--jn-ve-g-base-animation-date), color var(--jn-ve-g-base-animation-date);
+                    transition: opacity var(--jn-ve-g-base-animation-date),
+                        color var(--jn-ve-g-base-animation-date);
                     cursor: pointer;
 
                     &:hover {
@@ -70,7 +71,7 @@
                     }
                 }
 
-                >span>span {
+                > span > span {
                     font-size: 14px;
                     cursor: pointer;
 
@@ -103,7 +104,6 @@
                     transform: rotate(-45deg);
                 }
             }
-
 
             .el-loading-mask {
                 .el-loading-spinner {
