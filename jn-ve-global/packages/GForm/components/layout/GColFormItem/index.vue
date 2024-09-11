@@ -65,5 +65,3 @@ const getElColConfigs = (item: FormItemProps): any => {
     return spanConfig
 }
 </script>
-
-<style lang="scss" scoped></style>

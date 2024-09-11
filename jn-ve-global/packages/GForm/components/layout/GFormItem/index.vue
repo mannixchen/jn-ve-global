@@ -182,5 +182,3 @@ const elFormItemProps = computed<any>(() => {
     return formItemProps
 })
 </script>
-
-<style lang="scss" scoped></style>

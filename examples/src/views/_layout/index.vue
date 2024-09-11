@@ -153,6 +153,12 @@ onUnmounted(() => proxy.mittBus.off('changeAsideMenuCollapse', changeAsideMenuCo
 
         .is-active {
             &.el-menu-item {
+                background-image: linear-gradient(
+                    90deg,
+                    #ffffff 0%,
+                    rgba(255, 255, 255, 0.8) 100%
+                ) !important;
+
                 &,
                 i,
                 .custom-svg-icon,
@@ -161,12 +167,6 @@ onUnmounted(() => proxy.mittBus.off('changeAsideMenuCollapse', changeAsideMenuCo
                 &.grade-1 i {
                     color: var(--jn-base-active-color) !important;
                 }
-
-                background-image: linear-gradient(
-                    90deg,
-                    #ffffff 0%,
-                    rgba(255, 255, 255, 0.8) 100%
-                ) !important;
             }
         }
     }

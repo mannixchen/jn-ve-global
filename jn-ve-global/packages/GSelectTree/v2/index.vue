@@ -110,5 +110,3 @@ function recursion(source: any) {
     })
 }
 </script>
-
-<style lang="scss" scoped></style>

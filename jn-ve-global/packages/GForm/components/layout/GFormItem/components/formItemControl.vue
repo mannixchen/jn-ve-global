@@ -132,7 +132,7 @@
         <template v-if="localControlType === 'upload'">
             <LGUpload
                 v-model="localPropRef"
-                v-model:fileList="localUploadFileList"
+                v-model:file-list="localUploadFileList"
                 v-model:instance="localUploadInstance"
                 v-bind="(controlConfig.props as any)"
                 :disabled="controlDisabled"
@@ -383,5 +383,3 @@ const localControlProps = computed(() => {
     return controlProps
 })
 </script>
-
-<style lang="scss" scoped></style>

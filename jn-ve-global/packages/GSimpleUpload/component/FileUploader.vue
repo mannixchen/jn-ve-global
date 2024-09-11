@@ -44,5 +44,3 @@ const onFileAdded = (file, event) => {}
 
 // const onFileSuccess = 
 </script>
-
-<style lang="scss" scoped></style>

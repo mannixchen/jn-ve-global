@@ -58,5 +58,3 @@ const isShow = computed<boolean>(() => {
     return false
 })
 </script>
-
-<style lang="scss" scoped></style>

@@ -1,25 +1,17 @@
 <template>
-    <ElButton
-        class="debounce-button"
-        type="primary"
-        v-bind="$attrs"
-        @click="(handleDebounce as any)"
-    >
+    <ElButton class="debounce-button" type="primary" v-bind="$attrs" @click="(handleDebounce as any)">
         <slot />
     </ElButton>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-export default defineComponent({
-    name: 'GDButton'
-})
-</script>
 
 <script lang="ts" setup>
 import { computed } from 'vue'
 import _ from 'lodash'
 import { ElButton } from 'element-plus'
+
+defineOptions({
+    name: 'GDButton'
+})
 
 export interface Props {
     /**
@@ -51,5 +43,3 @@ const handleDebounce = computed(() => {
     })
 })
 </script>
-
-<style lang="scss" scoped></style>

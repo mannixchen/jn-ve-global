@@ -65,5 +65,3 @@ const localElInputRef = computed<any>({
     }
 })
 </script>
-
-<style lang="scss" scoped></style>

@@ -72,5 +72,3 @@ const props = defineProps({
 
 const columnProps = getColumnProps(props.columnConfig)
 </script>
-
-<style lang="scss" scoped></style>
