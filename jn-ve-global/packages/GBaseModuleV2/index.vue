@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-10 16:42:17
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-08-06 19:21:23
+ * @LastEditTime: 2024-08-23 15:26:43
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\index.vue
  * @Description: 
  * 
@@ -59,6 +59,7 @@
                         @change="loadTable"
                     />
                     <SearchCondition
+                        v-if="props?.searchFormProps"
                         :form-config="props.searchFormProps"
                         @confirm="confirmCondition"
                     />
