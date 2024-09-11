@@ -69,7 +69,7 @@ export interface BaseModuleProps {
     /**
      * 主要查询字段
      */
-    // mainKey: string
+    mainKey?: string
 
     /**
      * 搜索按钮是否独占一行
