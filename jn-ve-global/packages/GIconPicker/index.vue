@@ -137,7 +137,6 @@ const selecteHandle = (icon: string) => {
 }
 </script>
 
-<style lang="scss" scoped></style>
 <style lang="scss">
 .icon-picker {
     --input-icon-prepend-width: 45px;

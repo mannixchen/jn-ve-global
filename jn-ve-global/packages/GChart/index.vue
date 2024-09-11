@@ -45,5 +45,3 @@ defineExpose({
     chartInstance: Ref<ECharts>
 })
 </script>
-
-<style lang="scss" scoped></style>

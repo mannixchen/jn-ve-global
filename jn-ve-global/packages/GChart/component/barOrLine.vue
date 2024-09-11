@@ -340,5 +340,3 @@ const barOption = computed<EChartsOption>(() => {
     }
 })
 </script>
-
-<style lang="scss" scoped></style>

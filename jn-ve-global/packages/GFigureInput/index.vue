@@ -179,7 +179,7 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .g-figure-input {
     position: relative;
     width: 100%;
@@ -199,8 +199,7 @@ defineExpose({
         color: var(--el-color-info-light-3);
     }
 }
-</style>
-<style lang="scss">
+
 .g-table-root {
     .g-figure-input::after {
         display: none;

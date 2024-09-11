@@ -28,5 +28,3 @@ const props = withDefaults(
     }
 )
 </script>
-
-<style lang="scss" scoped></style>
