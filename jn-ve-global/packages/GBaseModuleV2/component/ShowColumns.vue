@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-08-07 09:16:28
+ * @LastEditTime: 2024-09-23 16:57:50
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -112,9 +112,10 @@
 
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed, reactive, toRefs, inject, onMounted } from 'vue'
-import { type TableColumnProps } from '../../GTable'
+// import { type TableColumnProps } from '../../GTable'
 import { tableColumnsKey } from '../constant'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
+import type { BaseModuleColumnProps } from '../interface'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 // import { global } from '@jsjn/utils'
@@ -154,7 +155,7 @@ const options = {
     ]
 }
 
-const columns = defineModel<TableColumnProps[]>({ default: [] })
+const columns = defineModel<BaseModuleColumnProps[]>({ default: [] })
 
 const visible = ref<boolean>(true)
 
@@ -173,7 +174,7 @@ let defaultColumns = []
 
 let allColumns = []
 const checkedColumns = ref<string[]>()
-const localColumns = ref<TableColumnProps[]>()
+const localColumns = ref<BaseModuleColumnProps[]>()
 
 const keyword = ref<string>('')
 
@@ -183,7 +184,7 @@ const showAll = ref(true)
 
 const checkboxGroupRef = ref()
 
-const init = (columns: TableColumnProps[]) => {
+const init = (columns: BaseModuleColumnProps[]) => {
     const copyColumns = cloneDeep(columns)
     allColumns = cloneDeep(
         copyColumns.filter((item) => !(item.prop === 'opertion' && item.label === '操作')) ?? []
@@ -227,7 +228,7 @@ const handleCheckedColumnsChange = (value: string[]) => {
     // updateColumns()
 }
 
-const fixColumn = (column: TableColumnProps) => {
+const fixColumn = (column: BaseModuleColumnProps) => {
     column.fixed = !column.fixed
     columns.value.find((item) => item.prop === column.prop).fixed = column.fixed
     // updateColumns()

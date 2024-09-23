@@ -6,6 +6,9 @@
         no-search-label
         more-search-mode="pull-down"
         search-btn-horizontal
+        :filterable="true"
+        :sortable="true"
+        :columns-configurable="true"
         :search-form-props="searchFormConfig"
         :btns="btns"
         :load-table-methods="loadTable"

@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-07-30 11:28:29
+ * @LastEditTime: 2024-09-23 16:59:18
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
  * @Description:
  *
@@ -44,11 +44,18 @@ export interface ExtraInfo {
     tableId?: string
 }
 
+export interface BaseModuleColumnProps extends TableColumnProps {
+    /**
+     * 列表字段是否支持后端排序
+     */
+    unsortable?: boolean
+}
+
 export interface BaseModuleProps {
     /**
      * 表格列
      */
-    tableColumns?: TableColumnProps[]
+    tableColumns?: BaseModuleColumnProps[]
     /**
      * 表格数据
      */
@@ -70,6 +77,21 @@ export interface BaseModuleProps {
      * 主要查询字段
      */
     mainKey?: string
+
+    /**
+     * 是否支持筛选
+     */
+    filterable?: boolean
+
+    /**
+     * 是否支持排序
+     */
+    sortable?: boolean
+
+    /**
+     * 是否支持设置显示列和冻结列
+     */
+    columnsConfigurable?: boolean
 
     /**
      * 搜索按钮是否独占一行
@@ -136,10 +158,12 @@ export interface BaseModuleProps {
      * 选中行的维护数组
      */
     selectedRows?: TableConfig<any>['selectedRows']
+
     /**
      * 内置操作项可见设置以及行为设置
      */
-    operationGroupProps?: OperationProps[]
+    // operationGroupProps?: OperationProps[]
+
     /**
      * 导入（上传）的url
      */

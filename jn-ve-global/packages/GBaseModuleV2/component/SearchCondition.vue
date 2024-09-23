@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-08-07 09:15:19
+ * @LastEditTime: 2024-09-23 15:46:42
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
@@ -271,8 +271,8 @@ const changeConditionStatus = (
 ) => {
     return conditions.map((item) => {
         if (item.value === prop) {
-            item.disabled = mode === 'add' ? true : false
-            item.isCurrent = mode === 'add' ? true : false
+            item.disabled = mode === 'add'
+            item.isCurrent = mode === 'add'
         } else {
             item.isCurrent = false
         }

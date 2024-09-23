@@ -116,13 +116,13 @@
 <script lang="ts" setup>
 import { onMounted, watch, ref, computed, reactive, toRefs } from 'vue'
 import { Delete, QuestionFilled, Plus, Search } from '@element-plus/icons-vue'
-import { type TableColumnProps } from '../../GTable'
+// import { type TableColumnProps } from '../../GTable'
+import type { BaseModuleColumnProps } from '../interface'
 import { Order, orderOptions } from '../constant'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 import type { RuleOption, OrderProps } from '../interface'
 // import { global } from '@jsjn/utils'
-
 
 const COMPONENT_NAME = 'Sort'
 defineOptions({
@@ -131,7 +131,7 @@ defineOptions({
 
 const props = withDefaults(
     defineProps<{
-        columns: TableColumnProps[]
+        columns: BaseModuleColumnProps[]
     }>(),
     {
         columns: () => []
@@ -168,13 +168,15 @@ const emits = defineEmits<{
 const sortPopoverVisible = ref<boolean>(false)
 
 // const totalR
-const notSelectedRuleOptions = ref<RuleOption[]>()
-const searchResults = ref()
-const selectedRuleOptions = ref<RuleOption[]>()
+const notSelectedRuleOptions = ref<RuleOption[]>() // 未被选择的排序条件集合
+const searchResults = ref() // 根据关键字搜索未被选择的排序条件集合， 属于notSelectedRuleOptions的子集
+const selectedRuleOptions = ref<RuleOption[]>() // 已选择排序条件集合
 
 const init = () => {
     notSelectedRuleOptions.value = cloneDeep(props.columns ?? [])
-        .filter((item) => !(item.prop === 'opertion' && item.label === '操作'))
+        // 操作咧不支持排序，
+        // endSortable为false的不支持排序，针对有的列通过多个后端字段组合展示的场景, 例如开始结束时间，或者有些列用户不想加入后端排序
+        .filter((item) => !((item.prop === 'opertion' && item.label === '操作') || item?.unsortable))
         .map(({ prop, label }) => ({
             prop,
             label,
@@ -241,6 +243,7 @@ const selectRule = (option: RuleOption) => {
     notSelectedRuleOptions.value = notSelectedRuleOptions.value.filter(
         (item) => item.prop !== option.prop
     )
+    // 添加规则后，查询结果默认置为全部待选集合
     searchResults.value = notSelectedRuleOptions.value
 }
 
@@ -248,7 +251,9 @@ const deleteRule = (option: RuleOption) => {
     selectedRuleOptions.value = selectedRuleOptions.value.filter(
         (item) => item.prop !== option.prop
     )
-    const index = props.columns?.findIndex((item) => item.prop === option.prop)
+    const index = props.columns
+        ?.filter((item) => !item?.unsortable)
+        ?.findIndex((item) => item.prop === option.prop)
     notSelectedRuleOptions.value.splice(index, 0, option)
     searchResults.value = notSelectedRuleOptions.value
 }
@@ -258,6 +263,16 @@ onMounted(() => {
     console.log('onMounted', selectedRulesRef.value)
     sortableInstance = new Sortable(selectedRulesRef.value, sortableOption)
 })
+
+// 每次添加排序规则时，情况上一次的查询条件
+watch(
+    () => selectRuleModalVisible.value,
+    (val) => {
+        if (val) {
+            keyword.value = ''
+        }
+    }
+)
 </script>
 
 <style lang="scss" scoped>
