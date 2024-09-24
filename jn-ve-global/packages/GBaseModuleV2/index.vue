@@ -49,7 +49,7 @@
                         @change="loadTable"
                     />
                     <SearchCondition
-                        v-if="props?.searchFormProps && filterable"
+                        v-if="props?.searchFormProps"
                         :form-config="props.searchFormProps"
                         @confirm="confirmCondition"
                     />
@@ -108,7 +108,13 @@ import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
 import { GUpload } from '../GUpload'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
-import type { BaseModuleProps, QueryProps, OrderProps, QueryParams, BaseModuleColumnProps } from './interface'
+import type {
+    BaseModuleProps,
+    QueryProps,
+    OrderProps,
+    QueryParams,
+    BaseModuleColumnProps
+} from './interface'
 import { tableColumnsKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
 import Sort from './component/Sort.vue'
@@ -121,7 +127,7 @@ onBeforeMount(() => {
 
 const props = withDefaults(defineProps<BaseModuleProps>(), {
     searchBtnsConfig: null,
-    filterable: true,
+    // filterable: true,
     sortable: true,
     columnsConfigurable: true,
     tableColumns: () => [],
@@ -153,6 +159,10 @@ const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
 const tableLoading = ref<boolean>(false)
 
 const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+
+const sortable = computed<boolean>(
+    () => props?.sortable && props?.tableColumns?.some((item) => !item.unsortable)
+)
 
 const keyword = ref<string>('')
 

@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-23 16:59:18
+ * @LastEditTime: 2024-09-24 15:08:58
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
  * @Description:
  *
@@ -51,6 +51,13 @@ export interface BaseModuleColumnProps extends TableColumnProps {
     unsortable?: boolean
 }
 
+// export interface BaseModuleSearchFormProps extends FormProps {
+//     /**
+//      * 所有查询条件的逻辑关系是'或'还是'且'
+//      */
+//     isOr?: boolean
+// }
+
 export interface BaseModuleProps {
     /**
      * 表格列
@@ -81,7 +88,7 @@ export interface BaseModuleProps {
     /**
      * 是否支持筛选
      */
-    filterable?: boolean
+    // filterable?: boolean
 
     /**
      * 是否支持排序
