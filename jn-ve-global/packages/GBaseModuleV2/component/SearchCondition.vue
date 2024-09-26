@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-26 10:28:43
+ * @LastEditTime: 2024-09-26 10:37:24
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
@@ -440,7 +440,7 @@ const changeCondition = (oldProp: string, newProp: string) => {
 }
 
 const confirm = () => {
-    popoverVisible.value = false
+    // popoverVisible.value = false
     const queryList: QueryProps[] = selectedConditions.value.map((item) => {
         const { isOr, type, prop, value } = item.model
         return {
