@@ -34,6 +34,7 @@ export default () =>
         {
             prop: 'tag',
             label: '标签',
+            unsortable: true,
             width: 480,
             render() {
                 return (

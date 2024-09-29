@@ -2,25 +2,19 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-08-07 09:15:19
+ * @LastEditTime: 2024-09-26 10:37:24
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover
-        placement="bottom-start"
-        trigger="click"
-        width="8.5rem"
-        :visible="popoverVisible"
-        :popper-options="options"
-    >
+    <el-popover ref="popoverRef" placement="bottom-start" trigger="click" width="8.5rem" :popper-options="options">
         <template #reference>
             <!-- <el-button type="primary" text @click="openPopover">
                 {{ selectedQueryList.length > 0 ? `筛选${selectedQueryList.length}` : '筛选' }}
             </el-button> -->
-            <div class="filter-btn-wrapper" @click="openPopover">
+            <div class="filter-btn-wrapper">
                 <g-icon custom-color icon="filter" />
                 <div class="label">
                     {{ selectedQueryList.length > 0 ? `${selectedQueryList.length}项` : '筛选' }}
@@ -123,7 +117,6 @@ import type { FormProps, FormItemProps } from '../../GForm'
 import type { ConditionProps, QueryProps } from '../interface'
 // import { global } from '@jsjn/utils'
 
-
 const COMPONENT_NAME = 'SearchCondition'
 defineOptions({
     name: COMPONENT_NAME
@@ -142,6 +135,8 @@ const emits = defineEmits<{
     'confirm': [queryList: QueryProps[], isOr: boolean]
 }>()
 
+const popoverRef = ref()
+
 const options = {
     modifiers: [
         {
@@ -159,7 +154,7 @@ const options = {
     ]
 }
 
-const popoverVisible = ref<boolean>(false)
+// const popoverVisible = ref<boolean>(false)
 
 const keyword = ref<string>('')
 
@@ -178,9 +173,9 @@ const selectedConditions = ref<FormProps[]>([])
 
 const selectedQueryList = ref<QueryProps[]>([])
 
-const openPopover = () => {
-    popoverVisible.value = true
-}
+// const openPopover = () => {
+//     popoverVisible.value = true
+// }
 
 const search = (val) => {
     console.log('search', val)
@@ -271,8 +266,8 @@ const changeConditionStatus = (
 ) => {
     return conditions.map((item) => {
         if (item.value === prop) {
-            item.disabled = mode === 'add' ? true : false
-            item.isCurrent = mode === 'add' ? true : false
+            item.disabled = mode === 'add'
+            item.isCurrent = mode === 'add'
         } else {
             item.isCurrent = false
         }
@@ -445,7 +440,7 @@ const changeCondition = (oldProp: string, newProp: string) => {
 }
 
 const confirm = () => {
-    popoverVisible.value = false
+    // popoverVisible.value = false
     const queryList: QueryProps[] = selectedConditions.value.map((item) => {
         const { isOr, type, prop, value } = item.model
         return {
@@ -462,6 +457,7 @@ const confirm = () => {
         (item) => !['', null, undefined].includes(item.value)
     )
     emits('confirm', queryList, selectedConditions.value?.[0]?.model?.isOr)
+    popoverRef.value.hide()
 }
 </script>
 

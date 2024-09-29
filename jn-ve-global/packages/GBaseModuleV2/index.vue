@@ -1,13 +1,3 @@
-<!--
- * @Author: “zhujin” zhujin@jsjngf.com
- * @Date: 2024-07-10 16:42:17
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-08-23 15:26:43
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\index.vue
- * @Description: 
- * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
--->
 <template>
     <div
         :class="[
@@ -63,8 +53,8 @@
                         :form-config="props.searchFormProps"
                         @confirm="confirmCondition"
                     />
-                    <ShowColumns v-model="showColumns" />
-                    <Sort :columns="props.tableColumns" @confirm="confirmSort" />
+                    <ShowColumns v-if="columnsConfigurable" v-model="showColumns" />
+                    <Sort v-if="sortable" :columns="props.tableColumns" @confirm="confirmSort" />
                     <el-icon class="icon-wrapper" @click="loadTable">
                         <RefreshRight />
                     </el-icon>
@@ -113,12 +103,18 @@ export default {
 import { ref, computed, Ref, provide, toRef, watch, onBeforeMount } from 'vue'
 import { ElTabs, ElTabPane } from 'element-plus'
 import TableSearch from './component/TableSearch.vue'
-import { GTable as LGTable, TableColumnProps, type TableConfig } from '../GTable'
+import { GTable as LGTable, type TableConfig } from '../GTable'
 import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
 import { GUpload } from '../GUpload'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
-import type { BaseModuleProps, QueryProps, OrderProps, QueryParams } from './interface'
+import type {
+    BaseModuleProps,
+    QueryProps,
+    OrderProps,
+    QueryParams,
+    BaseModuleColumnProps
+} from './interface'
 import { tableColumnsKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
 import Sort from './component/Sort.vue'
@@ -131,6 +127,9 @@ onBeforeMount(() => {
 
 const props = withDefaults(defineProps<BaseModuleProps>(), {
     searchBtnsConfig: null,
+    // filterable: true,
+    sortable: true,
+    columnsConfigurable: true,
     tableColumns: () => [],
     tableData: () => [],
     tablePagination: null,
@@ -159,7 +158,11 @@ const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
 
 const tableLoading = ref<boolean>(false)
 
-const showColumns = ref<TableColumnProps[]>(props.tableColumns)
+const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+
+const sortable = computed<boolean>(
+    () => props?.sortable && props?.tableColumns?.some((item) => !item.unsortable)
+)
 
 const keyword = ref<string>('')
 
