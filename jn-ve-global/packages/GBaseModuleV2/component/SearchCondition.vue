@@ -1,15 +1,21 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-26 10:37:24
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-09-29 09:39:28
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover ref="popoverRef" placement="bottom-start" trigger="click" width="8.5rem" :popper-options="options">
+    <el-popover
+        ref="popoverRef"
+        placement="bottom-start"
+        trigger="click"
+        :popper-options="options"
+        popper-class="search-conditions__popover"
+    >
         <template #reference>
             <!-- <el-button type="primary" text @click="openPopover">
                 {{ selectedQueryList.length > 0 ? `筛选${selectedQueryList.length}` : '筛选' }}
@@ -169,6 +175,10 @@ const allSearchConditions = ref<ConditionProps[]>(
 
 const searchResults = ref<ConditionProps[]>(allSearchConditions.value)
 
+/**
+ * TODO: 期望条件列表中的 value 可以和外部的 searchFormProps.model 绑定
+ * 即能通过 searchFormProps.model 完全同步获取到输入的值
+ */
 const selectedConditions = ref<FormProps[]>([])
 
 const selectedQueryList = ref<QueryProps[]>([])
@@ -461,7 +471,11 @@ const confirm = () => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.search-conditions__popover {
+    width: 850px !important;
+}
+
 .filter-btn-wrapper {
     display: flex;
     border: 1px solid rgba(213, 213, 213, 1);

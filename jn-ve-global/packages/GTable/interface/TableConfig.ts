@@ -10,11 +10,43 @@ export interface PaginationProps {
     onChange?: (currentPage?: number, currentPageSize?: number) => void
 }
 
-export interface TableRowBtnProps<TBD> extends BtnProps {
+export interface TableRowBtnProps<TBD = any> extends BtnProps {
     /**
      * 按钮点击事件
      */
     onClick?: (row: TBD, index: number) => void
+}
+
+export interface TableRowBtnConfig<TBD = any> {
+    /**
+     * 按钮组
+     */
+    btns: TableRowBtnProps<TBD>[]
+    /**
+     * 最多显示几个按钮，超出部分将于更多操作内显示
+     */
+    maxCount?: number
+    /**
+     * 列的宽度
+     */
+    width?: string | number
+    /**
+     * 操作列的对齐方式
+     */
+    align?: 'left' | 'center' | 'right'
+    /**
+     * 标识是否追加操作按钮列
+     */
+    hide?: boolean
+    /**
+     * 固定位置
+     * 列是否固定在左侧或者右侧。 true 表示固定在左侧
+     */
+    fixed?: true | 'left' | 'right'
+    /**
+     * 列标题
+     */
+    label?: string
 }
 
 export interface TableConfig<TBD = any> extends TableProps<TBD> {
@@ -59,35 +91,5 @@ export interface TableConfig<TBD = any> extends TableProps<TBD> {
     /**
      * 自定义渲染操作列的按钮组
      */
-    rowBtnConfig?: {
-        /**
-         * 按钮组
-         */
-        btns: TableRowBtnProps<TBD>[]
-        /**
-         * 最多显示几个按钮，超出部分将于更多操作内显示
-         */
-        maxCount?: number
-        /**
-         * 列的宽度
-         */
-        width?: string | number
-        /**
-         * 操作列的对齐方式
-         */
-        align?: 'left' | 'center' | 'right'
-        /**
-         * 标识是否追加操作按钮列
-         */
-        hide?: boolean
-        /**
-         * 固定位置
-         * 列是否固定在左侧或者右侧。 true 表示固定在左侧
-         */
-        fixed?: true | 'left' | 'right'
-        /**
-         * 列标题
-         */
-        label?: string
-    }
+    rowBtnConfig?: TableRowBtnConfig<TBD>
 }

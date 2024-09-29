@@ -40,7 +40,7 @@
                     <slot name="middle-right" />
                 </div> -->
                 <div class="middle-right-wrapper">
-                    <g-advance-input
+                    <LGAdvanceInput
                         v-model.trim="keyword"
                         class="search-input-wrapper"
                         placeholder="请输入关键字"
@@ -101,7 +101,7 @@ export default {
 
 <script lang="tsx" setup>
 import { ref, computed, Ref, provide, toRef, watch, onBeforeMount } from 'vue'
-import { ElTabs, ElTabPane } from 'element-plus'
+import { ElTabs, ElTabPane, ElIcon } from 'element-plus'
 import TableSearch from './component/TableSearch.vue'
 import { GTable as LGTable, type TableConfig } from '../GTable'
 import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
@@ -120,6 +120,7 @@ import ShowColumns from './component/ShowColumns.vue'
 import Sort from './component/Sort.vue'
 import SearchCondition from './component/SearchCondition.vue'
 import { Search, RefreshRight } from '@element-plus/icons-vue'
+import { GAdvanceInput as LGAdvanceInput } from '../GForm'
 
 onBeforeMount(() => {
     loadTable()
@@ -247,7 +248,7 @@ function loadTable(cb?: (data?: Record<string, any>[]) => void) {
         extInfo: { clientId, funcId, pageId, tableId },
         order,
         isOr,
-        paging: {
+        paging: localTableConfig.pagination && {
             current: localTableConfig.pagination.currentPage ?? 1,
             size: localTableConfig.pagination.pageSize ?? 10
         },

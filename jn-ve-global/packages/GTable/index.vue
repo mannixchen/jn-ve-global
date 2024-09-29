@@ -30,7 +30,7 @@
                     <ElTableColumn
                         v-if="localConfig.showSelection"
                         :width="size2Rem(55)"
-                        v-bind="localConfig.selectionColumns as any"
+                        v-bind="(localConfig.selectionColumns as any)"
                         type="selection"
                         class-name="table-selection-column"
                     />

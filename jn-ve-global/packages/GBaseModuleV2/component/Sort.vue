@@ -3,8 +3,8 @@
         v-model:visible="sortPopoverVisible"
         placement="bottom-start"
         trigger="click"
-        width="4rem"
         :popper-options="options"
+        popper-class="sort__popover"
     >
         <template #reference>
             <!-- <el-button type="primary" text>
@@ -176,7 +176,9 @@ const init = () => {
     notSelectedRuleOptions.value = cloneDeep(props.columns ?? [])
         // 操作咧不支持排序，
         // endSortable为false的不支持排序，针对有的列通过多个后端字段组合展示的场景, 例如开始结束时间，或者有些列用户不想加入后端排序
-        .filter((item) => !((item.prop === 'opertion' && item.label === '操作') || item?.unsortable))
+        .filter(
+            (item) => !((item.prop === 'opertion' && item.label === '操作') || item?.unsortable)
+        )
         .map(({ prop, label }) => ({
             prop,
             label,
@@ -275,12 +277,16 @@ watch(
 )
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.sort__popover {
+    width: 400px !important;
+}
+
 .sort-icon-wrapper {
     cursor: pointer;
     margin-right: 18px;
 
-    :deep(.custom-svg-icon) {
+    .custom-svg-icon {
         color: #989898;
         &:hover {
             color: #409eff;
@@ -401,7 +407,7 @@ watch(
             height: 100%;
             margin-top: 7px;
 
-            :deep(.custom-svg-icon) {
+            .custom-svg-icon {
                 color: #989898;
                 &:hover {
                     color: #409eff;

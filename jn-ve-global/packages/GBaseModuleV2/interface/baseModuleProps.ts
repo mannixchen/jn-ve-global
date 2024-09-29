@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-24 15:08:58
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-09-29 09:35:52
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/interface/baseModuleProps.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -13,7 +13,8 @@ import {
     type TableColumnProps,
     type BaseTableDataItem,
     type TableConfig,
-    type PaginationProps
+    type PaginationProps,
+    type TableRowBtnConfig
 } from '../../GTable'
 import type { FormProps } from '../../GForm'
 import { type BtnProps } from '../../GButtonGroup'
@@ -152,7 +153,7 @@ export interface BaseModuleProps {
     /**
      * 表格操作列
      */
-    rowBtnConfig?: TableConfig<any>['rowBtnConfig']
+    rowBtnConfig?: TableRowBtnConfig
     /**
      * tab 切换
      */

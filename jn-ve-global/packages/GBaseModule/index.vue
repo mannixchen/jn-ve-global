@@ -86,7 +86,8 @@ import {
     type TableColumnProps,
     type BaseTableDataItem,
     type TableConfig,
-    type PaginationProps
+    type PaginationProps,
+    type TableRowBtnConfig
 } from '../GTable'
 import { GButtonGroup as LGButtonGroup, type BtnProps } from '../GButtonGroup'
 import { getBaseModuleMode } from '../_globalConstant/baseModuleMode'
@@ -146,7 +147,7 @@ export interface Props {
     /**
      * 表格操作列
      */
-    rowBtnConfig?: TableConfig<any>['rowBtnConfig']
+    rowBtnConfig?: TableRowBtnConfig
     /**
      * tab 切换
      */
