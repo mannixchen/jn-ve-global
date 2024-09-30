@@ -1,15 +1,20 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-23 16:57:50
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-09-29 09:36:12
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/ShowColumns.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover placement="bottom-start" trigger="click" width="4rem" :popper-options="options">
+    <el-popover
+        placement="bottom-start"
+        trigger="click"
+        :popper-options="options"
+        popper-class="show-columns__popover"
+    >
         <template #reference>
             <!-- <el-button type="primary" text>
                 显示列
@@ -372,7 +377,11 @@ watch(
 // )
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.show-columns__popover {
+    width: 400px !important;
+}
+
 .show-column-icon-wrapper {
     cursor: pointer;
     margin-right: 18px;
@@ -425,6 +434,7 @@ watch(
         margin: 0 0 6px 12px;
     }
 }
+
 .column-checkbox-group-wrapper {
     display: flex;
     flex-direction: column;
@@ -432,7 +442,7 @@ watch(
     overflow-y: scroll;
     scroll-behavior: smooth;
 
-    :deep(.el-checkbox) {
+    .el-checkbox {
         //display: flex;
         padding: 10px 12px;
         margin-right: 0 !important;

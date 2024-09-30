@@ -17,6 +17,11 @@ export interface TableMethods extends TableMethodsExtend {
      */
     clearSelection: () => void
     /**
+     * 返回当前选中的行
+     * @returns 
+     */
+    getSelectionRows: () => any[]
+    /**
      * 用于多选表格
      * 切换某一行的选中状态，如果使用了第二个参数，则是设置这一行选中与否（selected 为 true 则选中）
      */

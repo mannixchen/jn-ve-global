@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-30 11:21:53
+ * @LastEditTime: 2024-09-30 11:34:05
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
@@ -176,6 +176,10 @@ const allSearchConditions = ref<ConditionProps[]>(
 
 const searchResults = ref<ConditionProps[]>(allSearchConditions.value)
 
+/**
+ * TODO: 期望条件列表中的 value 可以和外部的 searchFormProps.model 绑定
+ * 即能通过 searchFormProps.model 完全同步获取到输入的值
+ */
 const selectedConditions = ref<FormProps[]>([])
 
 const selectedQueryList = ref<QueryProps[]>([])
@@ -484,7 +488,11 @@ onBeforeUnmount(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.search-conditions__popover {
+    width: 850px !important;
+}
+
 .filter-btn-wrapper {
     display: flex;
     border: 1px solid rgba(213, 213, 213, 1);
