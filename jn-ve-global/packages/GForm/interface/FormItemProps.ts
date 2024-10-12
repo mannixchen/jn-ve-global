@@ -1,5 +1,5 @@
 import type { VNode, Ref } from 'vue'
-import type { ExtendRuleItem } from './FormProps'
+import type { ExtendRuleItem, FormProps } from './FormProps'
 import type {
     InputControlConfig,
     InputNumberControlConfig,
@@ -241,7 +241,7 @@ export interface ControlFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: Ref<any>, key?: string) => JSX.Element | VNode | string | number
+    render?: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -257,7 +257,7 @@ export interface ControlsFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: Ref<any>, key?: string) => JSX.Element | VNode | string | number
+    render?: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -273,7 +273,7 @@ export interface RenderFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render: (prop?: Ref<any>, key?: string) => JSX.Element | VNode | string | number
+    render: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */

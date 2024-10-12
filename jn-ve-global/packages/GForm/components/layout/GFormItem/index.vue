@@ -40,7 +40,8 @@
                     :render="
                         formItemConfig.render(
                             toRef(rootFormConfig.model, formItemConfig.prop),
-                            formItemConfig.prop
+                            formItemConfig.prop,
+                            rootFormConfig
                         )
                     "
                 />

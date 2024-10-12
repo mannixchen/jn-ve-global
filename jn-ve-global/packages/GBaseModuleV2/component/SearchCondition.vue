@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-09-29 09:39:28
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-09-30 11:34:05
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -11,16 +11,17 @@
 <template>
     <el-popover
         ref="popoverRef"
+        :visible="popoverVisible"
         placement="bottom-start"
         trigger="click"
+        width="8.5rem"
         :popper-options="options"
-        popper-class="search-conditions__popover"
     >
         <template #reference>
             <!-- <el-button type="primary" text @click="openPopover">
                 {{ selectedQueryList.length > 0 ? `筛选${selectedQueryList.length}` : '筛选' }}
             </el-button> -->
-            <div class="filter-btn-wrapper">
+            <div class="filter-btn-wrapper" @click="openPopover">
                 <g-icon custom-color icon="filter" />
                 <div class="label">
                     {{ selectedQueryList.length > 0 ? `${selectedQueryList.length}项` : '筛选' }}
@@ -115,7 +116,7 @@
 </template>
 
 <script lang="tsx" setup>
-import { onMounted, watch, ref, computed, reactive, toRefs } from 'vue'
+import { onMounted, watch, ref, computed, reactive, onBeforeUnmount } from 'vue'
 import { Delete, QuestionFilled, Plus, Search, Select } from '@element-plus/icons-vue'
 import { FunctionalComponent, SelectOptionProps } from 'jn-ve-global'
 import useBetweenFormItem from '../hooks/useBetweenFormItem'
@@ -160,7 +161,7 @@ const options = {
     ]
 }
 
-// const popoverVisible = ref<boolean>(false)
+const popoverVisible = ref<boolean>(false)
 
 const keyword = ref<string>('')
 
@@ -183,9 +184,9 @@ const selectedConditions = ref<FormProps[]>([])
 
 const selectedQueryList = ref<QueryProps[]>([])
 
-// const openPopover = () => {
-//     popoverVisible.value = true
-// }
+const openPopover = () => {
+    popoverVisible.value = true
+}
 
 const search = (val) => {
     console.log('search', val)
@@ -450,7 +451,7 @@ const changeCondition = (oldProp: string, newProp: string) => {
 }
 
 const confirm = () => {
-    // popoverVisible.value = false
+    popoverVisible.value = false
     const queryList: QueryProps[] = selectedConditions.value.map((item) => {
         const { isOr, type, prop, value } = item.model
         return {
@@ -467,8 +468,24 @@ const confirm = () => {
         (item) => !['', null, undefined].includes(item.value)
     )
     emits('confirm', queryList, selectedConditions.value?.[0]?.model?.isOr)
-    popoverRef.value.hide()
+    // popoverRef.value.hide()
+    popoverVisible.value = false
 }
+
+// 处理按键事件 针对点击popover窗口后按esc键popover消失的场景，此场景下将popoverVisible.value手动置为false, 以便下次能够再次打开
+const handleKeydown = (event) => {
+    if (event.key === 'Escape' && popoverVisible.value) {
+        popoverVisible.value = false
+    }
+}
+
+onMounted(() => {
+    window.addEventListener('keydown', handleKeydown)
+})
+
+onBeforeUnmount(() => {
+    window.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <style lang="scss">
