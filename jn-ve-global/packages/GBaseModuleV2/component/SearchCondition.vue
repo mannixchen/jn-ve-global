@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-09-30 11:34:05
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-10-16 16:21:57
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -14,8 +14,8 @@
         :visible="popoverVisible"
         placement="bottom-start"
         trigger="click"
-        width="8.5rem"
         :popper-options="options"
+        popper-class="search-conditions__popover"
     >
         <template #reference>
             <!-- <el-button type="primary" text @click="openPopover">

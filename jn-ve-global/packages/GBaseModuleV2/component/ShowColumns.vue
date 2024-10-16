@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-09-29 09:36:12
+ * @LastEditTime: 2024-10-16 16:24:28
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/ShowColumns.vue
  * @Description: 
  * 
