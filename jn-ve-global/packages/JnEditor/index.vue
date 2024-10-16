@@ -24,6 +24,7 @@ import {
 import type { TinyMCE, Editor as TinyMCEEditor, RawEditorSettings } from './interface/tinymce'
 import useDom from './hooks/useDom'
 import useInitTiny from './hooks/useInitTiny'
+import { vLoading } from 'element-plus'
 
 export interface JnEditorProps {
     /**
