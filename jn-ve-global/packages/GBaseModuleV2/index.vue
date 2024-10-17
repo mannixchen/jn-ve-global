@@ -1,5 +1,6 @@
 <template>
     <div
+        v-if="savedConfigResolved"
         :class="[
             'base-module-root',
             'classic-mode',
@@ -53,7 +54,11 @@
                         :form-config="props.searchFormProps"
                         @confirm="confirmCondition"
                     />
-                    <ShowColumns v-if="columnsConfigurable" v-model="showColumns" />
+                    <ShowColumns
+                        v-if="columnsConfigurable"
+                        v-model="showColumns"
+                        @column-change="saveColumns"
+                    />
                     <Sort v-if="sortable" :columns="props.tableColumns" @confirm="confirmSort" />
                     <el-icon class="icon-wrapper" @click="loadTable">
                         <RefreshRight />
@@ -100,8 +105,8 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed, Ref, provide, toRef, watch, onBeforeMount } from 'vue'
-import { ElTabs, ElTabPane, ElIcon } from 'element-plus'
+import { ref, computed, Ref, provide, toRef, reactive, onBeforeMount } from 'vue'
+import { ElTabs, ElTabPane, ElIcon, ElMessage } from 'element-plus'
 import TableSearch from './component/TableSearch.vue'
 import { GTable as LGTable, type TableConfig } from '../GTable'
 import { GButtonGroup as LGButtonGroup } from '../GButtonGroup'
@@ -113,20 +118,32 @@ import type {
     QueryProps,
     OrderProps,
     QueryParams,
-    BaseModuleColumnProps
+    BaseModuleColumnProps,
+    SavedConfig,
+    RuleOption
 } from './interface'
-import { tableColumnsKey } from './constant'
+import { tableColumnsKey, savedConfigKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
 import Sort from './component/Sort.vue'
 import SearchCondition from './component/SearchCondition.vue'
 import { Search, RefreshRight } from '@element-plus/icons-vue'
-import { GAdvanceInput as LGAdvanceInput } from '../GForm'
+import { GAdvanceInput as LGAdvanceInput, FormProps } from '../GForm'
+import { useConfig } from './hooks/useConfig'
+import { getQueryList } from './hooks/useFormConditions'
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
+    if (needGetSavedConfig.value) {
+        await getSavedConfig()
+        ;(params.isOr = savedConfig.value?.searchConditions?.[0]?.model?.isOr),
+        (params.queryList = getQueryList(savedConfig.value?.searchConditions ?? []))
+        // showColumns.value = savedConfig.value?.columns ?? []
+    }
     loadTable()
 })
 
 const props = withDefaults(defineProps<BaseModuleProps>(), {
+    id: '',
+    // siteId: '',
     searchBtnsConfig: null,
     // filterable: true,
     sortable: true,
@@ -149,6 +166,12 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     actionParams: null
 })
 
+if (!props?.id) {
+    const msg = 'GBaseModuleV2请传入id（组件唯一标识）'
+    ElMessage.warning(msg)
+    throw new Error(msg)
+}
+
 const emits = defineEmits([
     'getTableInstance',
     'update:activeTab',
@@ -166,6 +189,23 @@ const sortable = computed<boolean>(
 )
 
 const keyword = ref<string>('')
+
+// const needGetSavedConfig = ref<boolean>(
+//     !!sortable.value || !!props?.columnsConfigurable || !!props?.searchFormProps
+// )
+// const savedConfigResolved = ref<boolean>(!needGetSavedConfig.value)
+
+const savedConfig = ref<SavedConfig>(null)
+// const savedConfig = reactive<SavedConfig>({
+//     columns: [],
+//     searchConditions: []
+// })
+const { needGetSavedConfig, savedConfigResolved, getSavedConfig, setSavedConfig } = useConfig(
+    props,
+    savedConfig
+)
+
+provide(savedConfigKey, savedConfig)
 
 // provide(tableColumnsKey, toRef(props, 'tableColumns'))
 
@@ -202,7 +242,23 @@ const importRef = ref()
 // const rightBtns = compp
 
 // 包装本地表格配置（中转站）
-const { localTableConfig } = useMergeProps({ props, emits, showColumns, loadTable })
+const { localTableConfig } = useMergeProps({
+    props,
+    emits,
+    showColumns,
+    loadTable
+    // savedConfig,
+    // setSavedConfig
+})
+
+const saveColumns = (columns: BaseModuleColumnProps[]) => {
+    savedConfig.value = {
+        columns,
+        searchConditions: savedConfig.value?.searchConditions ?? []
+    }
+
+    setSavedConfig()
+}
 
 // const resetColumns = () => {
 //     console.log('reset', props.tableColumns)
@@ -225,14 +281,27 @@ let params: QueryParams = {
     isOr: false,
     queryList: []
 }
-const confirmCondition = (queryList: QueryProps[], isOr: boolean) => {
+
+const confirmCondition = (
+    queryList: QueryProps[],
+    isOr: boolean,
+    searchConditions: FormProps[]
+) => {
+    console.log('confirmCondition')
     params.isOr = isOr
     params.queryList = queryList
+    // savedConfig.value.searchConditions = searchConditions
+    savedConfig.value = {
+        searchConditions: searchConditions,
+        columns: savedConfig.value?.columns ?? []
+    }
+    setSavedConfig()
     // loadTable({ queryList, isOr })
     loadTable()
 }
-const confirmSort = (order: OrderProps) => {
+const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     params.order = order
+    // savedConfig.value.sortOptions = sortOptions ?? []
     // loadTable({ order })
     loadTable()
 }

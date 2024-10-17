@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-10-16 16:21:57
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-10-15 14:25:04
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -116,12 +116,14 @@
 </template>
 
 <script lang="tsx" setup>
-import { onMounted, watch, ref, computed, reactive, onBeforeUnmount } from 'vue'
+import { onMounted, watch, ref, inject, reactive, onBeforeUnmount } from 'vue'
 import { Delete, QuestionFilled, Plus, Search, Select } from '@element-plus/icons-vue'
 import { FunctionalComponent, SelectOptionProps } from 'jn-ve-global'
 import useBetweenFormItem from '../hooks/useBetweenFormItem'
 import type { FormProps, FormItemProps } from '../../GForm'
-import type { ConditionProps, QueryProps } from '../interface'
+import type { ConditionProps, QueryProps, SavedConfig } from '../interface'
+import { savedConfigKey } from '../constant'
+import { getQueryList } from '../hooks/useFormConditions'
 // import { global } from '@jsjn/utils'
 
 const COMPONENT_NAME = 'SearchCondition'
@@ -139,8 +141,10 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{
-    'confirm': [queryList: QueryProps[], isOr: boolean]
+    'confirm': [queryList: QueryProps[], isOr: boolean, searchConditions: FormProps[]]
 }>()
+
+const savedConfig = inject(savedConfigKey)
 
 const popoverRef = ref()
 
@@ -169,7 +173,11 @@ const allSearchConditions = ref<ConditionProps[]>(
     (props.formConfig as FormProps).formItems.map((item) => ({
         value: item.prop,
         label: item.label as string,
-        disabled: false,
+        // disabled: false,
+        // isCurrent: false
+        disabled:
+            savedConfig.value?.searchConditions?.map((ele) => ele.prop)?.includes(item.prop) ??
+            false,
         isCurrent: false
     }))
 )
@@ -180,9 +188,12 @@ const searchResults = ref<ConditionProps[]>(allSearchConditions.value)
  * TODO: 期望条件列表中的 value 可以和外部的 searchFormProps.model 绑定
  * 即能通过 searchFormProps.model 完全同步获取到输入的值
  */
-const selectedConditions = ref<FormProps[]>([])
-
-const selectedQueryList = ref<QueryProps[]>([])
+const selectedConditions = ref<FormProps[]>(savedConfig.value?.searchConditions ?? [])
+const selectedQueryList = ref<QueryProps[]>(
+    getQueryList(
+        selectedConditions.value
+    )?.filter((item) => !['', null, undefined].includes(item.value))
+)
 
 const openPopover = () => {
     popoverVisible.value = true
@@ -202,7 +213,7 @@ const clear = () => {
         item.model.value = props.formConfig.model[item.prop]
         return item
     })
-    emits('confirm', [], false)
+    emits('confirm', [], false, selectedConditions.value)
 }
 
 // 获取运算类型
@@ -451,23 +462,30 @@ const changeCondition = (oldProp: string, newProp: string) => {
 }
 
 const confirm = () => {
-    popoverVisible.value = false
-    const queryList: QueryProps[] = selectedConditions.value.map((item) => {
-        const { isOr, type, prop, value } = item.model
-        return {
-            column: prop,
-            isAuto: true,
-            isHump: true,
-            type,
-            // value: type === 'between' ? value?.join() : value,
-            value: Array.isArray(value) ? value?.join() : value,
-            valueType: 'String'
-        }
-    })
+    //popoverVisible.value = false
+    // const queryList: QueryProps[] = selectedConditions.value.map((item) => {
+    //     const { isOr, type, prop, value } = item.model
+    //     return {
+    //         column: prop,
+    //         isAuto: true,
+    //         isHump: true,
+    //         type,
+    //         // value: type === 'between' ? value?.join() : value,
+    //         value: Array.isArray(value) ? value?.join() : value,
+    //         valueType: 'String'
+    //     }
+    // })
+    const queryList = getQueryList(selectedConditions.value)
     selectedQueryList.value = queryList.filter(
         (item) => !['', null, undefined].includes(item.value)
     )
-    emits('confirm', queryList, selectedConditions.value?.[0]?.model?.isOr)
+    console.log('selectedConditions', selectedConditions)
+    emits(
+        'confirm',
+        queryList,
+        selectedConditions.value?.[0]?.model?.isOr,
+        selectedConditions.value
+    )
     // popoverRef.value.hide()
     popoverVisible.value = false
 }

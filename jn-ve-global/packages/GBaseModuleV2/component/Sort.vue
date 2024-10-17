@@ -162,7 +162,7 @@ const options = {
 // }})
 
 const emits = defineEmits<{
-    'confirm': [val?: OrderProps]
+    'confirm': [val: OrderProps, sortOptions: RuleOption[]]
 }>()
 
 const sortPopoverVisible = ref<boolean>(false)
@@ -226,7 +226,7 @@ const confirm = () => {
             selectedRuleOptions.value
                 .filter((item) => item.order === Order.DESCENT)
                 ?.map((item) => item.prop) ?? []
-    })
+    }, selectedRuleOptions.value)
 }
 
 const search = (val) => {
