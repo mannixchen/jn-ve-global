@@ -67,6 +67,10 @@ export function getFileBlobUrlByRequest(url: string, fileType?: string, timeout?
         .then((res) => {
             let blob: Blob
 
+            if (typeof res === 'object' && res.statusText) {
+                res = res.data
+            }
+
             // 实际的基座响应数据
             if (res) {
                 blob = res as any
@@ -76,7 +80,7 @@ export function getFileBlobUrlByRequest(url: string, fileType?: string, timeout?
             }
             return blob ? global.URL.createObjectURL(blob) : url
         })
-        .catch(() => undefined)
+        .catch((err) => undefined)
 }
 
 /**
