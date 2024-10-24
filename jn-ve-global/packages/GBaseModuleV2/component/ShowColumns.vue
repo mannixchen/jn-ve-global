@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-10-16 16:24:28
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/ShowColumns.vue
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-10-17 10:35:24
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -118,7 +118,7 @@
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed, reactive, toRefs, inject, onMounted } from 'vue'
 // import { type TableColumnProps } from '../../GTable'
-import { tableColumnsKey } from '../constant'
+import { tableColumnsKey, savedConfigKey } from '../constant'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import type { BaseModuleColumnProps } from '../interface'
 import { cloneDeep } from 'lodash'
@@ -143,6 +143,8 @@ defineOptions({
 //     'reset': [val?: TableColumnProps[]]
 // }>()
 
+const savedConfig = inject(savedConfigKey)
+
 const options = {
     modifiers: [
         {
@@ -161,6 +163,10 @@ const options = {
 }
 
 const columns = defineModel<BaseModuleColumnProps[]>({ default: [] })
+
+const emits = defineEmits<{
+    'columnChange': [val?: BaseModuleColumnProps[]]
+}>()
 
 const visible = ref<boolean>(true)
 
@@ -195,12 +201,26 @@ const init = (columns: BaseModuleColumnProps[]) => {
         copyColumns.filter((item) => !(item.prop === 'opertion' && item.label === '操作')) ?? []
     )
     checkedColumns.value = allColumns?.map((item) => item.prop)
+    // checkedColumns.value = allColumns?.map((item) => item.prop)?.filter((item) => !item.hide)
     localColumns.value = cloneDeep(allColumns ?? [])
     keyword.value = ''
     checkAll.value = true
     isIndeterminate.value = false
     showAll.value = true
 }
+
+// if (savedConfig.value?.columns?.length > 0) {
+//     const savedColumns = savedConfig.value?.columns
+//     sortColumns(savedColumns?.map((item) => item.prop))
+//     columns.value = columns.value.map((item) => {
+//         const { hide = false, fixed = false } = savedColumns.find((ele) => ele.prop === item.prop)
+//         return {
+//             ...item,
+//             hide,
+//             fixed
+//         }
+//     })
+// }
 
 init(columns.value)
 
@@ -236,6 +256,8 @@ const handleCheckedColumnsChange = (value: string[]) => {
 const fixColumn = (column: BaseModuleColumnProps) => {
     column.fixed = !column.fixed
     columns.value.find((item) => item.prop === column.prop).fixed = column.fixed
+    // saveColumns()
+
     // updateColumns()
     // const targetProp =
     // const lastFixedColumnIndex = allColumns.filter(item => item)
@@ -275,10 +297,21 @@ const sortableOption = {
             : sortableInstance.toArray()
         // columns.value = sortByOrder(columns.value, order)
         columns.value = order.map((prop) => columns.value.find((item) => item.prop === prop))
-        console.log('onEnd', event, order, columns)
+        // sortColumns(sortableInstance.toArray())
+        // saveColumns()
+        console.log('onEnd', event, columns)
         // updateColumns()
     }
 }
+
+// function sortColumns(props: string[]) {
+//     const operationColumnProp = columns.value.find(
+//         (item) => item.prop === 'opertion' && item.label === '操作'
+//     )?.prop
+//     const order = operationColumnProp ? [...props, operationColumnProp] : props
+//     // columns.value = sortByOrder(columns.value, order)
+//     columns.value = order.map((prop) => columns.value.find((item) => item.prop === prop))
+// }
 
 // const sortByOrder = (arr, order) => {
 //     // 使用 reduce 复制数组
@@ -328,6 +361,12 @@ const reset = () => {
 
 const confirm = () => {}
 
+const saveColumns = () => {
+    emits(
+        'columnChange',
+        columns.value?.filter((item) => !(item.prop === 'opertion' && item.label === '操作')) ?? []
+    )
+}
 // const getHandledColumns = () => {
 //     // return
 // }
@@ -375,6 +414,13 @@ watch(
 //         immediate: true
 //     }
 // )
+
+watch(
+    () => checkedColumns.value,
+    (val) => {
+        // saveColumns()
+    }
+)
 </script>
 
 <style lang="scss">

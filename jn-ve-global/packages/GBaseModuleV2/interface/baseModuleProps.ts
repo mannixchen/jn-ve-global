@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-09-29 09:35:52
- * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/interface/baseModuleProps.ts
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-10-14 15:13:16
+ * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -60,6 +60,16 @@ export interface BaseModuleColumnProps extends TableColumnProps {
 // }
 
 export interface BaseModuleProps {
+    /**
+     * 组件唯一标识，用于记录筛选，排序，冻结列配置
+     */
+    id: string
+
+    /**
+     * 站点Id
+     */
+    // siteId?: string
+    
     /**
      * 表格列
      */
