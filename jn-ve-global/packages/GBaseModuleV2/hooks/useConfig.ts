@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-10-24 11:18:56
+ * @LastEditTime: 2024-10-24 15:57:58
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
@@ -64,6 +64,7 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
     }
 
     const setSavedConfig = () => {
+        if (!props.needSavedConfig) return
         myAxios('/kinso-manager-server/v1/web/configIndPage/update', {
             method: 'PUT',
             data: {

@@ -1,5 +1,6 @@
 <template>
     <g-base-module-v2
+        id="tett"
         v-model:selected-rows="selectedRows"
         :show-selection="true"
         highlight-current-row
