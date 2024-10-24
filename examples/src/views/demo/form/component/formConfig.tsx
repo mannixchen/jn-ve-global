@@ -53,7 +53,7 @@ export default () => {
             selectTreeActiveM: ['1425374667260223489'],
             icon: '111',
             customLabel: `测试文本-${+new Date()}`,
-            avatar: `测试文本-${+new Date()}`,
+            avatar: `6,014eb8a8376d50`,
             clientChannel: `测试文本-${+new Date()}`,
             arr: [],
             address: [],
@@ -499,34 +499,34 @@ export default () => {
                     props: {
                         action: `${prefix}/kinso-basic-open-server/v1/document/file/upload`,
                         downloadUrl: `${prefix}/kinso-basic-open-server/v1/document/file/download`,
-                        fileList: [],
+                        // fileList: [],
                         name: 'file',
                         size: 2,
-                        listType: 'picture-card',
-                        onSuccess(res) {
-                            if (res.code === '000000') {
-                                const config = formConfig.formItems.find(
-                                    (item) => item.prop === 'avatar'
-                                ).controlConfig as UploadControlConfig
+                        listType: 'avatar'
+                        // onSuccess(res) {
+                        //     if (res.code === '000000') {
+                        //         const config = formConfig.formItems.find(
+                        //             (item) => item.prop === 'avatar'
+                        //         ).controlConfig as UploadControlConfig
 
-                                const fileList = config.props.fileList
+                        //         const fileList = config.props.fileList
 
-                                console.log(
-                                    `%c onSuccess fileList == `,
-                                    'color: #67c23a;',
-                                    fileList
-                                )
-                            }
-                        },
-                        onRemove() {
-                            const config = formConfig.formItems.find(
-                                (item) => item.prop === 'avatar'
-                            ).controlConfig as UploadControlConfig
+                        //         console.log(
+                        //             `%c onSuccess fileList == `,
+                        //             'color: #67c23a;',
+                        //             fileList
+                        //         )
+                        //     }
+                        // },
+                        // onRemove() {
+                        //     const config = formConfig.formItems.find(
+                        //         (item) => item.prop === 'avatar'
+                        //     ).controlConfig as UploadControlConfig
 
-                            const fileList = config.props.fileList
+                        //     const fileList = config.props.fileList
 
-                            console.log(`%c onRemove fileList == `, 'color: #67c23a;', fileList)
-                        }
+                        //     console.log(`%c onRemove fileList == `, 'color: #67c23a;', fileList)
+                        // }
                     }
                 }
             },

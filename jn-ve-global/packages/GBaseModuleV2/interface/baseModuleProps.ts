@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-10-14 15:13:16
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\interface\baseModuleProps.ts
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-10-24 11:18:11
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/interface/baseModuleProps.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -69,7 +69,7 @@ export interface BaseModuleProps {
      * 站点Id
      */
     // siteId?: string
-    
+
     /**
      * 表格列
      */
@@ -122,10 +122,10 @@ export interface BaseModuleProps {
     loadTableService?: (params?: any, replace?: Record<string, string | number>) => Promise<any>
     // loadTableMethods?: (page?: number) => void
 
-     /**
+    /**
      * 替代接口路径中大括号中的变量
      */
-     replace?: Record<string, string | number>
+    replace?: Record<string, string | number>
 
     /**
      * 下载表格
@@ -194,4 +194,8 @@ export interface BaseModuleProps {
      * 额外信息
      */
     extraInfo?: ExtraInfo
+    /**
+     * 是否需要保存配置信息
+     */
+    needSavedConfig?: boolean
 }

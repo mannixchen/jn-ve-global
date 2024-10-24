@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-10-17 10:25:00
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\hooks\useConfig.ts
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-10-24 11:18:56
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -27,7 +27,7 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
     const clientId = window['__SITE_ID__']
 
     const needGetSavedConfig = ref<boolean>(
-        !!props?.columnsConfigurable || !!props?.searchFormProps
+        props.needSavedConfig && (!!props?.columnsConfigurable || !!props?.searchFormProps)
         // || (props?.sortable && props?.tableColumns?.some((item) => !item.unsortable))
     )
 
@@ -49,7 +49,7 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
         if ((res as any).code === '000000') {
             // savedConfig = JSON.parse((res as any)?.data ?? '{}')
             let { columns = [], searchConditions = [] } = JSON.parse((res as any)?.data ?? '{}')
-            if(searchConditions?.length > 0 ) {
+            if (searchConditions?.length > 0) {
                 searchConditions[0].render = () => '当'
             }
             savedConfig.value = {

@@ -23,7 +23,7 @@
         /> -->
 
         <!-- 中间操作区域 -->
-        <div class="middle-area">
+        <div v-if="btns?.length || searchFormProps" class="middle-area">
             <div class="middle-opertion-wrapper">
                 <!-- 左 按钮组-->
                 <div class="middle-left-wrapper">
@@ -163,7 +163,8 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     selectedRows: null,
     operationGroupProps: null,
     action: '',
-    actionParams: null
+    actionParams: null,
+    needSavedConfig: true
 })
 
 if (!props?.id) {
