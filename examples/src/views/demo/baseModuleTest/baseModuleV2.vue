@@ -2,6 +2,7 @@
     <g-base-module-v2
         id="tett"
         v-model:selected-rows="selectedRows"
+        v-model:table-data="tableData"
         :show-selection="true"
         highlight-current-row
         no-search-label
@@ -14,7 +15,6 @@
         :btns="btns"
         :load-table-methods="loadTable"
         :table-columns="tableColumns"
-        :table-data="tableData"
         :table-pagination="tablePagination"
         :table-loading="false"
         :row-btn-config="rowBtnConfig"
@@ -34,6 +34,11 @@ import _ from 'lodash'
 const searchFormConfig = searchConfig()
 const tableColumns = TableColumns()
 const tableData = ref([])
+
+setTimeout(() => {
+    tableData.value = mockData.data1
+    // selectedRows.value = [mockData.data1[0]]
+}, 1000)
 
 const tablePagination = reactive<PaginationProps>({
     currentPage: 1,

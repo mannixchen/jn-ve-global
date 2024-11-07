@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-02-18 14:59:56
  * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-07-04 17:41:31
+ * @LastEditTime: 2024-11-04 14:11:26
  * @FilePath: \@jsjn-librar-monorepo\examples\src\views\demo\baseModuleTest\component\TableColumns.tsx
  * @Description: 
  * 
@@ -13,6 +13,13 @@ import { TableColumnProps } from 'jn-ve-global'
 
 export default () =>
     reactive<TableColumnProps[]>([
+        {
+            prop: '',
+            label: '',
+            type: 'expand',
+            fixed: true,
+            render: () => 11
+        },
         {
             prop: 'date',
             label: '日期',
