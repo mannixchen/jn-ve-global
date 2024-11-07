@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-10-15 14:25:04
- * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\SearchCondition.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-11-07 17:18:10
+ * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -118,7 +118,7 @@
 <script lang="tsx" setup>
 import { onMounted, watch, ref, inject, reactive, onBeforeUnmount } from 'vue'
 import { Delete, QuestionFilled, Plus, Search, Select } from '@element-plus/icons-vue'
-import { FunctionalComponent, SelectOptionProps } from 'jn-ve-global'
+import { SelectOptionProps } from '../../index'
 import useBetweenFormItem from '../hooks/useBetweenFormItem'
 import type { FormProps, FormItemProps } from '../../GForm'
 import type { ConditionProps, QueryProps, SavedConfig } from '../interface'

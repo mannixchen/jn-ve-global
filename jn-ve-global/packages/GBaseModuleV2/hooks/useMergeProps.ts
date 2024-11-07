@@ -1,4 +1,3 @@
-import { columns } from './../../../../examples/src/views/demo/table/data/columns'
 import { reactive, watch, nextTick, computed, useAttrs } from 'vue'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
 import type { TableConfig } from '../../GTable'
