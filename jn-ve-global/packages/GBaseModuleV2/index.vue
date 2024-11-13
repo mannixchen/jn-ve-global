@@ -167,7 +167,7 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     needSavedConfig: true
 })
 
-if (!props?.id) {
+if (props?.needSavedConfig && !props?.id) {
     const msg = 'GBaseModuleV2请传入id（组件唯一标识）'
     ElMessage.warning(msg)
     throw new Error(msg)
@@ -201,13 +201,8 @@ const savedConfig = ref<SavedConfig>(null)
 //     columns: [],
 //     searchConditions: []
 // })
-const {
-    needGetSavedConfig,
-    savedConfigResolved,
-    getSavedConfig,
-    setSavedConfig,
-    showColumns
-} = useConfig(props, savedConfig)
+const { needGetSavedConfig, savedConfigResolved, getSavedConfig, setSavedConfig, showColumns } =
+    useConfig(props, savedConfig)
 
 provide(savedConfigKey, savedConfig)
 
