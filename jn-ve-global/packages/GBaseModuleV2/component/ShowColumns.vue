@@ -1,8 +1,8 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-10-17 10:35:24
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2024-11-11 16:06:54
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -195,10 +195,16 @@ const showAll = ref(true)
 
 const checkboxGroupRef = ref()
 
+// 显示列中不参与配置的表格列
+const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
+    const { prop, label, type } = columnProps
+    return (prop === 'opertion' && label === '操作') || type === 'expand'
+}
+
 const init = (columns: BaseModuleColumnProps[]) => {
     const copyColumns = cloneDeep(columns)
     allColumns = cloneDeep(
-        copyColumns.filter((item) => !(item.prop === 'opertion' && item.label === '操作')) ?? []
+        copyColumns.filter((item) => !isExcludedColumn(item)) ?? []
     )
     checkedColumns.value = allColumns?.map((item) => item.prop)
     // checkedColumns.value = allColumns?.map((item) => item.prop)?.filter((item) => !item.hide)
@@ -255,8 +261,8 @@ const handleCheckedColumnsChange = (value: string[]) => {
 
 const fixColumn = (column: BaseModuleColumnProps) => {
     column.fixed = !column.fixed
-    columns.value.find((item) => item.prop === column.prop).fixed = column.fixed
-    // saveColumns()
+    columns.value.find((item) => item.prop === column.prop && item?.type !== 'expand').fixed = column.fixed
+    saveColumns()
 
     // updateColumns()
     // const targetProp =
@@ -292,13 +298,16 @@ const sortableOption = {
         const operationColumnProp = columns.value.find(
             (item) => item.prop === 'opertion' && item.label === '操作'
         )?.prop
+        const hasExpandColumn = columns.value.some(item => item?.type === 'expand')
         const order = operationColumnProp
             ? [...sortableInstance.toArray(), operationColumnProp]
             : sortableInstance.toArray()
         // columns.value = sortByOrder(columns.value, order)
-        columns.value = order.map((prop) => columns.value.find((item) => item.prop === prop))
+        const orderedColumns = order.map((prop) => columns.value.find((item) => item.prop === prop))
+        // columns.value = order.map((prop) => columns.value.find((item) => item.prop === prop))
+        columns.value = hasExpandColumn ? [columns.value.find(item => item?.type === 'expand'), ...orderedColumns] : orderedColumns
         // sortColumns(sortableInstance.toArray())
-        // saveColumns()
+        saveColumns()
         console.log('onEnd', event, columns)
         // updateColumns()
     }
@@ -329,7 +338,7 @@ const search = (val) => {
         localColumns.value = columns.value.filter((item) => item?.label?.includes(val))
     } else {
         localColumns.value = columns.value.filter(
-            (item) => !(item.prop === 'opertion' && item.label === '操作')
+            (item) => !isExcludedColumn(item)
         )
     }
     showAll.value = localColumns.value.length === allColumns.length
@@ -362,10 +371,17 @@ const reset = () => {
 const confirm = () => {}
 
 const saveColumns = () => {
-    emits(
-        'columnChange',
-        columns.value?.filter((item) => !(item.prop === 'opertion' && item.label === '操作')) ?? []
-    )
+    nextTick(() => {
+        emits(
+            'columnChange',
+            columns.value?.filter((item) => !isExcludedColumn(item))?.map(({prop, label, fixed, hide}) => ({
+                prop,
+                label,
+                fixed,
+                hide
+            })) ?? []
+        )
+    })
 }
 // const getHandledColumns = () => {
 //     // return
@@ -389,7 +405,7 @@ watch(
             return
         }
         columns.value.forEach((item) => {
-            if (!(item.prop === 'opertion' && item.label === '操作')) {
+            if (!isExcludedColumn(item)) {
                 item.hide = !val?.includes(item.prop)
             } else {
                 item.hide = false
@@ -418,7 +434,7 @@ watch(
 watch(
     () => checkedColumns.value,
     (val) => {
-        // saveColumns()
+        saveColumns()
     }
 )
 </script>

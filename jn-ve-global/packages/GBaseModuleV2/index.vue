@@ -167,7 +167,7 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     needSavedConfig: true
 })
 
-if (!props?.id) {
+if (props?.needSavedConfig && !props?.id) {
     const msg = 'GBaseModuleV2请传入id（组件唯一标识）'
     ElMessage.warning(msg)
     throw new Error(msg)
@@ -183,7 +183,7 @@ const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
 
 const tableLoading = ref<boolean>(false)
 
-const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+// const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
 
 const sortable = computed<boolean>(
     () => props?.sortable && props?.tableColumns?.some((item) => !item.unsortable)
@@ -201,10 +201,8 @@ const savedConfig = ref<SavedConfig>(null)
 //     columns: [],
 //     searchConditions: []
 // })
-const { needGetSavedConfig, savedConfigResolved, getSavedConfig, setSavedConfig } = useConfig(
-    props,
-    savedConfig
-)
+const { needGetSavedConfig, savedConfigResolved, getSavedConfig, setSavedConfig, showColumns } =
+    useConfig(props, savedConfig)
 
 provide(savedConfigKey, savedConfig)
 
@@ -255,7 +253,8 @@ const { localTableConfig } = useMergeProps({
 const saveColumns = (columns: BaseModuleColumnProps[]) => {
     savedConfig.value = {
         columns,
-        searchConditions: savedConfig.value?.searchConditions ?? []
+        searchConditions: savedConfig.value?.searchConditions ?? [],
+        sortOptions: savedConfig.value?.sortOptions ?? []
     }
 
     setSavedConfig()
@@ -294,7 +293,8 @@ const confirmCondition = (
     // savedConfig.value.searchConditions = searchConditions
     savedConfig.value = {
         searchConditions: searchConditions,
-        columns: savedConfig.value?.columns ?? []
+        columns: savedConfig.value?.columns ?? [],
+        sortOptions: savedConfig.value?.sortOptions ?? []
     }
     setSavedConfig()
     // loadTable({ queryList, isOr })
@@ -304,6 +304,12 @@ const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     params.order = order
     // savedConfig.value.sortOptions = sortOptions ?? []
     // loadTable({ order })
+    savedConfig.value = {
+        searchConditions: savedConfig.value?.searchConditions ?? [],
+        columns: savedConfig.value?.columns ?? [],
+        sortOptions
+    }
+    setSavedConfig()
     loadTable()
 }
 
