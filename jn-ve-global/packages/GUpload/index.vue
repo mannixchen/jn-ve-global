@@ -168,13 +168,6 @@
     </LGModal>
 </template>
 
-<script lang="ts">
-export default {
-    name: 'GUpload',
-    inheritAttrs: false
-}
-</script>
-
 <script lang="ts" setup>
 import { computed, ref, watch, Ref } from 'vue'
 import { getFileTypeIcon } from './utils'
@@ -201,6 +194,11 @@ import { GModal as LGModal } from '../GModal'
 import { global, size2Rem } from '@jsjn/utils'
 import useLocalPreviewMode from '../GFilePreview/hooks/useLocalPreviewMode'
 import { typeIsValid } from '../GFilePreview/utils'
+
+defineOptions({
+    name: 'GUpload',
+    inheritAttrs: false
+})
 
 export interface UploadCustomProps {
     instance?: any
