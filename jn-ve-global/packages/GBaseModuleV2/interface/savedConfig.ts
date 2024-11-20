@@ -14,4 +14,8 @@ export interface SavedConfig {
    * 冻结显示列
    */
   columns?: BaseModuleColumnProps[]
+  /**
+   * 导出列
+   */
+  exportColumns?: BaseModuleColumnProps[]
 }
