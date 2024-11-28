@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2024-11-11 16:53:03
+ * @LastEditTime: 2024-11-20 09:35:27
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
@@ -11,20 +11,34 @@
 import myAxios from '../../_http/http'
 import { BaseModuleProps, SavedConfig, BaseModuleColumnProps } from '../interface'
 import { ref, Ref } from 'vue'
+import { cloneDeep } from 'lodash'
 
 interface Info {
     inionId: string
     userId: string
 }
 
+const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
+    const { prop, label, type } = columnProps
+    return (prop === 'opertion' && label === '操作') || type === 'expand'
+}
+
 export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>) => {
-    console.log('useConfig', props, savedConfig)
+    // console.log('useConfig', props, savedConfig)
     const { siteAccountId: userId, siteOrgId: inionId } =
         JSON.parse(localStorage.getItem('vuex') ?? '{}')?.currentUserInfo?.loginInfo ?? {}
 
     const { id } = props
 
     const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+
+    // 导出列
+    const exportedColumns = ref<BaseModuleColumnProps[]>(
+        props.exportedColumns ??
+            cloneDeep(props.tableColumns?.filter((item) => !isExcludedColumn(item))) ??
+            []
+    )
+    const exporting = ref<boolean>(false)
 
     const clientId = window['__SITE_ID__']
 
@@ -62,6 +76,38 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
             : showColumns.value
     }
 
+    const setExportColumns = () => {
+        if (!savedConfig?.value?.exportColumns?.length) return
+        // const hasOperationColumn = exportedColumns.value?.some(
+        //     (item) => item.prop === 'opertion' && item.label === '操作'
+        // )
+        // const hasExpandColumn = exportedColumns.value.some((item) => item?.type === 'expand')
+        const savedColumns = savedConfig?.value?.columns?.map((item) => {
+            const column = exportedColumns.value?.find((ele) => ele?.prop === item?.prop)
+            return {
+                ...column,
+                ...item
+            }
+        })
+
+        exportedColumns.value = savedColumns
+
+        // exportedColumns.value = hasOperationColumn
+        //     ? [
+        //         ...savedColumns,
+        //         exportedColumns.value.find(
+        //             (item) => item.prop === 'opertion' && item.label === '操作'
+        //         )
+        //     ]
+        //     : savedColumns
+        // exportedColumns.value = hasExpandColumn
+        //     ? [
+        //         exportedColumns.value.find((item) => item?.type === 'expand'),
+        //         ...exportedColumns.value
+        //     ]
+        //     : exportedColumns.value
+    }
+
     const getSavedConfig = async () => {
         // let savedConfig
         const res = await myAxios('/kinso-manager-server/v1/web/configIndPage/query', {
@@ -77,17 +123,24 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
         savedConfigResolved.value = true
         if ((res as any).code === '000000') {
             // savedConfig = JSON.parse((res as any)?.data ?? '{}')
-            let { columns = [], searchConditions = [], sortOptions = [] } = JSON.parse((res as any)?.data ?? '{}')
+            let {
+                columns = [],
+                searchConditions = [],
+                sortOptions = [],
+                exportColumns = []
+            } = JSON.parse((res as any)?.data ?? '{}')
             if (searchConditions?.length > 0) {
                 searchConditions[0].render = () => '当'
             }
             savedConfig.value = {
                 columns,
                 searchConditions,
-                sortOptions
+                sortOptions,
+                exportColumns
             }
 
             setColumns()
+            setExportColumns()
             // savedConfig.columns = columns
             // savedConfig.searchConditions = searchConditions
             // savedConfig.value = JSON.parse((res as any)?.data ?? '{}')
@@ -95,9 +148,10 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
         }
     }
 
-    const setSavedConfig = () => {
-        console.log('setSavedConfig')
-        if (!props.needSavedConfig) return
+    const setSavedConfig = (config?: Partial<SavedConfig>) => {
+        // console.log('setSavedConfig', config)
+        if (!props.needSavedConfig || !config) return
+        savedConfig.value = { ...savedConfig.value, ...config }
         myAxios('/kinso-manager-server/v1/web/configIndPage/update', {
             method: 'PUT',
             data: {
@@ -114,6 +168,8 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
         needGetSavedConfig,
         savedConfigResolved,
         showColumns,
+        exportedColumns,
+        exporting,
         getSavedConfig,
         setSavedConfig
     }

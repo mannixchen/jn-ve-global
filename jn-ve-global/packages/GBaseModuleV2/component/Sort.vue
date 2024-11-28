@@ -33,7 +33,7 @@
                     placement="left-start"
                     trigger="click"
                     :teleported="false"
-                    :width="340"
+                    width="3.4rem"
                 >
                     <template #reference>
                         <el-button class="add-btn-wrapper" type="primary" plain :icon="Plus">

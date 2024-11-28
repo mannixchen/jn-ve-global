@@ -1,6 +1,9 @@
 <template>
     <div
         v-if="savedConfigResolved"
+        v-loading="exporting"
+        element-loading-text="正在导出..."
+        element-loading-background="rgba(122, 122, 122, 0.4)"
         :class="[
             'base-module-root',
             'classic-mode',
@@ -60,6 +63,11 @@
                         @column-change="saveColumns"
                     />
                     <Sort v-if="sortable" :columns="props.tableColumns" @confirm="confirmSort" />
+                    <ExportColumns
+                        v-if="exportable && exportedColumns?.length"
+                        v-model="exportedColumns"
+                        @confirm="confirmExport"
+                    />
                     <el-icon class="icon-wrapper" @click="loadTable">
                         <RefreshRight />
                     </el-icon>
@@ -124,12 +132,14 @@ import type {
 } from './interface'
 import { tableColumnsKey, savedConfigKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
+import ExportColumns from './component/ExportColumns.vue'
 import Sort from './component/Sort.vue'
 import SearchCondition from './component/SearchCondition.vue'
 import { Search, RefreshRight } from '@element-plus/icons-vue'
 import { GAdvanceInput as LGAdvanceInput, FormProps } from '../GForm'
 import { useConfig } from './hooks/useConfig'
 import { getQueryList } from './hooks/useFormConditions'
+import { isFunction } from 'lodash'
 
 onBeforeMount(async () => {
     if (needGetSavedConfig.value) {
@@ -163,6 +173,8 @@ const props = withDefaults(defineProps<BaseModuleProps>(), {
     selectedRows: null,
     operationGroupProps: null,
     action: '',
+    exportable: false,
+    // exportedColumns: () => [],
     actionParams: null,
     needSavedConfig: true
 })
@@ -201,8 +213,15 @@ const savedConfig = ref<SavedConfig>(null)
 //     columns: [],
 //     searchConditions: []
 // })
-const { needGetSavedConfig, savedConfigResolved, getSavedConfig, setSavedConfig, showColumns } =
-    useConfig(props, savedConfig)
+const {
+    needGetSavedConfig,
+    savedConfigResolved,
+    showColumns,
+    exportedColumns,
+    exporting,
+    getSavedConfig,
+    setSavedConfig
+} = useConfig(props, savedConfig)
 
 provide(savedConfigKey, savedConfig)
 
@@ -251,13 +270,31 @@ const { localTableConfig } = useMergeProps({
 })
 
 const saveColumns = (columns: BaseModuleColumnProps[]) => {
-    savedConfig.value = {
-        columns,
-        searchConditions: savedConfig.value?.searchConditions ?? [],
-        sortOptions: savedConfig.value?.sortOptions ?? []
-    }
+    // savedConfig.value = {
+    //     columns,
+    //     searchConditions: savedConfig.value?.searchConditions ?? [],
+    //     sortOptions: savedConfig.value?.sortOptions ?? []
+    // }
 
-    setSavedConfig()
+    setSavedConfig({columns})
+}
+
+// 确认导出列
+const confirmExport = (exportColumns: BaseModuleColumnProps[]) => {
+    if(!props?.exportMethod || !isFunction(props?.exportMethod)) {
+        ElMessage.warning('请配置导出方法exportMethod')
+        return
+    }
+    setSavedConfig({exportColumns})
+    exporting.value = true
+    props.exportMethod({
+        columns: exportColumns.filter(item => !item?.hide),
+        allQuery: keyword.value,
+        queryList: params?.queryList?.filter((item) => !['', null, undefined].includes(item.value))
+    })?.finally(() => {
+        exporting.value = false
+    })
+
 }
 
 // const resetColumns = () => {
@@ -291,12 +328,12 @@ const confirmCondition = (
     params.isOr = isOr
     params.queryList = queryList
     // savedConfig.value.searchConditions = searchConditions
-    savedConfig.value = {
-        searchConditions: searchConditions,
-        columns: savedConfig.value?.columns ?? [],
-        sortOptions: savedConfig.value?.sortOptions ?? []
-    }
-    setSavedConfig()
+    // savedConfig.value = {
+    //     searchConditions: searchConditions,
+    //     columns: savedConfig.value?.columns ?? [],
+    //     sortOptions: savedConfig.value?.sortOptions ?? []
+    // }
+    setSavedConfig({searchConditions})
     // loadTable({ queryList, isOr })
     loadTable()
 }
@@ -304,12 +341,12 @@ const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     params.order = order
     // savedConfig.value.sortOptions = sortOptions ?? []
     // loadTable({ order })
-    savedConfig.value = {
-        searchConditions: savedConfig.value?.searchConditions ?? [],
-        columns: savedConfig.value?.columns ?? [],
-        sortOptions
-    }
-    setSavedConfig()
+    // savedConfig.value = {
+    //     searchConditions: savedConfig.value?.searchConditions ?? [],
+    //     columns: savedConfig.value?.columns ?? [],
+    //     sortOptions
+    // }
+    setSavedConfig({sortOptions})
     loadTable()
 }
 

@@ -1,8 +1,8 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-11-07 17:18:10
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2024-11-15 10:44:45
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
@@ -46,7 +46,12 @@
                 </div>
             </div>
             <div class="btns-wrapper">
-                <el-popover placement="left-start" trigger="click" :teleported="false" :width="340">
+                <el-popover
+                    placement="left-start"
+                    trigger="click"
+                    :teleported="false"
+                    width="3.4rem"
+                >
                     <template #reference>
                         <el-button class="add-btn-wrapper" type="primary" plain :icon="Plus">
                             添加条件
@@ -97,9 +102,7 @@
                     :key="form.prop ?? index"
                     class="selected-condition-item-wrapper"
                 >
-                    <div class="condition-form-wrapper">
-                        <g-form :config="form" />
-                    </div>
+                    <g-form class="condition-form-wrapper" :config="form" />
 
                     <el-icon class="delete-rule-btn" @click="deleteCondition(form.prop)">
                         <Delete />
@@ -107,6 +110,9 @@
                 </div>
             </div>
             <div class="confirm-btn-wrapper">
+                <el-button @click="popoverVisible = false">
+                    取消
+                </el-button>
                 <el-button type="primary" @click="confirm">
                     确定
                 </el-button>
@@ -190,9 +196,9 @@ const searchResults = ref<ConditionProps[]>(allSearchConditions.value)
  */
 const selectedConditions = ref<FormProps[]>(savedConfig.value?.searchConditions ?? [])
 const selectedQueryList = ref<QueryProps[]>(
-    getQueryList(
-        selectedConditions.value
-    )?.filter((item) => !['', null, undefined].includes(item.value))
+    getQueryList(selectedConditions.value)?.filter(
+        (item) => !['', null, undefined].includes(item.value)
+    )
 )
 
 const openPopover = () => {
@@ -632,14 +638,15 @@ onBeforeUnmount(() => {
 
         .condition-form-wrapper {
             width: 100%;
-            :deep(.form-item-row) {
+
+            .form-item-row {
                 width: 100%;
 
-                .g-form-item.when {
-                    margin-left: 10px;
-                    margin-top: 10px;
-                }
                 .form-item-col {
+                    .el-form-item.g-form-item.when {
+                        margin-left: 10px !important;
+                        margin-top: 10px !important;
+                    }
                     padding-right: 0 !important;
                 }
             }

@@ -1,8 +1,8 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-01 09:51:56
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-10-24 11:18:11
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2024-11-18 15:59:40
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/interface/baseModuleProps.ts
  * @Description:
  *
@@ -18,6 +18,7 @@ import {
 } from '../../GTable'
 import type { FormProps } from '../../GForm'
 import { type BtnProps } from '../../GButtonGroup'
+import { QueryProps } from './searchCondition'
 
 export interface OperationProps {
     /**
@@ -43,6 +44,12 @@ export interface ExtraInfo {
     funcId?: string
     pageId?: string
     tableId?: string
+}
+
+export interface ExportMethodParams {
+    columns: TableColumnProps[]
+    allQuery?: string
+    queryList?: QueryProps[]
 }
 
 export interface BaseModuleColumnProps extends TableColumnProps {
@@ -112,9 +119,14 @@ export interface BaseModuleProps {
     columnsConfigurable?: boolean
 
     /**
-     * 搜索按钮是否独占一行
+     * 是否支持导出
      */
-    // searchBtnHorizontal?: boolean
+    exportable?: boolean
+
+    /**
+     * 导出列
+     */
+    exportedColumns?: BaseModuleColumnProps[]
 
     /**
      * 核心加载 table 数据的方法
@@ -134,7 +146,7 @@ export interface BaseModuleProps {
     /**
      * 下载表格
      */
-    exportMethod?: (params?: any) => void
+    exportMethod?: (params: ExportMethodParams) => Promise<any>
 
     /**
      * 表格 loading flag
