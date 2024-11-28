@@ -1,8 +1,8 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2024-11-15 10:44:45
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2024-11-28 16:53:43
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
@@ -643,11 +643,12 @@ onBeforeUnmount(() => {
                 width: 100%;
 
                 .form-item-col {
+                    padding-right: 0 !important;
+
                     .el-form-item.g-form-item.when {
                         margin-left: 10px !important;
                         margin-top: 10px !important;
                     }
-                    padding-right: 0 !important;
                 }
             }
         }
