@@ -129,7 +129,7 @@ export interface FormItemCustomProps {
     /**
      * 是否隐藏
      */
-    hide?: boolean
+    hide?: boolean | ((formItemConfig: FormItemBaseProps) => boolean)
     /**
      * 控件分组
      */
@@ -241,7 +241,11 @@ export interface ControlFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
+    render?: (
+        prop?: Ref<any>,
+        key?: string,
+        formConfig?: FormProps
+    ) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -257,7 +261,11 @@ export interface ControlsFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render?: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
+    render?: (
+        prop?: Ref<any>,
+        key?: string,
+        formConfig?: FormProps
+    ) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */
@@ -273,7 +281,11 @@ export interface RenderFormItem extends FormItemBaseProps {
     /**
      * 渲染函数
      */
-    render: (prop?: Ref<any>, key?: string, formConfig?: FormProps) => JSX.Element | VNode | string | number
+    render: (
+        prop?: Ref<any>,
+        key?: string,
+        formConfig?: FormProps
+    ) => JSX.Element | VNode | string | number
     /**
      * 控件组配置
      */

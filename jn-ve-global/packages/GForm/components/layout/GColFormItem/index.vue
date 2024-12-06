@@ -1,6 +1,6 @@
 <template>
     <ElCol
-        v-if="formItemConfig && !formItemConfig.hide"
+        v-if="formItemConfig && isCreate"
         :class="[
             'design-item-box',
             'form-item-col',
@@ -24,6 +24,8 @@ import { type Ref } from 'vue'
 import { type FormItemProps } from '../../../interface'
 import { ElCol } from 'element-plus'
 import LGFormItem from '../GFormItem/index.vue'
+import { computed } from 'vue'
+import { isBoolean, isFunction } from 'lodash'
 
 defineOptions({
     name: 'GColFormItem'
@@ -37,6 +39,14 @@ const props = withDefaults(
         formItemConfig: null
     }
 )
+
+const isCreate = computed(() => {
+    if (isBoolean(props.formItemConfig.hide)) return !props.formItemConfig.hide
+    else if (isFunction(props.formItemConfig.hide)) {
+        return !props.formItemConfig.hide(props.formItemConfig)
+    }
+    return true
+})
 
 /**
  * 从统一的 FormItemProps 中，提取出 el-col 的配置参数
