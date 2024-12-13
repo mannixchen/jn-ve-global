@@ -243,6 +243,11 @@ export interface UploadCustomProps {
      */
     onMagnify?: (file: UploadFile) => void
     /**
+     * 删除按钮的钩子
+     * @param file 
+     */
+    onDelete?: (file: UploadFile) => void
+    /**
      * 下载 & 预览文件的 url
      */
     downloadUrl?: string

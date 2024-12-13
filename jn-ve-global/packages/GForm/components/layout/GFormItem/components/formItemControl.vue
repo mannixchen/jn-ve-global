@@ -3,7 +3,7 @@
         <!-- Input -->
         <template v-if="localControlType === 'input'">
             <LGAdvanceInput
-                v-model="localPropRef"
+                v-model.trim="localPropRef"
                 v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"
@@ -32,9 +32,9 @@
                 <ElOption
                     v-for="selectOption in (controlConfig as SelectControlConfig).options"
                     :key="(selectOption.value as any)"
-                    :label="selectOption.label"
-                    :value="selectOption.value"
-                    :disabled="selectOption.disabled"
+                    :label="selectOption[(controlConfig?.props as SelectProps)?.optionProps['label'] ?? 'label']"
+                    :value="selectOption[(controlConfig?.props as SelectProps)?.optionProps['value'] ?? 'value']"
+                    :disabled="selectOption[(controlConfig?.props as SelectProps)?.optionProps['disabled'] ?? 'disabled']"
                 >
                     <!-- 自定义渲染 Select 模板 -->
                     <template v-if="(controlConfig as SelectControlConfig).optionRender">
@@ -242,7 +242,8 @@ import {
     AddressControlConfig,
     SelectTreeControlConfig,
     DatePickerControlConfig,
-    DatePickerProps
+    DatePickerProps,
+    SelectProps
 } from '../../../../interface'
 import { TableConfig } from '../../../../../index'
 import FunctionalComponent from '../../../../../FunctionalComponent'

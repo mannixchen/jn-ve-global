@@ -112,6 +112,7 @@ export default ({
             type: 'warning'
         }).then(() => {
             uploadRef.value.handleRemove(file)
+            props.onDelete?.(file)
         })
     }
 

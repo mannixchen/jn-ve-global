@@ -114,6 +114,15 @@ export interface SelectProps {
      * 自定义清空图标的类名
      */
     clearIcon?: string
+
+    /**
+     * 下拉选项，绑定值对应的源数据的字段
+     */
+    optionProps?: {
+        value?: string
+        label?: string
+        disabled?: string
+    }
 }
 
 /**

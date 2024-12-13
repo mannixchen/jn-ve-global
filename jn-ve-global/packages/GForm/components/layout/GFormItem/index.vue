@@ -140,7 +140,7 @@ const currentClasss = computed(() => {
     const type = props.formItemConfig?.controlConfig?.type
 
     return {
-        'no-colon': rootFormConfig.value?.colon === false,
+        'no-colon': rootFormConfig.value?.colon === false || props.formItemConfig?.colon === false,
         'g-form-item': true,
         'show-tip': props.formItemConfig.tip || currentFieldHistoryInfo,
         'field-log-tip': currentFieldHistoryInfo.value,

@@ -196,6 +196,11 @@ export interface FormItemCustomProps {
         | 'right-start'
         | 'right-end'
     /**
+     * 表示是否显示 label 后面的冒号
+     * 默认：true
+     */
+    colon?: boolean
+    /**
      * 扩展字段
      */
     [k: string]: any
