@@ -32,9 +32,9 @@
                 <ElOption
                     v-for="selectOption in (controlConfig as SelectControlConfig).options"
                     :key="(selectOption.value as any)"
-                    :label="selectOption[(controlConfig?.props as SelectProps)?.optionProps['label'] ?? 'label']"
-                    :value="selectOption[(controlConfig?.props as SelectProps)?.optionProps['value'] ?? 'value']"
-                    :disabled="selectOption[(controlConfig?.props as SelectProps)?.optionProps['disabled'] ?? 'disabled']"
+                    :label="selectOption[(controlConfig?.props as SelectProps)?.optionProps?.['label'] ?? 'label']"
+                    :value="selectOption[(controlConfig?.props as SelectProps)?.optionProps?.['value'] ?? 'value']"
+                    :disabled="selectOption[(controlConfig?.props as SelectProps)?.optionProps?.['disabled'] ?? 'disabled']"
                 >
                     <!-- 自定义渲染 Select 模板 -->
                     <template v-if="(controlConfig as SelectControlConfig).optionRender">
