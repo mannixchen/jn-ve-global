@@ -82,6 +82,9 @@ import { GForm as LGForm, type FormProps, type FormItemProps } from '../../GForm
 import { GModal as LGModal } from '../../GModal'
 import { GIcon as LGIcon } from '../../GIcon'
 import { assignOwnProp } from '@jsjn/utils'
+import { Bases } from '../../setting'
+import { getBase } from '../../_globalConstant/base'
+
 import _ from 'lodash'
 
 export interface Props {
@@ -168,9 +171,15 @@ watch(
     }
 )
 
-const modeTriggerLabel = computed<string>(() =>
-    props.moreSearchMode === 'pull-down' ? (!pullDownFlag.value ? '展开' : '收起') : '查看更多'
-)
+const modeTriggerLabel = computed<string>(() => {
+    const expandText = getBase() === Bases.REGTECH ? '展开查询' : '展开'
+    const collapseText = getBase() === Bases.REGTECH ? '收起查询' : '收起'
+    return props.moreSearchMode === 'pull-down'
+        ? !pullDownFlag.value
+            ? expandText
+            : collapseText
+        : '查看更多'
+})
 
 /**
  * 下拉模式，原 form 高度

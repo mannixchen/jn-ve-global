@@ -39,7 +39,7 @@
 
                     <LGIcon
                         v-if="collapsStyleMode !== ('syb' as any)"
-                        icon="el-DArrowRight"
+                        :icon="isRegtech ? 'el-ArrowRight' : 'el-DArrowRight'"
                         class="active-icon"
                     />
                 </div>
@@ -91,6 +91,8 @@ import { GButtonGroup as LGButtonGroup, type BtnProps } from '../../../GButtonGr
 import { GForm as LGForm, type FormProps } from '../../../GForm'
 import { GTable as LGTable, type TableConfig } from '../../../GTable'
 import { getCollapseMode } from '../../../_globalConstant/CollapseMode'
+import { Bases } from '../../../setting'
+import { getBase } from '../../../_globalConstant/base'
 
 export interface Props {
     /**
@@ -136,6 +138,9 @@ const props = withDefaults(defineProps<Props>(), {
     btns: () => [],
     shadow: false
 })
+
+// 是否监管基座
+const isRegtech = computed(() => getBase() === Bases.REGTECH)
 
 // 样式模式
 const collapsStyleMode = getCollapseMode()

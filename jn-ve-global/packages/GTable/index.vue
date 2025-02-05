@@ -79,10 +79,10 @@
                     v-model:current-page="localConfig.pagination.currentPage"
                     :total="localConfig.pagination.total"
                     :page-sizes="localConfig.pagination.pageSizes || [10, 20, 50]"
-                    prev-text="上一页"
-                    next-text="下一页"
+                    :prev-text="prevText"
+                    :next-text="nextText"
                     background
-                    layout="prev, pager, next, jumper, total, sizes"
+                    :layout="layout"
                 />
             </div>
         </template>
@@ -110,6 +110,8 @@ import useTimeoutCreate from './hooks/useTimeoutCreate'
 import TableColumn from './component/TableColumn.vue'
 import useAddOperationColumn from './component/OperationColumn/index'
 import useSelector from './hooks/useSelector'
+import { Bases } from '../setting'
+import { getBase } from '../_globalConstant/base'
 
 const props = withDefaults(
     defineProps<{
@@ -139,6 +141,16 @@ provide(tableInstanceKey, localInstance)
 
 // 收集表格所有单元格的校验器
 useLoadTriggerValidator({ props, localInstance })
+
+// 分页布局（当前监管表格分页布局需要客制化）
+const layout = computed(() => {
+    if (getBase() === Bases.REGTECH) {
+        return 'total, sizes, prev, pager, next, jumper'
+    }
+    return 'prev, pager, next, jumper, total, sizes"'
+})
+const prevText = computed(() => getBase() === Bases.REGTECH ? '' : '上一页' )
+const nextText = computed(() => getBase() === Bases.REGTECH ? '' : '下一页' )
 
 const { localSelect, localSelectAll } = useSelector({
     localConfig,

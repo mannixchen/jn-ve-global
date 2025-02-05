@@ -5,6 +5,7 @@ import {
     setDefauleMode
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
+import { setBase } from './_globalConstant/base'
 import { type CollapseMode, getCollapseMode, setCollapseMode } from './_globalConstant/CollapseMode'
 import {
     setIterceptorsReqHandle,
@@ -13,6 +14,38 @@ import {
     ResHandle
 } from './_http/httpInterceptors'
 import { setPrefix } from './_http/prefix'
+
+/**
+ * 基座（每个项目都有各自的基座，基座名称的集合，以枚举方式展示）
+ */
+export enum Bases {
+    REGTECH = 'regtech',
+    CONSUMER = 'consumer',
+    CORPORATE_CREDIT = 'corporate-credit',
+    DATA_SUBMISSION = 'data-submission',
+    GUARANTEE_LEASE = 'guarantee-lease',
+    LETTER_GUARANTEE = 'letter-guarantee',
+    MAINTENANCE = 'maintenance',
+    MANAGED_CLOUD = 'managed-cloud',
+    NEWCORE = 'newcore',
+    RONGFENG = 'rongfeng',
+    UU_CENTER = 'uu-center',
+    XINBAOZD = 'xinbaozd'
+}
+
+export type Base =
+    | Bases.REGTECH
+    | Bases.CONSUMER
+    | Bases.CORPORATE_CREDIT
+    | Bases.DATA_SUBMISSION
+    | Bases.GUARANTEE_LEASE
+    | Bases.LETTER_GUARANTEE
+    | Bases.MAINTENANCE
+    | Bases.MANAGED_CLOUD
+    | Bases.NEWCORE
+    | Bases.RONGFENG
+    | Bases.UU_CENTER
+    | Bases.XINBAOZD
 
 export interface VeGlobalSetting {
     /**
@@ -43,6 +76,10 @@ export interface VeGlobalSetting {
      * 请求前缀
      */
     prefix?: string
+    /**
+     * 基座
+     */
+    base?: Base
 }
 
 /**
@@ -60,13 +97,18 @@ export function setting(props: VeGlobalSetting) {
         interceptorsReqHandle,
         interceptorsResHandle,
         prefix,
-        collapseMode
+        collapseMode,
+        base
     } = props
 
     if (appMode) {
         setAppMode(appMode)
     } else if (window['__VUE_APP_MODE__']) {
         setAppMode(window['__VUE_APP_MODE__'])
+    }
+
+    if (base) {
+        setBase(base)
     }
 
     /**

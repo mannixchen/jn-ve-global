@@ -42,6 +42,13 @@
                             :render="(controlConfig as SelectControlConfig).optionRender(selectOption)"
                         />
                     </template>
+                    <div
+                        v-else-if="isRegtech && (localControlProps as SelectProps)?.multiple"
+                        class="checkbox-option"
+                    >
+                        <span class="checkbox" />
+                        <span>{{ selectOption[(controlConfig?.props as SelectProps)?.optionProps?.['label'] ?? 'label'] }}</span>
+                    </div>
                 </ElOption>
             </ElSelect>
         </template>
@@ -264,6 +271,9 @@ import LGChoose from '../../../control/GChoose/index.vue'
 import formConfigProvideKey from '../../../../constant/formConfigProvideKey'
 import getControlOprions from '../../../../hooks/getControlOprions'
 
+import { getBase } from '../../../../../_globalConstant/base'
+import { Bases } from '../../../../../setting'
+
 import {
     ElInputNumber,
     ElSelect,
@@ -383,4 +393,7 @@ const localControlProps = computed(() => {
 
     return controlProps
 })
+
+//监管基座下，select多选场景样式客制化，
+const isRegtech = getBase() === Bases.REGTECH
 </script>
