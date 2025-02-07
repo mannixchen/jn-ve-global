@@ -6,6 +6,32 @@
 
 <template #version>
 
+3.7.1
+
+</template>
+
+<template #date>
+
+2025-2-7
+
+</template>
+
+<h3>BugFix</h3>
+
+<h4>Upload</h4>
+
+1. 默认 token 获取问题：该问题导致不能即时获取 token，获取的是缓存（上一次登录的 token）
+
+注：如果环境 getway 配置了上传接口的不校验 token，请关掉；
+
+</update-log-block>
+
+<!-- ================== 3.6.2 ======================================================================== -->
+
+<update-log-block>
+
+<template #version>
+
 3.6.2
 
 </template>

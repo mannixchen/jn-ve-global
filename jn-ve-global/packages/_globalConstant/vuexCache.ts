@@ -1,5 +1,10 @@
 import { humpObj2PartitionObj, Local } from '@jsjn/utils'
 
-export const vuexCache = Local.get('vuex')
+export function getVuexCache() {
+    return Local.get('vuex')
+}
 
-export const token = vuexCache?.loginInfo?.['access_token']
+export function getToken() {
+    const token = getVuexCache()?.loginInfo?.['access_token']
+    return token
+}

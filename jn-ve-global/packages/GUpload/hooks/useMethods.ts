@@ -3,7 +3,7 @@ import { UploadFile } from '../interface/UploadFile'
 import { fillFileMemoryUrl, fillFileWpsPreviewUrl } from '../utils'
 import { typeIsValid } from '../../GFilePreview/utils'
 import { PreviewMode, WPS_PREVIEW_EXT } from '../../GFilePreview'
-import { token as tokenCache } from '../../_globalConstant/vuexCache'
+import { getToken } from '../../_globalConstant/vuexCache'
 
 export default ({
     uploadRef,
@@ -54,7 +54,7 @@ export default ({
         let aDom = document.createElement('a')
         aDom.href = file.url
             ? file.url
-            : `${localDownloadUrl.value}/${file.fileId}?token=${tokenCache}`
+            : `${localDownloadUrl.value}/${file.fileId}?token=${getToken()}`
         aDom.setAttribute('download', file.name)
         aDom.click()
         aDom = null
