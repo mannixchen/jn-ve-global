@@ -34,6 +34,8 @@ import { GIcon as LGIcon } from '../../../../../GIcon'
 import { FormItemProps } from '../../../../interface'
 import FunctionalComponent from '../../../../../FunctionalComponent'
 import { ElTooltip } from 'element-plus'
+import { Bases } from '../../../../../setting'
+import { getBase } from '../../../../../_globalConstant/base'
 import _ from 'lodash'
 
 const props = withDefaults(
@@ -45,7 +47,7 @@ const props = withDefaults(
     }>(),
     {
         content: null,
-        icon: 'el-QuestionFilled',
+        icon: () => getBase() === Bases.REGTECH ? 'jg-help-circle' : 'el-QuestionFilled',
         popperClass: '',
         placement: 'top'
     }

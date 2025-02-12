@@ -149,8 +149,8 @@ const layout = computed(() => {
     }
     return 'prev, pager, next, jumper, total, sizes"'
 })
-const prevText = computed(() => getBase() === Bases.REGTECH ? '' : '上一页' )
-const nextText = computed(() => getBase() === Bases.REGTECH ? '' : '下一页' )
+const prevText = computed(() => (getBase() === Bases.REGTECH ? '' : '上一页'))
+const nextText = computed(() => (getBase() === Bases.REGTECH ? '' : '下一页'))
 
 const { localSelect, localSelectAll } = useSelector({
     localConfig,
