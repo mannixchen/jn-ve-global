@@ -47,7 +47,12 @@
                         class="checkbox-option"
                     >
                         <span class="checkbox" />
-                        <span>{{ selectOption[(controlConfig?.props as SelectProps)?.optionProps?.['label'] ?? 'label'] }}</span>
+                        <span>{{
+                            selectOption[
+                                (controlConfig?.props as SelectProps)?.optionProps?.['label'] ??
+                                'label'
+                            ]
+                        }}</span>
                     </div>
                 </ElOption>
             </ElSelect>
@@ -80,7 +85,12 @@
         </template>
 
         <template v-if="localControlType === 'datePicker'">
-            <ElDatePicker v-model="localPropRef" v-bind="localControlProps" style="width: 100%" />
+            <ElDatePicker
+                v-model="localPropRef"
+                v-bind="localControlProps"
+                :popper-options="getPopoverOptions()"
+                style="width: 100%"
+            />
         </template>
 
         <template v-if="localControlType === 'dateTimePicker'">
@@ -88,6 +98,7 @@
                 v-model="localPropRef"
                 type="datetime"
                 v-bind="localControlProps"
+                :popper-options="getPopoverOptions()"
                 style="width: 100%"
             />
         </template>
@@ -200,6 +211,7 @@
             <LGAddress
                 v-model="localPropRef"
                 :options="(controlConfig as AddressControlConfig).options"
+                :popper-options="getPopoverOptions()"
                 v-bind="(controlConfig.props as any)"
             />
         </template>
@@ -271,6 +283,7 @@ import LGChoose from '../../../control/GChoose/index.vue'
 import formConfigProvideKey from '../../../../constant/formConfigProvideKey'
 import getControlOprions from '../../../../hooks/getControlOprions'
 
+import { getPopoverOptions } from '../../../../../_globalConstant/popoverOptions'
 import { getBase } from '../../../../../_globalConstant/base'
 import { Bases } from '../../../../../setting'
 
