@@ -2,7 +2,7 @@
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-11-06 15:17:09
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-11-30 14:18:31
+ * @LastEditTime: 2025-02-19 16:12:23
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/scripts/build/task/build-modules.ts
  * @Description: 组件库模块分包编译
  */
@@ -61,12 +61,15 @@ export const buildModules = async () => {
                 targets: [
                     {
                         src: [
-                            `${compRoot}/assets/icons/ali/*.ttf`,
-                            `${compRoot}/assets/icons/ali/*.woff`,
-                            `${compRoot}/assets/icons/ali/*.woff2`,
-                            `${compRoot}/assets/icons/ali/*.css`
+                            path.join(compRoot, 'assets', 'icons', 'ali', '*.ttf'),
+                            path.join(compRoot, 'assets', 'icons', 'ali', '*.woff'),
+                            path.join(compRoot, 'assets', 'icons', 'ali', '*.woff2'),
+                            path.join(compRoot, 'assets', 'icons', 'ali', '*.css')
                         ],
-                        dest: [`${outputEsm}/fonts`, `${outputCjs}/fonts`]
+                        dest: [
+                            path.join(outputEsm, 'fonts'),
+                            path.join(outputCjs, 'fonts')
+                        ]
                     }
                 ]
             }),
