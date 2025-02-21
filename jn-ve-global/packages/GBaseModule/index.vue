@@ -52,7 +52,7 @@
         <div class="core-wrapper">
             <slot name="core">
                 <!-- tab页 -->
-                <div v-if="!!tabs.length" class="core-tab-wrapper">
+                <div v-if="!!tabs.length" :class="isRegtech ? '' : 'core-tab-wrapper'">
                     <ElTabs v-model="localActiveTab">
                         <template v-for="(tab, index) in tabs" :key="`${tab.value}-${index}`">
                             <ElTabPane :label="tab.label" :name="tab.value" />
@@ -94,6 +94,8 @@ import { getBaseModuleMode } from '../_globalConstant/baseModuleMode'
 import type { BaseModuleMode } from '../_globalConstant/baseModuleMode'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
+import { Bases } from '../setting'
+import { getBase } from '../_globalConstant/base'
 
 export interface Props {
     /**
@@ -186,6 +188,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
 const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
+
+// 是否监管基座
+const isRegtech = getBase() === Bases.REGTECH
 
 /**
  * 期望运行的 baseModule 的模式
