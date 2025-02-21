@@ -47,7 +47,8 @@
     "scripts": {
         "build": "gulp --require @esbuild-kit/cjs-loader -f scripts/build/index.ts",
         "build:vite": "vite build",
-        "build:px": "pnpm build --px"
+        "build:px": "pnpm build --px",
+        "dev": "concurrently \"vite build --watch -- --px\" \"vite preview --port 8644\""
     },
     "sideEffects": [
         "dist/*",
