@@ -14,7 +14,7 @@
         align-items: center;
         width: 100%;
 
-        >span {
+        > span {
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -28,5 +28,17 @@
 
         @include control-style;
         @include error-msg;
+    }
+
+    .el-col {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: 1 !important;
+    }
+
+    .el-form-item {
+        .el-form-item__label {
+            display: none;
+        }
     }
 }
