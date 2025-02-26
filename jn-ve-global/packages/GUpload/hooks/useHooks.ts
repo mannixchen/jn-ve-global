@@ -3,8 +3,9 @@ import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 import { getFileType } from '../../GFilePreview/utils'
 import { IMG_EXT } from '../../GFilePreview'
+import useSimpleUpload from './useSimpleUpload'
 
-export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, localLimit }) => {
+export default ({ attrs, emits, localReqHeaders, localFileList, currentFile, props, uploadRef, localLimit }) => {
     // 上传文件之前的钩子
     const beforeUpload = (file: UploadFile) => {
         /**
@@ -22,6 +23,10 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
         // 文件大小
         const size: number = props.size
         if (size) {
+            if(props.chunkUpload && file.size / 1024 / 1024 > size) {
+                chunkUpload(file as File)
+                return false
+            }
             if (file.size / 1024 / 1024 > size) {
                 ElMessage.warning(`单个文件上传大小不能超过 ${size}MB!`)
                 return false
@@ -51,22 +56,26 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
      * 存什么值取决于后台，这里目前和虞鹏飞对接的文件上传接口，需要存储 data 的 fileId
      * 故：将返回的信息的 fileId 赋值给 model 中对应的字段
      */
-    const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
+    const onSuccess = (res, file: UploadFile, fileList: UploadFile[], chunkUploadFileUrl?: string) => {
+
+        console.log('%c [  ]-62', 'font-size:13px; background:blue; color:#fff;', file)
         // 默认赋值行为
         if (res.code === '000000') {
             !props.successNoMsg && ElMessage.success(`上传成功!`)
 
             // 添加业务上的 fileId 到文件 <===> fileList[item]
             file['fileId'] = _.isArray(res.data) ? res.data[0].fileId : res.data.fileId
-
-            // 本地上传，可以直接操作原 file，添加 url 的内存地址
-            const localFileUrl = URL.createObjectURL(file.raw!)
-            file['url'] = localFileUrl
             
-            // 略缩图（由于还在本地，直接采用文件源）
-            const fileType = getFileType(file.name)
-            if (IMG_EXT.includes(fileType)) {
-                file['thumb'] = localFileUrl
+            if(!chunkUploadFileUrl) {
+                // 本地上传，可以直接操作原 file，添加 url 的内存地址
+                const localFileUrl = URL.createObjectURL(file.raw!)
+                file['url'] = localFileUrl
+                
+                // 略缩图（由于还在本地，直接采用文件源）
+                const fileType = getFileType(file.name)
+                if (IMG_EXT.includes(fileType)) {
+                    file['thumb'] = localFileUrl
+                }
             }
 
             /**
@@ -134,6 +143,8 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
         // 同时执行用户传递的
         attrs.value['on-remove']?.(file, fileList)
     }
+
+    const { uploader: chunkUpload } = useSimpleUpload({attrs, localReqHeaders, localFileList, onChange, onSuccess, onError})
 
     return {
         beforeUpload,
