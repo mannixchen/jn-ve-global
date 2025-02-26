@@ -48,6 +48,7 @@
                     :size="size"
                     list-type="text"
                     :disabled="disabled"
+                    :chunk-upload="chunkUpload"
                     v-bind="$attrs"
                 />
             </div>
@@ -98,6 +99,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { chunk } from 'lodash'
 export default defineComponent({
     name: 'GUploadFolder',
     inheritAttrs: false
@@ -146,13 +148,19 @@ const props = withDefaults(
          * 禁用上传，只查看列表
          */
         disabled?: boolean
+
+        /**
+         * 是否启用分片上传
+         */
+        chunkUpload?: boolean
     }>(),
     {
         size: 10,
         downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
         uploadUrl: '/kinso-basic-open-server/v1/document/file/upload',
         timeout: 1000 * 60 * 10,
-        defaultExpandAll: true
+        defaultExpandAll: true,
+        chunkUpload: true
     }
 )
 
