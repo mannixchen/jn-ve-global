@@ -1,6 +1,7 @@
 import SimpleUploader from 'simple-uploader.js'
 import { UploadFile } from '../interface/UploadFile'
 import _ from 'lodash'
+import { UploadType } from '../enum'
 
 const CHUNK_SIZE = 1024 * 1024 * 2
 
@@ -48,8 +49,10 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
                 }
                 : response
 
-            sourceFile['status'] = 'success'
+            sourceFile['status'] = res.code === '000000' ? 'success' : 'fail'
             sourceFile['response'] = res
+
+            sourceFile['uploadType'] = UploadType.chunk
 
             onSuccess(res, sourceFile, localFileList.value)
 
