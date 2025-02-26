@@ -4,6 +4,7 @@ import _ from 'lodash'
 import { getFileType } from '../../GFilePreview/utils'
 import { IMG_EXT } from '../../GFilePreview'
 import useSimpleUpload from './useSimpleUpload'
+import { UploadType } from '../enum'
 
 export default ({
     attrs,
@@ -101,8 +102,18 @@ export default ({
         } else {
             ElMessage.error(res.msg)
             uploadRef.value.handleRemove(file)
-        }
 
+            /**
+             * 针对分片上传的文件，需要手动删除
+             */
+            if(file['uploadType'] === UploadType.chunk) {
+                const i = localFileList.value.findIndex((item) => item.uid === file.uid)
+                if(i !== -1) {
+                    localFileList.value.splice(i, 1)
+                }
+            }
+        }
+        
         // 用户传递
         attrs.value['on-success']?.(res, file, fileList)
     }
