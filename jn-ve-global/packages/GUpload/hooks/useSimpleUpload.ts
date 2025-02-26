@@ -7,8 +7,7 @@ const CHUNK_SIZE = 1024 * 1024 * 2
 const DEV_MODE = process.env.NODE_ENV === 'development'
 
 export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, onError }) => {
-
-    const createUploader = (sourceFile: File) => {
+    const createUploader = (sourceFile: UploadFile) => {
         const uploader = new SimpleUploader({
             target: DEV_MODE ? 'http://localhost:3000/upload' : attrs.value.action,
             headers: {
@@ -33,11 +32,12 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
         // 文件添加
         uploader.on('fileAdded', function (file) {})
 
+        // 文件上传进度
         uploader.on('fileProgress', function (file, chunk) {
             sourceFile['percentage'] = Math.floor(file.progress() * 100)
-            onChange(sourceFile, localFileList.value)
         })
 
+        // 文件上传成功
         uploader.on('fileSuccess', function (rootFile, file, response) {
             const res = DEV_MODE
                 ? {
@@ -50,12 +50,14 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
 
             sourceFile['status'] = 'success'
             sourceFile['response'] = res
-            
-            const localFileUrl = URL.createObjectURL(sourceFile)
-            sourceFile['url'] = localFileUrl
-            onSuccess(res, sourceFile, localFileList.value, localFileUrl)
+
+            onSuccess(res, sourceFile, localFileList.value)
+
+            // 这里调用onChange用于更新保证外面的数据是最新的
+            onChange(sourceFile, localFileList.value)
         })
 
+        // 文件上传失败
         uploader.on('fileError', function (file, message) {
             sourceFile['status'] = 'fail'
             onError(message, sourceFile, localFileList.value)
@@ -63,28 +65,28 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
 
         return uploader
     }
-    const uploader = (file: File) => {
-
+    /**
+     *  上传文件
+     * @param file
+     */
+    const uploader = (file: UploadFile) => {
         Promise.resolve().then(() => {
             localFileList.value.push(file)
         })
 
-        const sourceFile = file
-
         // 上传状态
-        sourceFile['status'] = 'uploading'
+        file['status'] = 'uploading'
         // 上传进度
-        sourceFile['percentage'] = 0
+        file['percentage'] = 0
 
         // 创建上传器
-        const uploader = createUploader(sourceFile as File)
+        const uploader = createUploader(file as File)
 
         try {
             // 手动添加文件
-            uploader.addFile(file)
+            uploader.addFile(file.raw)
             // 开始上传
-            uploader.upload(file)
-            
+            uploader.upload()
         } catch (error) {
             console.error(error)
         }
