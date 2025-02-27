@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 import { getFileType } from '../../GFilePreview/utils'
 import { IMG_EXT } from '../../GFilePreview'
-import useSimpleUpload from './useSimpleUpload'
+import useChunkUpload from './useChunkUpload'
 import { UploadType } from '../enum'
 
 export default ({
@@ -113,7 +113,7 @@ export default ({
                 }
             }
         }
-        
+
         // 用户传递
         attrs.value['on-success']?.(res, file, fileList)
     }
@@ -177,7 +177,7 @@ export default ({
         attrs.value['on-remove']?.(file, fileList)
     }
 
-    const { uploader: chunkUpload } = useSimpleUpload({
+    const { uploader: chunkUpload } = useChunkUpload({
         attrs,
         localReqHeaders,
         localFileList,

@@ -52,6 +52,7 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
             sourceFile['status'] = res.code === '000000' ? 'success' : 'fail'
             sourceFile['response'] = res
 
+            // 定义上传类型用来区分做不同的处理
             sourceFile['uploadType'] = UploadType.chunk
 
             onSuccess(res, sourceFile, localFileList.value)
