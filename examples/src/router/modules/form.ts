@@ -82,6 +82,30 @@ const routes: Array<RouteConfig> = [
                 component: () => import('@/views/demo/form/choose.vue')
             },
             {
+                path: 'formItems',
+                name: 'formItems',
+                meta: {
+                    title: 'formItems'
+                },
+                component: () => import('@/views/demo/form/formItems.vue')
+            },
+            {
+                path: 'businessUI',
+                name: 'businessUI',
+                meta: {
+                    title: 'businessUI'
+                },
+                component: () => import('@/views/demo/form/businessUI.vue')
+            },
+            {
+                path: 'detail',
+                name: 'detail',
+                meta: {
+                    title: 'detail'
+                },
+                component: () => import('@/views/demo/form/detail.vue')
+            },
+            {
                 path: 'free',
                 name: 'free',
                 meta: {
