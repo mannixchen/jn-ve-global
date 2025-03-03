@@ -18,7 +18,7 @@
     "license": "ISC",
     "resolutions": {
         "element-plus": "2.3.4",
-        "vue": "^3.5.3"
+        "vue": "3.5.13"
     },
     "dependencies": {
         "@element-plus/icons-vue": "2.0.10",
