@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-03-12 13:54:53
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-30 11:25:12
- * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\index.ts
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2025-02-27 10:42:42
+ * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/components/index.ts
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -31,7 +31,6 @@ import { BiFiInputPhone } from './input-phone'
 import { BiFiInputEmail } from './input-email'
 import { BiFiCheckbox } from './checkbox'
 import { BiFiRadio } from './radio'
-import { BiFiDetail } from './detail'
 import { BiFiColorPicker } from './color-picker'
 import { BiFiRate } from './rate'
 import { BiFiSlider } from './slider'
@@ -100,7 +99,6 @@ export const components = [
     BiFiInputEmail,
     BiFiCheckbox,
     BiFiRadio,
-    BiFiDetail,
     BiFiColorPicker,
     BiFiRate,
     BiFiSlider,

@@ -54,7 +54,8 @@ export default defineConfig({
                 '@vue-office/excel',
                 '@vue-office/docx',
                 '@vue-office/pdf',
-                '@jsjn/icons-vue'
+                '@jsjn/icons-vue',
+                'jn-ve-global'
                 // '@jsjn/utils',
                 // '@vueuse/core',
                 // 'axios',
@@ -75,7 +76,8 @@ export default defineConfig({
                     '@vue-office/excel': 'vue-office-excel',
                     '@vue-office/docx': 'vue-office-docx',
                     '@vue-office/pdf': 'vue-office-pdf',
-                    '@jsjn/icons-vue': 'JnIconsVue'
+                    '@jsjn/icons-vue': 'JnIconsVue',
+                    'jn-ve-global': 'VeGlobal'
                     // '@jsjn/utils': 'JnUtils',
                     // '@vueuse/core': 'VueUse',
                     // 'axios': 'axios',

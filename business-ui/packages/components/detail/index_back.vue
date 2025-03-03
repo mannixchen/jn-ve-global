@@ -1,17 +1,46 @@
+<!--
+ * @Author: “zhujin” zhujin@jsjngf.com
+ * @Date: 2024-05-06 15:32:03
+ * @LastEditors: “zhujin” zhujin@jsjngf.com
+ * @LastEditTime: 2024-05-31 14:54:57
+ * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\index.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+-->
 <template>
     <div class="bi-detail">
-        <FormMode
-            v-if="display === 'form'"
-            v-bind="props"
-            :form-configs="(formConfigs as any)"
-            :current-records="currentRecords"
-        >
-            <slot />
-        </FormMode>
-
-        <template v-else>
-            <div v-if="__is_simulator_env__" class="table-field-is-simulator">
+        <template v-if="isSimulator">
+            <div v-if="display === 'form'" class="form-display-wrapper">
+                <g-collapse v-model="activeNames">
+                    <g-collapse-item
+                        :title="`${serialName}1`"
+                        :name="`${serialName}1`"
+                        class="form-item-wrapper"
+                    >
+                        <el-button-group v-if="showOperation" class="operation-wrapper">
+                            <el-button
+                                v-for="(btnProps, index) in btns"
+                                :key="index"
+                                class="operate-btn"
+                                text
+                                link
+                                disabled
+                                :type="btnProps.type"
+                            >
+                                {{ btnProps.label }}
+                            </el-button>
+                        </el-button-group>
+                        <bi-form :config="formConfig">
+                            <slot />
+                        </bi-form>
+                    </g-collapse-item>
+                </g-collapse>
+            </div>
+            <div v-else class="table-field-is-simulator">
                 <div ref="scrollWrapRef" class="table-wrapper-is-simulator">
+                    <!-- <bi-form label-position="top" :config="formConfig">
+                    </bi-form> -->
                     <div ref="tableRef" class="form-items-wrapper">
                         <el-form-item
                             v-if="showSerial"
@@ -22,7 +51,6 @@
                             1
                         </el-form-item>
                         <slot />
-
                         <el-form-item
                             v-if="showOperation"
                             label="操作"
@@ -46,9 +74,61 @@
                     </div>
                 </div>
             </div>
-
+            <div class="foot-wrapper">
+                <el-button v-if="addBtnVisible" :icon="Plus" class="add-btn-wrapper" type="primary">
+                    {{ addButtonLabel }}
+                </el-button>
+            </div>
+        </template>
+        <template v-else>
+            <div v-if="display === 'form'" class="form-display-wrapper">
+                <g-collapse v-model="activeNames">
+                    <!-- <g-collapse-item
+                        v-for="(form, formIndex) in formConfigs"
+                        :key="form?.id ?? formIndex"
+                        class="form-item-wrapper"
+                        :title="`${form?.name}${formIndex + 1}`"
+                        :name="`${form?.name}${formIndex + 1}`"
+                    > -->
+                    <g-collapse-item
+                        v-for="form in currentRecords"
+                        :key="form?.id ?? form?.serialNo"
+                        class="form-item-wrapper"
+                        :title="`${form?.name}${form?.serialNo}`"
+                        :name="`${form?.name}${form?.serialNo}`"
+                    >
+                        <el-button-group v-if="showOperation" class="operation-wrapper">
+                            <el-button
+                                v-for="(btnProps, index) in btns"
+                                :key="index"
+                                class="operate-btn"
+                                text
+                                link
+                                :type="btnProps.type"
+                                :loading="btnProps.loading"
+                                :disabled="btnProps.disabled as boolean"
+                                @click.stop="
+                                    () => {
+                                        btnProps.onClick({
+                                            forms: formConfigs,
+                                            form,
+                                            index: form.serialNo - 1
+                                        })
+                                    }
+                                "
+                            >
+                                {{ btnProps.label }}
+                            </el-button>
+                        </el-button-group>
+                        <bi-form :config="form">
+                            <slot class="eeee" />
+                        </bi-form>
+                    </g-collapse-item>
+                </g-collapse>
+            </div>
             <div v-else ref="scrollWrapRef" class="table-field">
                 <div ref="tableRef" :class="getTableClass(['table-display-wrapper'])">
+                    <!-- <div v-if="showTableHeader" class="table-header"> -->
                     <div class="table-header">
                         <div
                             v-for="(column, labelIndex) in columns"
@@ -67,7 +147,12 @@
                             {{ column.label }}
                         </div>
                     </div>
-
+                    <!-- <bi-form
+                        v-for="(form, formIndex) in formConfigs"
+                        :key="form?.id ?? formIndex"
+                        class="table-row-form"
+                        :config="form"
+                    > -->
                     <bi-form
                         v-for="(form, index) in currentRecords"
                         :key="form?.id ?? form?.serialNo"
@@ -82,6 +167,7 @@
                             {{ form?.serialNo }}
                         </div>
 
+                        <!-- <slot /> -->
                         <template v-for="(slot, slotIndex) in slots" :key="slotIndex">
                             <div
                                 :class="
@@ -137,28 +223,27 @@
                     </bi-form>
                 </div>
             </div>
+            <div class="foot-wrapper">
+                <el-button
+                    v-if="addBtnVisible"
+                    :icon="Plus"
+                    class="add-btn-wrapper"
+                    type="primary"
+                    @click="add"
+                >
+                    {{ addButtonLabel }}
+                </el-button>
+                <el-pagination
+                    v-model:current-page="currentPage"
+                    v-model:page-size="pageSize"
+                    class="foot-pagination-wrapper"
+                    v-bind="paginationProps"
+                    @current-change="change"
+                    @prev-click="prevClick"
+                    @next-click="nextClick"
+                />
+            </div>
         </template>
-
-        <div class="foot-wrapper">
-            <el-button
-                v-if="addBtnVisible"
-                :icon="Plus"
-                class="add-btn-wrapper"
-                type="primary"
-                @click="add"
-            >
-                {{ addButtonLabel }}
-            </el-button>
-            <el-pagination
-                v-model:current-page="currentPage"
-                v-model:page-size="pageSize"
-                class="foot-pagination-wrapper"
-                v-bind="paginationProps"
-                @current-change="change"
-                @prev-click="prevClick"
-                @next-click="nextClick"
-            />
-        </div>
     </div>
 </template>
 
@@ -182,7 +267,6 @@ import {
 import { assignOwnProp } from '@jsjn/micro-core-utils/utils'
 import { cloneDeep } from 'lodash'
 import { v4 as uuidV4 } from 'uuid'
-import FormMode from './components/formMode.vue'
 
 const COMPONENT_NAME = 'BiDetail'
 defineOptions({
@@ -191,7 +275,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<DetailProps>(), useDefaultProps())
 
-// TODO: 添加操作emits
+// console.log('BiDetail', props)
+
+//TODO:添加操作emits
 const emits = defineEmits<{
     'update:modelValue': [val: Array<Record<string, any>>]
     add: [param: Omit<OperationParams, 'emits' | 'index'>]
@@ -200,6 +286,9 @@ const emits = defineEmits<{
     upMove: [param: Omit<OperationParams, 'emits' | 'index'>]
     downMove: [param: Omit<OperationParams, 'emits' | 'index'>]
 }>()
+
+const isSimulator = computed<boolean>(() => __is_simulator_env__)
+// const isSimulator = ref<boolean>(__is_simulator_env__)
 
 const slots = computed(() => {
     const defaultSlots = useSlots()?.default()
@@ -299,6 +388,7 @@ const add = () => {
 }
 
 onMounted(async () => {
+    // console.log('onMounted')
     if (props.display === 'form') return
     await nextTick()
     if (__is_simulator_env__) {
@@ -313,46 +403,27 @@ watch(
     (value) => {
         ;(paginationProps.value.total as any) = value.length
         getCurrentRecords()
-
+        // console.log('watch-formConfigs', value)
         emits(
             'update:modelValue',
             value.map((item) => item?.model ?? {})
         )
+
     },
     {
         deep: true
     }
 )
 
-// function createFormConfig(data?: any): GFormProps {
-//     const { labelPosition, labelWidth } = props
-
-//     const model = slots.value.reduce((acc, vnode) => {
-//         const prop = findPropDeep(vnode, 'prop')
-//         if (prop) {
-//             acc[prop] = data?.[prop] ?? ''
-//         }
-//         return acc
-//     }, {})
-
-//     const form: GFormProps = {
-//         id: uuidV4(),
-//         instance: null,
-//         model,
-//         labelPosition,
-//         labelWidth: labelWidth as string
+// watch(
+//     () => currentRecords.value,
+//     (value) => {
+//         console.log('currentRecords', value)
+//     },
+//     {
+//         deep: true
 //     }
-//     return form
-// }
-
-// const formConfigs2 = computed(() =>
-//     currentDataModel.value?.length
-//         ? currentDataModel.value.map((item) => {
-//               return createFormConfig(item)
-//           })
-//         : [createFormConfig()]
 // )
-// console.log(`%c formConfigs2 === `, 'color: #67c23a;', formConfigs2.value)
 
 defineExpose({
     forms: formConfigs.value
@@ -360,23 +431,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@mixin el-form-item__label {
-    .el-form-item__label {
-        width: 100% !important;
-
-        &:after {
-            display: none !important;
-        }
-    }
-}
-@mixin cell-el-col {
-    padding: 0 !important;
-    margin: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    @include el-form-item__label;
-}
-
 .bi-detail {
     width: 100%;
     overflow-x: auto;
@@ -397,9 +451,9 @@ defineExpose({
     overflow-x: auto;
 
     //&::-webkit-scrollbar {
-    // margin-top: 10px;
-    //width: 16px;
-    //border: 5px solid #fff;
+       // margin-top: 10px;
+        //width: 16px;
+        //border: 5px solid #fff;
     //}
 }
 
@@ -412,14 +466,6 @@ defineExpose({
     overflow-x: auto;
     //table-layout: fixed;
     width: 100%;
-
-    :deep(.el-col) {
-        @include cell-el-col;
-    }
-
-    :deep(.el-form-item) {
-        @include el-form-item__label;
-    }
 
     .form-items-wrapper {
         display: inline-flex;
@@ -546,10 +592,6 @@ defineExpose({
                     display: none !important;
                 }
             }
-
-            :deep(.el-col) {
-                @include cell-el-col;
-            }
         }
 
         .table-cell-striped {
@@ -580,7 +622,9 @@ defineExpose({
             left: 0;
             box-shadow: -2px 0 3px rgba(0, 0, 0, 0.15);
             width: 1px;
-            transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+            transition:
+                box-shadow 0.2s ease-in-out,
+                -webkit-box-shadow 0.2s ease-in-out;
         }
     }
 
@@ -595,7 +639,9 @@ defineExpose({
             right: 0;
             box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
             width: 1px;
-            transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+            transition:
+                box-shadow 0.2s ease-in-out,
+                -webkit-box-shadow 0.2s ease-in-out;
         }
     }
 }
@@ -631,7 +677,9 @@ defineExpose({
             left: 0;
             box-shadow: -2px 0 3px rgba(0, 0, 0, 0.15);
             width: 1px;
-            transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+            transition:
+                box-shadow 0.2s ease-in-out,
+                -webkit-box-shadow 0.2s ease-in-out;
         }
     }
 }
@@ -655,7 +703,9 @@ defineExpose({
             right: 0;
             box-shadow: 2px 0 3px rgba(0, 0, 0, 0.15);
             width: 1px;
-            transition: box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+            transition:
+                box-shadow 0.2s ease-in-out,
+                -webkit-box-shadow 0.2s ease-in-out;
         }
     }
 }

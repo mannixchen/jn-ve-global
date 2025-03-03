@@ -1,3 +1,3 @@
-import type { FormItemProps, ISelectV2Props } from 'element-plus'
+import type { FormItemProps } from 'element-plus'
 
-export type FiSelectProps = ISelectV2Props & FormItemProps
+export type FiSelectProps = FormItemProps

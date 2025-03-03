@@ -10,6 +10,7 @@ import {
 import { castArray } from 'lodash'
 import { __is_simulator_env__ } from '../../../constants'
 import { useNamespace } from '../../../hooks'
+import { findPropDeep } from '@jsjn/utils'
 
 // import { useBtns } from './use-btns'
 
@@ -21,7 +22,10 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         columns: []
     })
 
-    const getFormItemProp = (slot) => slot?.props?.prop ?? slot?.type?.props?.prop?.default ?? ''
+    // 基于 gcolformItem vnode 的 props 获取字段唯一值
+    const getFormItemProp = (slot) => {
+        return findPropDeep(slot, 'prop')
+    }
 
     const getTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
         // const prop = formItemSlot?.props?.prop ?? formItemSlot?.type?.props?.prop?.default ?? ''
@@ -149,16 +153,18 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
     const getColumns = (props: DetailProps, showOperation: boolean) => {
         const { showSerial, operationWidth } = props
+
         let columns = slots
             // ?.filter((item) => !item.children)
-            ?.map((item, index) => {
+            ?.map((vnode, index) => {
+                const rules = findPropDeep(vnode.props, 'rules')
+                const required = rules?.some((rule) => rule?.required)
+
                 return {
-                    prop: getFormItemProp(item),
-                    label: item?.props?.label ?? item?.type?.props?.label?.default ?? '',
+                    prop: getFormItemProp(vnode),
+                    label: findPropDeep(vnode.props, 'label') ?? '',
                     type: 'form',
-                    required:
-                        !!item?.props?.required ||
-                        castArray(item?.props?.rules)?.some((rule) => rule?.required),
+                    required,
                     style: {
                         width: DEFAULT_COLUMN_WIDTH,
                         minWidth: DEFAULT_MIN_COLUMN_WIDTH,
@@ -167,6 +173,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
                     }
                 }
             })
+
         if (showSerial) {
             columns = [
                 {
@@ -245,7 +252,6 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
 export const useTableScrollClass = (scrollEl: any, tableEl: any, columns: ColumnProps[]) => {
     // console.log('useTableScrollClass', scrollEl, tableEl)
-
     let tableMinWidth = 0
     const tableClientWidth = scrollEl.clientWidth
     columns.forEach((item) => {
@@ -419,7 +425,6 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             //     el.className = [...classList, borderClass]?.join(' ')
             // }
             useSimulatorTableStyle(props, tableEl)
-
         }
     )
 

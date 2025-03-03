@@ -359,3 +359,52 @@ export function urlParams2Obj(url: string) {
     })
     return params
 }
+
+/**
+ * 递归查找对象中指定属性名的值（返回第一个匹配的值）
+ * @param obj 要搜索的对象
+ * @param targetKey 目标属性名
+ * @returns 找到的属性值，未找到则返回 undefined
+ */
+export function findPropDeep(obj: any, targetKey: string): any {
+    // 如果不是对象或是 null，直接返回 undefined
+    if (obj === null || typeof obj !== 'object') return undefined
+
+    // 如果当前对象直接包含目标属性，返回该属性值
+    if (Object.prototype.hasOwnProperty.call(obj, targetKey)) {
+        return obj[targetKey]
+    }
+
+    // 递归搜索所有属性
+    for (const key in obj) {
+        const result = findPropDeep(obj[key], targetKey)
+        if (result !== undefined) return result
+    }
+
+    return undefined
+}
+
+/**
+ * 递归查找对象中指定属性名的所有值
+ * @param obj 要搜索的对象
+ * @param targetKey 目标属性名
+ * @returns 包含所有匹配值的数组
+ */
+export function findAllPropsDeep(obj: any, targetKey: string): any[] {
+    const results: any[] = []
+
+    function search(current: any) {
+        if (current === null || typeof current !== 'object') return
+
+        if (Object.prototype.hasOwnProperty.call(current, targetKey)) {
+            results.push(current[targetKey])
+        }
+
+        for (const key in current) {
+            search(current[key])
+        }
+    }
+
+    search(obj)
+    return results
+}
