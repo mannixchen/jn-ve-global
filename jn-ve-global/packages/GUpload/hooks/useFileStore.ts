@@ -42,8 +42,12 @@ export default ({
                 if (!file.url && file.fileId && localDownloadUrl.value) {
                     const fileType = getFileType(file.name)
 
-                    // 加载及装填图片的 “缩略图” ，来自服务器裁剪的图片资源，TODO: 等后台接口返回缩略图，测试
-                    if (IMG_EXT.includes(fileType)) {
+                    /**
+                     * 加载及装填图片的 “缩略图” ，来自服务器裁剪的图片资源
+                     *  1. 必须是图片类型
+                     *  2. 在上传文件成功后，会更新列表，但列表包含旧的元素，且旧的元素，已经装填过 thumb 了 --- 20250312 fix
+                     */
+                    if (IMG_EXT.includes(fileType) && !(file.thumb || file.url)) {
                         fillFileMemoryUrl(
                             proxyFile,
                             `${localDownloadUrl.value}`,
