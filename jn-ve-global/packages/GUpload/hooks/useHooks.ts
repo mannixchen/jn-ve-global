@@ -36,7 +36,7 @@ export default ({
         const size: number = props.size
         if (size) {
             if (props.chunkUpload && file.size / 1024 / 1024 > size) {
-                chunkUpload(chunkUploadFiles.find((f) => f.uid === file.uid))
+                chunkUpload(chunkUploadFiles.find((f) => f.uid === file['uid']))
                 return false
             }
             if (file.size / 1024 / 1024 > size) {
@@ -121,7 +121,7 @@ export default ({
     // 文件上传失败时的钩子
     const onError = (err, file: UploadFile, fileList: UploadFile[]) => {
         ElMessage.error(`上传失败!`)
-
+        uploadRef.value.handleRemove(file)
         // 同时执行用户传递的
         attrs.value['on-error']?.(err, file, fileList)
     }

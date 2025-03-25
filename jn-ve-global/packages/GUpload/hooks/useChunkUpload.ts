@@ -1,6 +1,7 @@
 import SimpleUploader from 'simple-uploader.js'
 import { UploadFile } from '../interface/UploadFile'
 import _ from 'lodash'
+import CryptoJS from 'crypto-js'
 import { UploadType } from '../enum'
 
 const CHUNK_SIZE = 1024 * 1024 * 2
@@ -10,9 +11,12 @@ const DEV_MODE = process.env.NODE_ENV === 'development'
 export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, onError }) => {
     const createUploader = (sourceFile: UploadFile) => {
         const uploader = new SimpleUploader({
-            target: DEV_MODE ? 'http://localhost:3000/upload' : attrs.value.action,
+            target: attrs.value.action,
             headers: {
                 ...(DEV_MODE ? {} : localReqHeaders)
+            },
+            generateUniqueIdentifier: function (file: File) {
+                return CryptoJS.SHA512(file.size + '-' + file.name).toString(CryptoJS.enc.Hex)
             },
             checkChunkUploadedByResponse: function (chunk, message) {
                 // TODO 默认写死，后续做断点续传时需要根据后端返回的数据判断是否上传过
@@ -52,9 +56,6 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
             sourceFile['status'] = res.code === '000000' ? 'success' : 'fail'
             sourceFile['response'] = res
 
-            // 定义上传类型用来区分做不同的处理
-            sourceFile['uploadType'] = UploadType.chunk
-
             onSuccess(res, sourceFile, localFileList.value)
 
             // 这里调用onChange用于更新保证外面的数据是最新的
@@ -78,6 +79,8 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
             localFileList.value.push(file)
         })
 
+        // 定义上传类型用来区分做不同的处理
+        file['uploadType'] = UploadType.chunk
         // 上传状态
         file['status'] = 'uploading'
         // 上传进度
