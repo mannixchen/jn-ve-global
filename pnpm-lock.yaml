@@ -93,6 +93,9 @@ importers:
       resize-observer-polyfill:
         specifier: ^1.5.1
         version: 1.5.1
+      simple-uploader.js:
+        specifier: ^0.6.0
+        version: 0.6.0
       sortablejs:
         specifier: ^1.15.3
         version: 1.15.3
