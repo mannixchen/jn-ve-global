@@ -269,6 +269,11 @@ export interface UploadCustomProps {
      *  - icon：图标
      */
     fileListBtnType?: FileListBtnType
+
+    /**
+     * 是否采用分片上传
+     */
+    chunkUpload?: boolean
 }
 
 const props = withDefaults(defineProps<UploadCustomProps>(), {
@@ -285,7 +290,8 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     successNoMsg: false,
     downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
     getWpsEditLinkApi: '/supervision-publicuse-server/v1/wps/preview',
-    timeout: 1000 * 20
+    timeout: 1000 * 20,
+    chunkUpload: true
 })
 
 const emits = defineEmits([
@@ -326,6 +332,7 @@ const { currentFile, localFileList } = useFileStore({
 const { beforeUpload, onExceed, onSuccess, onError, onChange, onRemove } = useHooks({
     attrs,
     emits,
+    localReqHeaders,
     localFileList,
     currentFile,
     props,

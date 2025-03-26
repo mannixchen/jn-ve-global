@@ -3,10 +3,24 @@ import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 import { getFileType } from '../../GFilePreview/utils'
 import { IMG_EXT } from '../../GFilePreview'
+import useChunkUpload from './useChunkUpload'
+import { UploadType } from '../enum'
 
-export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, localLimit }) => {
+export default ({
+    attrs,
+    emits,
+    localReqHeaders,
+    localFileList,
+    currentFile,
+    props,
+    uploadRef,
+    localLimit
+}) => {
+    // 保存分片上传的文件
+    const chunkUploadFiles: UploadFile[] = []
+
     // 上传文件之前的钩子
-    const beforeUpload = (file: UploadFile) => {
+    const beforeUpload = (file: File) => {
         /**
          * 文件类型
          *  1. avatar 模式只支持 'image/*'
@@ -18,10 +32,13 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
                 return false
             }
         }
-
         // 文件大小
         const size: number = props.size
         if (size) {
+            if (props.chunkUpload && file.size / 1024 / 1024 > size) {
+                chunkUpload(chunkUploadFiles.find((f) => f.uid === file['uid']))
+                return false
+            }
             if (file.size / 1024 / 1024 > size) {
                 ElMessage.warning(`单个文件上传大小不能超过 ${size}MB!`)
                 return false
@@ -51,22 +68,28 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
      * 存什么值取决于后台，这里目前和虞鹏飞对接的文件上传接口，需要存储 data 的 fileId
      * 故：将返回的信息的 fileId 赋值给 model 中对应的字段
      */
-    const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
+    const onSuccess = (
+        res,
+        file: UploadFile,
+        fileList: UploadFile[],
+        chunkUploadFileUrl?: string
+    ) => {
         // 默认赋值行为
         if (res.code === '000000') {
             !props.successNoMsg && ElMessage.success(`上传成功!`)
-
             // 添加业务上的 fileId 到文件 <===> fileList[item]
             file['fileId'] = _.isArray(res.data) ? res.data[0].fileId : res.data.fileId
 
-            // 本地上传，可以直接操作原 file，添加 url 的内存地址
-            const localFileUrl = URL.createObjectURL(file.raw!)
-            file['url'] = localFileUrl
-            
-            // 略缩图（由于还在本地，直接采用文件源）
-            const fileType = getFileType(file.name)
-            if (IMG_EXT.includes(fileType)) {
-                file['thumb'] = localFileUrl
+            if (!chunkUploadFileUrl) {
+                // 本地上传，可以直接操作原 file，添加 url 的内存地址
+                const localFileUrl = URL.createObjectURL(file.raw!)
+                file['url'] = localFileUrl
+
+                // 略缩图（由于还在本地，直接采用文件源）
+                const fileType = getFileType(file.name)
+                if (IMG_EXT.includes(fileType)) {
+                    file['thumb'] = localFileUrl
+                }
             }
 
             /**
@@ -79,6 +102,16 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
         } else {
             ElMessage.error(res.msg)
             uploadRef.value.handleRemove(file)
+
+            /**
+             * 针对分片上传的文件，需要手动删除
+             */
+            if(file['uploadType'] === UploadType.chunk) {
+                const i = localFileList.value.findIndex((item) => item.uid === file.uid)
+                if(i !== -1) {
+                    localFileList.value.splice(i, 1)
+                }
+            }
         }
 
         // 用户传递
@@ -88,13 +121,22 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
     // 文件上传失败时的钩子
     const onError = (err, file: UploadFile, fileList: UploadFile[]) => {
         ElMessage.error(`上传失败!`)
-
+        uploadRef.value.handleRemove(file)
         // 同时执行用户传递的
         attrs.value['on-error']?.(err, file, fileList)
     }
 
     // 变化时 抛出 fileList
     const onChange = (file: UploadFile, fileList: UploadFile[]) => {
+        /**
+         * 将当前操作的 file 添加到 chunkUploadFiles 中
+         * 一定要从fileList中取，不能直接取file
+         * 因为file和fileList中的file是不同的对象
+         *  */ 
+        if(!chunkUploadFiles.find((f) => f.uid === file.uid)) {
+            chunkUploadFiles.push(fileList.find((f) => f.uid === file.uid))
+        }
+
         /**
          * 在当前操作的 file 中存在 fileId 时，才能视为上传成功
          *  1. 列表模式抛出数组
@@ -134,6 +176,15 @@ export default ({ attrs, emits, localFileList, currentFile, props, uploadRef, lo
         // 同时执行用户传递的
         attrs.value['on-remove']?.(file, fileList)
     }
+
+    const { uploader: chunkUpload } = useChunkUpload({
+        attrs,
+        localReqHeaders,
+        localFileList,
+        onChange,
+        onSuccess,
+        onError
+    })
 
     return {
         beforeUpload,
