@@ -6,7 +6,7 @@ import { UploadType } from '../enum'
 
 const CHUNK_SIZE = 1024 * 1024 * 2
 
-const DEV_MODE = process.env.NODE_ENV === 'development'
+const DEV_MODE = import.meta.env.MODE === 'development'
 
 export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, onError }) => {
     const createUploader = (sourceFile: UploadFile) => {
