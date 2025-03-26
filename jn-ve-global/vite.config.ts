@@ -21,6 +21,8 @@ const externals = {
     '@vue-office/pdf': 'vue-office-pdf',
     '@jsjn/icons-vue': 'JnIconsVue',
     sortablejs: 'Sortable'
+    // 'simple-uploader.js': 'Uploader',
+    // 'crypto-js': 'CryptoJS'
     // '@jsjn/utils': 'JnUtils',
     // '@vueuse/core': 'VueUse',
     // 'axios': 'axios',
