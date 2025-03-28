@@ -37,7 +37,7 @@ export default defineConfig({
             entry: resolve(__dirname, 'packages', 'index.ts'),
             name: PKG_CAMELCASE_NAME,
             fileName: 'index',
-            formats: [/* 'es', */ 'umd']
+            formats: ['es', 'umd']
         },
         rollupOptions: {
             plugins: [

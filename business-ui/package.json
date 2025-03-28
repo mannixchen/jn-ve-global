@@ -5,6 +5,8 @@
     "version": "1.0.0",
     "type": "module",
     "description": "基于vue3+element-plus的二次封装库，应用于江苏低代码平台 -- 江苏金农内部库",
+    "main": "dist/index.umd.cjs",
+    "module": "dist/index.js",
     "scripts": {
         "build": "vite build",
         "preview": "vite preview",
