@@ -291,7 +291,7 @@ const props = withDefaults(defineProps<UploadCustomProps>(), {
     downloadUrl: '/kinso-basic-open-server/v1/document/file/download',
     getWpsEditLinkApi: '/supervision-publicuse-server/v1/wps/preview',
     timeout: 1000 * 20,
-    chunkUpload: true
+    chunkUpload: false
 })
 
 const emits = defineEmits([
