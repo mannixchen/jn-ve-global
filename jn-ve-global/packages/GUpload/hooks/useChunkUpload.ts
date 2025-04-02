@@ -6,14 +6,12 @@ import { UploadType } from '../enum'
 
 const CHUNK_SIZE = 1024 * 1024 * 2
 
-const DEV_MODE = import.meta.env.MODE === 'development'
-
 export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, onError }) => {
     const createUploader = (sourceFile: UploadFile) => {
         const uploader = new SimpleUploader({
             target: attrs.value.action,
             headers: {
-                ...(DEV_MODE ? {} : localReqHeaders)
+                ...(import.meta.env.MODE === 'development' ? {} : localReqHeaders)
             },
             generateUniqueIdentifier: function (file: File) {
                 return CryptoJS.SHA512(file.size + '-' + file.name).toString(CryptoJS.enc.Hex)
@@ -44,14 +42,15 @@ export default ({ attrs, localReqHeaders, localFileList, onChange, onSuccess, on
 
         // 文件上传成功
         uploader.on('fileSuccess', function (rootFile, file, response) {
-            const res = DEV_MODE
-                ? {
-                    code: '000000',
-                    data: {
-                        fileId: '123456'
+            const res =
+                import.meta.env.MODE === 'development'
+                    ? {
+                        code: '000000',
+                        data: {
+                            fileId: '123456'
+                        }
                     }
-                }
-                : response
+                    : response
 
             sourceFile['status'] = res.code === '000000' ? 'success' : 'fail'
             sourceFile['response'] = res
