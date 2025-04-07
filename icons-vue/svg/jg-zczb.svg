@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>注册资本</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="注册资本">
+            <circle id="椭圆形" fill="#EFEAFF" cx="28" cy="28" r="28"></circle>
+            <g id="编组-24" transform="translate(14.000000, 14.000000)" stroke="#6F51FA" stroke-width="2">
+                <g id="编组-25">
+                    <ellipse id="椭圆形" cx="14" cy="5" rx="14" ry="5"></ellipse>
+                    <path d="M0,17 C0,19.7614237 6.2680135,22 14,22 C21.7319865,22 28,19.7614237 28,17" id="路径" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M0,11 C0,13.7614237 6.2680135,16 14,16 C21.7319865,16 28,13.7614237 28,11" id="路径备份" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M0,23 C0,25.7614237 6.2680135,28 14,28 C21.7319865,28 28,25.7614237 28,23" id="路径" stroke-linecap="round" stroke-linejoin="round"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

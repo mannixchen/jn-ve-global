@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>客户数量</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="客户数量">
+            <circle id="椭圆形备份-12" fill="#EFF5FF" cx="28" cy="28" r="28"></circle>
+            <g id="编组-10" transform="translate(16.000000, 18.000000)">
+                <circle id="椭圆形" stroke="#3165D2" stroke-width="2" stroke-linejoin="round" cx="10" cy="5" r="5"></circle>
+                <path d="M18,10 C20.209139,10 22,8.209139 22,6 C22,3.790861 20.209139,2 18,2" id="路径" stroke="#3165D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M22.5,18 C23.0555556,18 23.8888889,18 25,18 C25,14.0333111 22.1130313,10.7409099 18.3256183,10.1093208 C18.2870786,10.1028939 18.2484456,10.0967425 18.2097215,10.0908688" id="路径" stroke="#3165D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                <path d="M20,20 C20,14.4771525 15.5228475,10 10,10 C4.4771525,10 0,14.4771525 0,20 L20,20 Z" id="路径" stroke="#3165D2" stroke-width="2" stroke-linejoin="round"></path>
+                <path d="M10,10.5 L8.12244679,15.193883 C8.04816344,15.3795914 8.09170045,15.5917005 8.23313175,15.7331317 L9.64644661,17.1464466 C9.84170876,17.3417088 10.1582912,17.3417088 10.3535534,17.1464466 L11.7668683,15.7331317 C11.9082995,15.5917005 11.9518366,15.3795914 11.8775532,15.193883 L10,10.5 L10,10.5 Z" id="路径-44" fill="#3165D2"></path>
+            </g>
+        </g>
+    </g>
+</svg>

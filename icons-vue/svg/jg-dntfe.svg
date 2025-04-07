@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>当年投放额</title>
+    <defs>
+        <circle id="path-1" cx="28" cy="28" r="28"></circle>
+    </defs>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="当年投放额">
+            <g id="椭圆形">
+                <use fill="#FFECE9" xlink:href="#path-1"></use>
+                <use fill="#FFF0E1" xlink:href="#path-1"></use>
+            </g>
+            <g id="编组-15" transform="translate(16.500000, 16.000000)" stroke="#FF921F" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <polyline id="路径-46" points="12 19 20 23 23.5 6.38378239e-16 1.12711772e-15 12.5 6 16"></polyline>
+                <polyline id="路径-47" points="9 25 9 17 23.5 1.04083409e-15"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>

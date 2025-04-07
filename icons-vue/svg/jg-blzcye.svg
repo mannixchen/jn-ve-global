@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>不良资产余额</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="不良资产余额">
+            <circle id="椭圆形" fill="#FFECE9" cx="28" cy="28" r="28"></circle>
+            <path d="M39,28 C39,21.9248678 34.0751322,17 28,17 C21.9248678,17 17,21.9248678 17,28 C17,33.1360434 20.5199822,37.4499509 25.2791311,38.660907" id="路径" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <line x1="22" y1="25.5" x2="32" y2="25.5" id="路径-41" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="32" y1="29.5" x2="22" y2="29.5" id="路径-42" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="27" y1="25.5" x2="27" y2="34" id="路径-43" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <path d="M27,25.5 C26.6666667,25.1666667 25.3333333,24 23,22" id="路径-49" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <line x1="27" y1="25.5" x2="30.5" y2="22" id="路径-50" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <polygon id="路径-60" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="35 29 30 39 40 39"></polygon>
+            <path d="M35,33.5 C35.4527652,33.5 35.8198039,33.8670387 35.8198039,34.3198039 C35.8198039,34.3737896 35.8144713,34.4276433 35.8038839,34.4805807 L35.5980581,35.5097097 C35.5410415,35.7947926 35.2907287,36 35,36 C34.7092713,36 34.4589585,35.7947926 34.4019419,35.5097097 L34.1961161,34.4805807 C34.1073216,34.0366079 34.3952504,33.6047146 34.8392232,33.51592 C34.8921606,33.5053326 34.9460143,33.5 35,33.5 Z" id="路径-61" fill="#FF583E"></path>
+            <circle id="椭圆形" fill="#FF583E" cx="35" cy="37" r="1"></circle>
+        </g>
+    </g>
+</svg>

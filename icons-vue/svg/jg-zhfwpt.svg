@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>综合服务平台</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="综合服务平台" transform="translate(0.000000, 0.000000)">
+            <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+            <path d="M9.48550424,0.308697453 L1.56207185,5.06275689 C1.08849159,5.34690505 0.934926522,5.9611653 1.21907468,6.43474557 C1.31692355,6.59782702 1.45924825,6.72962413 1.62935401,6.81467701 L9.5527864,10.7763932 C9.8343139,10.9171569 10.1656861,10.9171569 10.4472136,10.7763932 L18.370646,6.81467701 C18.8646245,6.56768776 19.0648488,5.96701472 18.8178596,5.47303622 C18.7328067,5.30293046 18.6010096,5.16060576 18.4379281,5.06275689 L10.5144958,0.308697453 C10.1978134,0.118688021 9.80218663,0.118688021 9.48550424,0.308697453 Z" id="路径-39" fill="#3165D2"></path>
+            <polyline id="路径-40" stroke="#3165D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="1 9 10 14 19 9"></polyline>
+            <polyline id="路径-40备份" stroke="#3165D2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="1 13 10 18 19 13"></polyline>
+        </g>
+    </g>
+</svg>

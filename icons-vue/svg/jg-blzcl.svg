@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>不良资产率</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="不良资产率">
+            <circle id="椭圆形" fill="#FFECE9" cx="28" cy="28" r="28"></circle>
+            <g id="编组-27" transform="translate(13.000000, 13.000000)">
+                <polyline id="路径" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="10 28 0 28 0 0 26 0 26 12.5"></polyline>
+                <line x1="5" y1="6" x2="21" y2="6" id="路径-57" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="5" y1="12.5" x2="13.5" y2="12.5" id="路径-58" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="5" y1="19" x2="12" y2="19" id="路径-59" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+                <polygon id="路径-60" stroke="#FF583E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="21.5 15 13.5 30 29.5 30"></polygon>
+                <path d="M21.5,21 C21.9875472,21 22.3827822,21.3952351 22.3827822,21.8827822 C22.3827822,21.9193868 22.3805055,21.955956 22.3759653,21.9922779 L22.0620174,24.5038611 C22.0265876,24.7872995 21.7856442,25 21.5,25 C21.2143558,25 20.9734124,24.7872995 20.9379826,24.5038611 L20.6240347,21.9922779 C20.563562,21.5084956 20.9067221,21.0672897 21.3905043,21.006817 C21.4268263,21.0022767 21.4633954,21 21.5,21 Z" id="路径-61" fill="#FF583E"></path>
+                <circle id="椭圆形" fill="#FF583E" cx="21.5" cy="26.75" r="1"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
