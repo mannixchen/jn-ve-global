@@ -1,7 +1,7 @@
 {
     "name": "@jsjn/utils",
     "author": "zyc",
-    "version": "1.6.3",
+    "version": "1.6.5",
     "type": "module",
     "files": [
         "dist",
