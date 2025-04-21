@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="27px" viewBox="0 0 27 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>营业利润</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="营业利润" transform="translate(1.000000, 1.000000)" stroke="#FF583E">
+            <path d="M9,23 L2,23 C0.8954305,23 1.3527075e-16,22.1045695 0,21 L0,2 C-1.3527075e-16,0.8954305 0.8954305,2.02906125e-16 2,0 L18,0 C19.1045695,-2.02906125e-16 20,0.8954305 20,2 L20,9 L20,9" id="路径" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle id="椭圆形" stroke-width="1.5" cx="18" cy="18" r="7"></circle>
+            <line x1="3" y1="6.5" x2="11" y2="6.5" id="路径-41" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="11" y1="10.5" x2="3" y2="10.5" id="路径-42" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="7" y1="6.5" x2="7" y2="15" id="路径-43" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <path d="M7,6.5 C6.66666667,6.16666667 5.33333333,5 3,3" id="路径-49" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <line x1="7" y1="6.5" x2="10.5" y2="3" id="路径-50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <polyline id="路径-45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="14 18 17 21 22 16"></polyline>
+        </g>
+    </g>
+</svg>
