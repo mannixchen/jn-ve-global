@@ -366,9 +366,21 @@ export function urlParams2Obj(url: string) {
  * @param targetKey 目标属性名
  * @returns 找到的属性值，未找到则返回 undefined
  */
-export function findPropDeep(obj: any, targetKey: string): any {
+export function findPropDeep(obj: any, targetKey: string, visited = new WeakSet()): any {
     // 如果不是对象或是 null，直接返回 undefined
-    if (obj === null || typeof obj !== 'object') return undefined
+    if (
+        obj === null ||
+        typeof obj !== 'object' ||
+        (typeof obj === 'object' && Object.keys(obj).length === 0)
+    ) {
+        return undefined
+    }
+
+    // 检测循环引用
+    if (visited.has(obj)) {
+        return undefined
+    }
+    visited.add(obj)
 
     // 如果当前对象直接包含目标属性，返回该属性值
     if (Object.prototype.hasOwnProperty.call(obj, targetKey)) {
@@ -377,8 +389,14 @@ export function findPropDeep(obj: any, targetKey: string): any {
 
     // 递归搜索所有属性
     for (const key in obj) {
-        const result = findPropDeep(obj[key], targetKey)
-        if (result !== undefined) return result
+        // 使用 Object.prototype.hasOwnProperty.call 而不是直接使用 obj.hasOwnProperty 的原因：
+        // 1. 对象可能重写了 hasOwnProperty 方法，导致结果不准确
+        // 2. 对象可能没有 hasOwnProperty 方法（比如使用 Object.create(null) 创建的对象）
+        // 3. 通过 call 调用 Object.prototype 上的原始方法，确保判断的准确性
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            const result = findPropDeep(obj[key], targetKey, visited)
+            if (result !== undefined) return result
+        }
     }
 
     return undefined

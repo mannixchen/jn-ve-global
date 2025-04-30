@@ -24,13 +24,15 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
     // 基于 gcolformItem vnode 的 props 获取字段唯一值
     const getFormItemProp = (slot) => {
-        return findPropDeep(slot, 'prop')
+        const prop = findPropDeep(slot.props.__schema, 'prop')
+        return prop
     }
 
     const getTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
         // const prop = formItemSlot?.props?.prop ?? formItemSlot?.type?.props?.prop?.default ?? ''
         if (!prop) {
-            throw new Error('请设置表单项prop')
+            // throw new Error('请设置表单项prop')
+            return {}
         }
         const targetIndex = columns.findIndex((item) => item.prop === prop)
         let left = 0
