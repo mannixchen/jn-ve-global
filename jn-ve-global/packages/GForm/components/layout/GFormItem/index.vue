@@ -32,6 +32,7 @@
 
         <slot
             :item-config="(formItemConfig as FormItemProps)"
+            :scope-form-config="rootFormConfig"
             :vmodel="(toRef(rootFormConfig.model, formItemConfig.prop) as Ref<any>)"
         >
             <!-- 优先级1：自定义 Render 控件 -->
