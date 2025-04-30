@@ -1,9 +1,9 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-08 14:45:17
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-23 14:25:09
- * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\form\index.vue
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2025-04-30 09:23:48
+ * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/components/form/index.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
@@ -15,11 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, watch, ref, computed, reactive, toRefs, provide, useAttrs } from 'vue'
+import { inject, watch, ref, computed, reactive, toRef, provide, useAttrs } from 'vue'
 import { ElForm } from 'element-plus'
 import type { FormInstance } from 'element-plus'
 import { modelKey } from '../../constants'
 import { FormProps as BiFormProps } from './type'
+import { GCollapse, GCollapseItem, GForm, formConfigProvideKey } from 'jn-ve-global'
 
 const COMPONENT_NAME = 'BiForm'
 defineOptions({
@@ -55,6 +56,11 @@ const elFormProps = computed(() => {
 
 // provide(modelKey, formModel)
 provide(modelKey, props?.config?.model ?? {})
+
+/**
+ * 兼容 g-form & gColFormItem 的使用；
+ */
+provide(formConfigProvideKey, toRef(props, 'config') as any)
 
 watch(
     () => props.config,
