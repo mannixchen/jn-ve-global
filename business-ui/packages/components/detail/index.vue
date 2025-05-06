@@ -229,10 +229,11 @@ const activeNames = computed<string[]>(() => {
 const addBtnVisible = computed<boolean>(() => !props.disabled && !props.hideAddBtn)
 
 const formConfig = computed<BiFormProps>(() => {
-    const { labelPosition, labelWidth } = props
+    const { labelPosition, labelWidth, disabled } = props
     return {
         labelPosition,
-        labelWidth
+        labelWidth,
+        disabled
     } as BiFormProps
 })
 
