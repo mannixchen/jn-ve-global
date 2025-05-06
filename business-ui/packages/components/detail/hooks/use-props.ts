@@ -13,7 +13,7 @@ export const useDefaultProps = () => ({
     fixedOperation: true,
     showOperation: true,
     serialName: '项目',
-    operationWidth: '70px',
+    operationWidth: '100px',
     // customColumns: true,
     expand: true,
     showCopyButton: false,

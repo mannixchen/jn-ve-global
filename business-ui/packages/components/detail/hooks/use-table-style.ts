@@ -12,8 +12,6 @@ import { __is_simulator_env__ } from '../../../constants'
 import { useNamespace } from '../../../hooks'
 import { findPropDeep } from '@jsjn/utils'
 
-// import { useBtns } from './use-btns'
-
 export const useTableColumns = (props: DetailProps, showOperation: boolean, slots) => {
     interface LocalState {
         columns: ColumnProps[]
@@ -22,29 +20,35 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         columns: []
     })
 
-    // 基于 gcolformItem vnode 的 props 获取字段唯一值
-    const getFormItemProp = (slot) => {
-        const prop = findPropDeep(slot.props.__schema, 'prop')
+    /**
+     * 基于 gcolformItem vnode 的 props 获取字段唯一值
+     * @param vnode
+     * @returns
+     */
+    const getFormItemProp = (vnode) => {
+        const prop = findPropDeep(vnode.props.__schema, 'prop')
         return prop
     }
 
     const getTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
-        // const prop = formItemSlot?.props?.prop ?? formItemSlot?.type?.props?.prop?.default ?? ''
         if (!prop) {
             // throw new Error('请设置表单项prop')
             return {}
         }
+
         const targetIndex = columns.findIndex((item) => item.prop === prop)
+
         let left = 0
         for (let i = 0; i < columns.length; i++) {
             if (i < targetIndex) {
                 const { width, minWidth } = columns[i].style
                 const columnWidth = width || minWidth
-                left += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
+                left += parseFloat(String(columnWidth))
             } else {
                 break
             }
         }
+
         return {
             left: left + 'px'
         }
@@ -70,7 +74,6 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         isHeader: boolean,
         prop?: string
     ) => {
-        // console.log('getFirstColumnCellBorderClass')
         const { border, showSerial } = props
         const className = 'is-first-column-cell'
         if (type === 'serial' && border && !isHeader) {
@@ -162,20 +165,24 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
                 const rules = findPropDeep(vnode.props, 'rules')
                 const required = rules?.some((rule) => rule?.required)
 
+                // 宽度继承设计时传递的宽度配置
+                const width = vnode.props?.style?.width ?? DEFAULT_COLUMN_WIDTH
+
                 return {
                     prop: getFormItemProp(vnode),
                     label: findPropDeep(vnode.props, 'label') ?? '',
                     type: 'form',
                     required,
                     style: {
-                        width: DEFAULT_COLUMN_WIDTH,
+                        width,
                         minWidth: DEFAULT_MIN_COLUMN_WIDTH,
-                        maxWidth: DEFAULT_COLUMN_WIDTH,
+                        maxWidth: width,
                         left: 0
                     }
                 }
             })
 
+        // 序号列
         if (showSerial) {
             columns = [
                 {
@@ -192,10 +199,13 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
                 ...columns
             ]
         }
+
+        // 操作列
         if (showOperation) {
             const width = operationWidth
-                ? String(operationWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, '') + 'px'
+                ? parseFloat(String(operationWidth)) + 'px'
                 : DEFAULT_OPERATION_COLUMN_WIDTH
+
             columns = [
                 ...columns,
                 {
@@ -253,13 +263,12 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 }
 
 export const useTableScrollClass = (scrollEl: any, tableEl: any, columns: ColumnProps[]) => {
-    // console.log('useTableScrollClass', scrollEl, tableEl)
     let tableMinWidth = 0
     const tableClientWidth = scrollEl.clientWidth
     columns.forEach((item) => {
         const { width, minWidth } = item?.style ?? {}
         const columnWidth = width || minWidth
-        tableMinWidth += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
+        tableMinWidth += parseFloat(String(columnWidth))
     })
 
     const scrollX = tableMinWidth > tableClientWidth
@@ -269,7 +278,6 @@ export const useTableScrollClass = (scrollEl: any, tableEl: any, columns: Column
     }
 
     const setScrollClass = (className: string) => {
-        // console.log('setScrollClass')
         if (!tableEl) return
         const classNames = Array.from(tableEl.classList).filter(
             (item) => !(item as string)?.startsWith('is-scrolling-')
@@ -366,7 +374,7 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             setClass(el, getLeftFixedClass(index))
         } else if (el?.className?.includes('operation-column')) {
             const width = operationWidth
-                ? String(operationWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, '') + 'px'
+                ? parseFloat(String(operationWidth)) + 'px'
                 : DEFAULT_OPERATION_COLUMN_WIDTH
 
             setStyle(el, {
@@ -399,7 +407,7 @@ export const useSimulatorTableStyle = (props: DetailProps, tableEl: any) => {
             })
         }
 
-        left += Number(String(columnWidth)?.replace(/[-+]?\d*\.\d+|[-+]?\d+/g, ''))
+        left += parseFloat(String(columnWidth))
 
         // index ++
     }
