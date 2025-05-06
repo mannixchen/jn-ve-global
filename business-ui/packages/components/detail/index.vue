@@ -355,7 +355,19 @@ watch(
 // console.log(`%c formConfigs2 === `, 'color: #67c23a;', formConfigs2.value)
 
 defineExpose({
-    forms: formConfigs.value
+    forms: formConfigs.value,
+    validate: async () => {
+        if (__is_simulator_env__) return null
+        const res = await Promise.all(
+            formConfigs.value.map((formConfig) => formConfig.instance.validate())
+        ).then((res) => {
+            if (res) {
+                return formConfigs.value.map((formConfig) => formConfig.model)
+            }
+            return res
+        })
+        return res
+    }
 })
 </script>
 

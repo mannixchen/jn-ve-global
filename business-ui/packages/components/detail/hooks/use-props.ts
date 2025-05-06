@@ -28,6 +28,6 @@ export const useDefaultProps = () => ({
     slotFromParent: false,
     // addButtonStatus: 'active',
     hideAddBtn: false,
-    pageSize: 5,
+    pageSize: 10,
     max: 50
 })
