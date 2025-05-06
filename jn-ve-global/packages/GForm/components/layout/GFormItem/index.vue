@@ -31,9 +31,10 @@
         </template>
 
         <slot
-            :item-config="(formItemConfig as FormItemProps)"
             :scope-form-config="rootFormConfig"
+            :item-config="(formItemConfig as FormItemProps)"
             :vmodel="(toRef(rootFormConfig.model, formItemConfig.prop) as Ref<any>)"
+            :parent-key="rootFormConfig?.id"
         >
             <!-- 优先级1：自定义 Render 控件 -->
             <template v-if="formItemConfig.render">

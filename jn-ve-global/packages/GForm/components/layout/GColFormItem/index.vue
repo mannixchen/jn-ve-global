@@ -12,11 +12,12 @@
     >
         <LGFormItem v-bind="props">
             <!-- 针对低码平台，这里要有一个 slot 占位，作为容器 -->
-            <template #default="{ itemConfig, vmodel, scopeFormConfig }">
+            <template #default="{ itemConfig, vmodel, scopeFormConfig, parentKey }">
                 <slot
+                    :scope-form-config="scopeFormConfig"
                     :item-config="(itemConfig as FormItemProps)"
                     :vmodel="(vmodel as Ref<any>)"
-                    :scope-form-config="scopeFormConfig"
+                    :parent-key="parentKey"
                 />
             </template>
         </LGFormItem>

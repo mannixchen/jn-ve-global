@@ -1,9 +1,9 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-18 14:59:31
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-27 13:41:05
- * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\hooks\use-pagination.ts
+ * @LastEditors: Zyunchao 18651805393@163.com
+ * @LastEditTime: 2025-04-30 16:29:23
+ * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/components/detail/hooks/use-pagination.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
@@ -45,7 +45,7 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
             .slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
         // 由于页面渲染的数据是state.currentRecords, 导致全量forms中每个元素的instance都为null,需要在页面渲染成功后，手动更改forms元素上instance
-        nextTick(() => {
+        setTimeout(() => {
             // console.log('next-tick-getCurrentRecords')
             state?.currentRecords?.forEach((item) => {
                 for (let i = 0; i < forms.length; i++) {
@@ -54,7 +54,7 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
                     }
                 }
             })
-        })
+        }, 0)
     }
 
     getCurrentRecords()
