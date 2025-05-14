@@ -80,19 +80,8 @@ export function assignValidField(
             }
         }
 
-        // 自判断
-        if (
-            _.isNull(providerVal) ||
-            _.isUndefined(providerVal) ||
-            (_.isArray(providerVal) && !providerVal.length) ||
-            (_.isString(providerVal) && !providerVal) ||
-            (_.isNumber(providerVal) && providerVal === 0) ||
-            (_.isBoolean(providerVal) && providerVal === false) ||
-            (_.isObject(providerVal) && _.isEmpty(providerVal)) ||
-            (_.isArray(providerVal) &&
-                providerVal.length &&
-                (providerVal as Array<any>).every((item) => !item))
-        ) {
+        // 使用 isValidValue 进行判断
+        if (!isValidValue(providerVal)) {
             delete target[key]
             return
         } else {
@@ -425,4 +414,25 @@ export function findAllPropsDeep(obj: any, targetKey: string): any[] {
 
     search(obj)
     return results
+}
+
+/**
+ * 判断传入的值是否有效
+ * @param value 要判断的值
+ * @returns boolean 值是否有效
+ */
+export function isValidValue(value: any): boolean {
+    if (
+        _.isNull(value) ||
+        _.isUndefined(value) ||
+        (_.isArray(value) && !value.length) ||
+        (_.isString(value) && !value) ||
+        // (_.isNumber(value) && value === 0) ||
+        (_.isBoolean(value) && value === false) ||
+        (_.isObject(value) && _.isEmpty(value)) ||
+        (_.isArray(value) && value.length && (value as Array<any>).every((item) => !item))
+    ) {
+        return false
+    }
+    return true
 }
