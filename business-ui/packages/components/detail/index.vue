@@ -180,7 +180,7 @@ import {
     usePagination
 } from './hooks'
 import { assignOwnProp } from '@jsjn/micro-core-utils/utils'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, has, unionBy } from 'lodash'
 import { v4 as uuidV4 } from 'uuid'
 import FormMode from './components/formMode.vue'
 
@@ -209,8 +209,8 @@ const slots = computed(() => {
         : (biDetailChildren as any)?.filter((item) => !item.children)
     // return biDetailChildren
 })
-console.log('slots', useSlots(), useSlots()?.default(), slots)
 
+// console.log('slots', useSlots(), useSlots()?.default(), slots)
 // const showSerial = computed<boolean>(() => props?.showSerial && slots.value?.length > 0)
 
 const activeNames = computed<string[]>(() => {
@@ -244,6 +244,13 @@ const baseForm = useFormProps(formConfig.value, slots.value, {
 const formConfigs = ref(
     props.modelValue?.length > 0
         ? props.modelValue?.map((item) => {
+            // 真实传递的 modelValue 可能会有一些默认字段，如 id，这里直接改变 baseForm.model 的值，添加传递进来的额外字段
+            Object.keys(item).forEach((key) => {
+                if (!has(baseForm.model, key)) {
+                    baseForm.model[key] = ''
+                }
+            })
+
             const form = cloneDeep(baseForm)
             form.id = uuidV4()
             assignOwnProp(form.model, item)
@@ -262,7 +269,7 @@ const {
     change,
     prevClick,
     nextClick
-} = usePagination(props, formConfigs.value)
+} = usePagination(props, formConfigs)
 
 // 操作按钮
 const btns = useBtns(props, emits, getCurrentPage)
@@ -279,6 +286,12 @@ const {
     getTableRowClass,
     getTableClass
 } = useTableColumns(props, showOperation.value, slots.value)
+
+// 是否是外部更新
+const isExternalUpdate = ref(false)
+// 是否是内部更新
+const isInternalUpdate = ref(false)
+let modelValueCache = null
 
 // let index = 1
 const add = () => {
@@ -312,51 +325,62 @@ onMounted(async () => {
 watch(
     () => formConfigs.value,
     (value) => {
+        if (isExternalUpdate.value) return
+        isInternalUpdate.value = true
         ;(paginationProps.value.total as any) = value.length
         getCurrentRecords()
 
-        emits(
-            'update:modelValue',
-            value.map((item) => item?.model ?? {})
-        )
+        const currentModelValue = value.map((item) => item?.model ?? {})
+
+        // if (modelValueCache) {
+        //     console.log(
+        //         `%c currentModelValue === `,
+        //         'color: #67c23a;',
+        //         currentModelValue,
+        //         modelValueCache
+        //     )
+        // }
+
+        emits('update:modelValue', currentModelValue)
+
+        setTimeout(() => {
+            isInternalUpdate.value = false
+        }, 0)
     },
-    {
-        deep: true
-    }
+    { deep: true }
 )
 
-// function createFormConfig(data?: any): GFormProps {
-//     const { labelPosition, labelWidth } = props
+/**
+ * 外部更新，外部更新会触发两次，第一次是初始化，第二次是外部更新
+ * 更新后，同步更新 formConfigs 的值，然后触发 getCurrentRecords 更新视图
+ */
+watch(
+    () => props.modelValue,
+    (value) => {
+        if (isInternalUpdate.value) return
+        isExternalUpdate.value = true
 
-//     const model = slots.value.reduce((acc, vnode) => {
-//         const prop = findPropDeep(vnode, 'prop')
-//         if (prop) {
-//             acc[prop] = data?.[prop] ?? ''
-//         }
-//         return acc
-//     }, {})
+        modelValueCache = cloneDeep(value)
 
-//     const form: GFormProps = {
-//         id: uuidV4(),
-//         instance: null,
-//         model,
-//         labelPosition,
-//         labelWidth: labelWidth as string
-//     }
-//     return form
-// }
+        console.log(`%c 2.props.modelValue, value ==== `, 'color: yellow;', value)
 
-// const formConfigs2 = computed(() =>
-//     currentDataModel.value?.length
-//         ? currentDataModel.value.map((item) => {
-//               return createFormConfig(item)
-//           })
-//         : [createFormConfig()]
-// )
-// console.log(`%c formConfigs2 === `, 'color: #67c23a;', formConfigs2.value)
+        formConfigs.value = value.map((item) => {
+            const form = cloneDeep(baseForm)
+            form.id = uuidV4()
+            assignOwnProp(form.model, item)
+            return form
+        })
+        getCurrentRecords()
+
+        setTimeout(() => {
+            isExternalUpdate.value = false
+        }, 0)
+    },
+    { immediate: true }
+)
 
 defineExpose({
-    forms: formConfigs.value,
+    forms: formConfigs,
     validate: async () => {
         if (__is_simulator_env__) return null
         const res = await Promise.all(

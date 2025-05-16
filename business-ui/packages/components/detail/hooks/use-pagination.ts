@@ -2,18 +2,18 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-18 14:59:31
  * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2025-04-30 16:29:23
+ * @LastEditTime: 2025-05-16 16:07:05
  * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/components/detail/hooks/use-pagination.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
-import { reactive, toRefs, nextTick } from 'vue'
+import { reactive, toRefs, nextTick, ref, Ref } from 'vue'
 import type { PaginationProps } from 'element-plus'
 import type { DetailProps } from '../type'
 import { FormProps } from '../../form'
 
-export const usePagination = (props: DetailProps, forms: FormProps[]) => {
+export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>) => {
     // console.log('usePagination', props)
     interface LocalState {
         currentPage: number
@@ -26,7 +26,7 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
         currentPage: 1,
         pageSize,
         paginationProps: {
-            total: forms?.length ?? 0,
+            total: forms.value?.length ?? 0,
             // pageSizes: [5, 10, 20],
             layout: 'total, prev, pager, next, jumper',
             hideOnSinglePage: true
@@ -35,9 +35,8 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
     })
 
     const getCurrentRecords = () => {
-        // console.log('getCurrentRecords')
         const { currentPage, pageSize } = state
-        state.currentRecords = forms
+        state.currentRecords = forms.value
             ?.map((item, index) => ({
                 ...item,
                 serialNo: index + 1
@@ -46,11 +45,10 @@ export const usePagination = (props: DetailProps, forms: FormProps[]) => {
 
         // 由于页面渲染的数据是state.currentRecords, 导致全量forms中每个元素的instance都为null,需要在页面渲染成功后，手动更改forms元素上instance
         setTimeout(() => {
-            // console.log('next-tick-getCurrentRecords')
             state?.currentRecords?.forEach((item) => {
-                for (let i = 0; i < forms.length; i++) {
-                    if (forms[i]?.id === item?.id) {
-                        forms[i].instance = item.instance
+                for (let i = 0; i < forms.value.length; i++) {
+                    if (forms.value[i]?.id === item?.id) {
+                        forms.value[i].instance = item.instance
                     }
                 }
             })
