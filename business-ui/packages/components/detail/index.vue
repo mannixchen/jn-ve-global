@@ -322,7 +322,7 @@ onMounted(async () => {
 
 watch(
     () => formConfigs.value,
-    debounce((value) => {
+    (value) => {
         if (isExternalUpdate) return
         isInternalUpdate = true
         ;(paginationProps.value.total as any) = value.length
@@ -366,7 +366,7 @@ watch(
         setTimeout(() => {
             isInternalUpdate = false
         }, 0)
-    }, 100),
+    },
     { deep: true }
 )
 
