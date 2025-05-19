@@ -147,7 +147,7 @@ const layout = computed(() => {
     if (getBase() === Bases.REGTECH) {
         return 'total, sizes, prev, pager, next, jumper'
     }
-    return 'prev, pager, next, jumper, total, sizes"'
+    return 'prev, pager, next, jumper, total, sizes'
 })
 const prevText = computed(() => (getBase() === Bases.REGTECH ? '' : '上一页'))
 const nextText = computed(() => (getBase() === Bases.REGTECH ? '' : '下一页'))
