@@ -180,7 +180,7 @@ import {
     usePagination
 } from './hooks'
 import { assignOwnProp } from '@jsjn/micro-core-utils/utils'
-import { cloneDeep, has, unionBy } from 'lodash'
+import { cloneDeep, debounce, has, unionBy } from 'lodash'
 import { v4 as uuidV4 } from 'uuid'
 import FormMode from './components/formMode.vue'
 
@@ -287,11 +287,9 @@ const {
     getTableClass
 } = useTableColumns(props, showOperation.value, slots.value)
 
-// 是否是外部更新
-const isExternalUpdate = ref(false)
-// 是否是内部更新
-const isInternalUpdate = ref(false)
-let modelValueCache = null
+let isExternalUpdate = false // 是否是外部更新
+let isInternalUpdate = false // 是否是内部更新
+let modelValueCache = null // 模型值缓存
 
 // let index = 1
 const add = () => {
@@ -324,29 +322,51 @@ onMounted(async () => {
 
 watch(
     () => formConfigs.value,
-    (value) => {
-        if (isExternalUpdate.value) return
-        isInternalUpdate.value = true
+    debounce((value) => {
+        if (isExternalUpdate) return
+        isInternalUpdate = true
         ;(paginationProps.value.total as any) = value.length
         getCurrentRecords()
 
         const currentModelValue = value.map((item) => item?.model ?? {})
 
-        // if (modelValueCache) {
-        //     console.log(
-        //         `%c currentModelValue === `,
-        //         'color: #67c23a;',
-        //         currentModelValue,
-        //         modelValueCache
-        //     )
-        // }
+        // 为当前数据添加 opt 字段，用于标识 新增、修改、删除
+        if (modelValueCache?.length > 0) {
+            // 使用Map优化查找效率，避免重复的O(n)查找
+            const cacheMap = new Map(modelValueCache.map((item) => [item.id, item]))
+
+            // 标记新增或修改的项
+            currentModelValue.forEach((item) => {
+                if (cacheMap.has(item.id)) {
+                    // 比较对象属性而非使用JSON.stringify
+                    const cacheItem = cacheMap.get(item.id)
+                    const hasChanged = Object.keys(item).some(
+                        (key) => item[key] !== cacheItem[key] && key !== 'opt'
+                    )
+                    if (hasChanged) {
+                        item.opt = 'alter'
+                    }
+                } else {
+                    item.opt = 'create'
+                }
+            })
+
+            // 找出已删除的项
+            const currentItemIds = new Set(currentModelValue.map((item) => item.id))
+            const deletedItems = modelValueCache
+                .filter((item) => !currentItemIds.has(item.id))
+                .map((item) => ({ ...item, opt: 'drop' }))
+
+            // 将删除的项添加到结果中
+            currentModelValue.push(...deletedItems)
+        }
 
         emits('update:modelValue', currentModelValue)
 
         setTimeout(() => {
-            isInternalUpdate.value = false
+            isInternalUpdate = false
         }, 0)
-    },
+    }, 100),
     { deep: true }
 )
 
@@ -357,12 +377,10 @@ watch(
 watch(
     () => props.modelValue,
     (value) => {
-        if (isInternalUpdate.value) return
-        isExternalUpdate.value = true
+        if (isInternalUpdate) return
+        isExternalUpdate = true
 
         modelValueCache = cloneDeep(value)
-
-        console.log(`%c 2.props.modelValue, value ==== `, 'color: yellow;', value)
 
         formConfigs.value = value.map((item) => {
             const form = cloneDeep(baseForm)
@@ -373,7 +391,7 @@ watch(
         getCurrentRecords()
 
         setTimeout(() => {
-            isExternalUpdate.value = false
+            isExternalUpdate = false
         }, 0)
     },
     { immediate: true }
