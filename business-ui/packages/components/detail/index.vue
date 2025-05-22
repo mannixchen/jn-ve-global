@@ -289,7 +289,11 @@ const {
 
 let isExternalUpdate = false // 是否是外部更新
 let isInternalUpdate = false // 是否是内部更新
-let modelValueCache = null // 模型值缓存
+/**
+ * 绑定值缓存，明细表内，需要做数据的 curd 操作（前端做）
+ * 做操作时，需要一个原始数据的比对，来判断是新增、修改、删除
+ */
+let modelValueCache = null 
 
 // let index = 1
 const add = () => {
