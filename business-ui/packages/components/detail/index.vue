@@ -333,12 +333,16 @@ watch(
         // 为当前数据添加 opt 字段，用于标识 新增、修改、删除
         if (modelValueCache?.length > 0) {
             // 使用Map优化查找效率，避免重复的O(n)查找
-            const cacheMap = new Map(modelValueCache.map((item) => [item.id, item]))
+            const cacheMap = new Map(
+                modelValueCache
+                    .filter(item => item?.id) // 只过滤掉没有 id 的项
+                    .map(item => [item.id, item])
+            )
 
             // 标记新增或修改的项
             currentModelValue.forEach((item) => {
-                if (cacheMap.has(item.id)) {
-                    // 比较对象属性而非使用JSON.stringify
+                // 有 id 且在缓存中存在，则视为修改
+                if (item?.id && cacheMap.has(item.id)) {
                     const cacheItem = cacheMap.get(item.id)
                     const hasChanged = Object.keys(item).some(
                         (key) => item[key] !== cacheItem[key] && key !== 'opt'
@@ -352,13 +356,17 @@ watch(
             })
 
             // 找出已删除的项
-            const currentItemIds = new Set(currentModelValue.map((item) => item.id))
+            const currentItemIds = new Set(currentModelValue.map(item => item?.id).filter(Boolean))
             const deletedItems = modelValueCache
-                .filter((item) => !currentItemIds.has(item.id))
-                .map((item) => ({ ...item, opt: 'drop' }))
+                .filter(item => item?.id && !currentItemIds.has(item.id))
+                .map(item => ({ ...item, opt: 'drop' }))
 
             // 将删除的项添加到结果中
             currentModelValue.push(...deletedItems)
+        } else {
+            currentModelValue.forEach((item) => {
+                item.opt = 'create'
+            })
         }
 
         emits('update:modelValue', currentModelValue)
@@ -367,7 +375,7 @@ watch(
             isInternalUpdate = false
         }, 0)
     },
-    { deep: true }
+    { deep: true, immediate: true }
 )
 
 /**
