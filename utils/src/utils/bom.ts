@@ -35,7 +35,17 @@ export function getUrlParams(queryString: string = (global || getGlobal()).locat
         newSearch.forEach((item) => {
             let temp = item.substring(1).split('=')
             let key = temp[0]
-            let value = temp[1]
+            let value = temp[1] || ''
+            
+            // 对参数名和参数值进行解码，处理中文字符
+            try {
+                key = decodeURIComponent(key)
+                value = decodeURIComponent(value)
+            } catch (e) {
+                // 如果解码失败，使用原始值
+                console.warn('URL 参数解码失败:', e)
+            }
+            
             result[key] = value
         })
     }
