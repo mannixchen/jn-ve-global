@@ -11,40 +11,44 @@
 
         <template v-else>
             <div v-if="__is_simulator_env__" class="table-field-is-simulator">
-                <div ref="scrollWrapRef" class="table-wrapper-is-simulator">
-                    <div ref="tableRef" class="form-items-wrapper">
-                        <el-form-item
-                            v-if="showSerial"
-                            label="序号"
-                            class="serial-column"
-                            style="left: 0"
-                        >
-                            1
-                        </el-form-item>
-                        <slot />
+                <bi-form :config="{...baseForm}">
+                    <div ref="scrollWrapRef" class="table-wrapper-is-simulator">
+                        <div ref="tableRef" class="form-items-wrapper">
+                            <el-form-item
+                                v-if="showSerial"
+                                label="序号"
+                                class="serial-column"
+                                style="left: 0"
+                                label-width="60"
+                            >
+                                1
+                            </el-form-item>
+                            <slot />
 
-                        <el-form-item
-                            v-if="showOperation"
-                            label="操作"
-                            class="operation-column"
-                            style="right: 0"
-                        >
-                            <el-button-group class="operation-wrapper">
-                                <el-button
-                                    v-for="(btnProps, index) in btns"
-                                    :key="index"
-                                    class="operate-btn"
-                                    text
-                                    link
-                                    type="default"
-                                    disabled
-                                >
-                                    {{ btnProps.label }}
-                                </el-button>
-                            </el-button-group>
-                        </el-form-item>
+                            <el-form-item
+                                v-if="showOperation"
+                                label="操作"
+                                class="operation-column"
+                                style="right: 0"
+                                label-width="60"
+                            >
+                                <el-button-group class="operation-wrapper">
+                                    <el-button
+                                        v-for="(btnProps, index) in btns"
+                                        :key="index"
+                                        class="operate-btn"
+                                        text
+                                        link
+                                        type="default"
+                                        disabled
+                                    >
+                                        {{ btnProps.label }}
+                                    </el-button>
+                                </el-button-group>
+                            </el-form-item>
+                        </div>
                     </div>
-                </div>
+                </bi-form>
             </div>
 
             <div v-else ref="scrollWrapRef" class="table-field">
@@ -293,7 +297,7 @@ let isInternalUpdate = false // 是否是内部更新
  * 绑定值缓存，明细表内，需要做数据的 curd 操作（前端做）
  * 做操作时，需要一个原始数据的比对，来判断是新增、修改、删除
  */
-let modelValueCache = null 
+let modelValueCache = null
 
 // let index = 1
 const add = () => {
@@ -339,8 +343,8 @@ watch(
             // 使用Map优化查找效率，避免重复的O(n)查找
             const cacheMap = new Map(
                 modelValueCache
-                    .filter(item => item?.id) // 只过滤掉没有 id 的项
-                    .map(item => [item.id, item])
+                    .filter((item) => item?.id) // 只过滤掉没有 id 的项
+                    .map((item) => [item.id, item])
             )
 
             // 标记新增或修改的项
@@ -360,10 +364,12 @@ watch(
             })
 
             // 找出已删除的项
-            const currentItemIds = new Set(currentModelValue.map(item => item?.id).filter(Boolean))
+            const currentItemIds = new Set(
+                currentModelValue.map((item) => item?.id).filter(Boolean)
+            )
             const deletedItems = modelValueCache
-                .filter(item => item?.id && !currentItemIds.has(item.id))
-                .map(item => ({ ...item, opt: 'drop' }))
+                .filter((item) => item?.id && !currentItemIds.has(item.id))
+                .map((item) => ({ ...item, opt: 'drop' }))
 
             // 将删除的项添加到结果中
             currentModelValue.push(...deletedItems)
