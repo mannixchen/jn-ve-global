@@ -11,7 +11,7 @@
 
         <template v-else>
             <div v-if="__is_simulator_env__" class="table-field-is-simulator">
-                <bi-form :config="{...baseForm}">
+                <bi-form :config="baseForm">
                     <div ref="scrollWrapRef" class="table-wrapper-is-simulator">
                         <div ref="tableRef" class="form-items-wrapper">
                             <el-form-item
