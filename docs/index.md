@@ -22,6 +22,10 @@ actions:
       link: /utilsDocs/
       type: secondary
 
+    - text: monitor-sdk
+      link: /monitor-sdk/
+      type: secondary
+
 features:
     - title: 🍡	组件库
       details: 使用 vue3 + element-plus + ts + vite 封装的组件库

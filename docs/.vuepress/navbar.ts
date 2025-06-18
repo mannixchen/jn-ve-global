@@ -20,6 +20,11 @@ export default [
         activeMatch: '^/utilsDocs/'
     },
     {
+        text: 'monitor-sdk',
+        link: '/monitor-sdk/',
+        activeMatch: '^/monitor-sdk/'
+    },
+    {
         text: '更新日志',
         children: [
             {
