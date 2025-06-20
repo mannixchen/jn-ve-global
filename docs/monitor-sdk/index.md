@@ -4,7 +4,7 @@
 
 该插件使用[神策数据](https://manual.sensorsdata.cn/sa/docs/tech_sdk_client_web_use/v0300)提供的sa-javascript-sdk提供底层支持
 
-监听主要是在基座应用中来进行注册, 微应用如需注册只需要进行自定义上报
+monitor-sdk在基座应用中注册和监听进行基础的埋点上报, 子应用无需注册, 只需要调用提供的一些方法进行自定义上报即可.
 
 ## 开始
 
@@ -36,13 +36,15 @@ app.use(monitorSdk(window.__MONITOR_SDK_CONFIG__, window.__MONITOR_SDK_GLOBAL_PR
 
 **这些全局常量定义在index.html平级的globalVariable.js中**
 
+`__ENABLE_MONITOR_SDK__`: 是否开启monitor-sdk
+
 `__MONITOR_SDK_CONFIG__`: monitor-sdk的初始化配置  
+
 `__MONITOR_SDK_GLOBAL_PROPERTIES__`: monitor-sdk的公共上报属性(该属性会添加到每次上报的内容中)  
-`__ENABLE_MONITOR_SDK__`: 是否开始monitor-sdk的上报
 
 ### 子应用的使用
 
-子应用如果使用自定义埋点则进行下面的操作,否则不需要进行任何操作,因为基础埋点已经在基座中集成了.
+子应用如果使用自定义埋点则进行下面的操作,否则不需要进行任何操作
 
 #### 1.安装sdk
 
@@ -67,15 +69,15 @@ pnpm add @jsjn/monitor-sdk
 示例:
 
 ``` ts
-import { addBuriedPoint, addRegisterProperty, createBuriedPoint, getMonitorInstance } from '@jsjn/monitor-sdk'
+import { reportEvent, registerSuperProperties, createEventTracker, getMonitorInstance } from '@jsjn/monitor-sdk'
 // 该函数会像上报的信息中追加一个全局信息, 后面的上报消息中都会携带该数据
-addRegisterProperty({
+registerSuperProperties({
   custom_prop1: 'xxx',
   custom_prop2: 'xxx',
 })
 
 // 该函数可以自定义上报的类型及上报的信息(参数只存在这一次上报中)
-addBuriedPoint('$useclick', {
+reportEvent('$useclick', {
   userName: 'admin',
   useId: 123456
 })
@@ -84,15 +86,15 @@ addBuriedPoint('$useclick', {
 const monitorInstance = getMonitorInstance()
 
 // 自定义链式操作的上报
-const buriedPoint = createBuriedPoint('$user')
+const trackerInstance = createEventTracker('$user')
 
-buriedPoint.addProperties({
+trackerInstance.addProperties({
   processId: '12313'
 }).addProperties({
   type: 'edit'
 }).report()
 
-buriedPoint.addProperties({
+trackerInstance.addProperties({
   type: 'save'
 }).report()
 ```
