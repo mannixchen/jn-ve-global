@@ -36,9 +36,36 @@ app.use(monitorSdk(window.__MONITOR_SDK_CONFIG__, window.__MONITOR_SDK_GLOBAL_PR
 
 **这些全局常量定义在index.html平级的globalVariable.js中**
 
-`__ENABLE_MONITOR_SDK__`: 是否开启monitor-sdk
-
 `__MONITOR_SDK_CONFIG__`: monitor-sdk的初始化配置  
+
+```js
+// 默认配置
+const default = {
+    enable_sdk: false, // 开启sdk
+    server_url: '', // 数据接收地址
+    batch_send: {
+      datasend_timeout: 10000, // 一次请求超过多少毫秒的话自动取消，防止请求无响应。
+      send_interval: 10000, // 间隔多少毫秒发一次数据。
+      storage_length: 200, // 存储 localStorage 条数最大值，默认：200 。如 localStorage 条数超过该值，则使用 image 方式立即发送数据。v1.24.8 以上支持。
+    },
+    send_type: 'ajax',
+    use_base64: true,
+    use_client_time: true,
+    is_track_single_page: true, // 单页应用页面浏览事件采集(url改变就触发)
+    use_app_track: true,
+    encrypt_cookie: true,
+    show_log: true, // 控制台显示数据开
+    heatmap: {
+      // 是否开启点击图，default 表示开启，自动采集 $WebClick 事件，可以设置 'not_collect' 表示关闭。
+      // 默认只有点击 a input button textarea 四种元素时，才会触发 $WebClick 元素点击事件
+      clickmap: 'default',
+      // 是否开启触达图，default 表示开启，自动采集 $WebStay 事件，可以设置 'not_collect' 表示关闭。
+      // 需要 Web JS SDK 版本号大于 1.9.1
+      // https://manual.sensorsdata.cn/sa/docs/tech_sdk_client_web_all_use/v0300#Web_%E5%85%83%E7%B4%A0%E7%82%B9%E5%87%BB($WebClick)
+      scroll_notice_map: 'default'
+    }
+}
+```
 
 `__MONITOR_SDK_GLOBAL_PROPERTIES__`: monitor-sdk的公共上报属性(该属性会添加到每次上报的内容中)  
 
