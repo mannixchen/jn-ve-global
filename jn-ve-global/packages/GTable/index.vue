@@ -83,6 +83,7 @@
                     :next-text="nextText"
                     background
                     :layout="layout"
+                    @change="localConfig.pagination.onChange"
                 />
             </div>
         </template>
@@ -195,16 +196,6 @@ watch(
         })
     }
 )
-
-// 监听分页部分的变化，向外抛出
-if (localConfig.value.pagination) {
-    watch(
-        () => [localConfig.value.pagination.currentPage, localConfig.value.pagination.pageSize],
-        ([currentPage, pageSize]) => {
-            localConfig.value.pagination.onChange?.(currentPage, pageSize)
-        }
-    )
-}
 
 //监听列变化
 watch(
