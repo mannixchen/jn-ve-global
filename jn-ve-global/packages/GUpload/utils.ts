@@ -29,7 +29,7 @@ export function getFileTypeIcon(file?: UploadFile) {
     const fileType = getFileType(file.name)
 
     // 图片取原url
-    if (IMG_EXT.includes(fileType)) return file['thumb']
+    if (IMG_EXT.includes(fileType)) return file['thumb'] || file['url']
 
     // word
     if (WORD_EXT.includes(fileType)) return WordFileTypeImg
