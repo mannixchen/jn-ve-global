@@ -63,30 +63,29 @@
                     </template>
                 </ElTable>
             </div>
-
-            <!-- 分页 -->
-            <div
-                v-if="
-                    localConfig.pagination &&
-                        (localConfig.pagination.show === true ||
-                            localConfig.pagination.show === undefined)
-                "
-                class="g-table-pagination"
-            >
-                <ElPagination
-                    v-if="isCreatePagination"
-                    v-model:page-size="localConfig.pagination.pageSize"
-                    v-model:current-page="localConfig.pagination.currentPage"
-                    :total="localConfig.pagination.total"
-                    :page-sizes="localConfig.pagination.pageSizes || [10, 20, 50]"
-                    :prev-text="prevText"
-                    :next-text="nextText"
-                    background
-                    :layout="layout"
-                    @change="localConfig.pagination.onChange"
-                />
-            </div>
         </template>
+
+        <!-- 分页 -->
+        <div
+            v-if="
+                localConfig.pagination &&
+                    (localConfig.pagination.show === true || localConfig.pagination.show === undefined)
+            "
+            class="g-table-pagination"
+        >
+            <ElPagination
+                v-if="isCreatePagination"
+                v-model:page-size="localConfig.pagination.pageSize"
+                v-model:current-page="localConfig.pagination.currentPage"
+                :total="localConfig.pagination.total"
+                :page-sizes="localConfig.pagination.pageSizes || [10, 20, 50]"
+                :prev-text="prevText"
+                :next-text="nextText"
+                background
+                :layout="layout"
+                @change="localConfig.pagination.onChange"
+            />
+        </div>
     </div>
 </template>
 
