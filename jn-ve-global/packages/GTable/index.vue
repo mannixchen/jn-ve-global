@@ -83,7 +83,8 @@
                 :next-text="nextText"
                 background
                 :layout="layout"
-                @change="localConfig.pagination.onChange"
+                @current-change="currentChange"
+                @size-change="sizeChange"
             />
         </div>
     </div>
@@ -216,6 +217,17 @@ const handleEmptyRefresh = () => {
         isRefresh.value = false
     }, 1000)
     props.config.onRefresh()
+}
+
+const currentChange = (page: number) => {
+    localConfig.value.pagination.onChange(page, localConfig.value.pagination.pageSize)
+}
+
+const sizeChange = (size: number) => {
+    localConfig.value.pagination.onChange(
+        localConfig.value.pagination.currentPage,
+        size
+    )
 }
 
 defineExpose({
