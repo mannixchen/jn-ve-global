@@ -25,8 +25,9 @@ import monitorSDK from '@jsjn/monitor-sdk'
 app.use(monitorSdk(window.__MONITOR_SDK_CONFIG__, window.__MONITOR_SDK_GLOBAL_PROPERTIES__) as any)
 ```
 
-> &#x2139;&#xfe0f;
-> **注册时机在router, store之后**
+:::warning 注意
+注册时机在router, store之后
+:::
 
 #### 3.vue.config.js排除监控sdk
 
@@ -83,8 +84,9 @@ pnpm add @jsjn/monitor-sdk
 
 `externals`中添加配置 **'@jsjn/monitor-sdk': 'JnMonitor'**
 
-> &#x2139;&#xfe0f;
-> 这一步一定不要省略, 虽然也可以使用, 但是会导致monitorsdk的实例不一致, 上报的数据丢失一些默认绑定的数据
+:::warning 注意
+这一步一定不要省略, 虽然也可以使用, 但是会导致monitorsdk的实例不一致, 上报的数据丢失一些默认绑定的数据
+:::
 
 ## 自定义上报元素
 
