@@ -66,15 +66,40 @@ export default ({
     )
 
     // 分页
+    let watchPagination = null
+    let isOnChangeFlag = false
     watch(
         () => props.tablePagination,
         (val) => {
+            if (watchPagination) {
+                watchPagination()
+            }
+
             localTableConfig.pagination = val
             if (val && !localTableConfig.pagination['onChange']) {
                 localTableConfig.pagination['onChange'] = () => {
+                    isOnChangeFlag = true
                     props.loadTableMethods?.()
                 }
             }
+
+            /**
+             * 20250729 fix: 由于 gtable 内部的分页交给了事件驱动，导致外部直接改变 currentPage 时，未能直接触发 onChange
+             * 因此需要监听 currentPage 的变化，并手动触发 loadTableMethods
+             */
+            watchPagination = watch(
+                () => props.tablePagination?.currentPage,
+                (val) => {
+                    if (isOnChangeFlag) {
+                        isOnChangeFlag = false
+                        return
+                    }
+                    if (!val) {
+                        return
+                    }
+                    props.loadTableMethods?.()
+                }
+            )
         },
         {
             immediate: true,
