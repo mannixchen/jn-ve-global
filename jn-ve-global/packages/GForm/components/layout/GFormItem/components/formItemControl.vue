@@ -4,6 +4,7 @@
         <template v-if="localControlType === 'input'">
             <LGAdvanceInput
                 v-model.trim="localPropRef"
+                :autosize="{ minRows: 5, maxRows: 8 }"
                 v-bind="localControlProps"
                 @focus="emits('controlFocus')"
                 @blur="emits('controlBlur')"

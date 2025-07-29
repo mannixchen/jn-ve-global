@@ -301,7 +301,8 @@ const emits = defineEmits([
     'update:instance'
 ])
 
-const isFullscreen = ref<boolean>(true)
+// 预览是否全屏展示
+const isFullscreen = ref<boolean>(false)
 const { localPreviewMode, isWpsPreview, localFileListBtnType } = useLocalPreviewMode({ props })
 const { uploadRef } = useRefStore({ emits })
 
