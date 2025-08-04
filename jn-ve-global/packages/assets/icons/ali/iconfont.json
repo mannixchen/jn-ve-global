@@ -6,6 +6,83 @@
   "description": "前端图标项目",
   "glyphs": [
     {
+      "icon_id": "1084306",
+      "name": "典当行",
+      "font_class": "diandangxing",
+      "unicode": "e933",
+      "unicode_decimal": 59699
+    },
+    {
+      "icon_id": "1486961",
+      "name": "小贷-01",
+      "font_class": "xiaodai-",
+      "unicode": "e7c4",
+      "unicode_decimal": 59332
+    },
+    {
+      "icon_id": "2470313",
+      "name": "amc",
+      "font_class": "amc",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
+      "icon_id": "2718123",
+      "name": "典当行",
+      "font_class": "diandanghang",
+      "unicode": "e69d",
+      "unicode_decimal": 59037
+    },
+    {
+      "icon_id": "3588414",
+      "name": "交易所报盘日志",
+      "font_class": "declare-1",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "6901088",
+      "name": "Gongjiaojinggai-01",
+      "font_class": "Gongjiaojinggai-",
+      "unicode": "e809",
+      "unicode_decimal": 59401
+    },
+    {
+      "icon_id": "8488442",
+      "name": "农家乐",
+      "font_class": "nongjiale",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "15000419",
+      "name": "股权出质",
+      "font_class": "guquanchuzhi",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "27991310",
+      "name": "担保分析",
+      "font_class": "danbaofenxi",
+      "unicode": "e69e",
+      "unicode_decimal": 59038
+    },
+    {
+      "icon_id": "28121872",
+      "name": "资管合格投资者",
+      "font_class": "ziguanhegetouzizhe",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "34480792",
+      "name": "保理",
+      "font_class": "baoli",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
       "icon_id": "36593",
       "name": "职务",
       "font_class": "zhiwu",

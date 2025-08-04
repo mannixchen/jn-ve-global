@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4641590 */
-  src: url('./iconfont.woff2?t=1723603524909') format('woff2'),
-       url('./iconfont.woff?t=1723603524909') format('woff'),
-       url('./iconfont.ttf?t=1723603524909') format('truetype');
+  src: url('./iconfont.woff2?t=1754297523212') format('woff2'),
+       url('./iconfont.woff?t=1754297523212') format('woff'),
+       url('./iconfont.ttf?t=1754297523212') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.ali-icon-diandangxing:before {
+  content: "\e933";
+}
+
+.ali-icon-xiaodai-:before {
+  content: "\e7c4";
+}
+
+.ali-icon-amc:before {
+  content: "\e715";
+}
+
+.ali-icon-diandanghang:before {
+  content: "\e69d";
+}
+
+.ali-icon-declare-1:before {
+  content: "\e711";
+}
+
+.ali-icon-Gongjiaojinggai-:before {
+  content: "\e809";
+}
+
+.ali-icon-nongjiale:before {
+  content: "\e601";
+}
+
+.ali-icon-guquanchuzhi:before {
+  content: "\e60c";
+}
+
+.ali-icon-danbaofenxi:before {
+  content: "\e69e";
+}
+
+.ali-icon-ziguanhegetouzizhe:before {
+  content: "\e643";
+}
+
+.ali-icon-baoli:before {
+  content: "\e621";
 }
 
 .ali-icon-zhiwu:before {
