@@ -379,9 +379,10 @@ watch(
             })
         }
 
-        emits('update:modelValue', currentModelValue)
-
         setTimeout(() => {
+            // fix: 这里的抛出，要等低码的上下文初始化完成后，再抛出，否则可能会导致报错
+            emits('update:modelValue', currentModelValue)
+
             isInternalUpdate = false
         }, 0)
     },
