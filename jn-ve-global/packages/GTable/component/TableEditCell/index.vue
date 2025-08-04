@@ -176,6 +176,7 @@
                             v-if="datePickerValueVerify()"
                             v-model="localPropRef"
                             v-bind="localControlProps"
+                            :popper-options="getPopoverOptions()"
                             style="width: 100%"
                             size="small"
                             @change="delayControlToText"
@@ -193,6 +194,7 @@
                             v-model="localPropRef"
                             v-bind="localControlProps"
                             type="datetime"
+                            :popper-options="getPopoverOptions()"
                             style="width: 100%"
                             size="small"
                             @change="delayControlToText"
@@ -390,6 +392,7 @@
                             v-bind="localControlProps"
                             :options="(columnConfig.controlConfig as AddressControlConfig).options"
                             size="small"
+                            :popper-options="getPopoverOptions()"
                             @table-edit-hide="delayControlToText"
                         />
                     </template>
@@ -435,6 +438,7 @@ import type {
     InfoAutocompleteControlConfig,
     AddressControlConfig
 } from '../../../GForm'
+import { getPopoverOptions } from '../../../_globalConstant/popoverOptions'
 import type { TableColumnProps, BaseTableDataItem } from '../../interface'
 import FunctionalComponent from '../../../FunctionalComponent'
 import { GSelectTree as LGSelectTree, GSelectTreeV2 as LGSelectTreeV2 } from '../../../GSelectTree'
