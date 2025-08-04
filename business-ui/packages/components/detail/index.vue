@@ -205,8 +205,10 @@ const emits = defineEmits<{
     downMove: [param: Omit<OperationParams, 'emits' | 'index'>]
 }>()
 
+const comSlots = useSlots()
 const slots = computed(() => {
-    const defaultSlots = useSlots()?.default()
+    if (!comSlots?.default) return []
+    const defaultSlots = comSlots.default()
     const biDetailChildren = props.slotFromParent ? defaultSlots?.[0]?.children : defaultSlots
     return (biDetailChildren as any[])?.some((item) => item?.props?.__schema)
         ? biDetailChildren
