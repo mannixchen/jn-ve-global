@@ -12,7 +12,8 @@
                 <ElTable
                     ref="localInstance"
                     :tooltip-options="{
-                        popperClass: 'table-tooltip-popper max-h-200'
+                        popperClass: 'table-tooltip-popper max-h-200',
+                        popperOptions: getPopoverOptions()
                     }"
                     scrollbar-always-on
                     v-bind="tableProps"
@@ -113,6 +114,7 @@ import useAddOperationColumn from './component/OperationColumn/index'
 import useSelector from './hooks/useSelector'
 import { Bases } from '../setting'
 import { getBase } from '../_globalConstant/base'
+import { getPopoverOptions } from '../_globalConstant/popoverOptions'
 
 const props = withDefaults(
     defineProps<{
