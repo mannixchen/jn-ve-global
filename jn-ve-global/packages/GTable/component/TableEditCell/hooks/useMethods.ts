@@ -1,12 +1,12 @@
 /*
  * @Author: Zyunchao 18651805393@163.com
  * @Date: 2023-02-01 10:02:50
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2023-02-01 10:24:26
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-08-11 10:04:33
  * @FilePath: /jn-ve-global/packages/GTable/component/TableEditCell/hooks/useMethods.ts
  * @Description: 存储组件方法归类
  */
-import _ from 'lodash'
+import _, { isNull } from 'lodash'
 import { DatePickerControlConfig } from '../../../../GForm'
 
 export default ({
@@ -62,16 +62,21 @@ export default ({
         setTimeout(control2Text, parseInt(animationTime.value))
     }
 
+    const datePrickerIsRange = () =>
+        ['monthrange', 'datetimerange', 'daterange'].includes(
+            (localControlProps.value as DatePickerControlConfig['props'])?.type
+        )
+
     // 校验时间选择类绑定值的格式是否正确
     const datePickerValueVerify = () => {
         // 传递了 props
         if (!!localControlProps.value) {
-            const isRange = ['monthrange', 'datetimerange', 'daterange'].includes(
-                (localControlProps.value as DatePickerControlConfig['props']).type
-            )
+            // const isRange = ['monthrange', 'datetimerange', 'daterange'].includes(
+            //     (localControlProps.value as DatePickerControlConfig['props']).type
+            // )
 
-            if (isRange) {
-                return Array.isArray(localPropRef.value)
+            if (datePrickerIsRange()) {
+                return Array.isArray(localPropRef.value) || isNull(localPropRef.value)
             }
         }
 
@@ -79,7 +84,8 @@ export default ({
         return (
             localPropRef.value instanceof Date ||
             typeof localPropRef.value === 'string' ||
-            typeof localPropRef.value === 'number'
+            typeof localPropRef.value === 'number' ||
+            isNull(localPropRef.value)
         )
     }
 
@@ -114,6 +120,7 @@ export default ({
         text2Control,
         control2Text,
         delayControlToText,
+        datePrickerIsRange,
         datePickerValueVerify,
         handleDB,
         handleSC

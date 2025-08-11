@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="localPropRef !== undefined && localPropRef !== null"
+        v-if="localPropRef !== undefined"
         ref="editCellContentRef"
         class="edit-cell-content"
         @dblclick="handleDB"

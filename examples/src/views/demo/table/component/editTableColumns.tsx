@@ -247,7 +247,7 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
             controlConfig: {
                 type: 'datePicker',
                 props: {
-                    valueFormat: 'YYYY-MM-DD',
+                    // valueFormat: 'YYYY-MM-DD',
                     clearable: true,
                     onChange(val) {
                         if (val === null) {
@@ -258,9 +258,9 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
                 }
             },
             render(row) {
-                return dayjs(row.datePicker).format('YYYY-MM-DD')
+                return row?.datePicker ? dayjs(row.datePicker).format('YYYY-MM-DD') : ''
             }
-        }
+        },
         // {
         //     prop: 'dateTimePicker',
         //     label: '生日-DateTimePicker',
@@ -276,24 +276,24 @@ export default (tableData: Ref<any[]>, tableInstance: Ref<TableConfig['instance'
         //         return dayjs(row.dateTimePicker).format('YYYY-MM-DD HH:mm:ss')
         //     }
         // },
-        // {
-        //     prop: 'daterange',
-        //     label: '放假-Daterange',
-        //     width: 260,
-        //     editable: true,
-        //     controlConfig: {
-        //         type: 'datePicker',
-        //         props: {
-        //             type: 'daterange',
-        //             valueFormat: 'YYYY-MM-DD'
-        //         }
-        //     },
-        //     render(row) {
-        //         return Array.isArray(row.daterange)
-        //             ? `${row.daterange[0]} 至 ${row.daterange[1]}`
-        //             : row.daterange
-        //     }
-        // },
+        {
+            prop: 'daterange',
+            label: '放假-Daterange',
+            width: 260,
+            editable: true,
+            controlConfig: {
+                type: 'datePicker',
+                props: {
+                    type: 'daterange',
+                    valueFormat: 'YYYY-MM-DD'
+                }
+            },
+            render(row) {
+                return Array.isArray(row.daterange)
+                    ? `${row.daterange[0]} 至 ${row.daterange[1]}`
+                    : row.daterange
+            }
+        }
         // {
         //     prop: 'checkbox',
         //     label: '爱好-Checkbox',
