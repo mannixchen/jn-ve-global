@@ -1,5 +1,5 @@
 <template>
-    <div class="bi-detail">
+    <div :class="['bi-detail', disabled ? `bi-detail-disabled` : '']">
         <FormMode
             v-if="display === 'form'"
             v-bind="props"
@@ -67,8 +67,23 @@
                             "
                             :style="column.style"
                         >
-                            <span v-if="column?.required" style="color: #f56c6c"> *</span>
-                            {{ column.label }}
+                            <template v-if="column?.type === 'selection'">
+                                <el-checkbox
+                                    v-model="checkAll"
+                                    size="large"
+                                    :indeterminate="indeterminate"
+                                    :disabled="disabled"
+                                    @change="
+                                        (val) => {
+                                            selectAllChange(val)
+                                        }
+                                    "
+                                />
+                            </template>
+                            <template v-else>
+                                <span v-if="column?.required" style="color: #f56c6c"> *</span>
+                                {{ column.label }}
+                            </template>
                         </div>
                     </div>
 
@@ -78,10 +93,29 @@
                         :class="getTableRowClass(index, ['table-row-form'])"
                         :config="form"
                     >
+                        <!-- 多选 -->
+                        <div
+                            v-if="multiple"
+                            :class="getTableCellClass('selection', ['checkbox-column'], index)"
+                            :style="getTableCellStyle('selection', columns)"
+                        >
+                            <el-checkbox
+                                v-model="form.checked"
+                                size="large"
+                                :disabled="!selectable({ form, index, forms: currentRecords })"
+                                @change="
+                                    () => {
+                                        selectChange({ form, index, forms: currentRecords })
+                                    }
+                                "
+                            />
+                        </div>
+
+                        <!-- 序号 -->
                         <div
                             v-if="showSerial"
                             :class="getTableCellClass('serial', ['serial-column'], index)"
-                            style="left: 0"
+                            :style="getTableCellStyle('serial', columns)"
                         >
                             {{ form?.serialNo }}
                         </div>
@@ -96,9 +130,14 @@
                                         getFormItemProp(slot)
                                     )
                                 "
-                                :style="getTableCellStyle(getFormItemProp(slot), columns)"
+                                :style="getTableCellStyle('form', columns, getFormItemProp(slot))"
                             >
-                                <component :is="slot" />
+                                <!-- 不可编辑状态下，没有值的表单控件不展示 -->
+                                <component
+                                    :is="slot"
+                                    v-if="form?.model?.[getFormItemProp(slot)] && !disabled"
+                                />
+                                <!-- <component :is="slot" /> -->
                             </div>
                         </template>
 
@@ -139,6 +178,25 @@
                             </el-button-group>
                         </div>
                     </bi-form>
+
+                    <!-- 表格合计行 -->
+                    <div v-if="showSummary" class="table-footer summary-table-row">
+                        <div
+                            v-for="(column, index) in columns"
+                            :key="index"
+                            :class="
+                                getTableCellClass(
+                                    column.type,
+                                    ['table-footer-item'],
+                                    index,
+                                    column.prop
+                                )
+                            "
+                            :style="column.style"
+                        >
+                            {{ summary[index] }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
@@ -158,9 +216,15 @@
                 v-model:page-size="pageSize"
                 class="foot-pagination-wrapper"
                 v-bind="paginationProps"
-                @current-change="change"
-                @prev-click="prevClick"
-                @next-click="nextClick"
+                @current-change="() => {
+                    change(currentPage, selectedRows as any)
+                }"
+                @prev-click="() => {
+                    prevClick(currentPage, selectedRows as any)
+                }"
+                @next-click="() => {
+                    nextClick(currentPage, selectedRows as any)
+                }"
             />
         </div>
     </div>
@@ -169,7 +233,7 @@
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs, useSlots, onMounted, nextTick } from 'vue'
 import { ElButton, ElButtonGroup, ElMessage, ElFormItem, ElPagination } from 'element-plus'
-import type { DetailProps, OperationParams } from './type'
+import type { DetailProps, OperationParams, TableRowForm } from './type'
 import { GCollapse, GCollapseItem } from 'jn-ve-global'
 import { BiForm, FormProps as BiFormProps } from '../form'
 import { Plus } from '@element-plus/icons-vue'
@@ -181,9 +245,12 @@ import {
     useTableColumns,
     useSimulatorTableStyle,
     useTableScrollClass,
-    usePagination
+    usePagination,
+    useSelection,
+    useSummary
 } from './hooks'
 import { assignOwnProp } from '@jsjn/micro-core-utils/utils'
+import { isCommentVNode } from '../../utils'
 import { cloneDeep, debounce, has, unionBy } from 'lodash'
 import { v4 as uuidV4 } from 'uuid'
 import FormMode from './components/formMode.vue'
@@ -198,25 +265,43 @@ const props = withDefaults(defineProps<DetailProps>(), useDefaultProps())
 // TODO: 添加操作emits
 const emits = defineEmits<{
     'update:modelValue': [val: Array<Record<string, any>>]
+    'update:selectedRows': [val: TableRowForm[]]
     add: [param: Omit<OperationParams, 'emits' | 'index'>]
     delete: [param: Omit<OperationParams, 'emits' | 'index'>]
     copy: [param: Omit<OperationParams, 'emits' | 'index'>]
     upMove: [param: Omit<OperationParams, 'emits' | 'index'>]
     downMove: [param: Omit<OperationParams, 'emits' | 'index'>]
+
+    // 展示形式为'table'时的相关事件
+
+    // 当表格的当前行发生变化的时候会触发该事件，如果要高亮当前行，请打开 highlight-current-row 属性
+    // currentChange: [currentRow: BiFormProps, oldCurrentRow: BiFormProps]
+
+    // 当用户手动勾选数据行的 Checkbox 时触发的事件
+    select: [selection: TableRowForm[], row: TableRowForm]
+
+    // 当用户手动勾选全选 Checkbox 时触发的事件
+    selectAll: [selection: TableRowForm[]]
+
+    // 当选择项发生变化时会触发该事件
+    // selectionChange: [newSelection: TableRowForm[]]
 }>()
 
 const comSlots = useSlots()
 const slots = computed(() => {
     if (!comSlots?.default) return []
     const defaultSlots = comSlots.default()
-    const biDetailChildren = props.slotFromParent ? defaultSlots?.[0]?.children : defaultSlots
+    const biDetailChildren = (
+        (props.slotFromParent ? defaultSlots?.[0]?.children : defaultSlots) as any
+    )?.filter((item) => !isCommentVNode(item))
+    // return biDetailChildren
     return (biDetailChildren as any[])?.some((item) => item?.props?.__schema)
         ? biDetailChildren
         : (biDetailChildren as any)?.filter((item) => !item.children)
     // return biDetailChildren
 })
 
-// console.log('slots', useSlots(), useSlots()?.default(), slots)
+// console.log('slots', useSlots(), useSlots()?.default(), slots.value)
 // const showSerial = computed<boolean>(() => props?.showSerial && slots.value?.length > 0)
 
 const activeNames = computed<string[]>(() => {
@@ -275,11 +360,20 @@ const {
     change,
     prevClick,
     nextClick
-} = usePagination(props, formConfigs)
+} = usePagination(props, formConfigs, emits)
+
+// 多选变化时触发
+const { checkAll, indeterminate, selectChange, selectedRows, selectAllChange } = useSelection(
+    props,
+    currentRecords,
+    emits
+)
 
 // 操作按钮
-const btns = useBtns(props, emits, getCurrentPage)
-const showOperation = computed<boolean>(() => props.showOperation && btns.value?.length > 0)
+const btns = useBtns(props, emits, getCurrentPage, selectedRows)
+const showOperation = computed<boolean>(
+    () => props.showOperation && btns.value?.length > 0 && !props.disabled
+)
 
 // 表头
 const scrollWrapRef = ref()
@@ -292,6 +386,15 @@ const {
     getTableRowClass,
     getTableClass
 } = useTableColumns(props, showOperation.value, slots.value)
+
+// console.log('columns', columns.value)
+
+// 合计功能\
+const { summary, summaryMethod } = useSummary(props)
+summary.value = summaryMethod({
+    forms: currentRecords.value,
+    columns: columns.value
+})
 
 let isExternalUpdate = false // 是否是外部更新
 let isInternalUpdate = false // 是否是内部更新
@@ -336,7 +439,12 @@ watch(
         if (isExternalUpdate) return
         isInternalUpdate = true
         ;(paginationProps.value.total as any) = value.length
-        getCurrentRecords()
+        getCurrentRecords(selectedRows.value)
+
+        summary.value = summaryMethod({
+            forms: currentRecords.value,
+            columns: columns.value
+        })
 
         const currentModelValue = value.map((item) => item?.model ?? {})
 
@@ -385,7 +493,9 @@ watch(
             // fix: 这里的抛出，要等低码的上下文初始化完成后，再抛出，否则可能会导致报错
             emits('update:modelValue', currentModelValue)
 
-            isInternalUpdate = false
+            setTimeout(() => {
+                isInternalUpdate = false
+            }, 0)
         }, 0)
     },
     { deep: true, immediate: true }
@@ -398,6 +508,7 @@ watch(
 watch(
     () => props.modelValue,
     (value) => {
+        // console.log('watch-modelValue', value)
         if (isInternalUpdate) return
         isExternalUpdate = true
 
@@ -409,7 +520,12 @@ watch(
             assignOwnProp(form.model, item)
             return form
         })
-        getCurrentRecords()
+        // getCurrentRecords(selectedRows.value)
+
+        summary.value = summaryMethod({
+            forms: currentRecords.value,
+            columns: columns.value
+        })
 
         setTimeout(() => {
             isExternalUpdate = false

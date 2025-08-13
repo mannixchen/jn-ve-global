@@ -79,10 +79,12 @@ export interface FormProps extends ElFormProps {
      * 多个表单的主键
      */
     id?: string
+
     /**
      * 表单的实例（实际为 ref）
      */
     instance?: FormInstance | null
+
     // /**
     //  * 表单的自定义样式名称
     //  */

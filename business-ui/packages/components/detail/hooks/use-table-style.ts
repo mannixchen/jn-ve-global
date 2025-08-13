@@ -5,6 +5,7 @@ import {
     DEFAULT_COLUMN_WIDTH,
     DEFAULT_MIN_COLUMN_WIDTH,
     DEFAULT_OPERATION_COLUMN_WIDTH,
+    DEFAULT_CHECKBOX_COLUMN_WIDTH,
     DEFAULT_SERIAL_COLUMN_WIDTH
 } from '../const'
 import { castArray } from 'lodash'
@@ -26,11 +27,35 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
      * @returns
      */
     const getFormItemProp = (vnode) => {
-        const prop = findPropDeep(vnode.props.__schema, 'prop')
+        // const prop = findPropDeep(vnode?.props?.__schema, 'prop')
+        const prop =
+            findPropDeep(vnode?.props?.__schema, 'prop') || findPropDeep(vnode?.props, 'prop') || ''
         return prop
     }
 
-    const getTableCellStyle = (prop: string, columns: ColumnProps[]): CSSProperties => {
+    const getTableCellStyle = (
+        type: ColumnProps['type'],
+        columns: ColumnProps[],
+        prop?: string
+    ): CSSProperties => {
+        const { multiple } = props
+        if (type === 'selection') {
+            return {
+                left: 0
+            }
+        } else if (type === 'serial') {
+            if (multiple) {
+                const { width, minWidth } = columns[0].style
+                return {
+                    left: width || minWidth
+                }
+            } else {
+                return {
+                    left: 0
+                }
+            }
+        }
+
         if (!prop) {
             // throw new Error('请设置表单项prop')
             return {}
@@ -57,7 +82,9 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
     const getLeftFixedClass = (prop: string, fixColumns: ColumnProps[]) => {
         let classNames: string[] = []
         const fixedPropList =
-            fixColumns?.filter((item) => item.type !== 'serial')?.map((item) => item.prop) ?? []
+            fixColumns
+                ?.filter((item) => item.type !== 'serial' && item.type !== 'selection')
+                ?.map((item) => item.prop) ?? []
         const lastFixedProp = fixColumns?.at(-1)?.prop
         if (prop === lastFixedProp) {
             classNames = ['sticky-start', 'sticky-start-shadow']
@@ -74,12 +101,21 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         isHeader: boolean,
         prop?: string
     ) => {
-        const { border, showSerial } = props
+        const { border, showSerial, multiple } = props
         const className = 'is-first-column-cell'
-        if (type === 'serial' && border && !isHeader) {
+        if (type === 'selection' && border) {
             return className
         }
-        if (type === 'form' && !showSerial && !isHeader && state.columns?.[0]?.prop === prop) {
+        if (type === 'serial' && border && !multiple && !isHeader) {
+            return className
+        }
+        if (
+            type === 'form' &&
+            !showSerial &&
+            !multiple &&
+            !isHeader &&
+            state.columns?.[0]?.prop === prop
+        ) {
             return className
         }
         return ''
@@ -92,7 +128,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         prop?: string
     ) => {
         // console.log('getTableCellClass', props)
-        const { leftFixedColumns, fixedOperation, stripe, border } = props
+        const { leftFixedColumns, fixedOperation, stripe, border, multiple } = props
         const isHead = classNames?.includes('table-head-item')
         const firstColumnCellBorderClass = getFirstColumnCellBorderClass(type, isHead, prop)
         const stripedClassName =
@@ -100,9 +136,27 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         const borderClassName = border ? 'table-cell-border' : ''
         let fixedClassNames = []
         // leftFixedColumn: ColumnProps
+
+        if (type === 'selection') {
+            fixedClassNames =
+                leftFixedColumns > 0 ? ['sticky-start'] : ['sticky-start', 'sticky-start-shadow']
+
+            return [
+                ...classNames,
+                ...fixedClassNames,
+                stripedClassName,
+                firstColumnCellBorderClass,
+                borderClassName,
+                'table-cell',
+                'table-selection-cell'
+            ]
+        }
+
         if (type === 'serial') {
             if (leftFixedColumns === 1) {
-                fixedClassNames = ['sticky-start', 'sticky-start-shadow']
+                fixedClassNames = multiple
+                    ? ['sticky-start']
+                    : ['sticky-start', 'sticky-start-shadow']
             } else if (leftFixedColumns > 1) {
                 fixedClassNames = ['sticky-start']
             }
@@ -116,7 +170,9 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
             ]
         }
 
-        let leftFixedColumnList = state.columns?.filter((item, index) => index < leftFixedColumns)
+        let leftFixedColumnList = state.columns?.filter((item, index) => {
+            return multiple ? index < leftFixedColumns + 1 : index < leftFixedColumns
+        })
         if (fixedOperation) {
             leftFixedColumnList = leftFixedColumnList.filter((item) => item.type !== 'operation')
             // leftFixedColumn = leftFixedColumnList.at(-1)
@@ -157,7 +213,8 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
     }
 
     const getColumns = (props: DetailProps, showOperation: boolean) => {
-        const { showSerial, operationWidth } = props
+        // console.log('getColumns', props, showOperation)
+        const { showSerial, operationWidth, disabled } = props
 
         let columns = slots
             // ?.filter((item) => !item.children)
@@ -167,6 +224,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
 
                 // 宽度继承设计时传递的宽度配置
                 const width = vnode.props?.style?.width ?? DEFAULT_COLUMN_WIDTH
+                // const width = vnode.props?.style?.width ?? 'auto'
 
                 return {
                     prop: getFormItemProp(vnode),
@@ -177,22 +235,24 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
                         width,
                         minWidth: DEFAULT_MIN_COLUMN_WIDTH,
                         maxWidth: width,
+                        // minWidth: '200px',
+                        // maxWidth: '400px',
                         left: 0
                     }
                 }
             })
 
-        // 序号列
-        if (showSerial) {
+        // 复选框
+        if (props?.multiple) {
             columns = [
                 {
-                    prop: 'serial',
-                    label: '序号',
-                    type: 'serial',
+                    prop: 'selection',
+                    label: '',
+                    type: 'selection',
                     style: {
-                        width: DEFAULT_SERIAL_COLUMN_WIDTH,
-                        minWidth: DEFAULT_SERIAL_COLUMN_WIDTH,
-                        maxWidth: DEFAULT_SERIAL_COLUMN_WIDTH,
+                        width: DEFAULT_CHECKBOX_COLUMN_WIDTH,
+                        minWidth: DEFAULT_CHECKBOX_COLUMN_WIDTH,
+                        maxWidth: DEFAULT_CHECKBOX_COLUMN_WIDTH,
                         left: 0
                     }
                 },
@@ -200,8 +260,30 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
             ]
         }
 
+        // 序号列
+        if (showSerial) {
+            const serialColumn = {
+                prop: 'serial',
+                label: '序号',
+                type: 'serial',
+                style: {
+                    width: DEFAULT_SERIAL_COLUMN_WIDTH,
+                    minWidth: DEFAULT_SERIAL_COLUMN_WIDTH,
+                    maxWidth: DEFAULT_SERIAL_COLUMN_WIDTH,
+                    left: props?.multiple ? DEFAULT_CHECKBOX_COLUMN_WIDTH : 0
+                }
+            }
+
+            // columns = props?.multiple
+            //     ? columns.splice(1, 0, serialColumn)
+            //     : [serialColumn, ...columns]
+            props?.multiple
+                ? columns.splice(1, 0, serialColumn)
+                : columns.splice(0, 0, serialColumn)
+        }
+
         // 操作列
-        if (showOperation) {
+        if (showOperation && !disabled) {
             const width = operationWidth
                 ? parseFloat(String(operationWidth)) + 'px'
                 : DEFAULT_OPERATION_COLUMN_WIDTH
@@ -223,7 +305,7 @@ export const useTableColumns = (props: DetailProps, showOperation: boolean, slot
         }
         for (let i = 0; i < columns.length; i++) {
             if (columns[i].type === 'form') {
-                columns[i].style.left = getTableCellStyle(columns[i].prop, columns).left
+                columns[i].style.left = getTableCellStyle('form', columns, columns[i].prop).left
             }
         }
         return columns

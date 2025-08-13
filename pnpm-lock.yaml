@@ -63,6 +63,9 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      decimal:
+        specifier: ^0.0.2
+        version: 0.0.2
       decimal.js:
         specifier: ^10.5.0
         version: 10.5.0
@@ -2806,6 +2809,10 @@ packages:
 
   decimal.js@10.5.0:
     resolution: {integrity: sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==}
+
+  decimal@0.0.2:
+    resolution: {integrity: sha512-puX1+D5GlpXYH0kDejnu8F2jsGLKRePc7eOznNjqMbA2otl7AzvubrvvZVmOvRCHhsqeAPKNcAxHHbevsH/1qg==}
+    engines: {node: 0.4.x}
 
   decode-uri-component@0.2.2:
     resolution: {integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==}
@@ -9341,6 +9348,8 @@ snapshots:
   decamelize@1.2.0: {}
 
   decimal.js@10.5.0: {}
+
+  decimal@0.0.2: {}
 
   decode-uri-component@0.2.2: {}
 

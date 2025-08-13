@@ -1,8 +1,8 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-18 14:59:31
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2025-05-16 16:07:05
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-08-13 15:26:39
  * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/components/detail/hooks/use-pagination.ts
  * @Description:
  *
@@ -10,18 +10,18 @@
  */
 import { reactive, toRefs, nextTick, ref, Ref } from 'vue'
 import type { PaginationProps } from 'element-plus'
-import type { DetailProps } from '../type'
+import type { DetailProps, TableRowForm } from '../type'
 import { FormProps } from '../../form'
 
-export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>) => {
+export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>, emits) => {
     // console.log('usePagination', props)
     interface LocalState {
         currentPage: number
         pageSize: number
         paginationProps: Partial<PaginationProps>
-        currentRecords: FormProps[]
+        currentRecords: TableRowForm[]
     }
-    const { pageSize, max } = props
+    const { pageSize, max, display, multiple } = props
     const state = reactive<LocalState>({
         currentPage: 1,
         pageSize,
@@ -34,13 +34,22 @@ export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>) => {
         currentRecords: []
     })
 
-    const getCurrentRecords = () => {
+    const getCurrentRecords = (selectedRows: TableRowForm[] = []) => {
+        // console.log('getCurrentRecords', selectedRows)
         const { currentPage, pageSize } = state
+        const selectedIds = selectedRows?.map((item) => item?.id) ?? []
         state.currentRecords = forms.value
-            ?.map((item, index) => ({
-                ...item,
-                serialNo: index + 1
-            }))
+            ?.map((item, index) => {
+                let checked
+                if (display === 'table' && multiple) {
+                    checked = selectedIds?.includes(item?.id) ? true : false
+                }
+                return {
+                    ...item,
+                    serialNo: index + 1,
+                    checked
+                }
+            })
             .slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
         // 由于页面渲染的数据是state.currentRecords, 导致全量forms中每个元素的instance都为null,需要在页面渲染成功后，手动更改forms元素上instance
@@ -52,10 +61,12 @@ export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>) => {
                     }
                 }
             })
+
+            // console.log('getCurrentRecords-forms', state.currentRecords)
         }, 0)
     }
 
-    getCurrentRecords()
+    // getCurrentRecords()
 
     const getCurrentPage = (currentIndex) => {
         // console.log('getCurrentPage', state, currentIndex)
@@ -73,18 +84,23 @@ export const usePagination = (props: DetailProps, forms: Ref<FormProps[]>) => {
     }
 
     // const change = (currentPage: number, pageSize: number) => {
-    const change = (value: number) => {
-        // console.log('change')
-        getCurrentRecords()
+    const change = (value: number, selectedRow: Ref<TableRowForm[]>) => {
+        selectedRow.value = []
+        getCurrentRecords(selectedRow.value)
+        emits('update:selectedRows', selectedRow.value)
     }
 
-    const prevClick = (value: number) => {
+    const prevClick = (value: number, selectedRow: Ref<TableRowForm[]>) => {
         // console.log('preClick', value)
-        getCurrentRecords()
+        selectedRow.value = []
+        getCurrentRecords(selectedRow.value)
+        emits('update:selectedRows', selectedRow.value)
     }
 
-    const nextClick = (value: number) => {
-        getCurrentRecords()
+    const nextClick = (value: number, selectedRow: Ref<TableRowForm[]>) => {
+        selectedRow.value = []
+        getCurrentRecords(selectedRow.value)
+        emits('update:selectedRows', selectedRow.value)
     }
 
     return {

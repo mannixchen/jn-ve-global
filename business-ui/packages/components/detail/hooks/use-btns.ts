@@ -1,27 +1,52 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-10 10:33:27
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-05-23 11:17:20
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-08-13 15:23:59
  * @FilePath: \@jsjn-librar-monorepo\business-ui\packages\components\detail\hooks\use-btns.ts
  * @Description:
  *
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
 
-import { computed } from 'vue'
+import { computed, Ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
-import { DetailProps, BtnProps } from '../type'
+import { DetailProps, BtnProps, TableRowForm, DisplayType } from '../type'
 import { __is_simulator_env__ } from '../../../constants'
 import { useOperation } from './use-form-operations'
 
-export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => {
+export const useBtns = (
+    props: DetailProps,
+    emits,
+    getCurrentPage: Function,
+    selectedRows: Ref<TableRowForm[]>
+) => {
     // console.log('useBtns', props)
     const { remove, copy, upMove, downMove } = useOperation(props, emits, getCurrentPage)
+
+    const updateSelectedRows = (
+        selectedRows: Ref<TableRowForm[]>,
+        curOperationForm: TableRowForm,
+        display: DetailProps['display'],
+        operationType: 'delete' | 'copy' | 'up-move' | 'down-move'
+    ) => {
+        // console.log('before-updateSelectedRows', selectedRows.value)
+        if (display === DisplayType.FORM) return
+        const curId = curOperationForm?.id
+
+        if (operationType === 'delete') {
+            selectedRows.value = selectedRows.value.filter((item) => item.id !== curId)
+        }
+        // console.log('after-updateSelectedRows', selectedRows.value)
+
+        emits('update:selectedRows', selectedRows.value)
+    }
+
     return computed(() => {
         // const disabled l= __is_simulator_env__
         const {
             disabled,
+            display,
             showOperation,
             showCopyButton,
             showDeleteButton,
@@ -53,11 +78,13 @@ export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => 
                             .then(() => {
                                 // useDelete({ forms, form, index, emits })
                                 remove({ forms, form, index })
+                                updateSelectedRows(selectedRows, form, display, 'delete')
                             })
                             .catch(() => {})
                     } else {
                         // useDelete({ forms, form, index, emits })
                         remove({ forms, form, index })
+                        updateSelectedRows(selectedRows, form, display, 'delete')
                     }
                 }
             },
@@ -69,6 +96,7 @@ export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => 
                 onClick: ({ forms, form, index }) => {
                     // useCopy({ forms, form, index, emits })
                     copy({ forms, form, index })
+                    // updateSelectedRows(selectedRows, form, display, 'copy')
                 }
             },
             {
@@ -78,6 +106,7 @@ export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => 
                 onClick: ({ forms, form, index }) => {
                     // useUpMove({ forms, form, index, emits })
                     upMove({ forms, form, index })
+                    // updateSelectedRows(selectedRows, form, display, 'up-move')
                 }
             },
             {
@@ -87,6 +116,7 @@ export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => 
                 onClick: ({ forms, form, index }) => {
                     // useDownMove({ forms, form, index, emits })
                     downMove({ forms, form, index })
+                    // updateSelectedRows(selectedRows, form, display, 'down-move')
                 }
             },
             ...btns?.map(
@@ -95,7 +125,7 @@ export const useBtns = (props: DetailProps, emits, getCurrentPage: Function) => 
                         type: 'primary',
                         ...item,
                         disabled: btnDisabled
-                    }) as BtnProps
+                    } as BtnProps)
             )
         ]
         if ((disabled && __is_simulator_env__) || !showOperation) {

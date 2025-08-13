@@ -1,8 +1,8 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-05-09 10:47:34
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2025-04-30 16:28:19
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-08-12 11:01:44
  * @FilePath: /@jsjn-librar-monorepo/business-ui/packages/hooks/form/index.ts
  * @Description:
  *
@@ -26,7 +26,7 @@ export const useFormProps = (
     let formModel = {}
 
     slots?.forEach((slot) => {
-        const prop = findPropDeep(slot.props.__schema, 'prop')
+        const prop = findPropDeep(slot?.props?.__schema, 'prop')
         const defaultVal = slot?.props?.__schema?.props?.formItemConfig?.__defaultVal ?? ''
         if (prop) {
             formModel[prop] = defaultVal

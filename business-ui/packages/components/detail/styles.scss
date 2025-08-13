@@ -19,6 +19,10 @@
     width: 100%;
     overflow-x: auto;
     background-color: #fff;
+
+    --bi-detail-table-cell-font-color: #606266;
+    --bi-detail-table-cell-font-size: 14px;
+
     //padding: 10px 10px 0 10px;
 }
 
@@ -77,7 +81,7 @@
             justify-content: flex-start;
             background-color: #e9ebef;
             padding: 0 10px;
-            font-size: 12px !important;
+            font-size: var(--bi-detail-table-cell-font-size) !important;
             font-weight: 700;
             color: rgba(0, 0, 0, 0.6);
         }
@@ -114,6 +118,162 @@
     }
 }
 
+.bi-detail-disabled {
+    .table-display-wrapper {
+        :deep(.el-input.is-disabled) {
+            cursor: default;
+            .el-input__wrapper {
+                --el-disabled-text-color: var(--bi-detail-table-cell-font-color);
+
+                padding-left: 0;
+                padding-right: 0;
+                box-shadow: none;
+                background-color: transparent;
+                cursor: default;
+
+                .el-input__inner {
+                    cursor: default;
+                }
+
+                &:hover {
+                    box-shadow: none;
+                }
+
+                .el-input__prefix,
+                .el-input__suffix {
+                    display: none;
+                }
+            }
+        }
+
+        :deep(.el-input-number.is-disabled) {
+            .el-input-number__decrease,
+            .el-input-number__increase {
+                display: none;
+            }
+
+            .el-input__inner {
+                text-align: left;
+            }
+        }
+
+        :deep(.el-select) {
+            .el-select__tags.is-disabled {
+                --el-fill-color: transparent;
+                --el-color-info: var(--bi-detail-table-cell-font-color);
+
+                cursor: default;
+
+                .el-select-tags-wrapper.has-prefix {
+                    margin-left: 0;
+
+                    .el-tag {
+                        --el-tag-font-size: var(--bi-detail-table-cell-font-size);
+                        margin: 0;
+                        margin-right: 6px;
+                        padding: 0;
+
+                        .el-select__tags-text {
+                            max-width: none !important;
+                        }
+                    }
+                }
+            }
+        }
+
+        :deep(.el-radio.is-disabled) {
+            display: none;
+
+            &.is-checked {
+                display: block;
+            }
+
+            .el-radio__input {
+                display: none;
+
+                &.is-disabled + span.el-radio__label {
+                    cursor: default;
+                    font-weight: 400;
+                    color: var(--bi-detail-table-cell-font-color);
+                    font-size: var(--bi-detail-table-cell-font-size);
+                    padding-left: 0;
+                }
+            }
+        }
+
+        :deep(.el-checkbox-group) {
+            display: flex;
+        }
+
+        :deep(.el-checkbox.is-disabled) {
+            display: none;
+            cursor: default;
+            margin-right: 6px !important;
+
+            &.is-checked {
+                display: block;
+
+                .el-checkbox__input {
+                    display: none;
+
+                    &.is-disabled + span.el-checkbox__label {
+                        cursor: default;
+                        font-weight: 400;
+                        color: var(--bi-detail-table-cell-font-color);
+                        font-size: var(--bi-detail-table-cell-font-size);
+                        padding-left: 0;
+                    }
+                }
+            }
+        }
+
+        :deep(.el-date-editor) {
+            &.el-input {
+                --el-date-editor-width: auto;
+            }
+
+            &.el-date-editor--daterange,
+            &.el-date-editor--datetimerange,
+            &.el-date-editor--timerange {
+                width: auto;
+                padding: 0;
+                border: none;
+                background-color: transparent;
+                box-shadow: none;
+                cursor: default;
+
+                .el-icon {
+                    display: none;
+                }
+                .el-range-input {
+                    background-color: transparent;
+                    color: var(--bi-detail-table-cell-font-color);
+                    font-size: var(--bi-detail-table-cell-font-size);
+                    cursor: default;
+                }
+                .el-range-separator {
+                    padding: 0;
+                }
+            }
+
+            &.el-date-editor--datetimerange {
+                //  width: auto;
+                display: flex;
+                // flex-wrap: wrap;
+                flex-direction: column;
+                bottom: 13px;
+
+                .el-range-input {
+                    width: auto;
+                }
+            }
+
+            &.el-date-editor--timerange {
+            }
+        }
+    }
+}
+
 .table-display-wrapper {
     position: relative;
     display: table;
@@ -128,7 +288,8 @@
         height: 30px;
         line-height: 30px;
         text-align: left;
-        font-size: 12px;
+        // font-size: 12px;
+        font-size: var(--bi-detail-table-cell-font-size);
         font-weight: 700;
         color: rgba(0, 0, 0, 0.6);
         overflow: hidden;
@@ -141,6 +302,11 @@
     .table-cell {
         display: table-cell;
         padding: 10px 8px;
+
+        :deep(.el-checkbox) {
+            display: block !important;
+            text-align: center;
+        }
     }
 
     .table-cell-border {
@@ -154,13 +320,21 @@
     .table-row-form {
         display: table-row;
         overflow: hidden;
-        font-size: 12px;
+        // font-size: 12px;
+        font-size: var(--bi-detail-table-cell-font-size);
         overflow: hidden;
 
         .serial-column {
             border-bottom: solid 1px #dcdfe6;
             background-color: #fff;
-            text-align: center;
+            color: var(--bi-detail-table-cell-font-color);
+            // text-align: center;
+        }
+
+        .checkbox-column {
+            border-bottom: solid 1px #dcdfe6;
+            background-color: #fff;
+            // text-align: center;
         }
 
         .operation-column {
@@ -192,6 +366,22 @@
 
         .table-cell-striped {
             background-color: #fafafa;
+        }
+    }
+
+    .table-footer {
+        display: table-row;
+        background-color: #e9ebef;
+        height: 30px;
+        line-height: 30px;
+        text-align: left;
+        font-size: var(--bi-detail-table-cell-font-size);
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.6);
+        overflow: hidden;
+
+        .table-head-item {
+            background-color: #e9ebef;
         }
     }
 }
