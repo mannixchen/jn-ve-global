@@ -135,7 +135,7 @@
                                 <!-- 不可编辑状态下，没有值的表单控件不展示 -->
                                 <component
                                     :is="slot"
-                                    v-if="form?.model?.[getFormItemProp(slot)] && !disabled"
+                                    v-if="form?.model?.[getFormItemProp(slot)] || !disabled"
                                 />
                                 <!-- <component :is="slot" /> -->
                             </div>
