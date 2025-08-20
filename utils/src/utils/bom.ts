@@ -5,15 +5,27 @@ export let global: Window & typeof globalThis = null
 export function getGlobal(win: Window & typeof globalThis = window): Window & typeof globalThis {
     if (global) return global
 
+    try {
+        // console.log(`%c win.top.name === `, 'color: #e6a23c;', win.top.name)
+        // try 如果顶层 window 没有或不包含 basic，说明可能不是在 基座环境下（非微应用）
+        if (!win.top?.name?.includes('basic')) {
+            setGlobal(win)
+            return global
+        }
+    } catch (error) {
+        setGlobal(win)
+        return global
+    }
+
     // 顶层保险
     if (win === win.top) {
-        global = win
+        setGlobal(win)
         return global
     }
 
     // 寻找名称带有 basic 的 window
     if (win.name.includes('basic')) {
-        global = win
+        setGlobal(win)
         return global
     }
 
@@ -21,6 +33,10 @@ export function getGlobal(win: Window & typeof globalThis = window): Window & ty
     getGlobal(win.parent as Window & typeof globalThis)
 
     return global
+}
+
+export function setGlobal(win: Window & typeof globalThis) {
+    global = win
 }
 
 /**
@@ -36,7 +52,7 @@ export function getUrlParams(queryString: string = (global || getGlobal()).locat
             let temp = item.substring(1).split('=')
             let key = temp[0]
             let value = temp[1] || ''
-            
+
             // 对参数名和参数值进行解码，处理中文字符
             try {
                 key = decodeURIComponent(key)
@@ -45,7 +61,7 @@ export function getUrlParams(queryString: string = (global || getGlobal()).locat
                 // 如果解码失败，使用原始值
                 console.warn('URL 参数解码失败:', e)
             }
-            
+
             result[key] = value
         })
     }
