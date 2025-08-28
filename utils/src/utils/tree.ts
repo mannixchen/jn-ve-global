@@ -285,9 +285,9 @@ export function findAncestors<T>(
 
 /**
  * 移动节点（改变源数据）
- * @param tree 
- * @param sourceId 
- * @param targetId 
+ * @param tree
+ * @param sourceId
+ * @param targetId
  */
 export function moveNode(tree: any, sourceId: string, targetId: string) {
     let sourceNode: any = null
@@ -328,9 +328,9 @@ export function moveNode(tree: any, sourceId: string, targetId: string) {
 
 /**
  * 删除节点（返回新数组）
- * @param tree 
- * @param targetId 
- * @returns 
+ * @param tree
+ * @param targetId
+ * @returns
  */
 export function deleteNode(tree: any[], targetId: string): any[] {
     return tree.reduce((acc: any[], node: any) => {
@@ -347,4 +347,127 @@ export function deleteNode(tree: any[], targetId: string): any[] {
             return acc
         }
     }, [])
+}
+
+/**
+ * 获取树结构数组中所有节点的指定字段值
+ * @param trees PageSchemaTreeNode 数组
+ * @param fieldName 字段名称
+ * @returns 所有节点 id 的数组
+ */
+export function getAllNodeFields<V = any>(trees: any[], fieldName: string): V[] {
+    const nodeFields: V[] = []
+    for (const tree of trees) {
+        nodeFields.push(tree[fieldName])
+        if (tree.children && tree.children.length > 0) {
+            nodeFields.push(...getAllNodeFields(tree.children, fieldName))
+        }
+    }
+    return nodeFields
+}
+
+/**
+ * 获取树结构数组中所有节点的 id
+ * @param trees PageSchemaTreeNode 数组
+ * @returns 所有节点 id 的数组
+ */
+export function getAllNodeIds(trees: any[]): string[] {
+    return getAllNodeFields<string>(trees, 'id')
+}
+
+/**
+ * 获取树结构数组中所有父节点的指定字段值
+ * @param trees PageSchemaTreeNode 数组
+ * @param fieldName 字段名称
+ * @returns 所有父节点 id 的数组
+ */
+export function getAllParentNodeFields<V = any>(trees: any[], fieldName: string): V[] {
+    const parentFields: V[] = []
+
+    for (const tree of trees) {
+        // 如果当前节点有子节点，则它是父节点
+        if (tree.children && tree.children.length > 0) {
+            parentFields.push(tree[fieldName])
+            // 递归收集子节点中的父节点 id
+            parentFields.push(...getAllParentNodeFields(tree.children, fieldName))
+        }
+    }
+
+    return parentFields
+}
+
+/**
+ * 获取树结构数组中所有父节点的 id
+ * @param trees PageSchemaTreeNode 数组
+ * @returns 所有父节点 id 的数组
+ */
+export function getAllParentNodeIds(trees: any[]): string[] {
+    return getAllParentNodeFields<string>(trees, 'id')
+}
+
+/**
+ * 在指定的树结构中，根据子节点的指定字段查找目标节点，然后沿着祖先链向上查找满足条件的祖先节点
+ * @param trees 树结构数组
+ * @param childFKey 子节点字段名
+ * @param childFVal 子节点字段值
+ * @param ancestorFKey 祖先节点字段名
+ * @param ancestorFVal 祖先节点字段值
+ * @returns 匹配的祖先节点，如果未找到则返回 null
+ */
+export function findAncestorByChildAndAncestorField<R = any>(
+    trees: any[],
+    childFKey: string,
+    childFVal: any,
+    ancestorFKey: string,
+    ancestorFVal: any
+): R | null {
+    let foundAncestor: any = null
+
+    function findTargetAndAncestors(nodes: any[], ancestors: any[] = []): boolean {
+        for (let i = 0; i < nodes.length; i++) {
+            const node = nodes[i]
+            const currentAncestors = [...ancestors, node]
+            
+            // 检查当前节点是否是目标子节点
+            if (node[childFKey] === childFVal) {
+                // 找到目标子节点后，从当前祖先链中查找满足条件的祖先节点
+                // 从最近的祖先开始向上查找（不包括目标节点本身）
+                for (let j = ancestors.length - 1; j >= 0; j--) {
+                    const ancestor = ancestors[j]
+                    if (ancestor[ancestorFKey] === ancestorFVal) {
+                        foundAncestor = ancestor
+                        return true
+                    }
+                }
+                // 如果没有找到匹配的祖先，返回 false 继续查找其他可能的目标节点
+                return false
+            }
+            
+            // 递归搜索子节点，传递当前的祖先链
+            if (node.children && node.children.length > 0) {
+                if (findTargetAndAncestors(node.children, currentAncestors)) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    findTargetAndAncestors(trees)
+    return foundAncestor
+}
+
+/**
+ * 在指定的树结构中，根据子节点的 id 和组件名称查找祖先节点
+ * @param trees 树结构数组
+ * @param childId 子节点 id
+ * @param componentName 组件名称
+ * @returns 匹配的祖先节点，如果未找到则返回 null
+ */
+export function findParentByComponentName<R = any>(
+    trees: any,
+    childId: string,
+    componentName: string
+): R | null {
+    return findAncestorByChildAndAncestorField<R>(trees, 'id', childId, 'componentName', componentName)
 }
