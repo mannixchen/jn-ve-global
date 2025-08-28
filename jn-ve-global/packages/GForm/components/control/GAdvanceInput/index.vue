@@ -13,6 +13,7 @@
                 :content="localModelValue"
                 placement="top-start"
                 popper-class="input-lang-word-popper"
+                :popper-options="getPopoverOptions()"
             >
                 <InputCore :model-value="localModelValue" v-bind="$attrs" />
             </ElTooltip>
@@ -32,6 +33,7 @@ import { computed, watch } from 'vue'
 import useInputDisabledTooltip from './hooks/useInputDisabledTooltip'
 import InputCore from './core.vue'
 import { ElInput as ElInputCom, ElTooltip } from 'element-plus'
+import { getPopoverOptions } from '../../../../_globalConstant/popoverOptions'
 
 /**
  * TODO: elInputRef?: InstanceType<typeof ElInputCom> | null
