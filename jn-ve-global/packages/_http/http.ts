@@ -19,6 +19,17 @@ instance.interceptors.request.use(
     (error) => Promise.reject(error)
 )
 
+instance.interceptors.request.use(
+    async (config) => {
+        // const { permission } = config as any
+        return {
+            ...config,
+            permission: true
+        }
+    },
+    (error) => Promise.reject(error)
+)
+
 /**
  * 响应拦截器，拦截器函数来自基座应用
  * - 响应结果处理（数据结构处理、登录失效等）
@@ -26,6 +37,18 @@ instance.interceptors.request.use(
  */
 instance.interceptors.response.use(
     async (res) => interceptorsResHandle?.(res) ?? res,
+    (error) => {
+        ElMessage.error(`${error}`)
+        return Promise.reject(error)
+    }
+)
+
+
+instance.interceptors.response.use(
+    async (res) => {
+        return res?.headers ? res?.data : res
+
+    },
     (error) => {
         ElMessage.error(`${error}`)
         return Promise.reject(error)
