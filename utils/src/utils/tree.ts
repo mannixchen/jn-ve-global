@@ -98,6 +98,39 @@ export function findTargetByField(
 }
 
 /**
+ * 根据多个字段的 key-value 对匹配树节点
+ * @param tree 源数据（树）
+ * @param obj 匹配条件对象，包含多个 key-value 对
+ * @returns 匹配的节点，如果没有找到则返回 null
+ */
+export function findTargetByMultipleFields(tree: any[], obj: Record<string, any>) {
+    if (!tree || tree.length === 0 || !obj || Object.keys(obj).length === 0) return null
+
+    let target = null
+
+    function recursion(source: any[]) {
+        for (let i = 0; i < source.length; i++) {
+            const item = source[i]
+            
+            // 检查当前节点是否匹配所有条件
+            const isMatch = Object.keys(obj).every(key => item[key] === obj[key])
+            
+            if (isMatch) {
+                target = item
+                break
+            }
+
+            if (item.children && item.children.length) {
+                recursion(item.children)
+            }
+        }
+    }
+
+    recursion(tree)
+    return target
+}
+
+/**
  * 在源数据中，依据指定字段查找数据节点（所有重复节点），或者指定节点的字段
  * @param source 源数据
  * @param targetFieldVal 查找依据值
