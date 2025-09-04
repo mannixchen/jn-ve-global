@@ -273,3 +273,34 @@ export function phoneEncrypt(phone: string) {
 export function idCardEncrypt(idCard: string) {
     return idCard.replace(/(\d{6})\d{8}(\w{4})/, '$1********$2')
 }
+
+/**
+ * 判断字符串是否为正则表达式格式
+ * @param str 要检查的字符串
+ * @returns 是否为正则表达式格式
+ */
+export function isRegexString(str: string): boolean {
+    if (!str || typeof str !== 'string') {
+        return false
+    }
+    
+    // 检查是否以 / 开头和结尾，并且可能包含修饰符
+    const regexPattern = /^\/(.+)\/([gimuy]*)$/
+    
+    if (!regexPattern.test(str)) {
+        return false
+    }
+    
+    try {
+        // 尝试创建正则表达式对象来验证语法是否正确
+        const match = str.match(regexPattern)
+        if (match) {
+            new RegExp(match[1], match[2])
+            return true
+        }
+        return false
+    } catch (error) {
+        // 如果创建正则表达式时出错，说明不是有效的正则表达式
+        return false
+    }
+}
