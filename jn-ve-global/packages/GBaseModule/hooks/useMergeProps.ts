@@ -1,21 +1,27 @@
-import { reactive, watch, nextTick, computed, useAttrs } from 'vue'
+import { reactive, watch, nextTick, computed, useAttrs, ref, Ref } from 'vue'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
 import type { TableConfig } from '../../GTable'
+import { BaseModuleColumnProps } from '../../GBaseModuleV2/interface'
+import { getBaseModuleProps } from '../../_globalConstant/baseModuleProps'
 
 export default ({
     props,
     emits
 }): {
-    localTableConfig: TableConfig
+    localTableConfig: TableConfig<any>,
+    showColumns: Ref<BaseModuleColumnProps[]>
 } => {
     const attrs = useAttrs()
     const _humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
+    const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
 
     const localTableConfig = reactive<TableConfig<any>>({
         instance: null,
         rowKey: 'id',
         stripe: true,
-        columns: props.tableColumns,
+        border: getBaseModuleProps().border,
+        // columns: props.tableColumns,
+        columns: showColumns.value,
         data: props.tableData,
         pagination: props.tablePagination,
         rowBtnConfig: props.rowBtnConfig,
@@ -61,7 +67,18 @@ export default ({
     watch(
         () => props.tableColumns,
         (columns) => {
+            // localTableConfig.columns = columns
+            showColumns.value = columns
+        }
+    )
+
+    watch(
+        () => showColumns.value,
+        (columns) => {
             localTableConfig.columns = columns
+        },
+        {
+            deep: true
         }
     )
 
@@ -116,6 +133,7 @@ export default ({
     )
 
     return {
+        showColumns,
         localTableConfig
     }
 }

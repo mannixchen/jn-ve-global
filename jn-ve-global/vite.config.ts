@@ -19,8 +19,8 @@ const externals = {
     '@vue-office/excel': 'vue-office-excel',
     '@vue-office/docx': 'vue-office-docx',
     '@vue-office/pdf': 'vue-office-pdf',
-    '@jsjn/icons-vue': 'JnIconsVue',
-    sortablejs: 'Sortable'
+    '@jsjn/icons-vue': 'JnIconsVue'
+    // sortablejs: 'Sortable'
     // 'simple-uploader.js': 'Uploader',
     // 'crypto-js': 'CryptoJS'
     // '@jsjn/utils': 'JnUtils',

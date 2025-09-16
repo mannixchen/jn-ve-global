@@ -6,6 +6,7 @@ import {
 } from './_globalConstant/baseModuleMode'
 import { setAppMode } from './_globalConstant/appMode'
 import { setBase } from './_globalConstant/base'
+import { type DefaultBaseModuleProps, setBaseModuleProps } from './_globalConstant/baseModuleProps'
 import { type CollapseMode, getCollapseMode, setCollapseMode } from './_globalConstant/CollapseMode'
 import {
     setIterceptorsReqHandle,
@@ -57,6 +58,10 @@ export interface VeGlobalSetting {
      */
     baseModuleMode?: BaseModuleMode
     /**
+     * 基座模式（微应用单独设置）
+     */
+    baseModuleProps?: DefaultBaseModuleProps
+    /**
      * 基座默认模式
      */
     baseModuleDefaultMode?: BaseModuleMode
@@ -98,7 +103,8 @@ export function setting(props: VeGlobalSetting) {
         interceptorsResHandle,
         prefix,
         collapseMode,
-        base
+        base,
+        baseModuleProps
     } = props
 
     if (appMode) {
@@ -109,6 +115,10 @@ export function setting(props: VeGlobalSetting) {
 
     if (base) {
         setBase(base)
+    }
+
+    if (Object.keys(baseModuleProps)?.length) {
+        setBaseModuleProps(baseModuleProps)
     }
 
     /**

@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2024-11-11 16:06:54
+ * @LastEditTime: 2025-09-15 17:00:31
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -19,7 +19,7 @@
             <!-- <el-button type="primary" text>
                 显示列
             </el-button> -->
-            <div class="show-column-icon-wrapper">
+            <div :class="['show-column-icon-wrapper', $attrs.class ?? '']">
                 <g-icon icon="show-column" custom-color />
             </div>
         </template>

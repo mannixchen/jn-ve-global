@@ -58,7 +58,7 @@
                         @confirm="confirmCondition"
                     />
                     <ShowColumns
-                        v-if="columnsConfigurable"
+                        v-if="columnsConfigurable && !isTreeStructureColumns(showColumns)"
                         v-model="showColumns"
                         @column-change="saveColumns"
                     />
@@ -137,7 +137,7 @@ import Sort from './component/Sort.vue'
 import SearchCondition from './component/SearchCondition.vue'
 import { Search, RefreshRight } from '@element-plus/icons-vue'
 import { GAdvanceInput as LGAdvanceInput, FormProps } from '../GForm'
-import { useConfig } from './hooks/useConfig'
+import { useConfig, isTreeStructureColumns } from './hooks/useConfig'
 import { getQueryList } from './hooks/useFormConditions'
 import { isFunction } from 'lodash'
 

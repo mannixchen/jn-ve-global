@@ -19,7 +19,6 @@
         }
     }
 
-
     /* 中间操作区域 */
     .middle-area {
         display: flex;
@@ -29,14 +28,13 @@
         padding-bottom: 0;
         justify-content: space-between;
 
-        >.title {
+        > .title {
             width: 100px;
             font-size: 20px;
             color: #222222;
             font-weight: 600;
             line-height: var(--jn-ve-g-btn-s-height);
         }
-
 
         .middle-opertion-wrapper {
             flex: 1;
@@ -58,13 +56,19 @@
                 flex: none;
                 padding-left: 20px;
             }
+
+            .show-column-wrapper {
+                margin-left: 15px;
+                margin-top: 8px;
+                margin-right: 0 !important;
+            }
         }
     }
 
-
     .core-wrapper {
         background-color: #fff;
-        padding: var(--jn-ve-g-base-module-table-padding-b) var(--jn-ve-g-base-module-padding-lr) var(--jn-ve-g-base-module-table-padding-b);
+        padding: var(--jn-ve-g-base-module-table-padding-b) var(--jn-ve-g-base-module-padding-lr)
+            var(--jn-ve-g-base-module-table-padding-b);
         flex: 1;
         overflow: hidden;
 

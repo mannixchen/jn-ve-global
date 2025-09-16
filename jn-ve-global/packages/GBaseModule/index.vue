@@ -45,6 +45,11 @@
                 <div v-if="$slots['middle-right']" class="middle-right-wrapper">
                     <slot name="middle-right" />
                 </div>
+                <ShowColumns
+                    v-if="columnsConfigurable && !isTreeStructureColumns(showColumns)"
+                    v-model="showColumns"
+                    class="show-column-wrapper"
+                />
             </div>
         </div>
 
@@ -95,7 +100,10 @@ import type { BaseModuleMode } from '../_globalConstant/baseModuleMode'
 import useSearchBtnConfig from './hooks/useSearchBtnConfig'
 import useMergeProps from './hooks/useMergeProps'
 import { Bases } from '../setting'
+import { getBaseModuleProps } from '../_globalConstant/baseModuleProps'
 import { getBase } from '../_globalConstant/base'
+import ShowColumns from '../GBaseModuleV2/component/ShowColumns.vue'
+import { isTreeStructureColumns } from '../GBaseModuleV2/hooks/useConfig'
 
 export interface Props {
     /**
@@ -122,6 +130,10 @@ export interface Props {
      * 搜索按钮是否独占一行
      */
     searchBtnHorizontal?: boolean
+    /**
+     * 是否支持设置显示列和冻结列
+     */
+    columnsConfigurable?: boolean
     /**
      * 核心加载 table 数据的方法
      */
@@ -183,6 +195,8 @@ const props = withDefaults(defineProps<Props>(), {
     tabs: () => [],
     activeTab: '',
     selectedRows: null,
+    // columnsConfigurable: defaultColumnsConfigurable,
+    columnsConfigurable: () => getBaseModuleProps().columnsConfigurable,
     mode: undefined
 })
 
@@ -219,7 +233,7 @@ const { searchBtnsConfig } = useSearchBtnConfig({
 })
 
 // 包装本地表格配置（中转站）
-const { localTableConfig } = useMergeProps({ props, emits })
+const { localTableConfig, showColumns } = useMergeProps({ props, emits })
 
 // 抛出
 defineExpose({

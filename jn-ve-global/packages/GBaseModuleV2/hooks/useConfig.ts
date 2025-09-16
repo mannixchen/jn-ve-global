@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2024-11-20 09:35:27
+ * @LastEditTime: 2025-09-16 10:35:51
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
@@ -21,6 +21,28 @@ interface Info {
 const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
     const { prop, label, type } = columnProps
     return (prop === 'opertion' && label === '操作') || type === 'expand'
+}
+
+// 判断是否多级表头
+export const isTreeStructureColumns = (columns: BaseModuleColumnProps[]): boolean => {
+    // 使用递归函数检查是否存在嵌套的children属性
+    function hasNestedChildren(items) {
+        for (const item of items) {
+            // 判断当前元素是否有children属性且为数组
+            if (item.children && Array.isArray(item.children)) {
+                // 如果children数组不为空，或者其中还包含有children的元素，则认为是树形结构
+                if (
+                    item.children.length > 0 ||
+                    item.children.some((child) => child.children && Array.isArray(child.children))
+                ) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    return hasNestedChildren(columns)
 }
 
 export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>) => {
@@ -43,7 +65,9 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
     const clientId = window['__SITE_ID__']
 
     const needGetSavedConfig = ref<boolean>(
-        props.needSavedConfig && (!!props?.columnsConfigurable || !!props?.searchFormProps)
+        props.needSavedConfig &&
+            ((!!props?.columnsConfigurable && !isTreeStructureColumns(showColumns.value)) ||
+                !!props?.searchFormProps)
         // || (props?.sortable && props?.tableColumns?.some((item) => !item.unsortable))
     )
 
