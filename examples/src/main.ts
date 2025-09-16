@@ -37,6 +37,10 @@ app.use(directives)
     .use(BusinessUI)
     .use<VeGlobalSetting>(JnVeGlobal, {
         // 基座确定 baseModule 的默认模式
+        baseModuleProps: {
+            border: false,
+            columnsConfigurable: true
+        },
         baseModuleDefaultMode: 'tabular',
         interceptorsReqHandle,
         interceptorsResHandle,
