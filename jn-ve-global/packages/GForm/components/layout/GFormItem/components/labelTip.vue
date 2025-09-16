@@ -3,6 +3,7 @@
         v-if="isShow"
         :placement="placement"
         :popper-class="[popperClass, 'form-item-tip__popper']"
+        :popper-options="getPopoverOptions()"
     >
         <template #content>
             <!-- 组件 || jsx 元素 -->
@@ -36,6 +37,8 @@ import FunctionalComponent from '../../../../../FunctionalComponent'
 import { ElTooltip } from 'element-plus'
 import { Bases } from '../../../../../setting'
 import { getBase } from '../../../../../_globalConstant/base'
+import { getPopoverOptions } from '../../../../../_globalConstant/popoverOptions'
+
 import _ from 'lodash'
 
 const props = withDefaults(

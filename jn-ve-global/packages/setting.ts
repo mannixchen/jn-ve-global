@@ -117,7 +117,7 @@ export function setting(props: VeGlobalSetting) {
         setBase(base)
     }
 
-    if (Object.keys(baseModuleProps)?.length) {
+    if (Object.keys(baseModuleProps ?? {})?.length) {
         setBaseModuleProps(baseModuleProps)
     }
 
