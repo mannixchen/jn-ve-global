@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-09-15 17:00:31
+ * @LastEditTime: 2025-09-19 14:22:28
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -97,6 +97,7 @@
                                 effect="dark"
                                 content="拖动改变字段顺序"
                                 placement="top-start"
+                                :popper-options="options"
                             >
                                 <div v-show="showAll" class="last-icon">
                                     <g-icon icon="drag" custom-color />
