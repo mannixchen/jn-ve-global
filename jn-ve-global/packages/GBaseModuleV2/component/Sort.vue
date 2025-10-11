@@ -10,7 +10,7 @@
             <!-- <el-button type="primary" text>
                 排序
             </el-button> -->
-            <div class="sort-icon-wrapper">
+            <div :class="['sort-icon-wrapper', $attrs.class ?? '']">
                 <g-icon icon="sort" custom-color />
             </div>
         </template>
@@ -190,7 +190,7 @@ const init = (isReset?: boolean) => {
     // searchResults.value = notSelectedRuleOptions.value
     selectedRuleOptions.value = []
 
-    if (savedConfig.value?.sortOptions?.length && !isReset) {
+    if (savedConfig?.value?.sortOptions?.length && !isReset) {
         const { sortOptions } = savedConfig.value
         selectedRuleOptions.value = sortOptions
         notSelectedRuleOptions.value = notSelectedRuleOptions.value?.filter(

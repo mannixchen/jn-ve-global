@@ -21,8 +21,20 @@
         width: 38%;
     }
 
-    .show-column-wrapper {
-        margin-top: 15px;
-        margin-right: 0 !important;
+    .end-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .show-column-wrapper,
+        .sort-wrapper {
+            margin-top: 15px;
+            margin-right: 0 !important;
+        }
+
+        .sort-wrapper {
+            margin-left: 12px !important;
+            padding: 0 !important;
+        }
     }
 }

@@ -57,10 +57,22 @@
                 padding-left: 20px;
             }
 
-            .show-column-wrapper {
+            .end-wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
                 margin-left: 15px;
-                margin-top: 8px;
-                margin-right: 0 !important;
+
+                .show-column-wrapper,
+                .sort-wrapper {
+                    margin-top: 8px;
+                    margin-right: 0 !important;
+                }
+
+                .sort-wrapper {
+                    margin-left: 12px !important;
+                    padding: 0 !important;
+                }
             }
         }
     }

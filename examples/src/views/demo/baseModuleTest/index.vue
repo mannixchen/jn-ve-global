@@ -1,6 +1,8 @@
 <template>
     <g-base-module
+        ref="gBaseModuleRef"
         v-model:selected-rows="selectedRows"
+        :sortable="true"
         mode="classic"
         :show-selection="true"
         highlight-current-row
@@ -44,6 +46,8 @@ const tablePagination = reactive<PaginationProps>({
 
 const selectedRows = ref<any[]>([mockData.data1[0]])
 
+const gBaseModuleRef = ref<any>()
+
 setTimeout(() => {
     tableData.value = mockData.data1
     // selectedRows.value = [mockData.data1[0]]
@@ -60,7 +64,9 @@ watch(
 const btns: BtnProps[] = [
     {
         label: '添加',
-        onClick: () => {}
+        onClick: () => {
+            console.log(`%c 添加 === `, 'color: #e6a23c;', gBaseModuleRef.value.exportedColumns)
+        }
     },
     {
         label: '授权',
@@ -85,17 +91,17 @@ const btns: BtnProps[] = [
             console.log(`%c 加载中 === `, 'color: #e6a23c;')
         }
     },
-    {
-        label: '隐藏操作列',
-        type: 'warning',
-        onClick: () => {
-            rowBtnConfig.hide = !rowBtnConfig.hide
-            rowBtnConfig.label = `${+new Date()}`
-            rowBtnConfig.fixed = 'left'
-            rowBtnConfig.align = 'right'
-            console.log(`%c rowBtnConfig.hide === `, 'color: #e6a23c;', rowBtnConfig.hide)
-        }
-    },
+    // {
+    //     label: '隐藏操作列',
+    //     type: 'warning',
+    //     onClick: () => {
+    //         rowBtnConfig.hide = !rowBtnConfig.hide
+    //         rowBtnConfig.label = `${+new Date()}`
+    //         rowBtnConfig.fixed = 'left'
+    //         rowBtnConfig.align = 'right'
+    //         console.log(`%c rowBtnConfig.hide === `, 'color: #e6a23c;', rowBtnConfig.hide)
+    //     }
+    // },
     {
         label: '切换数据',
         type: 'success',

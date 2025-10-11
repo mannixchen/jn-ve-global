@@ -45,11 +45,23 @@
                 <div v-if="$slots['middle-right']" class="middle-right-wrapper">
                     <slot name="middle-right" />
                 </div>
-                <ShowColumns
-                    v-if="columnsConfigurable && !isTreeStructureColumns(showColumns)"
-                    v-model="showColumns"
-                    class="show-column-wrapper"
-                />
+
+                <div class="end-wrapper">
+                    <!-- 展示列 -->
+                    <ShowColumns
+                        v-if="columnsConfigurable && !isTreeStructureColumns(showColumns)"
+                        v-model="showColumns"
+                        class="show-column-wrapper"
+                    />
+
+                    <!-- 排序 -->
+                    <Sort
+                        v-if="sortable"
+                        class="sort-wrapper"
+                        :columns="tableColumns"
+                        @confirm="confirmSort"
+                    />
+                </div>
             </div>
         </div>
 
@@ -103,7 +115,10 @@ import { Bases } from '../setting'
 import { getBaseModuleProps } from '../_globalConstant/baseModuleProps'
 import { getBase } from '../_globalConstant/base'
 import ShowColumns from '../GBaseModuleV2/component/ShowColumns.vue'
+import Sort from '../GBaseModuleV2/component/Sort.vue'
+import { RuleOption, OrderProps } from '../GBaseModuleV2/interface/sort'
 import { isTreeStructureColumns } from '../GBaseModuleV2/hooks/useConfig'
+import { BaseModuleColumnProps } from '../GBaseModuleV2/interface'
 
 export interface Props {
     /**
@@ -134,6 +149,10 @@ export interface Props {
      * 是否支持设置显示列和冻结列
      */
     columnsConfigurable?: boolean
+    /**
+     * 是否支持排序
+     */
+    sortable?: boolean
     /**
      * 核心加载 table 数据的方法
      */
@@ -197,10 +216,11 @@ const props = withDefaults(defineProps<Props>(), {
     selectedRows: null,
     // columnsConfigurable: defaultColumnsConfigurable,
     columnsConfigurable: () => getBaseModuleProps().columnsConfigurable,
+    sortable: false,
     mode: undefined
 })
 
-const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows'])
+const emits = defineEmits(['getTableInstance', 'update:activeTab', 'update:selectedRows', 'sort'])
 const tableSearchRef = ref<InstanceType<typeof TableSearch> | null>(null)
 
 // 是否监管基座
@@ -233,16 +253,22 @@ const { searchBtnsConfig } = useSearchBtnConfig({
 })
 
 // 包装本地表格配置（中转站）
-const { localTableConfig, showColumns } = useMergeProps({ props, emits })
+const { localTableConfig, showColumns, exportedColumns } = useMergeProps({ props, emits })
+
+const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
+    emits('sort', order, sortOptions)
+}
 
 // 抛出
 defineExpose({
     tableConfig: localTableConfig,
     tableInstance: localTableConfig.instance,
+    exportedColumns,
     tableSearchRef
 } as {
     tableConfig: TableConfig
     tableInstance: TableConfig['instance']
+    exportedColumns: Ref<BaseModuleColumnProps[]>
     tableSearchRef: Ref<any>
 })
 </script>

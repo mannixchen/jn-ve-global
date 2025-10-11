@@ -8,12 +8,21 @@ export default ({
     props,
     emits
 }): {
-    localTableConfig: TableConfig<any>,
+    localTableConfig: TableConfig<any>
     showColumns: Ref<BaseModuleColumnProps[]>
+    exportedColumns: Ref<BaseModuleColumnProps[]>
 } => {
     const attrs = useAttrs()
     const _humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
     const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+    const exportedColumns = ref<BaseModuleColumnProps[]>(
+        props.tableColumns.filter(
+            (item) =>
+                !item.hide &&
+                item?.type !== 'expand' &&
+                !(item?.prop === 'opertion' && item?.label === '操作')
+        )
+    )
 
     const localTableConfig = reactive<TableConfig<any>>({
         instance: null,
@@ -76,6 +85,12 @@ export default ({
         () => showColumns.value,
         (columns) => {
             localTableConfig.columns = columns
+            exportedColumns.value = columns.filter(
+                (item) =>
+                    !item.hide &&
+                item?.type !== 'expand' &&
+                !(item?.prop === 'opertion' && item?.label === '操作')
+            )
         },
         {
             deep: true
@@ -134,6 +149,7 @@ export default ({
 
     return {
         showColumns,
+        exportedColumns,
         localTableConfig
     }
 }
