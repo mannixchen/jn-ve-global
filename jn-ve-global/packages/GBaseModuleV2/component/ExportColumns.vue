@@ -4,10 +4,10 @@
         placement="bottom-start"
         trigger="click"
         :popper-options="options"
-        popper-class="show-columns__popover"
+        popper-class="export-columns__popover"
     >
         <template #reference>
-            <div class="show-column-icon-wrapper">
+            <div class="export-column-icon-wrapper">
                 <g-icon icon="jg-public-xiazai" custom-color style="" />
             </div>
         </template>
@@ -308,11 +308,11 @@ watch(
 </script>
 
 <style lang="scss">
-.show-columns__popover {
+.export-columns__popover {
     width: 400px !important;
 }
 
-.show-column-icon-wrapper {
+.export-column-icon-wrapper {
     cursor: pointer;
     margin-right: 18px;
     //margin-left: 18px;

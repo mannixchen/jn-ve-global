@@ -94,7 +94,12 @@
                                 {{ item.label }}
                             </el-radio>
                         </el-radio-group>
-                        <el-tooltip effect="dark" content="拖动改变字段顺序" placement="top-start">
+                        <el-tooltip
+                            effect="dark"
+                            content="拖动改变字段顺序"
+                            placement="top-start"
+                            :popper-options="options"
+                        >
                             <div class="drag-icon-wrapper">
                                 <g-icon icon="drag" custom-color />
                             </div>
