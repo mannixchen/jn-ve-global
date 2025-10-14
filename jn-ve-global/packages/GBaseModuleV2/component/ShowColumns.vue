@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-09-19 14:22:28
+ * @LastEditTime: 2025-10-14 11:40:03
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -450,7 +450,7 @@ watch(
     margin-right: 18px;
     //margin-left: 18px;
 
-    :deep(.custom-svg-icon) {
+    .custom-svg-icon {
         color: #989898;
         &:hover {
             color: #409eff;

@@ -27,7 +27,13 @@
             <span v-if="localMode === 'tabular' && !noSearchLabel" class="title">查询结果</span>
 
             <div
-                v-if="(btns && btns.length) || $slots['middle-right'] || $slots['middle-left']"
+                v-if="
+                    (btns && btns.length) ||
+                        $slots['middle-right'] ||
+                        $slots['middle-left'] ||
+                        sortable ||
+                        columnsConfigurable
+                "
                 class="middle-opertion-wrapper"
             >
                 <!-- 左 按钮组-->
