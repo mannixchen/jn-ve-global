@@ -64,7 +64,7 @@
                     <Sort
                         v-if="sortable"
                         class="sort-wrapper"
-                        :columns="tableColumns"
+                        :columns="sortColumns"
                         @confirm="confirmSort"
                     />
                 </div>
@@ -259,7 +259,10 @@ const { searchBtnsConfig } = useSearchBtnConfig({
 })
 
 // 包装本地表格配置（中转站）
-const { localTableConfig, showColumns, exportedColumns } = useMergeProps({ props, emits })
+const { localTableConfig, showColumns, exportedColumns, sortColumns } = useMergeProps({
+    props,
+    emits
+})
 
 const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     emits('sort', order, sortOptions)

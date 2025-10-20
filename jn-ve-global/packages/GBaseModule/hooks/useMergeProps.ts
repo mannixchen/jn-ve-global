@@ -1,6 +1,6 @@
 import { reactive, watch, nextTick, computed, useAttrs, ref, Ref } from 'vue'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
-import type { TableConfig } from '../../GTable'
+import type { TableConfig, TableColumnProps } from '../../GTable'
 import { BaseModuleColumnProps } from '../../GBaseModuleV2/interface'
 import { getBaseModuleProps } from '../../_globalConstant/baseModuleProps'
 
@@ -10,19 +10,24 @@ export default ({
 }): {
     localTableConfig: TableConfig<any>
     showColumns: Ref<BaseModuleColumnProps[]>
+    sortColumns: Ref<TableColumnProps[]>
     exportedColumns: Ref<BaseModuleColumnProps[]>
 } => {
     const attrs = useAttrs()
     const _humpAttrs = computed(() => partitionObj2HumpObj(attrs, ['onReset', 'onSearch']))
-    const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
-    const exportedColumns = ref<BaseModuleColumnProps[]>(
-        props.tableColumns.filter(
-            (item) =>
-                !item.hide &&
-                item?.type !== 'expand' &&
-                !(item?.prop === 'opertion' && item?.label === '操作')
-        )
-    )
+    const sortColumns = ref<TableColumnProps[]>([])
+    const showColumns = ref<BaseModuleColumnProps[]>([])
+    const exportedColumns = ref<BaseModuleColumnProps[]>([])
+
+    // const showColumns = ref<BaseModuleColumnProps[]>(props.tableColumns)
+    // const exportedColumns = ref<BaseModuleColumnProps[]>(
+    //     props.tableColumns.filter(
+    //         (item) =>
+    //             !item.hide &&
+    //             item?.type !== 'expand' &&
+    //             !(item?.prop === 'opertion' && item?.label === '操作')
+    //     )
+    // )
 
     const localTableConfig = reactive<TableConfig<any>>({
         instance: null,
@@ -77,25 +82,33 @@ export default ({
         () => props.tableColumns,
         (columns) => {
             // localTableConfig.columns = columns
-            showColumns.value = columns
-        }
-    )
+            showColumns.value = columns.filter((item) => !item?.hide)
+            sortColumns.value = columns.filter((item) => !item?.hide)
+            localTableConfig.columns = showColumns.value
 
-    watch(
-        () => showColumns.value,
-        (columns) => {
-            localTableConfig.columns = columns
-            exportedColumns.value = columns.filter(
+            exportedColumns.value = showColumns.value.filter(
                 (item) =>
                     !item.hide &&
-                item?.type !== 'expand' &&
-                !(item?.prop === 'opertion' && item?.label === '操作')
+                    item?.type !== 'expand' &&
+                    !(item?.prop === 'opertion' && item?.label === '操作')
             )
         },
         {
+            immediate: true,
             deep: true
         }
     )
+
+    // watch(
+    //     () => showColumns.value,
+    //     (columns) => {
+    //         console.log('showColumns', columns)
+    //     },
+    //     {
+    //         immediate: true,
+    //         deep: true
+    //     }
+    // )
 
     // 分页
     let watchPagination = null
@@ -149,6 +162,7 @@ export default ({
 
     return {
         showColumns,
+        sortColumns,
         exportedColumns,
         localTableConfig
     }
