@@ -84,9 +84,21 @@ export default ({
             // localTableConfig.columns = columns
             showColumns.value = columns.filter((item) => !item?.hide)
             sortColumns.value = columns.filter((item) => !item?.hide)
-            localTableConfig.columns = showColumns.value
+        },
+        {
+            immediate: true
+            // deep: true
+        }
+    )
 
-            exportedColumns.value = showColumns.value.filter(
+    watch(
+        () => showColumns.value,
+        (columns) => {
+            // console.log('showColumns', columns)
+
+            localTableConfig.columns = columns
+
+            exportedColumns.value = columns.filter(
                 (item) =>
                     !item.hide &&
                     item?.type !== 'expand' &&
@@ -98,17 +110,6 @@ export default ({
             deep: true
         }
     )
-
-    // watch(
-    //     () => showColumns.value,
-    //     (columns) => {
-    //         console.log('showColumns', columns)
-    //     },
-    //     {
-    //         immediate: true,
-    //         deep: true
-    //     }
-    // )
 
     // 分页
     let watchPagination = null
