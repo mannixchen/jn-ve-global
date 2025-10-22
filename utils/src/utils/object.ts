@@ -343,7 +343,19 @@ export function urlParams2Obj(url: string) {
         if (str.indexOf('%') === -1) {
             params[v.split('=')[0]] = v.split('=')[1]
         } else {
-            params[v.split('=')[0]] = JSON.parse(decodeURIComponent(v.split('=')[1]))
+            const str = decodeURIComponent(v.split('=')[1])
+            if (/^[\u4e00-\u9fa5]+$/.test(str)) {
+                params[v.split('=')[0]] = str
+            } else {
+                try {
+                    params[v.split('=')[0]] = JSON.parse(decodeURIComponent(v.split('=')[1]))
+                } catch {
+                    // 如果 JSON.parse 解析失败，说明字符串不是 JSON 格式，直接赋值
+                    params[v.split('=')[0]] = decodeURIComponent(v.split('=')[1])
+                }
+
+                
+            }
         }
     })
     return params
