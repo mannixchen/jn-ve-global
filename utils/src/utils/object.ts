@@ -34,6 +34,9 @@ export function assignOwnProp(
     excludes?: Array<string>,
     ignore?: boolean
 ) {
+    if(!target) {
+        return
+    }
     Object.keys(target).forEach((k) => {
         if (excludes && excludes.includes(k)) {
             return false
