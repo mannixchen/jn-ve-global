@@ -35,9 +35,35 @@ app.use(monitorSdk(window.__MONITOR_SDK_CONFIG__, window.__MONITOR_SDK_GLOBAL_PR
 
 #### 4.全局常量
 
-**这些全局常量定义在index.html平级的globalVariable.js中**
+**将全局常量定义在index.html平级的globalVariable.js中**
 
-`__MONITOR_SDK_CONFIG__`: monitor-sdk的初始化配置  
+```js
+
+// globalVariable.js
+const pro_monitor_server_url = `${location.origin}/supervision-publicuse-server/v1/trackingEvent/track`
+/**
+ * 监控 SDK 配置
+ */
+window.__MONITOR_SDK_CONFIG__ = {
+    enable_sdk: true,
+    enable_page_leave: false,
+    enable_page_view: true,
+    enable_app_load: true,
+    show_log: false,
+    send_type: 'ajax', // beacon  image  ajax
+    server_url: pro_monitor_server_url,
+    heatmap: {
+        clickmap: 'not_collect'
+    }
+}
+
+/**
+ * 监控 SDK 全局属性
+ */
+window.__MONITOR_SDK_GLOBAL_PROPERTIES__ = {}
+```
+
+**以下是全部都配置项**(正常来说上面的配置项就足够了)
 
 ```js
 // 默认配置
@@ -67,9 +93,6 @@ const default = {
     }
 }
 ```
-
-`__MONITOR_SDK_GLOBAL_PROPERTIES__`: monitor-sdk的公共上报属性(该属性会添加到每次上报的内容中)  
-
 ### 子应用的使用
 
 子应用如果使用自定义埋点则进行下面的操作,否则不需要进行任何操作
