@@ -86,8 +86,8 @@ export default ({
             sortColumns.value = columns.filter((item) => !item?.hide)
         },
         {
-            immediate: true
-            // deep: true
+            immediate: true,
+            deep: true
         }
     )
 
