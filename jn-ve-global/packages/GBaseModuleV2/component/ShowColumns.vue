@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-10-14 11:40:03
+ * @LastEditTime: 2025-10-31 14:28:40
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -173,7 +173,7 @@ const visible = ref<boolean>(true)
 
 // const columns = inject(tableColumnsKey)
 // console.log('tableColumnsKey', columns.value)
-console.log('tableColumns', columns)
+// console.log('tableColumns', columns)
 // const defaultColumns = cloneDeep(columns.value).map(({ prop, hide, fixed }) => ({
 //     prop,
 //     hide: hide ?? false,
@@ -391,7 +391,7 @@ const saveColumns = () => {
 let sortableInstance
 onMounted(() => {
     defaultColumns = cloneDeep(columns.value)
-    console.log('defaultColumns', defaultColumns)
+    // console.log('defaultColumns', defaultColumns)
     sortableInstance = new Sortable(checkboxGroupRef.value.$el, sortableOption)
 })
 

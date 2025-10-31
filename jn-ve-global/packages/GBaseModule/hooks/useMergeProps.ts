@@ -3,7 +3,7 @@ import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
 import type { TableConfig, TableColumnProps } from '../../GTable'
 import { BaseModuleColumnProps } from '../../GBaseModuleV2/interface'
 import { getBaseModuleProps } from '../../_globalConstant/baseModuleProps'
-import useAddOperationColumn from '../../GTable/component/OperationColumn/index'
+// import useAddOperationColumn from '../../GTable/component/OperationColumn/index'
 
 export default ({
     props,
@@ -87,8 +87,8 @@ export default ({
             sortColumns.value = columns.filter((item) => !item?.hide)
         },
         {
-            immediate: true,
-            deep: true
+            // deep: true,
+            immediate: true
         }
     )
 
@@ -99,7 +99,7 @@ export default ({
 
             localTableConfig.columns = columns
 
-            useAddOperationColumn(localTableConfig)
+            // useAddOperationColumn(localTableConfig)
 
             exportedColumns.value = columns.filter(
                 (item) =>
