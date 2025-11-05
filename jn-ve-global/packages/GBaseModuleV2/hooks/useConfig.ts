@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-09-16 10:35:51
+ * @LastEditTime: 2025-11-03 15:57:39
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
@@ -12,15 +12,16 @@ import myAxios from '../../_http/http'
 import { BaseModuleProps, SavedConfig, BaseModuleColumnProps } from '../interface'
 import { ref, Ref } from 'vue'
 import { cloneDeep } from 'lodash'
+import { excludedColumnTypes } from '../constant'
 
 interface Info {
     inionId: string
     userId: string
 }
 
-const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
+export const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
     const { prop, label, type } = columnProps
-    return (prop === 'opertion' && label === '操作') || type === 'expand'
+    return (prop === 'opertion' && label === '操作') || excludedColumnTypes.includes(type)
 }
 
 // 判断是否多级表头
@@ -78,7 +79,7 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
         const hasOperationColumn = showColumns.value?.some(
             (item) => item.prop === 'opertion' && item.label === '操作'
         )
-        const hasExpandColumn = showColumns.value.some((item) => item?.type === 'expand')
+        // const hasExpandColumn = showColumns.value.some((item) => item?.type === 'expand')
         const savedColumns = savedConfig?.value?.columns?.map((item) => {
             const column = showColumns.value?.find((ele) => ele?.prop === item?.prop)
             return {
@@ -95,9 +96,14 @@ export const useConfig = (props: BaseModuleProps, savedConfig: Ref<SavedConfig>)
                 )
             ]
             : savedColumns
-        showColumns.value = hasExpandColumn
-            ? [showColumns.value.find((item) => item?.type === 'expand'), ...showColumns.value]
-            : showColumns.value
+        // showColumns.value = hasExpandColumn
+        //     ? [showColumns.value.find((item) => item?.type === 'expand'), ...showColumns.value]
+        //     : showColumns.value
+        showColumns.value = [
+            ...(showColumns.value?.filter((item) => excludedColumnTypes.includes(item?.type)) ??
+                []),
+            ...showColumns.value
+        ]
     }
 
     const setExportColumns = () => {

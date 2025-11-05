@@ -206,7 +206,7 @@ const init = (isReset?: boolean) => {
     searchResults.value = notSelectedRuleOptions.value
 }
 
-init()
+// init()
 
 const selectRuleModalVisible = ref<boolean>(false)
 const keyword = ref<string>('')
@@ -295,6 +295,17 @@ watch(
         if (val) {
             keyword.value = ''
         }
+    }
+)
+
+watch(
+    () => props.columns,
+    (val) => {
+        init()
+    },
+    {
+        deep: true,
+        immediate: true
     }
 )
 </script>

@@ -2,8 +2,10 @@ import { reactive, watch, nextTick, computed, useAttrs, ref, Ref } from 'vue'
 import { assignOwnProp, partitionObj2HumpObj } from '@jsjn/utils'
 import type { TableConfig, TableColumnProps } from '../../GTable'
 import { BaseModuleColumnProps } from '../../GBaseModuleV2/interface'
+import { excludedColumnTypes } from '../../GBaseModuleV2/constant'
 import { getBaseModuleProps } from '../../_globalConstant/baseModuleProps'
-// import useAddOperationColumn from '../../GTable/component/OperationColumn/index'
+import useAddOperationColumn from '../../GTable/component/OperationColumn/index'
+import { cloneDeep } from 'lodash'
 
 export default ({
     props,
@@ -83,11 +85,13 @@ export default ({
         () => props.tableColumns,
         (columns) => {
             // localTableConfig.columns = columns
-            showColumns.value = columns.filter((item) => !item?.hide)
-            sortColumns.value = columns.filter((item) => !item?.hide)
+            showColumns.value = cloneDeep(columns).filter((item) => !item?.hide)
+            sortColumns.value = cloneDeep(columns).filter((item) => !item?.hide)
+            // showColumns.value = columns
+            // sortColumns.value = columns
         },
         {
-            // deep: true,
+            deep: true,
             immediate: true
         }
     )
@@ -99,14 +103,16 @@ export default ({
 
             localTableConfig.columns = columns
 
-            // useAddOperationColumn(localTableConfig)
+            useAddOperationColumn(localTableConfig)
 
-            exportedColumns.value = columns.filter(
-                (item) =>
-                    !item.hide &&
-                    item?.type !== 'expand' &&
-                    !(item?.prop === 'opertion' && item?.label === '操作')
-            )
+            exportedColumns.value =
+                columns?.filter(
+                    (item) =>
+                        !item?.hide &&
+                        // item?.type !== 'expand' &&
+                        !excludedColumnTypes.includes(item?.type) &&
+                        !(item?.prop === 'opertion' && item?.label === '操作')
+                ) ?? []
         },
         {
             immediate: true,

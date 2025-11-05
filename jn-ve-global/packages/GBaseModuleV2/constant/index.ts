@@ -1,8 +1,8 @@
 /*
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-10 16:18:45
- * @LastEditors: “zhujin” zhujin@jsjngf.com
- * @LastEditTime: 2024-10-14 15:57:06
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-11-03 15:41:59
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\constant\index.ts
  * @Description: 
  * 
@@ -20,3 +20,5 @@ export const orderOptions = [
     { label: '升序', value: Order.ASCENT },
     { label: '降序', value: Order.DESCENT }
 ]
+
+export const excludedColumnTypes = ['selection', 'expand', 'index']

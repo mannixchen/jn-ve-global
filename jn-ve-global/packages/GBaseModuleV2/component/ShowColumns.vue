@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-10-31 14:28:40
+ * @LastEditTime: 2025-11-03 16:32:18
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -119,7 +119,8 @@
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed, reactive, toRefs, inject, onMounted } from 'vue'
 // import { type TableColumnProps } from '../../GTable'
-import { tableColumnsKey, savedConfigKey } from '../constant'
+import { tableColumnsKey, savedConfigKey, excludedColumnTypes } from '../constant'
+import { isExcludedColumn } from '../hooks/useConfig'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import type { BaseModuleColumnProps } from '../interface'
 import { cloneDeep } from 'lodash'
@@ -171,6 +172,26 @@ const emits = defineEmits<{
 
 const visible = ref<boolean>(true)
 
+let isInnerUpdate = false
+let isOuterUpdate = false
+let timer
+
+const finishInnerUpdate = () => {
+    isInnerUpdate = true
+    timer = setTimeout(() => {
+        isInnerUpdate = false
+        timer = null
+    }, 0)
+}
+
+const finishOuterUpdate = () => {
+    isOuterUpdate = true
+    timer = setTimeout(() => {
+        isOuterUpdate = false
+        timer = null
+    }, 0)
+}
+
 // const columns = inject(tableColumnsKey)
 // console.log('tableColumnsKey', columns.value)
 // console.log('tableColumns', columns)
@@ -197,16 +218,15 @@ const showAll = ref(true)
 const checkboxGroupRef = ref()
 
 // 显示列中不参与配置的表格列
-const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
-    const { prop, label, type } = columnProps
-    return (prop === 'opertion' && label === '操作') || type === 'expand'
-}
+// const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
+//     const { prop, label, type } = columnProps
+//     return (prop === 'opertion' && label === '操作') || excludedColumnTypes.includes(type)
+// }
 
 const init = (columns: BaseModuleColumnProps[]) => {
+    // console.log('init', columns)
     const copyColumns = cloneDeep(columns)
-    allColumns = cloneDeep(
-        copyColumns.filter((item) => !isExcludedColumn(item)) ?? []
-    )
+    allColumns = cloneDeep(copyColumns.filter((item) => !isExcludedColumn(item)) ?? [])
     checkedColumns.value = allColumns?.map((item) => item.prop)
     // checkedColumns.value = allColumns?.map((item) => item.prop)?.filter((item) => !item.hide)
     localColumns.value = cloneDeep(allColumns ?? [])
@@ -229,15 +249,15 @@ const init = (columns: BaseModuleColumnProps[]) => {
 //     })
 // }
 
-init(columns.value)
+// init(columns.value)
 
 const handleCheckAllChange = (val: boolean) => {
-    console.log('yyy', val)
+    // console.log('handleCheckAllChange', val)
     checkedColumns.value = val ? allColumns?.map((item) => item.prop) : []
     isIndeterminate.value = false
 }
 const handleCheckedColumnsChange = (value: string[]) => {
-    console.log('xxx', value)
+    // console.log('handleCheckedColumnsChange', value)
     const checkedCount = value.length
     checkAll.value = checkedCount === allColumns.length
     isIndeterminate.value = checkedCount > 0 && checkedCount < allColumns.length
@@ -262,7 +282,11 @@ const handleCheckedColumnsChange = (value: string[]) => {
 
 const fixColumn = (column: BaseModuleColumnProps) => {
     column.fixed = !column.fixed
-    columns.value.find((item) => item.prop === column.prop && item?.type !== 'expand').fixed = column.fixed
+    // columns.value.find((item) => item.prop === column.prop && item?.type !== 'expand').fixed = column.fixed
+    columns.value.find(
+        (item) => item.prop === column.prop && !excludedColumnTypes.includes(item?.type)
+    ).fixed = column.fixed
+    finishInnerUpdate()
     saveColumns()
 
     // updateColumns()
@@ -299,17 +323,22 @@ const sortableOption = {
         const operationColumnProp = columns.value.find(
             (item) => item.prop === 'opertion' && item.label === '操作'
         )?.prop
-        const hasExpandColumn = columns.value.some(item => item?.type === 'expand')
+        // const hasExpandColumn = columns.value.some(item => item?.type === 'expand')
         const order = operationColumnProp
             ? [...sortableInstance.toArray(), operationColumnProp]
             : sortableInstance.toArray()
         // columns.value = sortByOrder(columns.value, order)
         const orderedColumns = order.map((prop) => columns.value.find((item) => item.prop === prop))
         // columns.value = order.map((prop) => columns.value.find((item) => item.prop === prop))
-        columns.value = hasExpandColumn ? [columns.value.find(item => item?.type === 'expand'), ...orderedColumns] : orderedColumns
+        // columns.value = hasExpandColumn ? [columns.value.find(item => item?.type === 'expand'), ...orderedColumns] : orderedColumns
+        columns.value = [
+            ...(columns.value?.filter((item) => excludedColumnTypes.includes(item?.type)) ?? []),
+            ...orderedColumns
+        ]
         // sortColumns(sortableInstance.toArray())
+        finishInnerUpdate()
         saveColumns()
-        console.log('onEnd', event, columns)
+        // console.log('onEnd', event, columns)
         // updateColumns()
     }
 }
@@ -338,19 +367,18 @@ const search = (val) => {
     if (val) {
         localColumns.value = columns.value.filter((item) => item?.label?.includes(val))
     } else {
-        localColumns.value = columns.value.filter(
-            (item) => !isExcludedColumn(item)
-        )
+        localColumns.value = columns.value.filter((item) => !isExcludedColumn(item))
     }
     showAll.value = localColumns.value.length === allColumns.length
     sortableInstance.option('disabled', !showAll.value)
 }
 
 const reset = () => {
-    console.log('reset', defaultColumns)
+    // console.log('reset', defaultColumns)
     // const defaultColumnsCopy = cloneDeep(defaultColumns)
     init(defaultColumns)
     columns.value = cloneDeep(defaultColumns)
+    finishInnerUpdate()
     visible.value = false
     nextTick(() => {
         visible.value = true
@@ -375,12 +403,14 @@ const saveColumns = () => {
     nextTick(() => {
         emits(
             'columnChange',
-            columns.value?.filter((item) => !isExcludedColumn(item))?.map(({prop, label, fixed, hide}) => ({
-                prop,
-                label,
-                fixed,
-                hide
-            })) ?? []
+            columns.value
+                ?.filter((item) => !isExcludedColumn(item))
+                ?.map(({ prop, label, fixed, hide }) => ({
+                    prop,
+                    label,
+                    fixed,
+                    hide
+                })) ?? []
         )
     })
 }
@@ -390,7 +420,7 @@ const saveColumns = () => {
 
 let sortableInstance
 onMounted(() => {
-    defaultColumns = cloneDeep(columns.value)
+    // defaultColumns = cloneDeep(columns.value)
     // console.log('defaultColumns', defaultColumns)
     sortableInstance = new Sortable(checkboxGroupRef.value.$el, sortableOption)
 })
@@ -398,7 +428,8 @@ onMounted(() => {
 watch(
     () => checkedColumns.value,
     (val) => {
-        console.log('checkedColumns', val, columns)
+        // console.log('checkedColumns', val, columns)
+        finishInnerUpdate()
         if (val?.length === 0) {
             columns.value.forEach((item) => {
                 item.hide = true
@@ -417,6 +448,21 @@ watch(
     {
         deep: true
         // immediate: true
+    }
+)
+
+watch(
+    () => columns.value,
+    (val) => {
+        // console.log('columns', val)
+        if (isInnerUpdate) return
+        defaultColumns = cloneDeep(val)
+        init(val)
+        finishOuterUpdate()
+    },
+    {
+        deep: true,
+        immediate: true
     }
 )
 

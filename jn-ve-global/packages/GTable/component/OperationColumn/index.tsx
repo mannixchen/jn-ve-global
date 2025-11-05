@@ -25,8 +25,8 @@ export default (config: TableConfig<any>) => {
      *  6. btns 长度不为 0
      */
     if (
-        config.columns?.length &&
-        !config.columns.some((column) => column.prop === 'opertion' || column.label === '操作') &&
+        config?.columns?.length &&
+        !config?.columns?.some((column) => column?.prop === 'opertion' || column?.label === '操作') &&
         config?.rowBtnConfig?.btns?.length
     ) {
         const columns = config.columns
