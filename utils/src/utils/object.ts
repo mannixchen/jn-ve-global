@@ -335,35 +335,65 @@ export function obj2Params(obj: object): string {
  * @returns
  */
 export function urlParams2Obj(url: string) {
-    var params = {}
-    var arr = url.split('?')
-    if (arr.length <= 1) {
-        return params
-    }
-    arr = arr[1].split('&')
-    arr.forEach((v, i) => {
-        let str = v.split('=')[1]
-        if (str.indexOf('%') === -1) {
-            params[v.split('=')[0]] = v.split('=')[1]
-        } else {
-            const str = decodeURIComponent(v.split('=')[1])
-            if (/^[\u4e00-\u9fa5]+$/.test(str)) {
-                params[v.split('=')[0]] = str
-            } else {
-                try {
-                    params[v.split('=')[0]] = JSON.parse(decodeURIComponent(v.split('=')[1]))
-                } catch {
-                    // 如果 JSON.parse 解析失败，说明字符串不是 JSON 格式，直接赋值
-                    params[v.split('=')[0]] = decodeURIComponent(v.split('=')[1])
-                }
+    const params: Record<string, any> = {}
+    const qIndex = url.indexOf('?')
+    if (qIndex === -1) return params
 
-                
+    const query = url.slice(qIndex + 1)
+    const pairs = query.split('&')
+
+    pairs.forEach((pair) => {
+        if (!pair) return
+        const eqIndex = pair.indexOf('=')
+        const key = eqIndex >= 0 ? pair.slice(0, eqIndex) : pair
+        let rawVal = eqIndex >= 0 ? pair.slice(eqIndex + 1) : ''
+
+        // 兼容 + 作为空格
+        rawVal = rawVal.replace(/\+/g, ' ')
+
+        // 如果包含百分号，优先尝试解码；否则保留原值
+        let decoded = rawVal
+        if (rawVal.includes('%')) {
+            try {
+                decoded = decodeURIComponent(rawVal)
+            } catch {
+                decoded = rawVal
             }
         }
+
+        const trimmed = decoded.trim()
+        let value: any = decoded
+
+        // 保留两种策略：
+        // 1）原有“全中文”判断（Updated upstream 分支）
+        const isPureChinese = /^[\u4e00-\u9fa5]+$/.test(trimmed)
+
+        // 2）结构上看像 JSON（Stashed changes 分支）
+        const first = trimmed[0]
+        const last = trimmed[trimmed.length - 1]
+        const looksLikeJSON =
+            !!first &&
+            !!last &&
+            ((first === '{' && last === '}') ||
+                (first === '[' && last === ']') ||
+                (first === '"' && last === '"'))
+
+        if (looksLikeJSON) {
+            try {
+                value = JSON.parse(trimmed)
+            } catch {
+                value = decoded
+            }
+        } else if (isPureChinese) {
+            value = decoded
+        } else {
+            value = decoded
+        }
+
+        params[key] = value
     })
     return params
 }
-
 /**
  * 递归查找对象中指定属性名的值（返回第一个匹配的值）
  * @param obj 要搜索的对象
