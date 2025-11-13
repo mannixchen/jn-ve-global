@@ -11,7 +11,8 @@
         "build": "vite build",
         "preview": "vite preview",
         "build:px": "pnpm build -- --px",
-        "dev": "concurrently \"vite build --watch -- --px\" \"vite preview --port 8602\""
+        "dev": "concurrently \"vite build --watch\" \"vite preview --port 8602\"",
+        "dev:px": "concurrently \"vite build --watch -- --px\" \"vite preview --port 8602\""
     },
     "dependencies": {},
     "devDependencies": {},
