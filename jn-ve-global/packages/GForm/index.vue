@@ -57,7 +57,7 @@
 </template>
 
 <script lang="ts" setup>
-import { watch, provide, ref, toRef, nextTick, computed, type Ref, watchEffect } from 'vue'
+import { watch, provide, ref, toRef, nextTick, computed, type Ref, onBeforeUnmount } from 'vue'
 import type { FormProps, FormInstance, FormItemProps } from './interface'
 import formConfigProvideKey from './constant/formConfigProvideKey'
 import { assignOwnProp, advanceSerialize } from '@jsjn/utils'
@@ -169,6 +169,17 @@ function advanceInstance(instance: FormInstance) {
         return !(cacheStr === currentModelStr)
     }
 }
+
+onBeforeUnmount(() => {
+    // 初始化 model
+    props.config.instance.initModel()
+
+    // 针对 低代码，绑定的 DataSet 在组件销毁时，清空 DataSet 的 instance，通过对象引用，挨个删除字段
+    for (const key in props.config.instance) {
+        // eslint-disable-next-line
+        delete props.config.instance[key]
+    }
+})
 
 defineExpose({
     instance: localInstance,
