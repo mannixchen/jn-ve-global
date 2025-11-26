@@ -9,5 +9,9 @@ export * from './utils/tree'
 export * from './utils/download'
 export * from './utils/number'
 export * from './utils/camelcase'
+export * from './utils/rem'
+export * from './utils/device'
+export * from './utils/browser-check'
+
 import { getGlobal } from './utils/bom'
 getGlobal()
