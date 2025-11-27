@@ -171,6 +171,8 @@ function advanceInstance(instance: FormInstance) {
 }
 
 onBeforeUnmount(() => {
+    if (!props.config.instance) return
+
     // 初始化 model
     props.config.instance.initModel()
 
