@@ -1,5 +1,6 @@
 <template>
     <div
+        ref="gTableRef"
         class="g-table-root"
         :class="{
             'hide-pagination': !localConfig.pagination || localConfig.pagination.show === false,
@@ -109,6 +110,7 @@ import { getTableProps } from './utils'
 import { onCellEditKey, tableInstanceKey } from './constant/InjectionKeys'
 import useLoadTriggerValidator from './hooks/useLoadTriggerValidator'
 import useTimeoutCreate from './hooks/useTimeoutCreate'
+import useTableHeight from './hooks/useTableHeight'
 import TableColumn from './component/TableColumn.vue'
 import useAddOperationColumn from './component/OperationColumn/index'
 import useSelector from './hooks/useSelector'
@@ -133,6 +135,8 @@ const refreshLoad = ref(true)
 const tableProps = computed(() => getTableProps(props.config))
 // 本地关联 Config，关联引用
 const localConfig = computed(() => props.config)
+
+const { gTableRef } = useTableHeight(props.config)
 
 // 追加操作按钮列
 useAddOperationColumn(localConfig.value)
@@ -226,10 +230,7 @@ const currentChange = (page: number) => {
 }
 
 const sizeChange = (size: number) => {
-    localConfig.value.pagination.onChange(
-        localConfig.value.pagination.currentPage,
-        size
-    )
+    localConfig.value.pagination.onChange(localConfig.value.pagination.currentPage, size)
 }
 
 defineExpose({

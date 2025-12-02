@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-11-03 16:32:18
+ * @LastEditTime: 2025-12-02 09:49:51
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -10,10 +10,12 @@
 -->
 <template>
     <el-popover
+        ref="popoverRef"
         placement="bottom-start"
         trigger="click"
         :popper-options="options"
         popper-class="show-columns__popover"
+        @show="show"
     >
         <template #reference>
             <!-- <el-button type="primary" text>
@@ -118,13 +120,15 @@
 
 <script lang="ts" setup>
 import { nextTick, watch, ref, computed, reactive, toRefs, inject, onMounted } from 'vue'
+import { getPopoverOptions } from '../../_globalConstant/popoverOptions'
 // import { type TableColumnProps } from '../../GTable'
-import { tableColumnsKey, savedConfigKey, excludedColumnTypes } from '../constant'
+import { tableColumnsKey, savedConfigKey, tableConfigKey, excludedColumnTypes } from '../constant'
 import { isExcludedColumn } from '../hooks/useConfig'
 import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import type { BaseModuleColumnProps } from '../interface'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
+import useMaxheight from '../hooks/useMaxheight'
 // import { global } from '@jsjn/utils'
 
 const COMPONENT_NAME = 'ShowColumns'
@@ -145,24 +149,13 @@ defineOptions({
 //     'reset': [val?: TableColumnProps[]]
 // }>()
 
+const popoverRef = ref()
+
 const savedConfig = inject(savedConfigKey)
 
-const options = {
-    modifiers: [
-        {
-            name: 'preventOverflow',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        },
-        {
-            name: 'flip',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        }
-    ]
-}
+const tableConfig = inject(tableConfigKey)
+
+const options = getPopoverOptions()
 
 const columns = defineModel<BaseModuleColumnProps[]>({ default: [] })
 
@@ -171,6 +164,16 @@ const emits = defineEmits<{
 }>()
 
 const visible = ref<boolean>(true)
+
+const { calculateAndSetMaxHeight } = useMaxheight({
+    popoverRef,
+    tableConfig,
+    targeClassName: 'column-checkbox-group-wrapper'
+})
+
+const show = () => {
+    calculateAndSetMaxHeight()
+}
 
 let isInnerUpdate = false
 let isOuterUpdate = false
@@ -467,16 +470,6 @@ watch(
 )
 
 // selectRuleModalVisible
-// watch(
-//     () => localColumns.value,
-//     (val) => {
-//         console.log('localColumns', val)
-//     },
-//     {
-//         deep: true,
-//         immediate: true
-//     }
-// )
 
 watch(
     () => checkedColumns.value,

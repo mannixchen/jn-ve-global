@@ -2,12 +2,15 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-10 16:18:45
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-11-03 15:41:59
+ * @LastEditTime: 2025-12-02 10:19:58
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\constant\index.ts
- * @Description: 
- * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ * @Description:
+ *
+ * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
  */
+import { TableConfig } from 'jn-ve-global'
+import { InjectionKey } from 'vue'
+
 export * from './tableColumnsKey'
 export * from './savedConfigKey'
 
@@ -22,3 +25,5 @@ export const orderOptions = [
 ]
 
 export const excludedColumnTypes = ['selection', 'expand', 'index']
+
+export const tableConfigKey: InjectionKey<TableConfig<any>> = Symbol('tableConfigKey')

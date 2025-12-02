@@ -1,8 +1,8 @@
 <!--
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-08 14:17:52
- * @LastEditors: Zyunchao 18651805393@163.com
- * @LastEditTime: 2024-11-28 16:53:43
+ * @LastEditors: zhujin zhujin@jsjngf.com
+ * @LastEditTime: 2025-12-02 10:16:09
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/component/SearchCondition.vue
  * @Description: 
  * 
@@ -16,6 +16,7 @@
         trigger="click"
         :popper-options="options"
         popper-class="search-conditions__popover"
+        @show="show"
     >
         <template #reference>
             <!-- <el-button type="primary" text @click="openPopover">
@@ -128,9 +129,10 @@ import { SelectOptionProps } from '../../index'
 import useBetweenFormItem from '../hooks/useBetweenFormItem'
 import type { FormProps, FormItemProps } from '../../GForm'
 import type { ConditionProps, QueryProps, SavedConfig } from '../interface'
-import { savedConfigKey } from '../constant'
+import { savedConfigKey, tableConfigKey } from '../constant'
 import { getQueryList } from '../hooks/useFormConditions'
-// import { global } from '@jsjn/utils'
+import { getPopoverOptions } from '../../_globalConstant/popoverOptions'
+import useMaxheight from '../hooks/useMaxheight'
 
 const COMPONENT_NAME = 'SearchCondition'
 defineOptions({
@@ -152,24 +154,11 @@ const emits = defineEmits<{
 
 const savedConfig = inject(savedConfigKey)
 
+const tableConfig = inject(tableConfigKey)
+
 const popoverRef = ref()
 
-const options = {
-    modifiers: [
-        {
-            name: 'preventOverflow',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        },
-        {
-            name: 'flip',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        }
-    ]
-}
+const options = getPopoverOptions()
 
 const popoverVisible = ref<boolean>(false)
 
@@ -510,6 +499,16 @@ onMounted(() => {
 onBeforeUnmount(() => {
     window.removeEventListener('keydown', handleKeydown)
 })
+
+const { calculateAndSetMaxHeight } = useMaxheight({
+    popoverRef,
+    tableConfig,
+    targeClassName: 'condition-detail-list-wrapper'
+})
+
+const show = () => {
+    calculateAndSetMaxHeight()
+}
 </script>
 
 <style lang="scss">

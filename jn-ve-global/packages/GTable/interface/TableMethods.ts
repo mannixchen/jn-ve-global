@@ -9,6 +9,15 @@ export interface TableMethodsExtend {
          */
         prop?: string
     }) => Promise<PromiseSettledResult<any>[]>
+
+    /**
+     * 获取表格所有高度信息 clientHeight、offsetHeight、scrollHeight
+     */
+    getTableHeight?: () => Promise<{
+        clientHeight: number
+        offsetHeight: number
+        scrollHeight: number
+    } | null>
 }
 
 export interface TableMethods extends TableMethodsExtend {
@@ -18,7 +27,7 @@ export interface TableMethods extends TableMethodsExtend {
     clearSelection: () => void
     /**
      * 返回当前选中的行
-     * @returns 
+     * @returns
      */
     getSelectionRows: () => any[]
     /**

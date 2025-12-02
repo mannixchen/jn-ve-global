@@ -5,6 +5,7 @@
         trigger="click"
         :popper-options="options"
         popper-class="export-columns__popover"
+        @show="show"
     >
         <template #reference>
             <div class="export-column-icon-wrapper">
@@ -110,6 +111,10 @@ import { Search, QuestionFilled, Refresh } from '@element-plus/icons-vue'
 import type { BaseModuleColumnProps } from '../interface'
 import { cloneDeep } from 'lodash'
 import { ElMessage } from 'element-plus'
+import { getPopoverOptions } from '../../_globalConstant/popoverOptions'
+import { tableConfigKey } from '../constant'
+import useMaxheight from '../hooks/useMaxheight'
+
 // import Sortable from 'sortablejs'
 
 const COMPONENT_NAME = 'ExportColumns'
@@ -117,24 +122,11 @@ defineOptions({
     name: COMPONENT_NAME
 })
 
-const options = {
-    modifiers: [
-        {
-            name: 'preventOverflow',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        },
-        {
-            name: 'flip',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        }
-    ]
-}
+const options = getPopoverOptions()
 
 const popoverRef = ref<any>()
+
+const tableConfig = inject(tableConfigKey)
 
 const columns = defineModel<BaseModuleColumnProps[]>({ default: [] })
 
@@ -269,6 +261,16 @@ const saveColumns = () => {
             })) ?? []
         )
     })
+}
+
+const { calculateAndSetMaxHeight } = useMaxheight({
+    popoverRef,
+    tableConfig,
+    targeClassName: 'column-checkbox-group-wrapper'
+})
+
+const show = () => {
+    calculateAndSetMaxHeight()
 }
 
 // let sortableInstance

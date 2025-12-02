@@ -3,7 +3,7 @@
         id="tett"
         v-model:selected-rows="selectedRows"
         v-model:table-data="tableData"
-        :exportable="false"
+        :exportable="true"
         :show-selection="true"
         highlight-current-row
         no-search-label

@@ -1,10 +1,12 @@
 <template>
     <el-popover
+        ref="popoverRef"
         v-model:visible="sortPopoverVisible"
         placement="bottom-start"
         trigger="click"
         :popper-options="options"
         popper-class="sort__popover"
+        @show="show"
     >
         <template #reference>
             <!-- <el-button type="primary" text>
@@ -123,11 +125,12 @@ import { onMounted, watch, ref, computed, reactive, toRefs, inject } from 'vue'
 import { Delete, QuestionFilled, Plus, Search } from '@element-plus/icons-vue'
 // import { type TableColumnProps } from '../../GTable'
 import type { BaseModuleColumnProps } from '../interface'
-import { Order, orderOptions, savedConfigKey } from '../constant'
+import { Order, orderOptions, savedConfigKey, tableConfigKey } from '../constant'
 import { cloneDeep } from 'lodash'
 import Sortable from 'sortablejs'
 import type { RuleOption, OrderProps } from '../interface'
-// import { global } from '@jsjn/utils'
+import { getPopoverOptions } from '../../_globalConstant/popoverOptions'
+import useMaxheight from '../hooks/useMaxheight'
 
 const COMPONENT_NAME = 'Sort'
 defineOptions({
@@ -143,25 +146,11 @@ const props = withDefaults(
     }
 )
 
+const popoverRef = ref()
+
 const savedConfig = inject(savedConfigKey)
 
-const options = {
-    modifiers: [
-        {
-            name: 'preventOverflow',
-            options: {
-                // rootBoundary: global.document.querySelector('.micro-view')
-                rootBoundary: document.querySelector('html')
-            }
-        },
-        {
-            name: 'flip',
-            options: {
-                rootBoundary: document.querySelector('html')
-            }
-        }
-    ]
-}
+const options = getPopoverOptions()
 
 // const order = defineModel<OrderProps>({default: {
 //     asc: [],
@@ -282,9 +271,21 @@ const deleteRule = (option: RuleOption) => {
     searchResults.value = notSelectedRuleOptions.value
 }
 
+const tableConfig = inject(tableConfigKey)
+
+const { calculateAndSetMaxHeight } = useMaxheight({
+    popoverRef,
+    tableConfig,
+    targeClassName: 'selected-rule-list-wrapper'
+})
+
+const show = () => {
+    calculateAndSetMaxHeight()
+}
+
 let sortableInstance
 onMounted(() => {
-    console.log('onMounted', selectedRulesRef.value)
+    // console.log('onMounted', selectedRulesRef.value)
     sortableInstance = new Sortable(selectedRulesRef.value, sortableOption)
 })
 

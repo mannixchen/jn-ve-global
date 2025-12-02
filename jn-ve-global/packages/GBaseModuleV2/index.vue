@@ -113,7 +113,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed, Ref, provide, toRef, reactive, onBeforeMount } from 'vue'
+import { ref, computed, Ref, provide, onBeforeMount } from 'vue'
 import { ElTabs, ElTabPane, ElIcon, ElMessage } from 'element-plus'
 import TableSearch from './component/TableSearch.vue'
 import { GTable as LGTable, type TableConfig } from '../GTable'
@@ -130,7 +130,7 @@ import type {
     SavedConfig,
     RuleOption
 } from './interface'
-import { tableColumnsKey, savedConfigKey } from './constant'
+import { savedConfigKey, tableConfigKey } from './constant'
 import ShowColumns from './component/ShowColumns.vue'
 import ExportColumns from './component/ExportColumns.vue'
 import Sort from './component/Sort.vue'
@@ -225,8 +225,6 @@ const {
 
 provide(savedConfigKey, savedConfig)
 
-// provide(tableColumnsKey, toRef(props, 'tableColumns'))
-
 /**
  * 期望运行的 baseModule 的模式
  */
@@ -268,6 +266,7 @@ const { localTableConfig } = useMergeProps({
     // savedConfig,
     // setSavedConfig
 })
+provide(tableConfigKey, localTableConfig)
 
 const saveColumns = (columns: BaseModuleColumnProps[]) => {
     // savedConfig.value = {
@@ -276,25 +275,28 @@ const saveColumns = (columns: BaseModuleColumnProps[]) => {
     //     sortOptions: savedConfig.value?.sortOptions ?? []
     // }
 
-    setSavedConfig({columns})
+    setSavedConfig({ columns })
 }
 
 // 确认导出列
 const confirmExport = (exportColumns: BaseModuleColumnProps[]) => {
-    if(!props?.exportMethod || !isFunction(props?.exportMethod)) {
+    if (!props?.exportMethod || !isFunction(props?.exportMethod)) {
         ElMessage.warning('请配置导出方法exportMethod')
         return
     }
-    setSavedConfig({exportColumns})
+    setSavedConfig({ exportColumns })
     exporting.value = true
-    props.exportMethod({
-        columns: exportColumns.filter(item => !item?.hide),
-        allQuery: keyword.value,
-        queryList: params?.queryList?.filter((item) => !['', null, undefined].includes(item.value))
-    })?.finally(() => {
-        exporting.value = false
-    })
-
+    props
+        .exportMethod({
+            columns: exportColumns.filter((item) => !item?.hide),
+            allQuery: keyword.value,
+            queryList: params?.queryList?.filter(
+                (item) => !['', null, undefined].includes(item.value)
+            )
+        })
+        ?.finally(() => {
+            exporting.value = false
+        })
 }
 
 // const resetColumns = () => {
@@ -333,7 +335,7 @@ const confirmCondition = (
     //     columns: savedConfig.value?.columns ?? [],
     //     sortOptions: savedConfig.value?.sortOptions ?? []
     // }
-    setSavedConfig({searchConditions})
+    setSavedConfig({ searchConditions })
     // loadTable({ queryList, isOr })
     loadTable()
 }
@@ -346,7 +348,7 @@ const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     //     columns: savedConfig.value?.columns ?? [],
     //     sortOptions
     // }
-    setSavedConfig({sortOptions})
+    setSavedConfig({ sortOptions })
     loadTable()
 }
 

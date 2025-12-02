@@ -100,7 +100,7 @@ export default {
 </script>
 
 <script lang="tsx" setup>
-import { ref, computed, Ref } from 'vue'
+import { ref, computed, Ref, provide } from 'vue'
 import { ElTabs, ElTabPane } from 'element-plus'
 import type { FormProps } from '../GForm'
 import TableSearch from './component/TableSearch.vue'
@@ -125,6 +125,7 @@ import Sort from '../GBaseModuleV2/component/Sort.vue'
 import { RuleOption, OrderProps } from '../GBaseModuleV2/interface/sort'
 import { isTreeStructureColumns } from '../GBaseModuleV2/hooks/useConfig'
 import { BaseModuleColumnProps } from '../GBaseModuleV2/interface'
+import { tableConfigKey } from '../GBaseModuleV2/constant'
 
 export interface Props {
     /**
@@ -267,6 +268,8 @@ const { localTableConfig, showColumns, exportedColumns, sortColumns } = useMerge
 const confirmSort = (order: OrderProps, sortOptions: RuleOption[]) => {
     emits('sort', order, sortOptions)
 }
+
+provide(tableConfigKey, localTableConfig)
 
 // 抛出
 defineExpose({
