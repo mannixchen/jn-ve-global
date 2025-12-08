@@ -1,124 +1,137 @@
 <template>
-    <el-popover
-        ref="popoverRef"
-        v-model:visible="sortPopoverVisible"
-        placement="bottom-start"
-        trigger="click"
-        :popper-options="options"
-        popper-class="sort__popover"
-        @show="show"
-    >
-        <template #reference>
-            <!-- <el-button type="primary" text>
-                排序
-            </el-button> -->
-            <div :class="['sort-icon-wrapper', $attrs.class ?? '']">
-                <g-icon icon="sort" custom-color />
-            </div>
-        </template>
-        <div class="sort-wrapper">
-            <div class="header-wrapper">
-                <div class="title-wrapper">
-                    <div class="title">
+    <el-tooltip effect="dark" content="自定义排序" placement="top-start" :popper-options="options">
+        <div>
+            <el-popover
+                ref="popoverRef"
+                v-model:visible="sortPopoverVisible"
+                placement="bottom-start"
+                trigger="click"
+                :popper-options="options"
+                popper-class="sort__popover"
+                @show="show"
+            >
+                <template #reference>
+                    <!-- <el-button type="primary" text>
                         排序
+                    </el-button> -->
+                    <div :class="['sort-icon-wrapper', $attrs.class ?? '']">
+                        <g-icon icon="sort" custom-color />
                     </div>
-                    <el-tooltip effect="dark" content="设置查询排序规则" placement="top-start">
-                        <el-icon class="tip-icon" color="#C1C1C1">
-                            <QuestionFilled />
-                        </el-icon>
-                    </el-tooltip>
-                </div>
-            </div>
-            <div class="btns-wrapper">
-                <el-popover
-                    v-model:visible="selectRuleModalVisible"
-                    placement="left-start"
-                    trigger="click"
-                    :teleported="false"
-                    width="3.4rem"
-                >
-                    <template #reference>
-                        <el-button class="add-btn-wrapper" type="primary" plain :icon="Plus">
-                            排序规则
-                        </el-button>
-                    </template>
-                    <div class="not-selected-wrapper">
-                        <el-input
-                            v-model.trim="keyword"
-                            class="search-wrapper"
-                            placeholder="搜索字段"
-                            clearable
-                            :suffix-icon="Search"
-                            @change="search"
-                        />
-                        <div class="option-list-wrapper">
-                            <div
-                                v-for="(option, index) in searchResults"
-                                :key="option.prop ?? index"
-                                class="not-selected-item-wrapper"
-                                @click="selectRule(option)"
-                            >
-                                {{ option.label }}
+                </template>
+                <div class="sort-wrapper">
+                    <div class="header-wrapper">
+                        <div class="title-wrapper">
+                            <div class="title">
+                                排序
                             </div>
+                            <el-tooltip
+                                effect="dark"
+                                content="设置查询排序规则"
+                                placement="top-start"
+                            >
+                                <el-icon class="tip-icon" color="#C1C1C1">
+                                    <QuestionFilled />
+                                </el-icon>
+                            </el-tooltip>
                         </div>
                     </div>
-                </el-popover>
-
-                <el-button
-                    class="clear-btn-wrapper"
-                    type="danger"
-                    plain
-                    :icon="Delete"
-                    @click="clear"
-                >
-                    全部清空
-                </el-button>
-            </div>
-            <div ref="selectedRulesRef" class="selected-rule-list-wrapper">
-                <div
-                    v-for="(option, index) in selectedRuleOptions"
-                    :key="option.prop ?? index"
-                    class="selected-rule-item-wrapper"
-                    :data-prop="option.prop"
-                >
-                    <div class="rule-info">
-                        <div class="label">
-                            {{ option.label ?? '' }}
-                        </div>
-                        <el-radio-group v-model="option.order" class="order-radio-group">
-                            <el-radio
-                                v-for="item in orderOptions"
-                                :key="item.value"
-                                :value="item.value"
-                                :label="item.value"
-                                size="large"
-                            >
-                                {{ item.label }}
-                            </el-radio>
-                        </el-radio-group>
-                        <el-tooltip
-                            effect="dark"
-                            content="拖动改变字段顺序"
-                            placement="top-start"
-                            :popper-options="options"
+                    <div class="btns-wrapper">
+                        <el-popover
+                            v-model:visible="selectRuleModalVisible"
+                            placement="left-start"
+                            trigger="click"
+                            :teleported="false"
+                            width="3.4rem"
                         >
-                            <div class="drag-icon-wrapper">
-                                <g-icon icon="drag" custom-color />
+                            <template #reference>
+                                <el-button
+                                    class="add-btn-wrapper"
+                                    type="primary"
+                                    plain
+                                    :icon="Plus"
+                                >
+                                    排序规则
+                                </el-button>
+                            </template>
+                            <div class="not-selected-wrapper">
+                                <el-input
+                                    v-model.trim="keyword"
+                                    class="search-wrapper"
+                                    placeholder="搜索字段"
+                                    clearable
+                                    :suffix-icon="Search"
+                                    @change="search"
+                                />
+                                <div class="option-list-wrapper">
+                                    <div
+                                        v-for="(option, index) in searchResults"
+                                        :key="option.prop ?? index"
+                                        class="not-selected-item-wrapper"
+                                        @click="selectRule(option)"
+                                    >
+                                        {{ option.label }}
+                                    </div>
+                                </div>
                             </div>
-                        </el-tooltip>
+                        </el-popover>
+
+                        <el-button
+                            class="clear-btn-wrapper"
+                            type="danger"
+                            plain
+                            :icon="Delete"
+                            @click="clear"
+                        >
+                            全部清空
+                        </el-button>
                     </div>
-                    <el-icon class="delete-rule-btn" @click="deleteRule(option)">
-                        <Delete />
-                    </el-icon>
+                    <div ref="selectedRulesRef" class="selected-rule-list-wrapper">
+                        <div
+                            v-for="(option, index) in selectedRuleOptions"
+                            :key="option.prop ?? index"
+                            class="selected-rule-item-wrapper"
+                            :data-prop="option.prop"
+                        >
+                            <div class="rule-info">
+                                <div class="label">
+                                    {{ option.label ?? '' }}
+                                </div>
+                                <el-radio-group v-model="option.order" class="order-radio-group">
+                                    <el-radio
+                                        v-for="item in orderOptions"
+                                        :key="item.value"
+                                        :value="item.value"
+                                        :label="item.value"
+                                        size="large"
+                                    >
+                                        {{ item.label }}
+                                    </el-radio>
+                                </el-radio-group>
+                                <el-tooltip
+                                    effect="dark"
+                                    content="拖动改变字段顺序"
+                                    placement="top-start"
+                                    :popper-options="options"
+                                >
+                                    <div class="drag-icon-wrapper">
+                                        <g-icon icon="drag" custom-color />
+                                    </div>
+                                </el-tooltip>
+                            </div>
+                            <el-icon class="delete-rule-btn" @click="deleteRule(option)">
+                                <Delete />
+                            </el-icon>
+                        </div>
+                    </div>
+                    <div class="confirm-btn-wrapper">
+                        <el-button type="primary" @click="confirm">
+                            确定
+                        </el-button>
+                    </div>
                 </div>
-            </div>
-            <div class="confirm-btn-wrapper">
-                <el-button type="primary" @click="confirm">
-                    确定
-                </el-button>
-            </div>
+            </el-popover>
         </div>
-    </el-popover>
+    </el-tooltip>
 </template>
 <script lang="ts" setup>
 import { onMounted, watch, ref, computed, reactive, toRefs, inject } from 'vue'

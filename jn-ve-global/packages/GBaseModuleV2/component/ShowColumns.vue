@@ -2,120 +2,131 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-12-02 09:49:51
+ * @LastEditTime: 2025-12-04 09:57:28
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
  * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
 -->
 <template>
-    <el-popover
-        ref="popoverRef"
-        placement="bottom-start"
-        trigger="click"
-        :popper-options="options"
-        popper-class="show-columns__popover"
-        @show="show"
-    >
-        <template #reference>
-            <!-- <el-button type="primary" text>
-                显示列
-            </el-button> -->
-            <div :class="['show-column-icon-wrapper', $attrs.class ?? '']">
-                <g-icon icon="show-column" custom-color />
-            </div>
-        </template>
-        <div class="set-columns-wrapper">
-            <div class="header-wrapper">
-                <div class="title-wrapper">
-                    <div class="title">
+    <el-tooltip effect="dark" content="自定义列" placement="top-start" :popper-options="options">
+        <div>
+            <el-popover
+                ref="popoverRef"
+                placement="bottom-start"
+                trigger="click"
+                :popper-options="options"
+                popper-class="show-columns__popover"
+                @show="show"
+            >
+                <template #reference>
+                    <!-- <el-button type="primary" text>
                         显示列
+                    </el-button> -->
+                    <div :class="['show-column-icon-wrapper', $attrs.class ?? '']">
+                        <g-icon icon="show-column" custom-color />
                     </div>
-                    <el-tooltip effect="dark" content="设置显示列和冻结列" placement="top-start">
-                        <el-icon class="tip-icon" color="#C1C1C1">
-                            <QuestionFilled />
-                        </el-icon>
-                    </el-tooltip>
+                </template>
+                <div class="set-columns-wrapper">
+                    <div class="header-wrapper">
+                        <div class="title-wrapper">
+                            <div class="title">
+                                显示列
+                            </div>
+                            <el-tooltip
+                                effect="dark"
+                                content="设置显示列和冻结列"
+                                placement="top-start"
+                            >
+                                <el-icon class="tip-icon" color="#C1C1C1">
+                                    <QuestionFilled />
+                                </el-icon>
+                            </el-tooltip>
+                        </div>
+                        <el-button
+                            class="reset-btn-wrapper"
+                            type="primary"
+                            plain
+                            :icon="Refresh"
+                            @click="reset"
+                        >
+                            重置
+                        </el-button>
+                        <!-- <div class="reset-btn-wrapper" @click="reset" /> -->
+                    </div>
+                    <el-input
+                        v-model.trim="keyword"
+                        class="search-wrapper"
+                        placeholder="搜索字段"
+                        clearable
+                        :suffix-icon="Search"
+                        @change="search"
+                    />
+                    <el-checkbox
+                        v-model="checkAll"
+                        class="check-all-wrapper"
+                        :indeterminate="isIndeterminate"
+                        @change="handleCheckAllChange"
+                    >
+                        全选 {{ checkedColumns.length }}/{{ localColumns.length }}
+                    </el-checkbox>
+                    <el-checkbox-group
+                        v-if="visible"
+                        ref="checkboxGroupRef"
+                        v-model="checkedColumns"
+                        class="column-checkbox-group-wrapper"
+                        @change="handleCheckedColumnsChange"
+                    >
+                        <el-checkbox
+                            v-for="column in localColumns"
+                            :key="column.prop"
+                            :label="column.prop"
+                            :value="column.prop"
+                            :data-prop="column.prop"
+                        >
+                            <!-- {{ column.label }} -->
+                            <div class="column-checkbox-wrapper">
+                                <div class="label">
+                                    {{ column.label }}
+                                </div>
+                                <div class="icons-wrapper">
+                                    <el-tooltip
+                                        class="box-item"
+                                        effect="dark"
+                                        content="冻结列"
+                                        placement="top-start"
+                                    >
+                                        <div
+                                            class="fix-column"
+                                            @click.stop.prevent="fixColumn(column)"
+                                        >
+                                            <g-icon v-if="column.fixed" icon="affix-filled" />
+                                            <g-icon v-else icon="affix" />
+                                        </div>
+                                    </el-tooltip>
+                                    <el-tooltip
+                                        effect="dark"
+                                        content="拖动改变字段顺序"
+                                        placement="top-start"
+                                        :popper-options="options"
+                                    >
+                                        <div v-show="showAll" class="last-icon">
+                                            <g-icon icon="drag" custom-color />
+                                        </div>
+                                    </el-tooltip>
+                                </div>
+                            </div>
+                        </el-checkbox>
+                    </el-checkbox-group>
+                    <!-- <div class="confirm-btn-wrapper">
+                        <el-button type="primary" @click="confirm">
+                            确认
+                        </el-button>
+                    </div> -->
                 </div>
-                <el-button
-                    class="reset-btn-wrapper"
-                    type="primary"
-                    plain
-                    :icon="Refresh"
-                    @click="reset"
-                >
-                    重置
-                </el-button>
-                <!-- <div class="reset-btn-wrapper" @click="reset" /> -->
-            </div>
-            <el-input
-                v-model.trim="keyword"
-                class="search-wrapper"
-                placeholder="搜索字段"
-                clearable
-                :suffix-icon="Search"
-                @change="search"
-            />
-            <el-checkbox
-                v-model="checkAll"
-                class="check-all-wrapper"
-                :indeterminate="isIndeterminate"
-                @change="handleCheckAllChange"
-            >
-                全选 {{ checkedColumns.length }}/{{ localColumns.length }}
-            </el-checkbox>
-            <el-checkbox-group
-                v-if="visible"
-                ref="checkboxGroupRef"
-                v-model="checkedColumns"
-                class="column-checkbox-group-wrapper"
-                @change="handleCheckedColumnsChange"
-            >
-                <el-checkbox
-                    v-for="column in localColumns"
-                    :key="column.prop"
-                    :label="column.prop"
-                    :value="column.prop"
-                    :data-prop="column.prop"
-                >
-                    <!-- {{ column.label }} -->
-                    <div class="column-checkbox-wrapper">
-                        <div class="label">
-                            {{ column.label }}
-                        </div>
-                        <div class="icons-wrapper">
-                            <el-tooltip
-                                class="box-item"
-                                effect="dark"
-                                content="冻结列"
-                                placement="top-start"
-                            >
-                                <div class="fix-column" @click.stop.prevent="fixColumn(column)">
-                                    <g-icon v-if="column.fixed" icon="affix-filled" />
-                                    <g-icon v-else icon="affix" />
-                                </div>
-                            </el-tooltip>
-                            <el-tooltip
-                                effect="dark"
-                                content="拖动改变字段顺序"
-                                placement="top-start"
-                                :popper-options="options"
-                            >
-                                <div v-show="showAll" class="last-icon">
-                                    <g-icon icon="drag" custom-color />
-                                </div>
-                            </el-tooltip>
-                        </div>
-                    </div>
-                </el-checkbox>
-            </el-checkbox-group>
-            <!-- <div class="confirm-btn-wrapper">
-                <el-button type="primary" @click="confirm">
-                    确认
-                </el-button>
-            </div> -->
+            </el-popover>
         </div>
-    </el-popover>
+    </el-tooltip>
 </template>
 
 <script lang="ts" setup>
