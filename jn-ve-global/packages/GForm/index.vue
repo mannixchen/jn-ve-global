@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
     if (!props.config.instance) return
 
     // 初始化 model
-    props.config.instance.initModel()
+    props.config.instance.initModel?.()
 
     // 针对 低代码，绑定的 DataSet 在组件销毁时，清空 DataSet 的 instance，通过对象引用，挨个删除字段
     for (const key in props.config.instance) {
