@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-07-03 10:10:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-12-04 09:57:28
+ * @LastEditTime: 2025-12-22 16:02:22
  * @FilePath: \@jsjn-librar-monorepo\jn-ve-global\packages\GBaseModuleV2\component\ShowColumns.vue
  * @Description: 
  * 
@@ -169,6 +169,13 @@ const tableConfig = inject(tableConfigKey)
 const options = getPopoverOptions()
 
 const columns = defineModel<BaseModuleColumnProps[]>({ default: [] })
+
+// if (
+//     columns.value?.length > 0 &&
+//     columns.value.some((item) => !isExcludedColumn(item) && !item.prop)
+// ) {
+//     throw new Error('列配置中prop属性不能为空')
+// }
 
 const emits = defineEmits<{
     'columnChange': [val?: BaseModuleColumnProps[]]

@@ -2,7 +2,7 @@
  * @Author: “zhujin” zhujin@jsjngf.com
  * @Date: 2024-10-14 13:48:29
  * @LastEditors: zhujin zhujin@jsjngf.com
- * @LastEditTime: 2025-11-03 15:57:39
+ * @LastEditTime: 2025-12-22 15:43:30
  * @FilePath: /@jsjn-librar-monorepo/jn-ve-global/packages/GBaseModuleV2/hooks/useConfig.ts
  * @Description:
  *
@@ -20,8 +20,8 @@ interface Info {
 }
 
 export const isExcludedColumn = (columnProps: BaseModuleColumnProps) => {
-    const { prop, label, type } = columnProps
-    return (prop === 'opertion' && label === '操作') || excludedColumnTypes.includes(type)
+    const { prop = '', label = '', type } = columnProps
+    return (prop === 'opertion' && label === '操作') || (type && excludedColumnTypes.includes(type))
 }
 
 // 判断是否多级表头
@@ -30,11 +30,13 @@ export const isTreeStructureColumns = (columns: BaseModuleColumnProps[]): boolea
     function hasNestedChildren(items) {
         for (const item of items) {
             // 判断当前元素是否有children属性且为数组
-            if (item.children && Array.isArray(item.children)) {
+            if (item?.children && Array.isArray(item?.children)) {
                 // 如果children数组不为空，或者其中还包含有children的元素，则认为是树形结构
                 if (
-                    item.children.length > 0 ||
-                    item.children.some((child) => child.children && Array.isArray(child.children))
+                    item?.children?.length > 0 ||
+                    item?.children?.some(
+                        (child) => child?.children && Array.isArray(child?.children)
+                    )
                 ) {
                     return true
                 }
