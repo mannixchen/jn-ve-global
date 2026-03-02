@@ -1,0 +1,95 @@
+:root {
+    --el-text-color-regular: var(--jn-ve-g-form-color);
+}
+
+// 覆盖 el-message-box 样式
+.el-message-box {
+    --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+
+    .el-message-box__header {
+        background-image: var(--jn-ve-g-popup-header-bg) !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .el-message-box__btns {
+        justify-content: center;
+    }
+}
+
+// 覆盖自定义 icon 的自定义颜色
+.svg-icon-custom-color {
+    path {
+        fill: currentColor;
+    }
+    
+    // path,
+    // rect,
+    // polyline {
+    //     fill: currentColor;
+    //     stroke: currentColor;
+    // }
+}
+
+// TinyMce 富文本编辑器
+.tox-tinymce-aux {
+    z-index: 13001 !important;
+}
+
+.mce-content-body.mce-edit-focus {
+    outline: #409eff auto 1px !important;
+}
+
+.tox-tinymce-inline {
+    z-index: 13000;
+}
+
+.el-message {
+    z-index: 130002 !important;
+}
+
+// ele 原生弹框样式覆盖
+.el-drawer,
+.el-dialog {
+    .el-drawer__header,
+    .el-dialog__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-image: var(--jn-ve-g-popup-header-bg);
+        margin-right: 0;
+        padding-top: var(--jn-ve-g-modal-title-base-top-p) !important;
+        padding-bottom: var(--jn-ve-g-modal-title-base-top-p) !important;
+        padding-left: var(--jn-ve-g-modal-title-base-left-p) !important;
+        padding-right: 20px !important;
+        margin-bottom: 0 !important;
+
+        .el-drawer__title,
+        .el-dialog__title {
+            font-size: 24px;
+            color: #333333;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+// el 滚动条样式加粗加黑
+.el-scrollbar__bar {
+    --scrollbar-strong: 8px;
+
+    .el-scrollbar__thumb {
+        --el-scrollbar-bg-color: #595959;
+        --el-scrollbar-opacity: 0.6;
+        --el-scrollbar-hover-opacity: 0.8;
+        --el-scrollbar-hover-bg-color: #606266;
+    }
+
+    &.is-horizontal {
+        height: var(--scrollbar-strong);
+    }
+
+    &.is-vertical {
+        width: var(--scrollbar-strong);
+    }
+}

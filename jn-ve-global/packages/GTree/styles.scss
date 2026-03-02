@@ -1,0 +1,119 @@
+.aside-tree {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    // 按钮区域
+    .btns-wrapper {
+        display: flex;
+        padding: 12px var(--jn-ve-g-tree-padding-lr) 0;
+        justify-content: space-between;
+        flex: none;
+
+        .g-button-group {
+            flex: 1;
+
+            .el-button {
+                --jn-ve-g-btn-height: var(--jn-ve-g-btn-ss-height);
+                --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr3);
+            }
+        }
+
+        .tree-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            >.el-tooltip__trigger {
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-left: 10px;
+
+                &:first-of-type {
+                    margin-left: 0;
+                }
+            }
+
+            .custom-svg-icon {
+                cursor: pointer;
+                color: #a7a7a7 !important;
+
+                &:hover {
+                    color: #399ffb !important;
+                }
+
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    // 搜索框
+    .input-wrapper {
+        padding: 12px var(--jn-ve-g-tree-padding-lr) 12px;
+    }
+
+    // 树容器
+    .tree-wrapper {
+        flex: 1;
+        overflow: hidden;
+        padding-left: var(--jn-ve-g-tree-padding-lr);
+
+        .el-tree {
+            .el-tree-node__content {
+
+                // 展开按钮图标
+                .el-tree-node__expand-icon {
+                    font-size: 22px;
+                    margin: 0;
+                }
+
+                // 复选框
+                .el-checkbox {
+                    height: 100% !important;
+                    margin-right: 8px !important;
+                }
+
+                // 文本
+                .tree-node__label {
+                    flex: 1;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    -o-text-overflow: ellipsis;
+                }
+
+                // 节点内图标
+                .tree-node__icon-wrapper {
+                    display: flex;
+                    align-items: center;
+                    height: 100%;
+                    margin-right: 6px;
+
+                    >svg,
+                    >i {
+                        font-size: 18px;
+                        color: rgba(0, 0, 0, 0.7) !important;
+
+                        &.root-icon {
+                            color: #1890ff !important;
+                        }
+                    }
+
+                    &.no-icon {
+                        display: none;
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+    }
+
+    .white {
+        height: 6px;
+    }
+}

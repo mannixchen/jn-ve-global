@@ -1,0 +1,40 @@
+@mixin middle-area {
+    padding: 0 var(--jn-ve-g-base-module-padding-lr);
+    margin-bottom: 10px;
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+
+    /* 左 */
+    .middle-left-wrapper {
+        width: 60%;
+
+        // 按钮组
+        .g-button-group {
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+            --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+        }
+    }
+
+    /* 右 */
+    .middle-right-wrapper {
+        width: 38%;
+    }
+
+    .end-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .show-column-wrapper,
+        .sort-wrapper {
+            margin-top: 15px;
+            margin-right: 0 !important;
+        }
+
+        .sort-wrapper {
+            margin-left: 12px !important;
+            padding: 0 !important;
+        }
+    }
+}

@@ -1,17 +1,30 @@
 node_modules
 .DS_Store
-dist
-uums
 dist-ssr
 *.local
-# yarn.lock
-# package-lock.json
+yarn.lock
+package-lock.json
 *.zip
 *.7z
 .temp 
 .cache 
 zyunchao.github.io
 jvb-doc
-jn-ve-global
+jn-ve-global/jn-ve-global
 @types
-pnpm-lock.yaml
+# pnpm-lock.yaml
+.husky
+test-vueuse-core
+dist
+es
+lib
+!examples/public/lib
+
+auto-imports.d.ts
+components.d.ts
+
+# !icons-vue/es
+# !icons-vue/dist
+
+element-component
+business-ui/business-ui

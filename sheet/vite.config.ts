@@ -1,0 +1,47 @@
+import { defineConfig } from 'vite'
+import { resolve } from 'path'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import eslintPlugin from 'vite-plugin-eslint'
+import requireTransform from 'vite-plugin-require-transform'
+import dts from 'vite-plugin-dts'
+
+export default defineConfig({
+    plugins: [
+        vue({
+            // reactivityTransform: false // 响应性语法糖
+        }),
+        vueJsx(),
+        // 生成 .d.ts
+        dts({
+            outputDir: resolve(__dirname, '@types'),
+            copyDtsFiles: false
+        }),
+        eslintPlugin({
+            include: ['src/**/*.{js,jsx,ts,tsx,vue}']
+        }),
+        requireTransform({})
+    ],
+    optimizeDeps: {
+        esbuildOptions: {}
+    },
+    build: {
+        lib: {
+            entry: resolve(__dirname, 'src/index.ts'),
+            name: 'JnSheet',
+            fileName: 'index',
+            formats: ['es']
+        },
+        rollupOptions: {
+            // 确保外部化处理那些你不想打包进库的依赖
+            external: ['vue', '@jsjn/utils'],
+            output: {
+                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                globals: {
+                    vue: 'Vue'
+                },
+                chunkFileNames: 'chunks/[name]-[hash].js'
+            }
+        }
+    }
+})

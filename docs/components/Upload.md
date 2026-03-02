@@ -8,18 +8,24 @@
 2. 抛出的绑定值是后台库所存储的 fileId
 3. 下载资源的链接与后台为强关联
 
+组件库文档由于是单独部署在 gitlub 上的，无法与文件服务器交互，故文档中的案例效果并非实际使用效果
+实际使用效果可参考 example（组件库开发人员可看，使用代理与资源服务器实际交互） 中的案例
+
+可在具体的项目中，参考案例代码，查看效果
+
 :::
 
 基于 [Element-plus Upload](https://element-plus.gitee.io/zh-CN/component/upload.html)
 
 扩展了：
 
-* 一键限制文件上传的大小（基于 `beforeUpload`）
+* 一键限制文件上传的大小
 * 一键配置头像模式
 * 业务 FileId 便捷获取
 * FileList 双向绑定
+* 文件预览功能
 
-:::tip 与后台交互，响应注意事项：
+与后台交互，响应注意事项：
 
 ```ts
 /**
@@ -53,14 +59,54 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 }
 ```
 
-:::
+## 文件列表
 
-::: tip 注意
+组件响应性的绑定了 `fileList` 字段，意味着你可以面向这个文件数组编程
 
-组件库文档由于是单独部署在 github 上的，无法与文件服务器交互，故文档中的案例效果并非实际使用效果
+动态的增加或减少这个数据的内容，就可以在页面上显示对应长度的文件列表
 
-实际使用效果可参考 example（使用代理与资源服务器实际交互） 中的案例
+文件列表可用于：
 
+* 展示文件信息：文件名、类型、略缩图
+* 预览：基于 [FilePreview](./FilePreview.md)
+* 下载
+* 删除：列表会同步更改
+
+文件列表的元素类型：
+
+```ts
+interface UploadFile {
+    /**
+     * 文件名称
+     */
+    name: string
+    /**
+     * 文件地址：
+     *  - 预览
+     *  - 下载
+     */
+    url?: string
+    /**
+     * 业务中的文件服务器的文件 id
+     */
+    fileId: string
+    percentage?: number
+    status?: UploadStatus
+    size?: number
+    response?: unknown
+    uid?: number
+    raw?: ElFile
+    type?: string
+    [k: string]: any
+}
+```
+
+:::tip
+文件必须包含 `name` && `fileId` 字段， `url` 在 2.6.0 之后是可选的
+
+组件内部会根据 `fileId` 值，去文件服务器（需要用户传递 `downloadUrl` 参数）自动获取资源
+
+同时 `url` 将会以用户传递的值为第一优先级
 :::
 
 ## 文本
@@ -75,7 +121,19 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 
 <template #code>
 
+<CodeGroup>
+  <CodeGroupItem title="示例代码" active>
+
 @[code](@demoroot/Upload/text.vue)
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="fileList.json" >
+
+@[code](@demoroot/Upload/data/fileList.json)
+
+  </CodeGroupItem>
+</CodeGroup>
 
 </template>
 
@@ -95,7 +153,19 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 
 <template #code>
 
+<CodeGroup>
+  <CodeGroupItem title="示例代码" active>
+
 @[code](@demoroot/Upload/picture.vue)
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="fileList.json" >
+
+@[code](@demoroot/Upload/data/fileList.json)
+
+  </CodeGroupItem>
+</CodeGroup>
 
 </template>
 
@@ -113,7 +183,19 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 
 <template #code>
 
+<CodeGroup>
+  <CodeGroupItem title="示例代码" active>
+
 @[code](@demoroot/Upload/picture-card.vue)
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="fileList.json" >
+
+@[code](@demoroot/Upload/data/fileList.json)
+
+  </CodeGroupItem>
+</CodeGroup>
 
 </template>
 
@@ -150,7 +232,19 @@ const onSuccess = (res, file: UploadFile, fileList: UploadFile[]) => {
 
 <template #code>
 
+<CodeGroup>
+  <CodeGroupItem title="示例代码" active>
+
 @[code](@demoroot/Upload/disabled.vue)
+
+  </CodeGroupItem>
+
+  <CodeGroupItem title="fileList.json" >
+
+@[code](@demoroot/Upload/data/fileList.json)
+
+  </CodeGroupItem>
+</CodeGroup>
 
 </template>
 
@@ -182,6 +276,7 @@ imgUrl | 上传头像回显的 img url | string \| 流 | --
 downloadHide | 隐藏下载按钮 | boolean | false
 delHide | 隐藏删除按钮 | boolean | false
 successNoMsg | 上传成功是不显示提示消息 | boolean | false
+downloadUrl | 下载 & 预览文件的 url | string | /kinso-basic-open-server/v1/document/file/download
 
 ## Upload 扩展钩子
 

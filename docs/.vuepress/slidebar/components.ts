@@ -4,14 +4,19 @@ export default [
         link: '/components/index.md'
     },
     {
+        text: '升级指南',
+        link: '/components/Updateguide.md'
+    },
+    {
         text: '控制组件',
         children: [
             { text: 'Form', link: '/components/Form.md' },
             { text: 'Tabs', link: '/components/Tabs.md' },
-            { text: 'OperateExcel', link: '/components/OperateExcel.md' },
+            // { text: 'OperateExcel', link: '/components/OperateExcel.md' },
             { text: 'FigureInput', link: '/components/FigureInput.md' },
             { text: 'IconPicker', link: '/components/IconPicker.md' },
             { text: 'Upload', link: '/components/Upload.md' },
+            { text: 'UploadFolder', link: '/components/UploadFolder.md' },
             { text: 'InfoSelect', link: '/components/InfoSAA/InfoSelect.md' },
             { text: 'InfoSelectAll', link: '/components/InfoSAA/InfoSelectAll.md' },
             { text: 'InfoAutocomplete', link: '/components/InfoSAA/InfoAutocomplete.md' },
@@ -39,7 +44,8 @@ export default [
             { text: 'Icon', link: '/components/Icon.md' },
             { text: 'Table', link: '/components/Table.md' },
             { text: 'Tree', link: '/components/Tree.md' },
-            { text: 'IrregularTable', link: '/components/IrregularTable.md' }
+            { text: 'IrregularTable', link: '/components/IrregularTable.md' },
+            { text: 'FilePreview', link: '/components/FilePreview.md' }
         ]
     },
     {

@@ -19,3 +19,4 @@ src/assets
 !*.vuepress
 *.cache
 *.temp
+icons-vue/vue/src/components/*

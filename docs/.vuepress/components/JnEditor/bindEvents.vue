@@ -22,9 +22,9 @@ export default {
 import { ref, watch } from 'vue'
 /**
  * 实际开发中，请使用如下引用
- * import { Editor as TinyMCEEditor } from '@component/index'
+ * import { Editor as TinyMCEEditor } from 'jn-ve-global'
  */
-import { Editor as TinyMCEEditor, EditorEvent } from '@component/index'
+import { Editor as TinyMCEEditor, EditorEvent } from 'jn-ve-global'
 
 const html = ref<string>('<h1>Hello Tiny!</h1>')
 const editorRef = ref<any>(null)

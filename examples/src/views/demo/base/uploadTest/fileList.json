@@ -1,0 +1,42 @@
+[
+    {
+        "id": "0",
+        "name": "大图.jpg",
+        "fileId": "5,d14aef6401f4"
+    },
+    {
+        "id": "1",
+        "name": "t1.png",
+        "fileId": "2,013406453b5b51"
+    },
+    {
+        "id": "2",
+        "name": "sun2.webp",
+        "fileId": "6,393b2bfbebe9"
+    },
+    {
+        "id": "3",
+        "name": "简历.pdf",
+        "fileId": "5,d157694dfe58"
+    },
+    {
+        "id": "4",
+        "name": "超大文档30M.docx",
+        "fileId": "1,0136b56049bad9"
+    },
+    {
+        "id": "5",
+        "name": "工作簿1.xlsx",
+        "fileId": "7,393e70c684fe"
+    },
+    {
+        "id": "6",
+        "name": "xxx.txt",
+        "fileId": "3,dbadb6fa1395"
+    },
+    {
+        "id": "7",
+        "name": "归档.zip",
+        "fileId": "1,0136e4164125ff"
+    }
+]

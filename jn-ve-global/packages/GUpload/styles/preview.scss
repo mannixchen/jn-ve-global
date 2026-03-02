@@ -1,0 +1,59 @@
+.file-preview-wrapper {
+    max-height: 800px;
+
+    img {
+        max-height: 800px;
+    }
+}
+
+.g-custom-dialog.upload-preview-modal {
+    border-radius: 2px !important;
+
+    .el-dialog__body {
+        padding: 2px;
+        overflow: hidden;
+    }
+
+    &.img-modal {
+        --el-dialog-bg-color: transparent;
+        box-shadow: none;
+        width: fit-content;
+
+        .el-dialog__header {
+            display: none;
+        }
+
+        .el-dialog__body {
+            width: fit-content;
+            height: fit-content;
+        }
+    }
+
+    &.is-fullscreen {
+        .el-dialog__body {
+            padding: 0;
+            overflow: hidden;
+        }
+    }
+}
+
+
+// 去除刷新列表的动画
+.g-upload {
+
+    .el-upload-list--picture,
+    .el-upload-list--picture-card {
+
+        .el-list-leave-active,
+        .el-list-leave-to {
+            transition: none;
+            transform: translate(0, 0);
+        }
+
+        .el-list-enter-active,
+        .el-list-enter-to {
+            transition: none;
+            transform: translate(0, 0);
+        }
+    }
+}

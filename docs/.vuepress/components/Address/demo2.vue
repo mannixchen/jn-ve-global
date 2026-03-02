@@ -11,7 +11,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps, BtnProps } from '@component/index'
+import { FormProps, BtnProps } from 'jn-ve-global'
 
 const formConfig = reactive<FormProps>({
     instance: null,
@@ -42,7 +42,7 @@ const btns: BtnProps[] = [
         label: '重置',
         type: 'default',
         onClick() {
-            formConfig.instance.resetFields()
+            formConfig.instance?.resetFields()
         }
     },
     {

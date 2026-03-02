@@ -38,7 +38,7 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
 
     .title {
         display: flex;
-        padding: 15px 30px;
+        padding: 0 30px;
         justify-content: space-between;
         border-bottom: 1px solid #ddd;
 
@@ -54,7 +54,8 @@ import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
     }
 
     .content {
-        padding: 20px 50px;
+        --navbar-height: 0.1rem;
+        padding: 10px 40px;
     }
 }
 </style>

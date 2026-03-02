@@ -14,7 +14,7 @@ import { ref, watch } from 'vue'
  * 实际开发中，请使用如下引用
  * import { RawEditorSettings } from 'jn-ve-global/packages'
  */
-import { RawEditorSettings } from '@component/index'
+import { RawEditorSettings } from 'jn-ve-global'
 
 const html = ref<string>('<h1>Hello Tiny!</h1>')
 

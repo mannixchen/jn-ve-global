@@ -21,7 +21,7 @@ export default {
 
 <script lang="ts" setup>
 import { defineComponent, reactive, toRefs } from 'vue'
-import { BtnProps, FormProps, TableColumnProps, PaginationProps } from '@component/index'
+import { BtnProps, FormProps, TableColumnProps, PaginationProps } from 'jn-ve-global'
 
 const searchFormProps = reactive<FormProps>({
     instance: null,

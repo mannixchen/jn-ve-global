@@ -1,14 +1,16 @@
 import { defineUserConfig } from 'vuepress'
 import { defaultTheme } from '@vuepress/theme-default'
 import { viteBundler } from '@vuepress/bundler-vite'
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+// import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import sidebar from './slidebar'
 import navbar from './navbar'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
-import path from 'path'
+// import path from 'path'
 import { registerComponentsPlugin } from '@vuepress/plugin-register-components'
 import { searchPlugin } from '@vuepress/plugin-search'
+import { getDirname, path } from '@vuepress/utils'
+
+const __dirname = getDirname(import.meta.url)
 
 /**
  * 部署站点的基础路径
@@ -26,12 +28,7 @@ export default defineUserConfig({
 
     // 定义路径别名
     alias: {
-        '@': path.resolve(__dirname, '../../examples'),
-        '@component': path.resolve(__dirname, '../../packages'),
-        '@examples': path.resolve(__dirname, '../../examples'),
-        '@assets': path.resolve(__dirname, '../../examples/assets'),
-        '@mdroot': path.resolve(__dirname, '../modules'),
-        '@imgs': path.resolve(__dirname, './public/images')
+        '@': path.resolve(__dirname, '../../examples/src')
     },
 
     // 主题配置
@@ -48,17 +45,15 @@ export default defineUserConfig({
     bundler: viteBundler({
         viteOptions: {
             plugins: [
-                vueJsx() as any,
-                createSvgIconsPlugin({
-                    iconDirs: [
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/old'),
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/newCore'),
-                        path.resolve(__dirname, '../../packages/assets/icons/svg/regtech')
-                    ],
-                    symbolId: 'custom-icon-[dir]-[name]'
-                }),
-                // setup 增强，标签添加 name 属性
-                vueSetupExtend()
+                vueJsx() as any
+                // createSvgIconsPlugin({
+                //     iconDirs: [
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/old'),
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/newCore'),
+                //         path.resolve(__dirname, '../../jn-ve-global/packages/assets/icons/svg/regtech')
+                //     ],
+                //     symbolId: 'custom-icon-[dir]-[name]'
+                // }),
             ]
         }
     }),

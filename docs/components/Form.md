@@ -276,7 +276,7 @@ interface ExtendRuleItem extends RuleItem {
 
 在以往的开发中，我们在操作一个拥有待选列表的控件（如：下拉框、单多选框、下拉树）时，我们需要请求接口，根据接口返回的数据，映射成对应的待选列表，然后再经过查找、赋值，才能回填到控件中，如下
 
-![待选列表](@imgs/realize/待选列表回填.png)
+![待选列表](/images/realize/待选列表回填.png)
 
 现在，为一些包含带有待选列表的控件，提供了通过配置一个请求地址的方式，实现自动请求、填充、更新的功能
 
@@ -417,6 +417,33 @@ xl: item.xl ?? 8
 <template #code>
 
 @[code](@demoroot/Form/bootstrapLayout.vue)
+
+</template>
+
+</demo-block>
+
+### 字段修改历史
+
+通过后台接口获取到表单的修改日志记录，传递给表单配置的 `historyLog` 字段，如：
+
+字段类型：
+
+```ts
+/**
+ * 数据模型修改历史，json 字符串 or 数据模型
+ */
+historyLog?: string | {
+    [k: string]: FieldHistoryLog;
+};
+```
+
+<demo-block>
+
+<Form-demo5 />
+
+<template #code>
+
+@[code](@demoroot/Form/demo5.vue)
 
 </template>
 

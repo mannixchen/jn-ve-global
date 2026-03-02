@@ -1,0 +1,10 @@
+{
+    "name": "examples",
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "serve": "vite preview",
+        "build:px": "vite build --px"
+    }
+}

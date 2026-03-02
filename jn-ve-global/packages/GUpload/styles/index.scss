@@ -1,0 +1,25 @@
+@import './common';
+@import './trigger/avatar.scss';
+@import './trigger/picture-card.scss';
+@import './file-list/picture-card.scss';
+@import './file-list/picture.scss';
+@import './file-list/text.scss';
+
+.g-upload {
+    // 禁用
+    @include disabled;
+
+    // 触发
+    @include trigger-avatar;
+
+    .el-upload {
+        @include trigger-picture-card;
+    }
+
+    // 文件列表
+    .el-upload-list {
+        @include file-list-picture;
+        @include file-list-picture-card;
+        @include file-list-text;
+    }
+}

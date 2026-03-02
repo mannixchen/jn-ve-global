@@ -1,0 +1,75 @@
+@use "sass:map";
+
+@use 'mixins/function' as *;
+@use "mixins/mixins" as *;
+@use 'mixins/var' as *;
+@use "common/var" as *;
+
+@include b(input-range) {
+  @include set-component-css-var('input-range', $input-range);
+}
+
+@include b(input-range) {
+  width: 100%;
+  display: flex;
+  padding: 2px;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: var(--el-input-border-radius, var(--el-border-radius-base));
+  cursor: text;
+  background-color: var(--el-input-bg-color, var(--el-fill-color-blank));
+  // background-image: none;
+  // border: 0.01rem solid map.get($input-range, "border-color");
+  // border: 1px solid var(--el-border-color);
+  transition: var(--el-transition-border);
+  box-shadow: 0 0 0 1px var(--el-input-border-color,var(--el-border-color)) inset;
+  // @include set-componet-css-var('input', $input);
+  // @include inset-input-border(var(#{getCssVarName("input-range-border-color")}, map.get($input-range, "border-color")));
+
+  &:hover {
+    box-shadow: 0 0 0 0.01rem var(--bi-input-range-hover-border-color) inset;
+  }
+
+  &.is-disabled {
+    cursor: not-allowed;
+    background-color: var(--el-disabled-bg-color);
+    box-shadow: 0 0 0 0.01rem var(--el-border-color-light) inset;
+  }
+
+  &.is-focus {
+    box-shadow: 0 0 0 1px var(--el-color-primary) inset;
+  }
+}
+
+
+@include b(range-separator) {
+  // margin: 1px, 0;
+  display: inline-flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 1px;
+  margin: 0;
+  overflow-wrap: break-word;
+  color: var(--el-text-color-primary);
+  // background-color: var(--bi-input-range-bg-color);
+  // background-color: var(--el-input-bg-color, var(--el-fill-color-blank));
+}
+
+@include b(input-number-amount) {
+  @include e(capital) {
+    width: 100%;
+    color: var(--el-color-info-light-3);
+    font-size: 12px;
+  }
+
+  @include b(input-number-currency) {
+    min-width: 160px;
+    height: 100%;
+
+    .el-select__wrapper {
+      height: 100% !important;
+    }
+  }
+}

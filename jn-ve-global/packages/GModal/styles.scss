@@ -1,0 +1,120 @@
+$--dialog-base-top-p: var(--jn-ve-g-modal-title-base-top-p);
+$--dialog-base-left-p: var(--jn-ve-g-modal-title-base-left-p);
+$--tf-base-bgc: #ecf6ff;
+$--close-btn-color: #ababab;
+$--close-btn-font-size: 22px;
+
+// // 顶部
+// @mixin titleStyle {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: $--dialog-base-top-p 20px $--dialog-base-top-p $--dialog-base-left-p;
+//     background-image: var(--jn-ve-g-popup-header-bg);
+//     margin-right: 0;
+
+//     >span,
+//     .el-dialog__title {
+//         font-size: 24px;
+//         color: #333333;
+//         font-weight: 600;
+//         letter-spacing: 1px;
+//     }
+// }
+
+// 底部
+@mixin footerStyle {
+    padding: 22px $--dialog-base-left-p;
+    display: flex;
+    justify-content: center;
+
+    .el-button {
+        --jn-ve-g-btn-height: var(--jn-ve-g-btn-b-height);
+        --jn-ve-g-btn-padding-lr: 20px;
+        font-size: var(--jn-ve-g-base-font-size-s);
+    }
+}
+
+// dialoag 模式
+.g-custom-dialog {
+    border-radius: 8px !important;
+    overflow: hidden;
+
+    .el-dialog__body {
+        padding: 14px $--dialog-base-left-p 14px $--dialog-base-left-p;
+        min-height: 100px;
+
+        >.base-module-root {
+            height: 650px;
+        }
+    }
+
+    .el-dialog__footer {
+        @include footerStyle;
+    }
+
+    // 关闭按钮
+    .el-dialog__headerbtn {
+        width: 56px;
+        height: 56px;
+        top: 0;
+
+        i {
+            width: 100%;
+            height: 100%;
+            font-size: $--close-btn-font-size !important;
+            color: $--close-btn-color;
+        }
+    }
+}
+
+// drawer 模式
+.g-custom-drawer {
+    .el-drawer__header {
+
+        .el-drawer__close-btn {
+            position: initial;
+            top: initial;
+            right: initial;
+            flex: none;
+            display: inline-flex;
+            align-items: center;
+
+            i {
+                font-size: $--close-btn-font-size !important;
+                color: $--close-btn-color;
+            }
+
+            &:hover {
+                i {
+                    color: var(--el-color-primary);
+                }
+            }
+        }
+    }
+
+    >.el-drawer__body {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+
+        >.drawer-content {
+            padding: 14px 0 14px $--dialog-base-left-p;
+            height: 100%;
+            overflow: hidden;
+
+            >.drawer-content-scrollbar {
+                >.el-scrollbar__wrap>.el-scrollbar__view {
+                    padding: 0;
+                    overflow: hidden;
+                    padding-right: $--dialog-base-left-p;
+                }
+            }
+        }
+
+        .drawer-footer {
+            flex: none;
+            @include footerStyle;
+        }
+    }
+}

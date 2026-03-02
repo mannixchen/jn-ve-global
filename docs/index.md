@@ -22,6 +22,10 @@ actions:
       link: /utilsDocs/
       type: secondary
 
+    - text: monitor-sdk
+      link: /monitor-sdk/
+      type: secondary
+
 features:
     - title: 🍡	组件库
       details: 使用 vue3 + element-plus + ts + vite 封装的组件库
@@ -29,8 +33,8 @@ features:
     - title: 🏰 微前端
       details: 微前端指引、业务框架架构、前端开发文档、前端开发规范
 
-    - title: 🚀 Vite SPA
-      details: 项目初代框架，vite 打包，dev 热更新迅速
+    - title: 🚀 Micro cli
+      details: 快速创建微应用
 
 ---
 
@@ -44,5 +48,5 @@ features:
 🎪 &nbsp; [Vue-Router4](https://router.vuejs.org/zh/installation.html) <br/>
 💺 &nbsp; [VueUse](https://vueuse.org/core.html) <br/>
 🚁 &nbsp; [MicroApp](https://micro-zoe.github.io/micro-app/) <br/>
-🚆 &nbsp; [Qiankun](https://qiankun.umijs.org/zh) <br/>
-🚂 &nbsp; [Single-spa](https://single-spa.js.org/) <br/>
+<!-- 🚆 &nbsp; [Qiankun](https://qiankun.umijs.org/zh) <br/>
+🚂 &nbsp; [Single-spa](https://single-spa.js.org/) <br/> -->

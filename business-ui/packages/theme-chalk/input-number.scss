@@ -1,0 +1,32 @@
+@use "mixins/mixins" as *;
+
+@include b(input-number) {
+  width: 100%;
+  position: relative;
+
+  &::after {
+    content: attr(capital-amount);
+    position: absolute;
+    color: var(--el-color-info-light-3);
+    font-size: 12px;
+    left: 0;
+    bottom: calc(-1 * var(--jn-ve-g-form-item-margin-b));
+  }
+}
+
+@include b(input-number-amount) {
+  // @include e(capital) {
+  //   width: 100%;
+  //   color: var(--el-color-info-light-3);
+  //   font-size: 12px;
+  // }
+
+  @include b(input-number-currency) {
+    min-width: 160px;
+    height: 100%;
+
+    // :deep(.el-select__wrapper) {
+    //   height: 100% !important;
+    // }
+  }
+}

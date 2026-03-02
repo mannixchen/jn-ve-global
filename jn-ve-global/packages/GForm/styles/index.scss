@@ -1,0 +1,82 @@
+@import './item-label.scss';
+@import './item-content.scss';
+@import './item-disabled.scss';
+@import './form-item-custom-class.scss';
+
+.g-form {
+    --jn-ve-g-btn-height: var(--jn-ve-g-form-item-height);
+
+    font-size: var(--jn-ve-g-form-font-size);
+
+    .el-form-item {
+
+        .el-form-item__label {
+            @include item-label;
+        }
+
+        .el-form-item__content {
+            @include item-content;
+        }
+
+        &.no-colon {
+            @include no-colon;
+        }
+
+        @include custom-class;
+
+        // 显示 tooltip 的 item
+        &.show-tip {
+
+            &.field-log-tip,
+            &.tip-append {
+                .el-form-item__content {
+                    flex-wrap: nowrap;
+                }
+            }
+
+            &.field-log-tip {
+                --el-border-color: #AFEEEE;
+                --el-disabled-border-color: var(--el-border-color);
+
+                .el-form-item__label {
+                    color: #03A480;
+                }
+            }
+
+            &.tip-label {
+                .el-form-item__label {
+                    align-items: center;
+
+                    .item-tip {
+                        margin-right: 4px;
+                        margin-left: 0;
+                        display: inline-flex;
+                        align-items: center;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .item-tip {
+                margin-left: 10px;
+                font-size: 22px;
+                color: #767575;
+            }
+
+            .item-tip.log {
+                margin-left: 10px;
+                font-size: 24px;
+                color: var(--el-color-primary);
+                height: 100%;
+                display: flex;
+                align-items: center;
+
+                .iconfont {
+                    font-size: inherit
+                }
+            }
+        }
+
+        @include item-disabled;
+    }
+}

@@ -27,7 +27,7 @@ export default {
 <script lang="tsx" setup>
 import { reactive, nextTick } from 'vue'
 import mockData from './data/editTableData2'
-import { TableColumnProps, TableConfig, BaseTableDataItem } from '@component/index'
+import { TableColumnProps, TableConfig, BaseTableDataItem } from 'jn-ve-global'
 import _ from 'lodash'
 import { ElMessage } from 'element-plus'
 

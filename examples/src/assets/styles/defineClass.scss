@@ -1,0 +1,229 @@
+// 禁止选中
+.not-select {
+    -moz-user-select: none;
+    /*火狐*/
+    -webkit-user-select: none;
+    /*webkit浏览器*/
+    -ms-user-select: none;
+    /*IE10*/
+    -khtml-user-select: none;
+    /*早期浏览器*/
+    user-select: none;
+}
+
+// 滚动条限制
+.scrollbar-astrict {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+// 版心：C 端
+.container {
+    width: 1300px;
+    margin: 0 auto;
+}
+
+// 间隙
+// margin
+.mb20 {
+    margin-bottom: 20px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+
+.mr10 {
+    margin-right: 10px;
+}
+
+// padding
+.pt10 {
+    padding-top: 10px;
+}
+
+.pr10 {
+    padding-right: 10px;
+}
+
+.pb10 {
+    padding-bottom: 10px;
+}
+
+.pl10 {
+    padding-left: 10px;
+}
+
+// border-radius
+.bora4 {
+    border-radius: 4px;
+}
+
+.bora8 {
+    border-radius: 8px;
+}
+
+.bora10 {
+    border-radius: 10px;
+}
+
+// flex
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.flex-al-c {
+    display: flex;
+    align-items: center;
+}
+
+.flex-jc-c {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// 基础模块容器
+.base-module-wrapper {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 6px;
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.04);
+}
+
+// 业务模块 drawer form 表单容器
+.business-module-drawer {
+    height: 100%;
+
+    .el-drawer__body {
+        overflow: hidden;
+
+        .form-wrapper {
+            height: calc(100% - 100px);
+            margin-bottom: 20px;
+
+            .el-scrollbar__view {
+                padding: 0 30px 20px 10px;
+                overflow: hidden;
+            }
+
+            &.no-button {
+                height: 100%;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .opertion-btn-wrapper {
+        text-align: center;
+    }
+}
+
+// dialog
+.dialog-content-wrapper {
+    height: 650px;
+}
+
+// 超出省略号
+.overflow-ellipsis {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+// 附加说明 tooltip
+.explain-aleart-wrapper {
+    >i {
+        margin-left: 15px;
+        color: #767575;
+        font-size: 22px;
+    }
+}
+
+.explain-aleart-content {
+    p {
+        font-size: 14px;
+        line-height: 1;
+        margin-bottom: 6px;
+    }
+}
+
+// 必填的红点
+.required-point {
+    &::before {
+        content: "*";
+        color: #F56C6C;
+        margin-right: 0.04rem;
+    }
+}
+
+.scrollbar-hide-x {
+    .el-scrollbar__view {
+        overflow: hidden;
+    }
+}
+
+// 表单 item 去除冒号
+.form-item_not-colon {
+    .el-form-item__label {
+        &:after {
+            // display: none;
+            opacity: 0;
+        }
+    }
+}
+
+// v-blurry 指令适配样式
+.my-blurry__dom {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        z-index: 1989;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-image: radial-gradient(transparent 1px, #fff 1px);
+        background-size: 4px 4px;
+        backdrop-filter: saturate(50%) blur(4px);
+
+        opacity: 0;
+        height: 0;
+        transition: all 0.3s;
+    }
+
+    &.my-blurry__show {
+        &::before {
+            opacity: 1;
+            height: 100%;
+        }
+    }
+}
+
+.examples-base-wrapper {
+    padding: 10px;
+    height: 100%;
+    overflow-y: auto;
+    background-color: #fff;
+}

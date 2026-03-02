@@ -11,9 +11,9 @@ export default {
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { FormProps, BtnProps, FormGenerateProps } from '@component/index'
+import { FormProps, BtnProps, FormGenerateProps } from 'jn-ve-global'
 import mockData from './data/demo1.json'
-import AdvanceFormConfig from '@component/GFormGenerate/implements/AdvanceFormConfig'
+import AdvanceFormConfig from 'jn-ve-global/packages/GFormGenerate/implements/AdvanceFormConfig'
 
 const formConfig = reactive<FormProps>({
     instance: null,

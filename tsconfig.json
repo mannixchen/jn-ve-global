@@ -1,34 +1,20 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "esnext",
-        "moduleResolution": "node",
-        "strict": false,
+        "target": "ESNext",
+        "module": "ESNext",
+        "strict": true,
         "jsx": "preserve",
-        "sourceMap": true,
-        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
         "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "baseUrl": ".",
-        "paths": {
-            "@/*": ["examples/*"],
-            "@views/*": ["examples/views/*"],
-            "@component/*": ["packages/*"]
-        },
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "useDefineForClassFields": true,
+        "sourceMap": true,
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
         "noImplicitAny": false,
-        "noImplicitThis": false
+        "noImplicitThis": false,
+        "strictNullChecks": false // strictNullChecks 参数用于新的严格空检查模式，在严格空检查模式下，null 和 undefined 值都不属于任何一个类型，它们只能赋值给本身这种类型或者 any
     },
-    "include": [
-        "examples/**/*.ts",
-        "examples/**/*.d.ts",
-        "examples/**/*.tsx",
-        "examples/**/*.vue",
-        "packages/**/*.ts",
-        "packages/**/*.d.ts",
-        "packages/**/*.tsx",
-        "packages/**/*.vue",
-        "docs/.vuepress/**/*.ts",
-        "docs/.vuepress/**/*.tsx",
-        "docs/.vuepress/**/*.vue"
-    ]
+    "exclude": ["node_modules"]
 }

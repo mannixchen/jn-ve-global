@@ -6,8 +6,8 @@
 
 <script lang="ts" setup>
 import { watch, reactive, toRefs, ref } from 'vue'
-import { FormProps } from '@component/index'
-import ErCodeImg from '@/assets/images/jn-er-code.png'
+import { FormProps } from 'jn-ve-global'
+import ErCodeImg from '@/assets/images/jn-logo.jpg'
 
 let formConfig = ref<FormProps>({
     instance: null,

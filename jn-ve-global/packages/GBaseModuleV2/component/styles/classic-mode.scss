@@ -1,0 +1,54 @@
+.search-wrapper.classic-mode {
+    padding: 10px var(--jn-ve-g-base-module-padding-lr) 0;
+
+    // 顶部
+    .top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        align-items: center;
+
+        .title {
+            font-size: 20px;
+            color: #333333;
+        }
+
+        .more {
+            display: inline-flex;
+            font-size: 16px;
+            align-items: center;
+            height: 100%;
+            cursor: pointer;
+            color: #595959;
+
+            span {
+                line-height: 1;
+                margin-left: 5px;
+                margin-right: 4px;
+                font-family: PingFangSC-Regular;
+                font-size: 16px;
+                color: #999999;
+                letter-spacing: 0;
+                font-weight: 400;
+            }
+
+            img {
+                width: 20px;
+                height: 20px;
+            }
+
+            &.pull-down {
+                img {
+                    transition: filter 0.2s;
+                    filter: grayscale(100%);
+                }
+
+                &.active {
+                    img {
+                        filter: grayscale(0%) !important;
+                    }
+                }
+            }
+        }
+    }
+}

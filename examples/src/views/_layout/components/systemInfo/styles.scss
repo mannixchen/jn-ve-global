@@ -1,0 +1,103 @@
+.header-top-wrapper {
+    height: var(--jn-header-system-info-height);
+    justify-content: space-between;
+    background-color: #fff;
+    border-bottom: 2px solid #eef3f6;
+    padding-left: var(--jn-layout-main-padding-l);
+    position: relative;
+    z-index: 2;
+
+    :deep(.custom-svg-icon),
+    :deep(i) {
+        color: #595959 !important;
+        font-size: 20px;
+    }
+
+    :deep(.left-box) {
+        svg.custom-svg-icon {
+            cursor: pointer;
+            font-size: 28px;
+            color: var(--jn-base-font-color) !important;
+        }
+
+        h1 {
+            margin-bottom: 0;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--jn-base-font-color);
+            letter-spacing: 2px;
+            margin-left: 16px;
+            line-height: 1;
+        }
+    }
+
+    .system-info-wrapper {
+        padding-right: 24px;
+        height: 100%;
+
+        .item {
+            margin-right: 26px;
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            .custom-svg-icon,
+            i,
+            .title {
+                font-size: 18px;
+            }
+
+            .title {
+                margin-left: 12px;
+                font-weight: 400;
+                color: var(--jn-base-font-color);
+                letter-spacing: 1px;
+                cursor: default;
+            }
+
+            >img {
+                width: 31px;
+                height: 31px;
+                border-radius: 50%;
+                margin-top: -4px;
+            }
+
+            .user-name {
+                --username-height: calc(var(--jn-header-system-info-height) - 2px);
+                margin-right: 8px;
+                max-width: 200px;
+                height: var(--username-height);
+                line-height: var(--username-height);
+            }
+
+            &.search,
+            .zoom,
+            &.search>.title {
+                cursor: pointer;
+            }
+
+            &.msg {
+                .el-badge {
+                    transform: translateY(3px);
+                }
+
+                .title {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .el-button {
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+
+            background-color: var(--jn-tags-view-item-active-bg) !important;
+            border: var(--el-border) !important;
+            border-color: var(--jn-tags-view-item-active-bg) !important;
+            color: #fff !important;
+
+            span {
+                letter-spacing: 10px;
+            }
+        }
+    }
+}

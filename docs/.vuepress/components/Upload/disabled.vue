@@ -3,7 +3,7 @@
         <g-upload
             v-model="fileIds"
             v-model:fileList="fileList"
-            action="/api/kinso-basic-open-server/v1/document/file/upload"
+            action="/proxy/kinso-basic-open-server/v1/document/file/upload"
             list-type="picture-card"
             disabled
         />
@@ -21,15 +21,7 @@ import { toRaw, watch, ref, computed, reactive } from 'vue'
 import source from './data/fileList.json'
 
 const fileIds = ref<string[]>([])
-const fileList = ref<any[]>(
-    source.map((item) => {
-        return {
-            name: item.fileRName,
-            url: item.filePath,
-            ...item
-        }
-    })
-)
+const fileList = ref<any[]>(source)
 
 watch(
     () => fileIds.value,

@@ -1,4 +1,4 @@
-import type { FormProps, TableColumnProps } from '@component/index'
+import type { FormProps, TableColumnProps } from 'jn-ve-global'
 
 export const columns: TableColumnProps[] = [
     {

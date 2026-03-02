@@ -1,0 +1,82 @@
+<template>
+    <ElCol
+        v-if="formItemConfig && isCreate"
+        :class="[
+            'design-item-box',
+            'form-item-col',
+            {
+                [`${formItemConfig.class}-col`]: formItemConfig.class
+            }
+        ]"
+        v-bind="getElColConfigs(formItemConfig)"
+    >
+        <LGFormItem v-bind="props">
+            <!-- 针对低码平台，这里要有一个 slot 占位，作为容器 -->
+            <template #default="{ itemConfig, vmodel, scopeFormConfig, parentKey }">
+                <slot
+                    :scope-form-config="scopeFormConfig"
+                    :item-config="(itemConfig as FormItemProps)"
+                    :vmodel="(vmodel as Ref<any>)"
+                    :parent-key="parentKey"
+                />
+            </template>
+        </LGFormItem>
+    </ElCol>
+</template>
+
+<script lang="ts" setup>
+import { type Ref } from 'vue'
+import { type FormItemProps } from '../../../interface'
+import { ElCol } from 'element-plus'
+import LGFormItem from '../GFormItem/index.vue'
+import { computed } from 'vue'
+import { isBoolean, isFunction } from 'lodash'
+
+defineOptions({
+    name: 'GColFormItem'
+})
+
+const props = withDefaults(
+    defineProps<{
+        formItemConfig: FormItemProps
+    }>(),
+    {
+        formItemConfig: null
+    }
+)
+
+const isCreate = computed(() => {
+    if (isBoolean(props.formItemConfig.hide)) return !props.formItemConfig.hide
+    else if (isFunction(props.formItemConfig.hide)) {
+        return !props.formItemConfig.hide(props.formItemConfig)
+    }
+    return true
+})
+
+/**
+ * 从统一的 FormItemProps 中，提取出 el-col 的配置参数
+ */
+const getElColConfigs = (item: FormItemProps): any => {
+    const baseConfig = {
+        offset: item.offset ?? 0
+    }
+
+    const spanConfig = {
+        ...baseConfig,
+        span: item.span ?? 8
+    }
+
+    const bootstrapConfig = {
+        ...baseConfig,
+        xs: item.xs ?? 24,
+        sm: item.sm ?? 12,
+        md: item.md ?? 12,
+        lg: item.lg ?? 8,
+        xl: item.xl ?? 8
+    }
+
+    if (item.xs || item.sm || item.md || item.lg || item.xl) return bootstrapConfig
+    if (item.span) return spanConfig
+    return spanConfig
+}
+</script>

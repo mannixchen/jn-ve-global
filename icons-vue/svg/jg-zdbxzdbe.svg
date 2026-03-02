@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>再担保新增担保额</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="再担保新增担保额">
+            <circle id="椭圆形备份-12" fill="#FFF0E1" cx="28" cy="28" r="28"></circle>
+            <path d="M24,38 L17,38 C15.8954305,38 15,37.1045695 15,36 L15,17 C15,15.8954305 15.8954305,15 17,15 L33,15 C34.1045695,15 35,15.8954305 35,17 L35,24 L35,24" id="路径" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle id="椭圆形" stroke="#FF921F" stroke-width="1.5" cx="33" cy="33" r="7"></circle>
+            <line x1="18" y1="21.5" x2="26" y2="21.5" id="路径-41" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="26" y1="25.5" x2="18" y2="25.5" id="路径-42" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="22" y1="21.5" x2="22" y2="30" id="路径-43" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <path d="M22,21.5 C21.6666667,21.1666667 20.3333333,20 18,18" id="路径-49" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            <line x1="22" y1="21.5" x2="25.5" y2="18" id="路径-50" stroke="#FF921F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></line>
+            <rect id="矩形" fill="#FF921F" x="29" y="32" width="8" height="2" rx="1"></rect>
+            <rect id="矩形" fill="#FF921F" transform="translate(33.000000, 33.000000) rotate(-270.000000) translate(-33.000000, -33.000000) " x="29" y="32" width="8" height="2" rx="1"></rect>
+        </g>
+    </g>
+</svg>

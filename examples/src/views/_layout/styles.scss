@@ -1,0 +1,79 @@
+.layout-root {
+    height: 100%;
+    overflow: hidden;
+
+    // 侧边栏
+    .layout-aside {
+        width: var(--jn-aside-base-width) !important;
+
+        background-color: var(--jn-aside-bgc);
+        background-image: var(--jn-aside-bgi);
+        background-size: var(--jn-aside-bg-size);
+        background-repeat: var(--jn-aside-bg-repeat);
+
+        transition: width var(--jn-base-animation-date);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+
+        &.is-collapse {
+            width: var(--jn-aside-collapse-width) !important;
+
+            .logo-wrapper {
+                height: 0;
+            }
+        }
+
+        >div {
+            &:not(.logo-wrapper) {
+                flex: 1;
+                overflow: hidden;
+            }
+        }
+
+        .logo-wrapper {
+            height: 100px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 0.2s;
+            margin-bottom: 20px;
+    
+            img {
+                height: 80px;
+            }
+        }
+    }
+
+    // 右侧主体
+    .layout-main {
+
+        // 头
+        .layout-main-header {
+            height: auto !important;
+            padding: 0;
+        }
+
+        // 内容区域
+        .layout-main-content {
+            padding: var(--jn-layout-main-padding-t) var(--jn-layout-main-padding-l) var(--jn-layout-main-padding-l) var(--jn-layout-main-padding-l);
+            margin-top: var(--jn-layout-main-margin-t, 0px);
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+
+            :deep(.layout-main-content-scrollbar) {
+                padding-right: 17px;
+
+                .el-scrollbar__view {
+                    height: 100%;
+                }
+            }
+
+            &.is-root-route {
+                padding: 0;
+            }
+        }
+    }
+}

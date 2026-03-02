@@ -1,6 +1,6 @@
 const _ = require('lodash')
 const notRemModes = ['docs', 'dev', 'build', '--px']
-const px2Rem = !(_.intersection(process.argv, notRemModes).length >= 2)
+const px2Rem = !(_.intersection(process.argv, notRemModes).length >= 2 || process.argv.includes('--px'))
 
 module.exports = {
     plugins: {

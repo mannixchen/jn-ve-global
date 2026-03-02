@@ -11,7 +11,7 @@ export default {
 <script lang="ts" setup>
 import { watch, reactive } from 'vue'
 import treeData from './data/treeData.json'
-import { FormProps } from '@component/index'
+import { FormProps } from 'jn-ve-global'
 
 const formConfig = reactive<FormProps>({
     instance: null,

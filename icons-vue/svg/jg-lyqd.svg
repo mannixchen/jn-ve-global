@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>来源渠道</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="来源渠道">
+            <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+            <rect id="矩形" fill="#3165D2" x="7" y="0" width="6" height="6" rx="1"></rect>
+            <rect id="矩形备份-48" fill="#3165D2" x="0" y="13" width="6" height="6" rx="1"></rect>
+            <rect id="矩形备份-49" fill="#3165D2" x="7" y="13" width="6" height="6" rx="1"></rect>
+            <rect id="矩形备份-54" fill="#3165D2" x="14" y="13" width="6" height="6" rx="1"></rect>
+            <polyline id="路径-40" stroke="#3165D2" stroke-width="2" stroke-linejoin="round" points="3 14 3 9 17 9 17 14"></polyline>
+            <line x1="10" y1="6" x2="10" y2="13" id="路径-41" stroke="#3165D2" stroke-width="2" stroke-linejoin="round"></line>
+        </g>
+    </g>
+</svg>

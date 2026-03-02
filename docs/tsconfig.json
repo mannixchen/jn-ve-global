@@ -1,0 +1,21 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        // "outDir": "./dist",
+        "composite": false,
+        "rootDir": "../",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["../examples/src/*"],
+            "@ROOT/*": ["../*"]
+        }
+    },
+    "include": [
+        "./.vuepress/**/*.ts",
+        "./.vuepress/**/*.tsx",
+        "./.vuepress/**/*.vue",
+
+        "../source.d.ts",
+        "../vite-env.d.ts"
+    ]
+}

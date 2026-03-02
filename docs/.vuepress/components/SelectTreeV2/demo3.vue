@@ -14,7 +14,7 @@ export default {
 import { watch, reactive } from 'vue'
 import tableData from './data/tableData.json'
 import treeData from './data/treeData.json'
-import { TableConfig, BaseTableDataItem, TableColumnProps } from '@component/index'
+import { TableConfig, BaseTableDataItem, TableColumnProps } from 'jn-ve-global'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {

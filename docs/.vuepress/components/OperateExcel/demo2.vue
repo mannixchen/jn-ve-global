@@ -10,7 +10,7 @@ export default {
 
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { TableConfig, TableColumnProps, BaseTableDataItem } from '@component/GTable'
+import { TableConfig, TableColumnProps, BaseTableDataItem } from 'jn-ve-global'
 
 const tableColumns = reactive<TableColumnProps[]>([
     {

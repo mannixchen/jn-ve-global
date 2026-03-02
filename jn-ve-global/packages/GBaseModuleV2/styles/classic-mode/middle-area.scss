@@ -1,0 +1,56 @@
+@mixin middle-area {
+    margin-top: 20px;
+    padding: 0 var(--jn-ve-g-base-module-padding-lr);
+    margin-bottom: 10px;
+    flex: none;
+    display: flex;
+    justify-content: space-between;
+
+    /* 左 */
+    .middle-left-wrapper {
+        width: 42%;
+
+        // 按钮组
+        .g-button-group {
+            //margin-top: 3px;
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+            --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+        }
+    }
+
+    /* 右 */
+    .middle-right-wrapper {
+        width: 55%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+
+        .g-advance-input-wrapper {
+            width: fit-content !important;
+        }
+
+        .search-input-wrapper {
+            width: 300px;
+            //margin-left: 12px;
+            margin-right: 10px;
+        }
+
+        .search-btn-wrapper {
+            --jn-ve-g-btn-height: var(--jn-ve-g-btn-s-height);
+            --jn-ve-g-btn-padding-lr: var(--jn-ve-g-btn-padding-lr2);
+            margin-left: 12px;
+        }
+
+        .icon-wrapper {
+            cursor: pointer;
+            color:  #989898;
+            font-size: 22px;
+            margin-bottom: 3px;
+            //margin-right: 60px;
+
+            &:hover {
+                color: #409EFF;
+            }
+        }
+    }
+}

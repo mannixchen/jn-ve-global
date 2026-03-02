@@ -20,9 +20,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-// 注意：组件文档的 demo 是基于本地路径引用的，在使用 npm 包时，应改为
-// import { TabPaneProps } from 'jn-ve-global/packages/GTabs
-import { TabPaneProps } from '@component/GTabs'
+import { TabPaneProps } from 'jn-ve-global'
 
 /**
  * 注意：

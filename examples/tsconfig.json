@@ -1,0 +1,25 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "moduleResolution": "bundler",
+        // "outDir": "./dist",
+        "composite": false,
+        "rootDir": "../",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"],
+            "@component/*": ["../jn-ve-global/packages/*"],
+            "@ROOT/*": ["../*"]
+        },
+        "types": [
+            "element-plus/global",
+            "jn-ve-global/global",
+            "@types/node",
+            "../source.d.ts",
+            "../vite-env.d.ts"
+            // "./auto-imports.d.ts",
+            // "./components.d.ts"
+        ]
+    },
+    "include": ["./src/**/*.ts", "./src/**/*.tsx", "./src/**/*.vue"]
+}

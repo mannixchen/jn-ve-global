@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { elIconKeys } from '@component/GIconPicker/data/icons'
+import { elIconKeys } from 'jn-ve-global/packages/GIconPicker/data/icons'
 </script>
 
 <style lang="scss" scoped>

@@ -10,7 +10,7 @@ export default {
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { FormProps } from '@component/index'
+import { FormProps } from 'jn-ve-global'
 
 const formConfig = reactive<FormProps>({
     instance: null,

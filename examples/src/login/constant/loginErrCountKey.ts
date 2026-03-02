@@ -1,0 +1,1 @@
+export default 'LOGIN_ERR_COUNT_KEY'

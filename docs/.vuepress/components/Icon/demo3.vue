@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { aliIcons } from '@component/GIconPicker/data/icons'
+import { aliIcons } from 'jn-ve-global/packages/GIconPicker/data/icons'
 </script>
 
 <style lang="scss" scoped>

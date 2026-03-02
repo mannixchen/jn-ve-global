@@ -4,7 +4,7 @@
 
 系统的 css 变量存放于基座应用下 `/src/assets/theme` 目录
 
-![them-dir](@imgs/micro/theme-dir.png)
+![them-dir](/images/micro/theme-dir.png)
 
 ## 目前已经添加公用 css 变量
 

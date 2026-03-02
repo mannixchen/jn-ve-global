@@ -1,0 +1,86 @@
+@import './cell-content.scss';
+@import './pagination.scss';
+@import './table-header.scss';
+@import './table-body.scss';
+@import './cell-button.scss';
+
+.g-table-root {
+    // 覆盖表单控件的高度变量
+    --jn-ve-g-form-item-height: var(--jn-ve-g-table-cell-line-height);
+    --jn-ve-g-form-item-line-height: var(--jn-ve-g-form-item-height);
+
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid var(--jn-ve-g-base-border-color);
+    border-radius: 4px 4px 0 0;
+
+    // 无分页
+    &.hide-pagination {
+        border-bottom: none;
+
+        .g-table-main {
+            height: 100%;
+
+            .el-table {
+                &::before {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // 无数据
+    &.data-empty {
+        .el-table {
+            .el-table__body-wrapper {
+                .el-scrollbar__view {
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    // 表格
+    .g-table-main {
+        height: calc(100% - var(--jn-ve-g-table-pagination-height));
+
+        .el-table {
+            color: var(--jn-ve-g-table-color);
+            font-size: var(--jn-ve-g-table-font-size);
+
+            .el-table__inner-wrapper {
+                @include table-header;
+                @include table-body;
+
+                // 复选框
+                .el-checkbox {
+                    height: auto;
+                }
+
+                &::before {
+                    background-color: var(--jn-ve-g-base-border-color);
+                }
+
+                .table-selection-column {
+                    .cell {
+                        width: 100%;
+                        padding: 0;
+                        justify-content: center;
+                    }
+
+                    .el-checkbox {
+                        margin: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+
+    // 分页
+    .g-table-pagination {
+        @include pagination;
+    }
+}

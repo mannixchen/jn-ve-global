@@ -1,5 +1,5 @@
 import { ref, reactive } from 'vue'
-import { FormProps, FormItemTableTableConfig } from '@component/index'
+import { FormProps, FormItemTableTableConfig } from 'jn-ve-global'
 import { columns } from './columns'
 import mockData from './data.json'
 

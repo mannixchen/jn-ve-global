@@ -1,0 +1,17 @@
+export * from './utils/common'
+export * from './utils/bom'
+export * from './utils/dom'
+export * from './utils/componentLib'
+export * from './utils/object'
+export * from './utils/storage'
+export * from './utils/string'
+export * from './utils/tree'
+export * from './utils/download'
+export * from './utils/number'
+export * from './utils/camelcase'
+export * from './utils/rem'
+export * from './utils/device'
+export * from './utils/browser-check'
+
+import { getGlobal } from './utils/bom'
+getGlobal()

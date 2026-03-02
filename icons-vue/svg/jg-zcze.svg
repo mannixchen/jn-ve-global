@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="56px" height="56px" viewBox="0 0 56 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>资产总额</title>
+    <g id="工作台首页" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="资产总额">
+            <circle id="椭圆形" fill="#E1F5E9" cx="28" cy="28" r="28"></circle>
+            <g id="编组-11" transform="translate(15.552962, 13.000000)" stroke="#3DBE66" stroke-linejoin="round" stroke-width="2">
+                <path d="M8.94703829,7 C3.94703829,10.6666667 1.11370496,13.8333333 0.447038295,16.5 C-0.552961705,20.5 -1.05296171,30 12.4470383,30 C25.9470383,30 25.9470383,22 24.4470383,16.5 C23.4470383,12.8333333 20.4470383,9.66666667 15.4470383,7 L8.94703829,7 Z" id="路径-39" fill-rule="nonzero"></path>
+                <path d="M15.9470383,7 L8.94703829,7 C6.28037163,4.33333333 5.28037163,2.5 5.94703829,1.5 C6.94703829,0 8.94703829,0 12.4470383,0 C15.9470383,0 18.4470383,0.5 18.9470383,2 C19.2803716,3 18.2803716,4.66666667 15.9470383,7 Z" id="路径-40"></path>
+                <line x1="7.94703829" y1="16.5" x2="17.9470383" y2="16.5" id="路径-41" stroke-linecap="round"></line>
+                <line x1="17.9470383" y1="20.5" x2="7.94703829" y2="20.5" id="路径-42" stroke-linecap="round"></line>
+                <line x1="12.9470383" y1="16.5" x2="12.9470383" y2="25" id="路径-43" stroke-linecap="round"></line>
+                <path d="M12.9470383,16.5 C12.613705,16.1666667 11.2803716,15 8.94703829,13" id="路径-49" stroke-linecap="round"></path>
+                <line x1="12.9470383" y1="16.5" x2="16.4470383" y2="13" id="路径-50" stroke-linecap="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

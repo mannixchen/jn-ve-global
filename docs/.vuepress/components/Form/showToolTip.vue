@@ -7,7 +7,7 @@
 
 <script lang="tsx" setup>
 import { ref } from 'vue'
-import { FormProps } from '@component/index'
+import { FormProps } from 'jn-ve-global'
 
 let formConfig = ref<FormProps>({
     instance: null,

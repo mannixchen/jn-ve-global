@@ -1,0 +1,25 @@
+{
+    "name": "@jsjn/icons-vue",
+    "type": "module",
+    "version": "1.2.0",
+    "description": "",
+    "main": "lib/index.js",
+    "module": "es/index.mjs",
+    "types": "es/index.d.ts",
+    "files": [
+        "dist",
+        "lib",
+        "es",
+        "vue"
+    ],
+    "scripts": {
+        "build": "gulp --require @esbuild-kit/cjs-loader -f scripts/build/index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {},
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-jsjngf/"
+    }
+}

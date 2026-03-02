@@ -332,3 +332,107 @@ export default routes
 勾选最下方的是否模糊匹配
 
 ![模糊路由配置.png](/images/realize/模糊路由配置.png)
+
+### 远程组件高阶传参
+
+:::tip
+
+框架 2.0+ 支持
+
+优点：
+
+* 可直接传递复杂类型数据，如 `Object、Array`，无需 `JSON` 转义
+* 可双向绑定，双向通信设置简单
+* 封装好的 hook 可直接获取参数，不再需要通过 url 获取参数
+
+:::
+
+#### 调用者
+
+```vue
+<template>
+    <div>调用方：RemoteDemo</div>
+    <RemoteMicroAppComponent
+        v-model:data="data"
+        :data-sync="true"
+        :app-url="appUrl"
+        component-url="/components/remoteDemo"
+    />
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: 'RemoteDemo'
+})
+</script>
+
+<script lang="ts" setup>
+import { watch, ref, computed, reactive, onMounted, onUnmounted, nextTick } from 'vue'
+import RemoteMicroAppComponent from '@jsjn/micro-core-components/business/remoteMicroAppComponent/index.vue'
+
+const appUrl = window.__MICRO_APP_LIST__.find((app) => app.name === 'apollo')?.url
+
+// 可双向绑定，自动获取数据
+const data = ref({
+    flag: false,
+    time: +new Date()
+})
+
+watch(
+    () => data.value,
+    (dt) => {
+        console.log(`%c 调用者获取提供者的数据抛出：`, 'color: red;', dt)
+    }
+)
+</script>
+
+<style lang="scss" scoped></style>
+```
+
+#### 提供者
+
+```vue
+<template>
+    <div>提供方：RemoteDemo</div>
+    <el-button type="success" @click="changeData">
+        改变父级远程数据
+    </el-button>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+export default defineComponent({
+    name: 'RemoteDemo'
+})
+</script>
+
+<script lang="ts" setup>
+import { watch } from 'vue'
+import useRemoteData from '@jsjn/micro-core-components/business/remoteMicroAppComponent/wujie/hooks/useRemoteData'
+
+// 获取远程数据 + 抛出数据的方法
+const [remoteState, setRemoteState] = useRemoteData()
+
+watch(
+    () => remoteState.value,
+    () => {
+        console.log(`%c 来自调用方的数据 === `, 'color: #67c23a;', remoteState.value)
+    },
+    {
+        immediate: true
+    }
+)
+
+// 改变数据
+const changeData = () => {
+    setRemoteState({ flag: true, time: +new Date() })
+}
+</script>
+
+<style lang="scss" scoped></style>
+```
+
+#### 输出示例
+
+![Alt text](/images/micro/remote-data-change.png)

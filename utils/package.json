@@ -1,0 +1,33 @@
+{
+    "name": "@jsjn/utils",
+    "author": "zyc",
+    "version": "1.6.18",
+    "type": "module",
+    "files": [
+        "dist",
+        "@types",
+        "src/utils"
+    ],
+    "main": "./dist/index.umd.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.umd.cjs"
+        },
+        "./dist/*": "./dist/*",
+        "./@types/*": "./@types/*",
+        "./utils/*": "./src/utils/*"
+    },
+    "scripts": {
+        "build": "vue-tsc --noEmit && vite build",
+        "build:push": "vue-tsc --noEmit && vite build && yalc push --private && npm publish"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21"
+    },
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-jsjngf/"
+    }
+}

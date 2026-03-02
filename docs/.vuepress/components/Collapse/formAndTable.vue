@@ -15,7 +15,7 @@ export default {
 
 <script lang="tsx" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { TableColumnProps, TableConfig, FormProps } from '@component/index'
+import { TableColumnProps, TableConfig, FormProps } from 'jn-ve-global'
 import mockData from './data/data.json'
 
 const activeNames = ref<string[]>(['1', '2'])

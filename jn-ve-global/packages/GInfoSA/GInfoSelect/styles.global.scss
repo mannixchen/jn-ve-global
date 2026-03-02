@@ -1,0 +1,21 @@
+$--pagination-height: 32px;
+
+.info-select-popper {
+    &.el-select__popper {
+        overflow: hidden;
+    }
+
+    .el-select-dropdown__list {
+        width: fit-content;
+        margin-top: 0 !important;
+    }
+}
+
+.info-select-pagination-wrapper {
+    position: absolute;
+    height: $--pagination-height;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #e4e7ed;
+}

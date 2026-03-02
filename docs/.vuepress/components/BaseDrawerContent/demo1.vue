@@ -24,7 +24,7 @@ export default {
 
 <script lang="ts" setup>
 import { toRaw, watch, ref, computed, reactive, toRefs } from 'vue'
-import { FormProps } from '@component/GForm'
+import { FormProps } from 'jn-ve-global'
 
 enum DrawerType {
     ADD = 'add',

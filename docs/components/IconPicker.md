@@ -2,7 +2,7 @@
 
 图标选择器
 
-## V1
+## 示例
 
 <demo-block>
 
@@ -16,7 +16,7 @@
 
 </demo-block>
 
-## V2
+<!-- ## V2
 
 <demo-block>
 
@@ -28,7 +28,7 @@
 
 </template>
 
-</demo-block>
+</demo-block> -->
 
 ## Attributes
 

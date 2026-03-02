@@ -19,25 +19,25 @@ export default [
         link: '/utilsDocs/',
         activeMatch: '^/utilsDocs/'
     },
-    // {
-    //     text: '前端知识分享',
-    //     link: '/blog/',
-    //     activeMatch: '^/blog/'
-    // },
+    {
+        text: 'monitor-sdk',
+        link: '/monitor-sdk/',
+        activeMatch: '^/monitor-sdk/'
+    },
     {
         text: '更新日志',
         children: [
             {
-                text: '组件库@2.6.2',
+                text: '组件库@3.6.2',
                 link: '/components/UpdateLog.md'
             },
             {
-                text: '基座应用@2.3.0',
+                text: '统一管理平台@2.5.2',
                 link: '/micro/updateLog/basic.md'
             },
             {
-                text: '微应用框架@2.0.0',
-                link: '/micro/updateLog/micro.md'
+                text: '微应用依赖',
+                link: '/micro/updateLog/dependence.md'
             }
         ]
     }

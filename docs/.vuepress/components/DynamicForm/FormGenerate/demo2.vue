@@ -13,7 +13,7 @@ export default {
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { FormGenerateProps, BtnProps } from '@component/index'
+import { FormGenerateProps, BtnProps } from 'jn-ve-global'
 import mockData from './data/demo1.json'
 
 const formConfigJson = ref<FormGenerateProps>(null)

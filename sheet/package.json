@@ -1,0 +1,32 @@
+{
+    "name": "@jsjn/sheet",
+    "author": "zyc",
+    "version": "2.0.3",
+    "description": "基于 vue3 + ts + Luckysheet 的二次封装库 江苏金农内部库",
+    "files": [
+        "dist",
+        "@types"
+    ],
+    "main": "./dist/index.mjs",
+    "module": "./dist/index.mjs",
+    "types": "./@types/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./dist/index.mjs"
+        },
+        "./style.css": "./dist/style.css",
+        "./dist/*": "./dist/*",
+        "./@types/*": "./@types/*",
+        "./@types": "./@types"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --noEmit && vite build",
+        "preview": "vite preview",
+        "report": "rimraf dist && vite build",
+        "build:push": "vue-tsc --noEmit && vite build && yalc push --private"
+    },
+    "publishConfig": {
+        "registry": "http://172.31.71.159/repository/npm-jsjngf/"
+    }
+}
